@@ -60,15 +60,15 @@ type: 간단한 제목
 ### 📍 그라운드 룰 📍 
 |문서|
 |---|
-|[팀의 목표](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/_new#%ED%8C%80%EC%9D%98-%EB%AA%A9%ED%91%9C)|
-|[개인의 목표](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/_new#%EA%B0%9C%EC%9D%B8%EC%9D%98-%EB%AA%A9%ED%91%9C)|
-|[커뮤니티 규칙](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/_new#%EC%BB%A4%EB%AE%A4%EB%8B%88%ED%8B%B0-%EA%B7%9C%EC%B9%99)|
-|[개발 규칙](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/_new#%EA%B0%9C%EB%B0%9C-%EA%B7%9C%EC%B9%99)|
+|[팀의 목표](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0#%ED%8C%80%EC%9D%98-%EB%AA%A9%ED%91%9C)|
+|[개인의 목표](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0#%EA%B0%9C%EC%9D%B8%EC%9D%98-%EB%AA%A9%ED%91%9C)|
+|[커뮤니티 규칙](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0#%EC%BB%A4%EB%AE%A4%EB%8B%88%ED%8B%B0-%EA%B7%9C%EC%B9%99)|
+|[개발 규칙](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0#%EA%B0%9C%EB%B0%9C-%EA%B7%9C%EC%B9%99)|
 
 <br> 
 
 ### 📚 기획/디자인 링크 📚
 |문서|링크|
 |---|---|
-|기획|[기획서](https://github.com/swkim0911](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B8%B0%ED%9A%8D%EC%84%9C)https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B8%B0%ED%9A%8D%EC%84%9C)|
+|기획|[기획서](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B8%B0%ED%9A%8D%EC%84%9C)|
 |디자인||
