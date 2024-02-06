@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Festival {
+public class Festival extends BaseEntity {
 
     private enum Category {
         SPORTS, MUSICAL, CONCERT, FAN_MEETING, ANIMATION, ETC
