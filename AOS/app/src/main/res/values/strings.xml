@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AOS</string>
+    <string name="dummy_string">더미</string>
+    <string name="home">홈</string>
+    <string name="reserve_list">예약 현황</string>
+    <string name="chat">채팅</string>
+    <string name="my_page">마이페이지</string>
+
 </resources>
