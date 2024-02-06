@@ -68,7 +68,9 @@ type: 간단한 제목
 <br> 
 
 ### 📚 기획/디자인 링크 📚
-|문서|링크|
-|---|---|
-|기획|[기획서](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B8%B0%ED%9A%8D%EC%84%9C)|
-|디자인||
+| 문서      | 링크                                                                                           |
+|---------|----------------------------------------------------------------------------------------------|
+| 기획      | [기획서](https://github.com/softeerbootcamp-3rd/Team8-8LISADE/wiki/%EA%B8%B0%ED%9A%8D%EC%84%9C) |
+| 디자인     |                                                                                              |
+| ERD 명세서 | [ERD](https://www.erdcloud.com/d/NFbw6q2XsRzrDPtm7)                                           |
+
