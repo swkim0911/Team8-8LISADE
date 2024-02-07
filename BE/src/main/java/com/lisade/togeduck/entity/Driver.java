@@ -5,7 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,4 +35,7 @@ public class Driver extends BaseEntity {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "driver")
+    private List<DriverRoute> driverRoutes;
 }

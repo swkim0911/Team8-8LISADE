@@ -32,6 +32,10 @@ public class DriverRoute extends BaseEntity {
     private String carNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id", nullable = false)
+    private Driver driver;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 }
