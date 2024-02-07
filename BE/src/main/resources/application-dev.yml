@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:${H2_DATABASE_NAME}
+    url: jdbc:h2:tcp://localhost/~/${H2_DATABASE_NAME}
     username: ${H2_USERNAME}
     password: ${H2_PASSWORD}
     driverClassName: org.h2.Driver
