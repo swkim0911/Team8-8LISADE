@@ -59,4 +59,7 @@ public class Festival extends BaseEntity {
 
     @OneToMany(mappedBy = "festival", cascade = CascadeType.ALL)
     private List<FestivalImage> festivalImages;
+
+    @OneToMany(mappedBy = "festival")
+    private List<Route> routes;
 }
