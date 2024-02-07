@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+
+  jpa:
+    properties:
+      generate-ddl: 'true'
+      hibernate:
+        format_sql: true
+        show-sql: true
+
+logging:
+  level:
+    org.hibernate.type: trace
