@@ -46,7 +46,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "authorization", nullable = false)
+    @Column(name = "authority", nullable = false)
     private AuthorityType authority;
 
     @OneToMany(mappedBy = "user")
