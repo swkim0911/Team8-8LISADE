@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.AOS" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="android:statusBarColor">@color/main</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <!--폰트-->
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
