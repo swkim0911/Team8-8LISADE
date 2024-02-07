@@ -37,9 +37,12 @@ public class Bus {
     @Column(name = "type", nullable = false)
     private BusType type;
 
+    @Column(name = "number_of_seats", nullable = false)
+    private Integer numberOfSeats;
+
     @OneToOne(mappedBy = "bus", fetch = FetchType.LAZY)
     private Route route;
-    
+
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
     private List<PriceTable> priceTables;
 }
