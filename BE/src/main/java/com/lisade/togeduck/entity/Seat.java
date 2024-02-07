@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,9 @@ public class Seat extends BaseEntity {
 
     @Column(name = "status", nullable = false)
     private SeatStatus status;
+
+    @OneToOne(mappedBy = "seat", fetch = FetchType.LAZY)
+    private UserRoute userRoute;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id", nullable = false)
