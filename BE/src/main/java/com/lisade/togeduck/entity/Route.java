@@ -58,7 +58,11 @@ public class Route extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "station_id", nullable = false)
     private Station station;
-    
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bus_id", nullable = false)
+    private Bus bus;
+
     @OneToMany(mappedBy = "route")
     private List<Seat> seats;
 
