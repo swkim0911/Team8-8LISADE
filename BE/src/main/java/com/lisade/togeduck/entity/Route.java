@@ -43,7 +43,7 @@ public class Route extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RouteStatus status;
 
-    @Column(name = "statred_at", nullable = false)
+    @Column(name = "started_at", nullable = false)
     private LocalDateTime startedAt;
 
     @Column(name = "expected_time", nullable = false)
@@ -71,7 +71,7 @@ public class Route extends BaseEntity {
 
     @OneToMany(mappedBy = "route")
     private List<DriverRoute> driverRoutes;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id", nullable = false)
     private Festival festival;
