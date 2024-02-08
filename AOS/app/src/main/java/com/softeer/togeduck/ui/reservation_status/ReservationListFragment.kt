@@ -5,57 +5,65 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.R
-import com.softeer.togeduck.ui.mypage.MyPageFragment
+import com.softeer.togeduck.databinding.FragmentReservationListBinding
+import com.softeer.togeduck.model.ReservationStatusModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MyPageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ReservationListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentReservationListBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var adapter: ReservationStatusAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_page, container, false)
+        _binding = FragmentReservationListBinding.inflate(inflater, container, false)
+
+        init()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyPageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
+
+
+    private fun init() {
+        adapter = ReservationStatusAdapter(getTestData())
+        val rvList = binding.rvReservationStatusList
+
+        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        rvList.addItemDecoration(dividerItemDecoration)
+        rvList.adapter = adapter
+    }
+
+    //////////////// 백엔드 API 연동시 수정 필요 /////////////////
+    private fun getTestData(): MutableList<ReservationStatusModel> {
+        val testList = mutableListOf<ReservationStatusModel>()
+        val testData = ReservationStatusModel(
+            "[서울] Exo 콘서트",
+            "https://i.namu.wiki/i/sqi3rhs8DtElCCknpMgPgJoTwalucUg506J0v4c6XnTD7Lq_0v3B4vnkw2-LO8iEkksXRdTyLoPb4jnt58IZkzfLOpuJhYTUVVh9x7jlBRezOUWqB-r5m6EOSyecZ3v159XfGjUb94NTckJXr0gJ4A.webp",
+            "2024.02.05",
+            "14:00",
+            "잠실종합운동장",
+            30000,
+            true,
+            "모집중(4/6)"
+        )
+        for (i in 0..7) {
+            testList.add(testData)
+        }
+        return testList
+    }
+    //////////////// 백엔드 API 연동시 수정 필요 /////////////////
 }

@@ -1,82 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp">
-
-    <ImageView
-        android:id="@+id/item_img"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dumi_reservation_list"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_contents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.37" />
-
-    <TextView
-        android:id="@+id/item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="[ ] 행사명"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/guideline_contents"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/item_datetime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="날짜 / 출발 시간"
-        android:textColor="@color/grey300"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/guideline_contents"
-        app:layout_constraintTop_toBottomOf="@id/item_title" />
-
-    <TextView
-        android:id="@+id/item_place"
-        android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="행사 위치"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@id/guideline_contents"
-        app:layout_constraintTop_toBottomOf="@id/item_datetime" />
 
 
-    <TextView
-        android:id="@+id/item_cost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0,000/인"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/guideline_contents"
-        app:layout_constraintTop_toBottomOf="@id/item_place" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="reserveStatus"
+            type="com.softeer.togeduck.model.ReservationStatusModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
 
-    <TextView
-        android:id="@+id/item_recruitment_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="모집여부(0/0)"
-        android:textColor="@color/main"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_contents" />
+        <ImageView
+            android:id="@+id/itemImg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@{reserveStatus.festivalImg}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.3" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineContents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.37" />
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{reserveStatus.festivalName}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guidelineContents"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemDatetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{reserveStatus.date + ` / ` +reserveStatus.departureTime +` 출발`}"
+            android:textColor="@color/grey300"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents"
+            app:layout_constraintTop_toBottomOf="@id/item_title" />
+
+        <TextView
+            android:id="@+id/itemPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{reserveStatus.place}"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents"
+            app:layout_constraintTop_toBottomOf="@id/itemDatetime" />
+
+
+        <TextView
+            android:id="@+id/itemCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{reserveStatus.cost+`/인`}"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents"
+            app:layout_constraintTop_toBottomOf="@id/itemPlace" />
+
+
+        <TextView
+            android:id="@+id/item_recruitment_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{reserveStatus.recruitPhrase}"
+            android:textColor="@color/main"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guidelineContents" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
