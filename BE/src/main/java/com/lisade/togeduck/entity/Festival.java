@@ -26,14 +26,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Festival extends BaseEntity {
 
-    private enum Category {
-        SPORTS, MUSICAL, CONCERT, FAN_MEETING, ANIMATION, ETC
-    }
-
-    private enum Status {
-        RECRUITMENT, TERMINATION
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
