@@ -1,44 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <!--타이틀-->
-    <View
-        android:id="@+id/header_top"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/icon_back"
-        app:layout_constraintBottom_toBottomOf="@id/header_top"
-        app:layout_constraintStart_toStartOf="@id/header_top"
-        app:layout_constraintTop_toTopOf="@id/header_top" />
-
+    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="예약 현황"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/header_top"
-        app:layout_constraintEnd_toEndOf="@id/header_top"
-        app:layout_constraintStart_toStartOf="@id/header_top"
-        app:layout_constraintTop_toTopOf="@id/header_top" />
-    <!--end 타이틀-->
-
-    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_top" />
+        android:layout_height="match_parent"
+        android:text="home" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
