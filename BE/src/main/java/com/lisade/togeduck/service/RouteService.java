@@ -11,6 +11,7 @@ import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.repository.BusRepository;
 import com.lisade.togeduck.repository.RouteRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +36,17 @@ public class RouteService {
         Station station = locationService.getStation(routeRegistration.getStationId());
         Bus bus = getBus(routeRegistration.getBusId());
 
-        Integer price = bus.getPriceTables().stream()
-            .filter((priceTable) -> priceTable.getDistance() <= routeRegistration.getDistance())
-            .findFirst().map(PriceTable::getPrice).orElse(0);
+        List<PriceTable> priceTables = bus.getPriceTables();
+
+        Integer price = 0;
+
+        for (int index = 0; index < priceTables.size(); index++) {
+            if (priceTables.get(index).getDistance() > routeRegistration.getDistance()) {
+                price = priceTables.get(index - 1).getDistance();
+
+                break;
+            }
+        }
 
         Route route = routeRepository.save(RouteMapper.toRoute(festival, bus, station,
             routeRegistration.getDistance(), price));
