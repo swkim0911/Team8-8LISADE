@@ -5,16 +5,18 @@ import lombok.Getter;
 
 @Getter
 public enum Category {
-    SPORTS("1"),
-    MUSICAL("2"),
-    CONCERT("3"),
-    FAN_MEETING("4"),
-    ANIMATION("5"),
-    ETC("6");
+    SPORTS("1", "스포츠"),
+    MUSICAL("2", "뮤지컬"),
+    CONCERT("3", "콘서트"),
+    FAN_MEETING("4", "팬미팅"),
+    ANIMATION("5", "애니메이션"),
+    ETC("6", "기타");
     private final String code;
+    private final String type;
 
-    Category(String code) {
+    Category(String code, String type) {
         this.code = code;
+        this.type = type;
     }
 
     public static Category of(String code) {
