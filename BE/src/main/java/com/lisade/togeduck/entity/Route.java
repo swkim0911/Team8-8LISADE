@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Route extends BaseEntity {
 
-    private enum RouteStatus {
+    public enum RouteStatus {
         PROGRESS, COMPLETE
     }
 
