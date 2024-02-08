@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.R
-import com.softeer.togeduck.databinding.FragmentReservationListBinding
+import com.softeer.togeduck.databinding.FragmentReservationStatusBinding
 import com.softeer.togeduck.model.ReservationStatusModel
 
-class ReservationListFragment : Fragment() {
-    private var _binding: FragmentReservationListBinding? = null
+class ReservationStatusFragment : Fragment() {
+    private var _binding: FragmentReservationStatusBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ReservationStatusAdapter
 
@@ -24,7 +22,7 @@ class ReservationListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentReservationListBinding.inflate(inflater, container, false)
+        _binding = FragmentReservationStatusBinding.inflate(inflater, container, false)
 
         init()
 

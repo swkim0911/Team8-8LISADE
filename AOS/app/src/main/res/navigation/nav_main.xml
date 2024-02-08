@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/menuReserveList"
-        android:name="com.softeer.togeduck.ui.reservation_status.ReservationListFragment"
+        android:name="com.softeer.togeduck.ui.reservation_status.ReservationStatusFragment"
         android:label="fragment_reservation_list"
-        tools:layout="@layout/fragment_reservation_list">
+        tools:layout="@layout/fragment_reservation_status">
         <action
             android:id="@+id/action_menu_reserve_list_to_menu_home"
             app:destination="@id/menuHome" />
