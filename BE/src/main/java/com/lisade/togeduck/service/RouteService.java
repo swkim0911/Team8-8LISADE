@@ -36,7 +36,7 @@ public class RouteService {
         Bus bus = getBus(routeRegistration.getBusId());
 
         Integer price = bus.getPriceTables().stream()
-            .filter((priceTable) -> priceTable.getDistance() < routeRegistration.getDistance())
+            .filter((priceTable) -> priceTable.getDistance() <= routeRegistration.getDistance())
             .findFirst().map(PriceTable::getPrice).orElse(0);
 
         Route route = routeRepository.save(RouteMapper.toRoute(festival, bus, station,
