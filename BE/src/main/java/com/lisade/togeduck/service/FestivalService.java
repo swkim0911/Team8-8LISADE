@@ -1,26 +1,16 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.FestivalDto;
+import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.entity.Festival;
-import com.lisade.togeduck.repository.FestivalRepository;
-import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import com.lisade.togeduck.entity.Status;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Slice;
 
-@Service
-@RequiredArgsConstructor
-public class FestivalService {
+public interface FestivalService {
 
-    private final FestivalRepository festivalRepository;
+    Slice<FestivalDto> getList(Pageable pageable, Category category, Status status,
+        String filterType);
 
-    public Page<FestivalDto> getList(Pageable pageable, Long category, String filterType) {
-        return null;
-    }
-
-    public Festival get(Long id) {
-        Optional<Festival> optionalFestival = festivalRepository.findById(id);
-        return optionalFestival.orElse(null);
-    }
+    Festival get(Long id);
 }
