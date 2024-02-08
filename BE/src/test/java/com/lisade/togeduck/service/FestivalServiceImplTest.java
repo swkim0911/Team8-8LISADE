@@ -60,7 +60,7 @@ class FestivalServiceImplTest {
         FestivalDto mockFestivalDto = FestivalDto.builder().id(1L)
             .title("Fake Festival")
             .location("Fake location")
-            .path(List.of("first")).build();
+            .paths(List.of("first")).build();
 
         when(festivalMapper.toFestivalDtoSlice(any())).thenReturn(
             new SliceImpl<>(Collections.singletonList(mockFestivalDto)));
@@ -81,7 +81,7 @@ class FestivalServiceImplTest {
         assertThat(result.getContent().get(0).getTitle()).isEqualTo("Fake Festival");
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
         assertThat(result.getContent().get(0).getLocation()).isEqualTo("Fake location");
-        assertThat(result.getContent().get(0).getPath()).contains("first");
+        assertThat(result.getContent().get(0).getPaths()).contains("first");
     }
 
     @Test
