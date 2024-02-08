@@ -27,10 +27,10 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
         MediaType selectedContentType, Class selectedConverterType,
         ServerHttpRequest request, ServerHttpResponse response) {
         HttpServletResponse servletResponse = ((ServletServerHttpResponse) response).getServletResponse();
-        int status = servletResponse.getStatus();
-        String message = "회원가입에 성공하였습니다.";
-        ResponseDto<Object> responseDto = ResponseDto.builder().status(status).message(message)
-            .result(body).build();
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        HttpStatus httpStatus = HttpStatus.valueOf(servletResponse.getStatus());
+        String statusMessage = httpStatus.name();
+        ResponseDto<Object> responseDto = ResponseDto.builder().status(httpStatus.value())
+            .message(statusMessage).result(body).build();
+        return new ResponseEntity<>(responseDto, httpStatus); //todo 상태코드 안 넣어도 받은 응답 상태코드가 그대로 가는지
     }
 }
