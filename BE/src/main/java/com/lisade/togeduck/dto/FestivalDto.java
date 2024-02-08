@@ -9,9 +9,9 @@ import lombok.Data;
 @Builder
 public class FestivalDto {
 
-    Long id;
-    String title;
-    String location;
-    LocalDate startedAt;
-    List<String> path;
+    private Long id;
+    private String title;
+    private String location;
+    private LocalDate startedAt;
+    private List<String> path;
 }
