@@ -26,10 +26,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Festival extends BaseEntity {
 
-    private enum Category {
-        SPORTS, MUSICAL, CONCERT, FAN_MEETING, ANIMATION, ETC
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -62,4 +58,8 @@ public class Festival extends BaseEntity {
 
     @OneToMany(mappedBy = "festival")
     private List<Route> routes;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
 }
