@@ -13,6 +13,7 @@ import com.lisade.togeduck.repository.BusRepository;
 import com.lisade.togeduck.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final BusRepository busRepository;
 
+    @Transactional
     public com.lisade.togeduck.dto.response.RouteRegistrationDto save(Long festivalId,
         RouteRegistrationDto routeRegistration) {
         if (exists(festivalId, routeRegistration.getStationId())) {
