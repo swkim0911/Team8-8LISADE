@@ -24,7 +24,8 @@ public class UserController {
         if (errors.hasErrors()) {
             return userService.validateSignUp(errors);
         }
-
+        userService.checkDuplication(signUpDto);
+        userService.join(signUpDto);
         return null;
     }
 }
