@@ -1,6 +1,6 @@
 package com.lisade.togeduck.util;
 
-import com.lisade.togeduck.entity.Category;
+import com.lisade.togeduck.entity.enums.Category;
 import org.springframework.core.convert.converter.Converter;
 
 public class CategoryRequestConverter implements Converter<String, Category> {

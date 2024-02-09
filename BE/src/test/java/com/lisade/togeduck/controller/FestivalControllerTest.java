@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.lisade.togeduck.dto.FestivalDto;
-import com.lisade.togeduck.entity.Category;
-import com.lisade.togeduck.entity.Status;
+import com.lisade.togeduck.entity.enums.Category;
+import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -66,7 +66,7 @@ class FestivalControllerTest {
 
         //when
         when(festivalService.getList(any(Pageable.class), any(Category.class),
-            any(Status.class), any(String.class))).thenReturn(mockSlice);
+            any(FestivalStatus.class), any(String.class))).thenReturn(mockSlice);
 
         ResultActions resultActions = mockMvc.perform(get("/festivals")
                 .param("category", "3")
@@ -81,7 +81,7 @@ class FestivalControllerTest {
         verify(festivalService).getList(
             eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
             eq(Category.CONCERT),
-            eq(Status.RECRUITMENT), eq("popular"));
+            eq(FestivalStatus.RECRUITMENT), eq("popular"));
 
         resultActions.andExpect(jsonPath("$.content[0].id").value(mockFestivalDto.getId()))
             .andExpect(jsonPath("$.content[0].title").value(mockFestivalDto.getTitle()))

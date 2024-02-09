@@ -1,5 +1,6 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.BusType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,10 +27,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bus {
-
-    private enum BusType {
-        SMALL, MEDIUM, BIG
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

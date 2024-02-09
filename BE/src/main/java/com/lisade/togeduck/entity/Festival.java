@@ -1,5 +1,7 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.Category;
+import com.lisade.togeduck.entity.enums.FestivalStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,5 +63,5 @@ public class Festival extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private Status status;
+    private FestivalStatus festivalStatus;
 }

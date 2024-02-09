@@ -1,8 +1,8 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.dto.FestivalDto;
-import com.lisade.togeduck.entity.Category;
-import com.lisade.togeduck.entity.Status;
+import com.lisade.togeduck.entity.enums.Category;
+import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +26,8 @@ public class FestivalController {
         @PageableDefault(size = 10, sort = "startedAt", direction = Direction.ASC) Pageable pageable,
         @RequestParam(name = "category", required = true) Category category,
         @RequestParam(name = "filter", required = false) String filterType,
-        @RequestParam(name = "stastus", required = false, defaultValue = "1") Status status) {
-        return festivalService.getList(pageable, category, status, filterType);
+        @RequestParam(name = "festivalStatus", required = false, defaultValue = "1") FestivalStatus festivalStatus) {
+        return festivalService.getList(pageable, category, festivalStatus, filterType);
     }
 
 }

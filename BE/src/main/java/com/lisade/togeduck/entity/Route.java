@@ -1,5 +1,6 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.RouteStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,10 +30,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Route extends BaseEntity {
-
-    private enum RouteStatus {
-        PROGRESS, COMPLETE
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
