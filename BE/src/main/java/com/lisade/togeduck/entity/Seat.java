@@ -1,5 +1,6 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.SeatStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,10 +24,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seat extends BaseEntity {
-
-    private enum SeatStatus {
-        AVAILABLE, RESERVATION
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

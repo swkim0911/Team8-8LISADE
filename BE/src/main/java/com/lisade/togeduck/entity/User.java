@@ -1,5 +1,6 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.AuthorityType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,10 +24,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
-
-    private enum AuthorityType {
-        ROLE_USER, ROLE_ADMIN
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
