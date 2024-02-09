@@ -65,7 +65,8 @@ class FestivalServiceImplTest {
         when(festivalMapper.toFestivalDtoSlice(any())).thenReturn(
             new SliceImpl<>(Collections.singletonList(mockFestivalDto)));
 
-        when(festivalRepository.findSliceByCategoryAndStatus(any(), any(), any())).thenReturn(
+        when(festivalRepository.findSliceByCategoryAndFestivalStatus(any(), any(),
+            any())).thenReturn(
             mockFestivalSlice);
 
         //when
@@ -73,7 +74,8 @@ class FestivalServiceImplTest {
             Category.SPORTS, FestivalStatus.RECRUITMENT, "testFilter");
 
         //then
-        verify(festivalRepository, times(1)).findSliceByCategoryAndStatus(any(PageRequest.class),
+        verify(festivalRepository, times(1)).findSliceByCategoryAndFestivalStatus(
+            any(PageRequest.class),
             eq(Category.SPORTS), eq(FestivalStatus.RECRUITMENT));
         verify(festivalMapper, times(1)).toFestivalDtoSlice(mockFestivalSlice);
         assertThat(result.getContent().size()).isEqualTo(1);

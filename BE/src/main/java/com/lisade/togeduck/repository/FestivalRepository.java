@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FestivalRepository extends JpaRepository<Festival, Long> {
 
-    Slice<Festival> findSliceByCategoryAndStatus(final Pageable pageable, Category category,
+    Slice<Festival> findSliceByCategoryAndFestivalStatus(final Pageable pageable, Category category,
         FestivalStatus festivalStatus);
 }
