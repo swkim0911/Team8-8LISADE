@@ -13,5 +13,5 @@ public class FestivalDto {
     private String title;
     private String location;
     private LocalDate startedAt;
-    private List<String> paths;
+    private List<String> path;
 }

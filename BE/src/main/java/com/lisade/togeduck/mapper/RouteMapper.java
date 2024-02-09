@@ -4,8 +4,8 @@ import com.lisade.togeduck.dto.response.RouteRegistrationDto;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
-import com.lisade.togeduck.entity.Route.RouteStatus;
 import com.lisade.togeduck.entity.Station;
+import com.lisade.togeduck.entity.enums.RouteStatus;
 
 public class RouteMapper {
 

@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.lisade.togeduck.dto.FestivalDto;
-import com.lisade.togeduck.entity.Category;
-import com.lisade.togeduck.entity.Status;
+import com.lisade.togeduck.entity.enums.Category;
+import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -59,14 +59,14 @@ class FestivalControllerTest {
         FestivalDto mockFestivalDto = FestivalDto.builder().id(1L)
             .title("test1")
             .location("테스트 로케이션")
-            .paths(List.of("filePath"))
+            .path(List.of("filePath"))
             .startedAt(LocalDate.of(2024, 2, 8)).build();
 
         Slice<FestivalDto> mockSlice = new PageImpl<>(Collections.singletonList(mockFestivalDto));
 
         //when
         when(festivalService.getList(any(Pageable.class), any(Category.class),
-            any(Status.class), any(String.class))).thenReturn(mockSlice);
+            any(FestivalStatus.class), any(String.class))).thenReturn(mockSlice);
 
         ResultActions resultActions = mockMvc.perform(get("/festivals")
                 .param("category", "3")
@@ -81,12 +81,12 @@ class FestivalControllerTest {
         verify(festivalService).getList(
             eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
             eq(Category.CONCERT),
-            eq(Status.RECRUITMENT), eq("popular"));
+            eq(FestivalStatus.RECRUITMENT), eq("popular"));
 
         resultActions.andExpect(jsonPath("$.content[0].id").value(mockFestivalDto.getId()))
             .andExpect(jsonPath("$.content[0].title").value(mockFestivalDto.getTitle()))
             .andExpect(jsonPath("$.content[0].location").value(mockFestivalDto.getLocation()))
-            .andExpect(jsonPath("$.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
+            .andExpect(jsonPath("$.content[0].path").value(mockFestivalDto.getPath().get(0)))
             .andExpect(jsonPath("$.content[0].startedAt").value("2024-02-08"));
     }
 

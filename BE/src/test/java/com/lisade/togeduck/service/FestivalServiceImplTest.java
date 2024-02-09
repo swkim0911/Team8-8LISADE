@@ -8,9 +8,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.lisade.togeduck.dto.FestivalDto;
-import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.entity.Festival;
-import com.lisade.togeduck.entity.Status;
+import com.lisade.togeduck.entity.enums.Category;
+import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.FestivalRepository;
 import java.time.LocalDateTime;
@@ -52,7 +52,7 @@ class FestivalServiceImplTest {
             .xPos(0.0)
             .yPos(0.0)
             .startedAt(LocalDateTime.now())
-            .status(Status.RECRUITMENT)
+            .festivalStatus(FestivalStatus.RECRUITMENT)
             .build();
         Slice<Festival> mockFestivalSlice = new SliceImpl<>(
             Collections.singletonList(mockFestival));
@@ -60,28 +60,30 @@ class FestivalServiceImplTest {
         FestivalDto mockFestivalDto = FestivalDto.builder().id(1L)
             .title("Fake Festival")
             .location("Fake location")
-            .paths(List.of("first")).build();
+            .path(List.of("first")).build();
 
         when(festivalMapper.toFestivalDtoSlice(any())).thenReturn(
             new SliceImpl<>(Collections.singletonList(mockFestivalDto)));
 
-        when(festivalRepository.findSliceByCategoryAndStatus(any(), any(), any())).thenReturn(
+        when(festivalRepository.findSliceByCategoryAndFestivalStatus(any(), any(),
+            any())).thenReturn(
             mockFestivalSlice);
 
         //when
         Slice<FestivalDto> result = festivalService.getList(PageRequest.of(0, 10),
-            Category.SPORTS, Status.RECRUITMENT, "testFilter");
+            Category.SPORTS, FestivalStatus.RECRUITMENT, "testFilter");
 
         //then
-        verify(festivalRepository, times(1)).findSliceByCategoryAndStatus(any(PageRequest.class),
-            eq(Category.SPORTS), eq(Status.RECRUITMENT));
+        verify(festivalRepository, times(1)).findSliceByCategoryAndFestivalStatus(
+            any(PageRequest.class),
+            eq(Category.SPORTS), eq(FestivalStatus.RECRUITMENT));
         verify(festivalMapper, times(1)).toFestivalDtoSlice(mockFestivalSlice);
         assertThat(result.getContent().size()).isEqualTo(1);
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
         assertThat(result.getContent().get(0).getTitle()).isEqualTo("Fake Festival");
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
         assertThat(result.getContent().get(0).getLocation()).isEqualTo("Fake location");
-        assertThat(result.getContent().get(0).getPaths()).contains("first");
+        assertThat(result.getContent().get(0).getPath()).contains("first");
     }
 
     @Test

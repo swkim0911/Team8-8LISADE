@@ -1,4 +1,4 @@
-package com.lisade.togeduck.entity;
+package com.lisade.togeduck.entity.enums;
 
 import java.util.Arrays;
 import lombok.Getter;
