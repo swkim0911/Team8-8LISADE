@@ -1,6 +1,5 @@
 package com.lisade.togeduck.repository;
 
-import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
