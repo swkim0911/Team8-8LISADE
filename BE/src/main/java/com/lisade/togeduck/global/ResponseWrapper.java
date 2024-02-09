@@ -1,20 +1,19 @@
-package com.lisade.togeduck.advice;
+package com.lisade.togeduck.global;
 
-import com.lisade.togeduck.dto.ResponseDto;
+import com.lisade.togeduck.global.dto.ResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@Slf4j
-@RestControllerAdvice
+
+@RestControllerAdvice(annotations = {RestController.class})
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
     @Override
@@ -28,9 +27,11 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
         ServerHttpRequest request, ServerHttpResponse response) {
         HttpServletResponse servletResponse = ((ServletServerHttpResponse) response).getServletResponse();
         HttpStatus httpStatus = HttpStatus.valueOf(servletResponse.getStatus());
-        String statusMessage = httpStatus.name();
-        ResponseDto<Object> responseDto = ResponseDto.builder().status(httpStatus.value())
-            .message(statusMessage).result(body).build();
-        return new ResponseEntity<>(responseDto, httpStatus); //todo 상태코드 안 넣어도 받은 응답 상태코드가 그대로 가는지
+
+        return ResponseDto.builder()
+            .status(httpStatus.value())
+            .message(httpStatus.name())
+            .result(body)
+            .build();
     }
 }

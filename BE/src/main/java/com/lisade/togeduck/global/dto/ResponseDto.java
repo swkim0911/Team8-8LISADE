@@ -1,4 +1,4 @@
-package com.lisade.togeduck.dto;
+package com.lisade.togeduck.global.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
