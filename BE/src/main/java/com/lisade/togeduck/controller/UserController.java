@@ -19,8 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public SignUpFailureDto signUp(@RequestBody @Valid SignUpDto signUpDto,
-        Errors errors) { //todo 반환 객체가 failuredto가 조금 이상한데
+    public SignUpFailureDto signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
             return userService.validateSignUp(errors);
