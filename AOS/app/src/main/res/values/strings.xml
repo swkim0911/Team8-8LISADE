@@ -5,4 +5,19 @@
     <string name="reserve_list">예약 현황</string>
     <string name="chat">채팅</string>
     <string name="my_page">마이페이지</string>
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="find_id">아이디 찾기</string>
+    <string name="find_password">비밀번호 찾기</string>
+    <string name="login">로그인</string>
+    <string name="register">회원가입</string>
+    <string name="request_input_id">아이디를 입력해주세요.</string>
+    <string name="double_check">중복 확인</string>
+    <string name="request_input_password">비밀번호를 입력해주세요.</string>
+    <string name="nickname">닉네임</string>
+    <string name="request_input_nickname">닉네임을 입력해주세요.</string>
+    <string name="email">이메일</string>
+    <string name="request_input_email">이메일을 입력해주세요.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
