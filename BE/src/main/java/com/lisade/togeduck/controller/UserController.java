@@ -1,7 +1,6 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.CheckEmailValidator;
 import com.lisade.togeduck.validator.CheckNicknameValidator;
@@ -34,12 +33,11 @@ public class UserController {
     }
 
     @PostMapping //todo FailureDto 반환하는게 이상하고 null return 하는 것도 이상함
-    public SignUpFailureDto signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
+    public Object signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
             return userService.validateSignUp(errors);
         }
-        Long userId = userService.join(signUpDto);
-        return null;
+        return userService.join(signUpDto);
     }
 }

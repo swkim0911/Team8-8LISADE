@@ -1,24 +1,32 @@
 package com.lisade.togeduck.global.handler;
 
-import com.lisade.togeduck.global.exception.GeneralException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@RestControllerAdvice(annotations = {RestController.class})
+@RestControllerAdvice()
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler() // custom exception 외 모든 예외 처리
-    public ResponseEntity<Object> exception(GeneralException generalException,
+    @Override // 잘못된 메서드 요청
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+        HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status,
+        WebRequest request) {
+        ApiResponse<Object> body = ApiResponse.of(status.value(), status.toString(), null);
+        return new ResponseEntity<>(body, status);
+    }
+
+    @ExceptionHandler(Exception.class) // controller 에서 발생한 예외중에 custom exception 외 모든 예외 처리
+    public ResponseEntity<Object> exception(Exception exception,
         WebRequest webRequest) {
-        return handleExceptionInternal(
-            generalException,
+        return handleInternalException(
+            exception,
             HttpStatus.INTERNAL_SERVER_ERROR,
             HttpHeaders.EMPTY,
             webRequest);
@@ -38,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             webRequest);
     }
 
-    private ResponseEntity<Object> handleExceptionInternal(Exception exception,
+    private ResponseEntity<Object> handleInternalException(Exception exception,
         HttpStatus httpStatus,
         HttpHeaders headers, WebRequest webRequest) {
         ApiResponse<Object> body = ApiResponse.of(httpStatus.value(), httpStatus.name(), null);
