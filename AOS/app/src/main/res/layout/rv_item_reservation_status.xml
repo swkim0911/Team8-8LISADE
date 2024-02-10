@@ -73,7 +73,7 @@
             android:id="@+id/itemCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{reserveStatus.cost+`/인`}"
+            android:text="@{reserveStatus.formattedCost+`/인`}"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"

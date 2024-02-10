@@ -7,6 +7,7 @@ data class ReservationStatusModel(
     val departureTime: String,
     val place: String,
     val cost: Int,
+    val formattedCost: String,
     val recruitStatus: Boolean,
     val recruitPhrase: String,
 )

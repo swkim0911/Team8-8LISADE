@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.softeer.togeduck.databinding.FragmentReservationStatusBinding
 import com.softeer.togeduck.model.ReservationStatusModel
+import java.text.DecimalFormat
 
 class ReservationStatusFragment : Fragment() {
     private var _binding: FragmentReservationStatusBinding? = null
@@ -48,6 +49,9 @@ class ReservationStatusFragment : Fragment() {
     //////////////// 백엔드 API 연동시 수정 필요 /////////////////
     private fun getTestData(): MutableList<ReservationStatusModel> {
         val testList = mutableListOf<ReservationStatusModel>()
+
+        val dec = DecimalFormat("#,###")
+
         val testData = ReservationStatusModel(
             "[서울] Exo 콘서트",
             "https://i.namu.wiki/i/sqi3rhs8DtElCCknpMgPgJoTwalucUg506J0v4c6XnTD7Lq_0v3B4vnkw2-LO8iEkksXRdTyLoPb4jnt58IZkzfLOpuJhYTUVVh9x7jlBRezOUWqB-r5m6EOSyecZ3v159XfGjUb94NTckJXr0gJ4A.webp",
@@ -55,6 +59,7 @@ class ReservationStatusFragment : Fragment() {
             "14:00",
             "잠실종합운동장",
             30000,
+            dec.format(30000),
             true,
             "모집중(4/6)"
         )
