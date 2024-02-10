@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignUpDto {
 
-    @NotBlank(message = "아이디를 입력해주세요.")
+    @NotBlank(message = "아이디를 입력해주세요.") // null, "", " " 허용 x
     private String userId;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
