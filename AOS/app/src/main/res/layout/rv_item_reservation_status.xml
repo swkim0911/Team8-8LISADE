@@ -38,7 +38,7 @@
             app:layout_constraintGuide_percent="0.37" />
 
         <TextView
-            android:id="@+id/item_title"
+            android:id="@+id/itemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{reserveStatus.festivalName}"
@@ -56,7 +56,7 @@
             android:textColor="@color/gray300"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
-            app:layout_constraintTop_toBottomOf="@id/item_title" />
+            app:layout_constraintTop_toBottomOf="@id/itemTitle" />
 
         <TextView
             android:id="@+id/itemPlace"
@@ -81,7 +81,7 @@
 
 
         <TextView
-            android:id="@+id/item_recruitment_status"
+            android:id="@+id/itemRecruitmentStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{reserveStatus.recruitPhrase}"
