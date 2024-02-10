@@ -9,6 +9,7 @@ import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.BusNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.mapper.RouteMapper;
+import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.BusRepository;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RouteService {
 
     private final FestivalService festivalService;
+    private final SeatService seatService;
     private final LocationService locationService;
     private final RouteRepository routeRepository;
     private final BusRepository busRepository;
@@ -50,6 +52,8 @@ public class RouteService {
 
         Route route = routeRepository.save(RouteMapper.toRoute(festival, bus, station,
             routeRegistration.getDistance(), price));
+
+        seatService.saveAll(SeatMapper.toSeats(route, bus.getNumberOfSeats()));
 
         return RouteMapper.toRouteRegistrationDto(route);
     }
