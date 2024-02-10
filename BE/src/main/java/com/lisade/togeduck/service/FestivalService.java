@@ -1,5 +1,6 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.dto.FestivalDetailDto;
 import com.lisade.togeduck.dto.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.Category;
@@ -13,4 +14,6 @@ public interface FestivalService {
         String filterType);
 
     Festival get(Long id);
+
+    FestivalDetailDto getDetail(Long id);
 }

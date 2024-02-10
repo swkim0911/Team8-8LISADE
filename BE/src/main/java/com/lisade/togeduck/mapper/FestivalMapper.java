@@ -1,5 +1,6 @@
 package com.lisade.togeduck.mapper;
 
+import com.lisade.togeduck.dto.FestivalDetailDto;
 import com.lisade.togeduck.dto.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.FestivalImage;
@@ -15,8 +16,12 @@ public interface FestivalMapper {
 
     FestivalMapper INSTANCE = Mappers.getMapper(FestivalMapper.class);
 
-    @Mapping(target = "path", source = "festivalImages")
+    @Mapping(target = "paths", source = "festivalImages")
     FestivalDto toFestivalDto(Festival festival);
+
+    @Mapping(target = "paths", source = "festivalImages")
+    @Mapping(target = "category", source = "category.type")
+    FestivalDetailDto toFestivalDetailDto(Festival festival);
 
     default List<String> festivalImagesToPaths(List<FestivalImage> festivalImages) {
         return festivalImages.stream()
