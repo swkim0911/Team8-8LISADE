@@ -31,7 +31,9 @@ public class UserService {
         checkEmailDuplication(signUpDto);
     }
 
+    @Transactional
     public Long join(SignUpDto signUpDto) {
+        checkDuplication(signUpDto);
         User user = UserMapper.toUser(signUpDto);
         User saveUser = userRepository.save(user);
         return saveUser.getId();

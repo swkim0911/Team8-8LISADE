@@ -24,7 +24,6 @@ public class UserController {
         if (errors.hasErrors()) {
             return userService.validateSignUp(errors);
         }
-        userService.checkDuplication(signUpDto);
         Long userId = userService.join(signUpDto);
         return null;
     }
