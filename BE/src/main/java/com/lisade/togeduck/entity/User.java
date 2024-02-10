@@ -10,9 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +20,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
@@ -48,4 +46,16 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<UserRoute> userRoutes;
+
+    @Builder
+    public User(Long id, String userId, String password, String nickname, String email,
+        AuthorityType authority) {
+        this.id = id;
+        this.userId = userId;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.authority = authority;
+        this.userRoutes = new ArrayList<>();
+    }
 }
