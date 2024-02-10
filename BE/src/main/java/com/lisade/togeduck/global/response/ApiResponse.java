@@ -1,4 +1,4 @@
-package com.lisade.togeduck.global.dto;
+package com.lisade.togeduck.global.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto<T> {
+public class ApiResponse<T> {
 
     private int status;
 
