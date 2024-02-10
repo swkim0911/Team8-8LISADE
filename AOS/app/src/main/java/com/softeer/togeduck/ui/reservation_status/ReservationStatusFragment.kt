@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentReservationStatusBinding
 import com.softeer.togeduck.model.ReservationStatusModel
+import com.softeer.togeduck.utils.ItemClick
 import java.text.DecimalFormat
 
 class ReservationStatusFragment : Fragment() {
@@ -44,6 +47,12 @@ class ReservationStatusFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         rvList.addItemDecoration(dividerItemDecoration)
         rvList.adapter = adapter
+
+        adapter.itemClick = object : ItemClick {
+            override fun onClick(view: View, position: Int) {
+                findNavController().navigate(R.id.action_menuReserveList_to_reservationStatusDetailActivity)
+            }
+        }
     }
 
     //////////////// 백엔드 API 연동시 수정 필요 /////////////////
