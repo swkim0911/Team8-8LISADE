@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="root_margin">
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
-    </style>
-
     <!--폰트-->
     <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/font_custom</item>
@@ -31,7 +26,6 @@
     <style name="common_button_style">
         <item name="android:radius">5dp</item>
         <item name="android:height">50dp</item>
-
     </style>
 
 </resources>
