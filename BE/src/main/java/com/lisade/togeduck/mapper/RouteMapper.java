@@ -15,11 +15,11 @@ public class RouteMapper {
         Festival festival,
         Bus bus,
         Station station,
-        Integer price,
-        Integer distance
+        Integer distance,
+        Integer price
     ) {
         // TODO expectedTime, startAt 설정하기
-        
+
         return Route.builder()
             .bus(bus)
             .festival(festival)
