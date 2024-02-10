@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -47,5 +48,5 @@ public class User extends BaseEntity {
     private AuthorityType authority;
 
     @OneToMany(mappedBy = "user")
-    private List<UserRoute> userRoutes;
+    private List<UserRoute> userRoutes = new ArrayList<>();
 }
