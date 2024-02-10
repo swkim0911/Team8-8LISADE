@@ -1,12 +1,17 @@
 package com.lisade.togeduck.controller;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.CheckEmailValidator;
 import com.lisade.togeduck.validator.CheckNicknameValidator;
 import com.lisade.togeduck.validator.CheckUserIdValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -33,11 +38,15 @@ public class UserController {
     }
 
     @PostMapping
-    public Object signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
+    public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
-            return userService.validateSignUp(errors);
+            SignUpFailureDto signUpFailureDto = userService.validateSignUp(errors);
+            return new ResponseEntity<>(
+                ApiResponse.of(BAD_REQUEST.value(), BAD_REQUEST.name(),
+                    signUpFailureDto), BAD_REQUEST);
         }
-        return userService.join(signUpDto);
+        Long id = userService.join(signUpDto);
+        return ResponseEntity.ok(ApiResponse.onSuccess(id));
     }
 }
