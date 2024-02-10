@@ -40,13 +40,13 @@ public class RouteService {
 
         List<PriceTable> priceTables = bus.getPriceTables();
 
-        Integer price = 0;
+        int price = 0;
+        int maxDistance = 0;
 
-        for (int index = 0; index < priceTables.size(); index++) {
-            if (priceTables.get(index).getDistance() > routeRegistration.getDistance()) {
-                price = priceTables.get(index - 1).getDistance();
-
-                break;
+        for (PriceTable priceTable : priceTables) {
+            if (priceTable.getDistance() < routeRegistration.getDistance()
+                && priceTable.getDistance() > maxDistance) {
+                price = priceTable.getPrice() / bus.getNumberOfSeats() / 100 * 100;
             }
         }
 
