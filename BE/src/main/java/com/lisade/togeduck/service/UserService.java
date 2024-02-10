@@ -24,42 +24,13 @@ public class UserService {
         return UserMapper.toSignUpFailureDto(validationResult);
     }
 
-    @Transactional(readOnly = true)
-    public void checkDuplication(SignUpDto signUpDto) {
-        checkUserIdDuplication(signUpDto);
-        checkNicknameDuplication(signUpDto);
-        checkEmailDuplication(signUpDto);
-    }
-
     @Transactional
     public Long join(SignUpDto signUpDto) {
-        checkDuplication(signUpDto);
         User user = UserMapper.toUser(signUpDto);
         User saveUser = userRepository.save(user);
         return saveUser.getId();
     }
-
-    private void checkUserIdDuplication(SignUpDto signUpDto) {
-        boolean userIdDuplication = userRepository.existsByUserId(signUpDto.getUserId());
-        if (userIdDuplication) {
-            throw new IllegalStateException("이미 존재하는 아이디입니다.");
-        }
-    }
-
-    private void checkNicknameDuplication(SignUpDto signUpDto) {
-        boolean nicknameDuplication = userRepository.existsByNickname(signUpDto.getNickname());
-        if (nicknameDuplication) {
-            throw new IllegalStateException("이미 존재하는 닉네임입니다.");
-        }
-    }
-
-    private void checkEmailDuplication(SignUpDto signUpDto) {
-        boolean emailDuplication = userRepository.existsByEmail(signUpDto.getEmail());
-        if (emailDuplication) {
-            throw new IllegalStateException("이미 존재하는 이메일입니다.");
-        }
-    }
-
+    
     private Map<String, String> getSignUpErrorField(Errors errors) {
         Map<String, String> validationResult = new HashMap<>();
 
