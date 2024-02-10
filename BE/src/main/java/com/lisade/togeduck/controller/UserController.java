@@ -19,13 +19,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public SignUpFailureDto signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
+    public SignUpFailureDto signUp(@RequestBody @Valid SignUpDto signUpDto,
+        Errors errors) { //todo 반환 객체가 failuredto가 조금 이상한데
 
         if (errors.hasErrors()) {
             return userService.validateSignUp(errors);
         }
         userService.checkDuplication(signUpDto);
-        userService.join(signUpDto);
+        Long userId = userService.join(signUpDto);
         return null;
     }
 }

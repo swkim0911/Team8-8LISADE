@@ -39,7 +39,7 @@ class UserRepositoryTest {
 
     @Test
     @DisplayName("DB에 저장된 사용자 정보가 제대로 조회되는지 확인")
-    void existId() {
+    void existUser() {
         //given
         SignUpDto signUpDto = SignUpDto.builder()
             .userId("testId")
