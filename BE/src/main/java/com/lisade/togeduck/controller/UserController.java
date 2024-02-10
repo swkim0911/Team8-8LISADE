@@ -33,7 +33,7 @@ public class UserController {
         binder.addValidators(checkEmailValidator);
     }
 
-    @PostMapping
+    @PostMapping //todo FailureDto 반환하는게 이상하고 null return 하는 것도 이상함
     public SignUpFailureDto signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
