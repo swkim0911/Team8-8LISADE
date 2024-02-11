@@ -7,6 +7,7 @@ import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.exception.NotFoundException;
 import com.lisade.togeduck.mapper.FestivalMapper;
+import com.lisade.togeduck.repository.FestivalQueryRepository;
 import com.lisade.togeduck.repository.FestivalRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class FestivalServiceImpl implements FestivalService {
 
+    private final FestivalQueryRepository festivalQueryRepository;
     private final FestivalRepository festivalRepository;
     private final FestivalMapper festivalMapper;
 
@@ -26,8 +28,7 @@ public class FestivalServiceImpl implements FestivalService {
         FestivalStatus festivalStatus,
         String filterType) {
         Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
-            pageable,
-            category, festivalStatus);
+            pageable, category, festivalStatus);
         return festivalMapper.toFestivalDtoSlice(festivals);
     }
 
