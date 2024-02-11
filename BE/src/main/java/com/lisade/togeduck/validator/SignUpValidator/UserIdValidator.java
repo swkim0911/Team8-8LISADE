@@ -1,4 +1,4 @@
-package com.lisade.togeduck.validator;
+package com.lisade.togeduck.validator.SignUpValidator;
 
 import com.lisade.togeduck.annotation.ValidateUserId;
 import com.lisade.togeduck.repository.UserRepository;

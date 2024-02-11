@@ -1,6 +1,6 @@
 package com.lisade.togeduck.annotation;
 
-import com.lisade.togeduck.validator.UserIdValidator;
+import com.lisade.togeduck.validator.SignUpValidator.UserIdValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.Documented;

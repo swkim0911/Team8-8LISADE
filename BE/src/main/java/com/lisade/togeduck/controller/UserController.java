@@ -8,6 +8,7 @@ import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.exception.InvalidSignUpInfoException;
 import com.lisade.togeduck.global.response.ApiResponse;
+import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
 import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @Validated
-
 public class UserController {
 
     private final UserService userService;
@@ -48,8 +48,8 @@ public class UserController {
     @GetMapping("/{user_id}")
     public ResponseEntity<Object> checkUserId(
         @PathVariable(name = "user_id") @ValidateUserId String userId) {
-
-        return null; //todo 정상 처리 해야함
+        return ResponseEntity.ok(
+            ApiResponse.onSuccess(UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.")));
     }
 
     @PostMapping

@@ -48,10 +48,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleViolationException(ConstraintViolationException ex,
         WebRequest webRequest) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-        for (ConstraintViolation<?> violation : violations) { //todo 확장성으로 일단 만들어 둠. stream 으로 변경 예정
+        for (ConstraintViolation<?> violation : violations) {
             ConstraintDescriptor<?> constraintDescriptor = violation.getConstraintDescriptor();
             Annotation annotation = constraintDescriptor.getAnnotation();
-            if (annotation instanceof ValidateUserId) {
+            if (annotation instanceof ValidateUserId) { // 검증 애노테이션 구분. (확장성으로 일단 만들어 둠)
                 ValidateUserIdDto validateUserIdDto = UserMapper.toValidateUserIdDto(
                     violation.getMessage());
 
