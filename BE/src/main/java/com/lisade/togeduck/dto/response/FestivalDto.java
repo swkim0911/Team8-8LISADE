@@ -1,4 +1,4 @@
-package com.lisade.togeduck.dto;
+package com.lisade.togeduck.dto.response;
 
 import java.time.LocalDate;
 import java.util.List;
