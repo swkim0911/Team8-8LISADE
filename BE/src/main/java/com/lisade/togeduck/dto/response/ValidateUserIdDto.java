@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckUserIdDto {
+public class ValidateUserIdDto {
 
     private String userId;
 }

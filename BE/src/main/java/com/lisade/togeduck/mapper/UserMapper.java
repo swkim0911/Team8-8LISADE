@@ -2,6 +2,7 @@ package com.lisade.togeduck.mapper;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.dto.response.ValidateUserIdDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.AuthorityType;
 import java.util.Map;
@@ -24,6 +25,12 @@ public class UserMapper {
             .nickname(signUpDto.getNickname())
             .email(signUpDto.getEmail())
             .authority(AuthorityType.ROLE_USER)
+            .build();
+    }
+
+    public static ValidateUserIdDto toValidateUserIdDto(String userIdMessage) {
+        return ValidateUserIdDto.builder()
+            .userId(userIdMessage)
             .build();
     }
 }

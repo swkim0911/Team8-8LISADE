@@ -3,18 +3,20 @@ package com.lisade.togeduck.controller;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
+import com.lisade.togeduck.annotation.ValidateUserId;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.exception.InvalidSignUpInfoException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
-import com.lisade.togeduck.validator.CheckEmailValidator;
-import com.lisade.togeduck.validator.CheckNicknameValidator;
-import com.lisade.togeduck.validator.CheckUserIdValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckUserIdValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Validated
+
 public class UserController {
 
     private final UserService userService;
@@ -41,9 +45,11 @@ public class UserController {
         binder.addValidators(checkEmailValidator);
     }
 
-    @GetMapping("{user_id}")
-    public ResponseEntity<Object> checkUserId(@PathVariable(name = "user_id") String userId) {
+    @GetMapping("/{user_id}")
+    public ResponseEntity<Object> checkUserId(
+        @PathVariable(name = "user_id") @ValidateUserId String userId) {
 
+        return null; //todo 정상 처리 해야함
     }
 
     @PostMapping

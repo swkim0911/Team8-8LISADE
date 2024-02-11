@@ -31,6 +31,7 @@ public class UserService {
         return saveUser.getId();
     }
 
+
     private Map<String, String> getSignUpErrorField(Errors errors) {
         Map<String, String> validationResult = new HashMap<>();
 
@@ -38,7 +39,7 @@ public class UserService {
             String field = fieldError.getField();
             validationResult.put(field, fieldError.getDefaultMessage());
         }
-        
+
         return validationResult;
     }
 }
