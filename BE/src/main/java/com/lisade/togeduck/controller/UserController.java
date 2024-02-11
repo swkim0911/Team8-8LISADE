@@ -1,6 +1,7 @@
 package com.lisade.togeduck.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
@@ -46,6 +47,6 @@ public class UserController {
             throw new InvalidSignUpInfoException(BAD_REQUEST, signUpFailureDto);
         }
         Long id = userService.join(signUpDto);
-        return ResponseEntity.ok(ApiResponse.onSuccess(id));
+        return new ResponseEntity<>(ApiResponse.of(CREATED.value(), CREATED.name(), id), CREATED);
     }
 }
