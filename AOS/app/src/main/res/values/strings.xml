@@ -22,6 +22,7 @@
     <string name="participate_in_route_chatting">노선 채팅방 참여</string>
     <string name="check_ticket">티켓 확인</string>
     <string name="cancle_reservation">예매 취소</string>
+    <string name="no_driver">아직 기사님이 배차되지 않았습니다.</string>
 
 
 </resources>
