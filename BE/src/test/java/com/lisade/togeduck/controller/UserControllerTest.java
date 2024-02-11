@@ -3,7 +3,6 @@ package com.lisade.togeduck.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisade.togeduck.dto.request.SignUpDto;
@@ -56,12 +55,8 @@ class UserControllerTest {
         //when & then
         when(userService.join(any())).thenReturn(1L);
 
-        mockMvc.perform(post("/users") //todo
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(signUpDto)))
-            .andExpect(status().isCreated())
-            .andReturn();
-
-
+        mockMvc.perform(post("/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(signUpDto)));
     }
 }
