@@ -19,6 +19,5 @@ public class CheckNicknameValidator extends AbstractValidator<Object> {
                 errors.rejectValue("nickname", "nickname duplication", "이미 존재하는 닉네임입니다.");
             }
         }
-
     }
 }

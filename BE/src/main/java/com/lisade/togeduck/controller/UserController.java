@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.response.LoginFailureDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.exception.InvalidSignUpInfoException;
 import com.lisade.togeduck.global.response.ApiResponse;
@@ -35,7 +36,7 @@ public class UserController {
     private final CheckNicknameValidator checkNicknameValidator;
     private final CheckEmailValidator checkEmailValidator;
 
-    @InitBinder // UserController 요청에 대한 커스텀 validator 추가
+    @InitBinder // UserController 요청에 대한 커U스텀 validator 추가
     public void validatorBinder(WebDataBinder binder) {
         binder.addValidators(checkUserIdValidator, checkNicknameValidator, checkEmailValidator);
     }
@@ -58,7 +59,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
-        System.out.println("hello");
+        if (errors.hasErrors()) {
+            LoginFailureDto loginFailureDto = userService.validateLogin(errors);
+        }
         return null;
     }
 }

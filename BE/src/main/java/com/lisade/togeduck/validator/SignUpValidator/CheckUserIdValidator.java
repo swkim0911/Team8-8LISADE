@@ -19,6 +19,5 @@ public class CheckUserIdValidator extends AbstractValidator<Object> {
                 errors.rejectValue("userId", "ID duplication", "이미 존재하는 아이디입니다.");
             }
         }
-
     }
 }
