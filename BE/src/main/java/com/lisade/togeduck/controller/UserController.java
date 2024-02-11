@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.exception.InvalidSignUpInfoException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.CheckEmailValidator;
@@ -42,9 +43,7 @@ public class UserController {
 
         if (errors.hasErrors()) {
             SignUpFailureDto signUpFailureDto = userService.validateSignUp(errors);
-            return new ResponseEntity<>(
-                ApiResponse.of(BAD_REQUEST.value(), BAD_REQUEST.name(),
-                    signUpFailureDto), BAD_REQUEST);
+            throw new InvalidSignUpInfoException(BAD_REQUEST, signUpFailureDto);
         }
         Long id = userService.join(signUpDto);
         return ResponseEntity.ok(ApiResponse.onSuccess(id));
