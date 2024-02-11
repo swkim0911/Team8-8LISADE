@@ -21,7 +21,7 @@ public class UserMapper {
 
     public static LoginFailureDto toLoginFailureDto(Map<String, String> validationResult) {
         return LoginFailureDto.builder()
-            .userId(validationResult.get("usrId"))
+            .userId(validationResult.get("userId"))
             .password(validationResult.get("password"))
             .build();
     }

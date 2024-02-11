@@ -60,10 +60,13 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
+
         if (errors.hasErrors()) {
             LoginFailureDto loginFailureDto = userService.validateLogin(errors);
             throw new InvalidLoginInfoException(BAD_REQUEST, loginFailureDto);
         }
-        return null;
+        //로그인 정보가 맞지 않은 경우
+        Long id = userService.login(loginDto);
+        return ResponseEntity.ok(ApiResponse.onSuccess(id)); //todo header 만들어야함
     }
 }
