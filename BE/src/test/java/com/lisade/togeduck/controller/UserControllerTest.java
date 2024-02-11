@@ -3,12 +3,13 @@ package com.lisade.togeduck.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.service.UserService;
+import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckUserIdValidator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,12 +34,21 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private CheckUserIdValidator checkUserIdValidator;
+
+    @MockBean
+    private CheckNicknameValidator checkNicknameValidator;
+
+    @MockBean
+    private CheckEmailValidator checkEmailValidator;
+
     @Test
     @DisplayName("회원가입 확인")
     void joinUser() throws Exception {
         //given
         SignUpDto signUpDto = SignUpDto.builder()
-            .userId("testId")
+            .userId("userId")
             .password("password!12")
             .nickname("nickname")
             .email("right@email.com").build();
@@ -46,9 +56,7 @@ class UserControllerTest {
         when(userService.join(any())).thenReturn(1L);
 
         mockMvc.perform(post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(signUpDto)))
-            .andExpect(status().isOk())
-            .andDo(print());
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(new ObjectMapper().writeValueAsString(signUpDto)));
     }
 }

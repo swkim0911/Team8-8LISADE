@@ -1,20 +1,27 @@
 package com.lisade.togeduck.controller;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
 
+import com.lisade.togeduck.annotation.ValidateUserId;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.exception.InvalidSignUpInfoException;
 import com.lisade.togeduck.global.response.ApiResponse;
+import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.service.UserService;
-import com.lisade.togeduck.validator.CheckEmailValidator;
-import com.lisade.togeduck.validator.CheckNicknameValidator;
-import com.lisade.togeduck.validator.CheckUserIdValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
+import com.lisade.togeduck.validator.SignUpValidator.CheckUserIdValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Validated
 public class UserController {
 
     private final UserService userService;
@@ -37,16 +45,21 @@ public class UserController {
         binder.addValidators(checkEmailValidator);
     }
 
+    @GetMapping("/{user_id}")
+    public ResponseEntity<Object> checkUserId(
+        @PathVariable(name = "user_id") @ValidateUserId String userId) {
+        return ResponseEntity.ok(
+            ApiResponse.onSuccess(UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.")));
+    }
+
     @PostMapping
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
             SignUpFailureDto signUpFailureDto = userService.validateSignUp(errors);
-            return new ResponseEntity<>(
-                ApiResponse.of(BAD_REQUEST.value(), BAD_REQUEST.name(),
-                    signUpFailureDto), BAD_REQUEST);
+            throw new InvalidSignUpInfoException(BAD_REQUEST, signUpFailureDto);
         }
         Long id = userService.join(signUpDto);
-        return ResponseEntity.ok(ApiResponse.onSuccess(id));
+        return new ResponseEntity<>(ApiResponse.of(CREATED.value(), CREATED.name(), id), CREATED);
     }
 }

@@ -30,7 +30,8 @@ public class UserService {
         User saveUser = userRepository.save(user);
         return saveUser.getId();
     }
-    
+
+
     private Map<String, String> getSignUpErrorField(Errors errors) {
         Map<String, String> validationResult = new HashMap<>();
 
