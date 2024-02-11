@@ -48,10 +48,9 @@ public class UserService {
 
     @Transactional
     public User login(LoginDto loginDto) {
-        User findUser = userRepository.findByUserIdAndPassword(loginDto.getUserId(),
+        return userRepository.findByUserIdAndPassword(loginDto.getUserId(),
                 loginDto.getPassword())
             .orElseThrow(() -> new InvalidLoginException(BAD_REQUEST, "아이디 또는 비밀번호가 잘못되었습니다."));
-        return findUser; //todo 조회랑 저장 동시에 하지 말라고 했는데
     }
 
     private Map<String, String> getErrorField(Errors errors) {

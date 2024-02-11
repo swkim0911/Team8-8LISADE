@@ -1,5 +1,6 @@
 package com.lisade.togeduck.controller;
 
+import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -69,10 +70,10 @@ public class UserController {
             LoginEmptyFieldDto loginEmptyFieldDto = userService.validateLogin(errors);
             throw new LoginEmptyFieldException(BAD_REQUEST, loginEmptyFieldDto);
         }
-        //로그인 정보가 맞지 않은 경우
-        User user = userService.login(loginDto);
+        
+        User findUser = userService.login(loginDto);
         HttpSession session = request.getSession();
-        session.setAttribute("hello", user);
-        return ResponseEntity.ok(ApiResponse.onSuccess(user.getUserId()));
+        session.setAttribute(LOGIN_USER, findUser);
+        return ResponseEntity.ok(ApiResponse.onSuccess(findUser.getUserId()));
     }
 }
