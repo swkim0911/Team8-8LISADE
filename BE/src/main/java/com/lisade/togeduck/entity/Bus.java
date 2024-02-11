@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AccessLevel;
@@ -40,8 +39,8 @@ public class Bus {
     @Column(name = "number_of_seats", nullable = false)
     private Integer numberOfSeats;
 
-    @OneToOne(mappedBy = "bus", fetch = FetchType.LAZY)
-    private Route route;
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    private List<Route> route;
 
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
     private List<PriceTable> priceTables;

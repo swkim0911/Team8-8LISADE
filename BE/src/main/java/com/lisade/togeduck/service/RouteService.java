@@ -9,6 +9,7 @@ import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.BusNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.mapper.RouteMapper;
+import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.BusRepository;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RouteService {
 
     private final FestivalService festivalService;
+    private final SeatService seatService;
     private final LocationService locationService;
     private final RouteRepository routeRepository;
     private final BusRepository busRepository;
@@ -38,18 +40,20 @@ public class RouteService {
 
         List<PriceTable> priceTables = bus.getPriceTables();
 
-        Integer price = 0;
+        int price = 0;
+        int maxDistance = 0;
 
-        for (int index = 0; index < priceTables.size(); index++) {
-            if (priceTables.get(index).getDistance() > routeRegistration.getDistance()) {
-                price = priceTables.get(index - 1).getDistance();
-
-                break;
+        for (PriceTable priceTable : priceTables) {
+            if (priceTable.getDistance() < routeRegistration.getDistance()
+                && priceTable.getDistance() > maxDistance) {
+                price = priceTable.getPrice() / bus.getNumberOfSeats() / 100 * 100;
             }
         }
 
         Route route = routeRepository.save(RouteMapper.toRoute(festival, bus, station,
             routeRegistration.getDistance(), price));
+
+        seatService.saveAll(SeatMapper.toSeats(route, bus.getNumberOfSeats()));
 
         return RouteMapper.toRouteRegistrationDto(route);
     }

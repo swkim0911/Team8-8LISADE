@@ -6,6 +6,8 @@ import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.entity.enums.RouteStatus;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class RouteMapper {
 
@@ -13,9 +15,11 @@ public class RouteMapper {
         Festival festival,
         Bus bus,
         Station station,
-        Integer price,
-        Integer distance
+        Integer distance,
+        Integer price
     ) {
+        // TODO expectedTime, startAt 설정하기
+
         return Route.builder()
             .bus(bus)
             .festival(festival)
@@ -23,6 +27,8 @@ public class RouteMapper {
             .distance(distance)
             .station(station)
             .status(RouteStatus.PROGRESS)
+            .expectedTime(LocalTime.now())
+            .startedAt(LocalDateTime.now())
             .build();
     }
 

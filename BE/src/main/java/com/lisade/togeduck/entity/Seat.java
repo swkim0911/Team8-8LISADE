@@ -3,6 +3,8 @@ package com.lisade.togeduck.entity;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +34,7 @@ public class Seat extends BaseEntity {
     @Column(name = "no", nullable = false)
     private Integer no;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "status", nullable = false)
     private SeatStatus status;
 

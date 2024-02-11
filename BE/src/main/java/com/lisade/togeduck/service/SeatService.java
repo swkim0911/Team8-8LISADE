@@ -19,4 +19,8 @@ public class SeatService {
 
         return SeatMapper.toSeatListDto(seats);
     }
+
+    public void saveAll(List<Seat> seats) {
+        seatRepository.saveAll(seats);
+    }
 }

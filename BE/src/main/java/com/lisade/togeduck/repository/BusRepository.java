@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusRepository extends JpaRepository<Bus, Long> {
 
-    @Query("select b from Bus b join fetch b.priceTables where b.id =: busId")
+    @Query("select b from Bus b join fetch b.priceTables where b.id =:busId")
     Optional<Bus> findBusByIdWithPriceTable(Long busId);
 }
