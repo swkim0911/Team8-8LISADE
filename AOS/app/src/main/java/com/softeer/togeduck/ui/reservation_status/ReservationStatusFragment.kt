@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentReservationStatusBinding
-import com.softeer.togeduck.model.ReservationStatusModel
+import com.softeer.togeduck.data.model.ReservationStatusModel
 import com.softeer.togeduck.utils.ItemClick
 import java.text.DecimalFormat
 

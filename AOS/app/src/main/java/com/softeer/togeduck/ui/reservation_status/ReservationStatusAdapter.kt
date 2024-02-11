@@ -3,9 +3,8 @@ package com.softeer.togeduck.ui.reservation_status
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.RvItemReservationStatusBinding
-import com.softeer.togeduck.model.ReservationStatusModel
+import com.softeer.togeduck.data.model.ReservationStatusModel
 import com.softeer.togeduck.utils.ItemClick
 
 

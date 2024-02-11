@@ -1,4 +1,4 @@
-package com.softeer.togeduck.model
+package com.softeer.togeduck.data.model
 
 data class ReservationStatusModel(
     val festivalName: String,
