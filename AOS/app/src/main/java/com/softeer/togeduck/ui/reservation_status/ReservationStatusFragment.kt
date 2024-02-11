@@ -63,7 +63,7 @@ class ReservationStatusFragment : Fragment() {
 
         val testData = ReservationStatusModel(
             "[서울] Exo 콘서트",
-            "https://i.namu.wiki/i/sqi3rhs8DtElCCknpMgPgJoTwalucUg506J0v4c6XnTD7Lq_0v3B4vnkw2-LO8iEkksXRdTyLoPb4jnt58IZkzfLOpuJhYTUVVh9x7jlBRezOUWqB-r5m6EOSyecZ3v159XfGjUb94NTckJXr0gJ4A.webp",
+            "https://t1.daumcdn.net/cfile/tistory/2436014554FC557F2E",
             "2024.02.05",
             "14:00",
             "잠실종합운동장",
