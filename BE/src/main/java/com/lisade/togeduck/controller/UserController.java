@@ -15,9 +15,13 @@ import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
 import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
 import com.lisade.togeduck.validator.SignUpValidator.CheckUserIdValidator;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +45,9 @@ public class UserController {
 
     @InitBinder // UserController 요청에 대한 커스텀 validator 추가
     public void validatorBinder(WebDataBinder binder) {
-        binder.addValidators(checkUserIdValidator, checkNicknameValidator, checkEmailValidator);
+        if (binder.getTarget() instanceof SignUpDto) {
+            binder.addValidators(checkUserIdValidator, checkNicknameValidator, checkEmailValidator);
+        }
     }
 
     @GetMapping("/{user_id}")
@@ -64,6 +70,17 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
+        if (errors.hasErrors()) {
+            Map<String, String> validationResult = new HashMap<>();
 
+            for (FieldError fieldError : errors.getFieldErrors()) {
+                String field = fieldError.getField();
+                validationResult.put(field, fieldError.getDefaultMessage());
+            }
+            for (Entry<String, String> entry : validationResult.entrySet()) {
+                System.out.println("entry.getValue() = " + entry.getValue());
+            }
+        }
+        return null;
     }
 }
