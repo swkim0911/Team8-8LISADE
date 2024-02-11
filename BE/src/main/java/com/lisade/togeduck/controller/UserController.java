@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.annotation.ValidateUserId;
+import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.exception.InvalidSignUpInfoException;
@@ -40,9 +41,7 @@ public class UserController {
 
     @InitBinder // UserController 요청에 대한 커스텀 validator 추가
     public void validatorBinder(WebDataBinder binder) {
-        binder.addValidators(checkUserIdValidator);
-        binder.addValidators(checkNicknameValidator);
-        binder.addValidators(checkEmailValidator);
+        binder.addValidators(checkUserIdValidator, checkNicknameValidator, checkEmailValidator);
     }
 
     @GetMapping("/{user_id}")
@@ -61,5 +60,10 @@ public class UserController {
         }
         Long id = userService.join(signUpDto);
         return new ResponseEntity<>(ApiResponse.of(CREATED.value(), CREATED.name(), id), CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
+
     }
 }
