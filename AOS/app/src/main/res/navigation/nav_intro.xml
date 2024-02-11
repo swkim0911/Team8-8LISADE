@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_intro"
+    app:startDestination="@id/intro_login">
+    <fragment
+        android:id="@+id/intro_login"
+        android:name="com.softeer.togeduck.ui.intro.LoginFragment"
+        android:label="fragment_reservation_list"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_intro_login_to_intro_register"
+            app:destination="@id/intro_register" />
+    </fragment>
+    <fragment
+        android:id="@+id/intro_register"
+        android:name="com.softeer.togeduck.ui.intro.RegisterFragment"
+        android:label="fragment_reservation_list"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_intro_register_to_intro_login"
+            app:destination="@+id/intro_login"
+            />
+    </fragment>
+
+</navigation>

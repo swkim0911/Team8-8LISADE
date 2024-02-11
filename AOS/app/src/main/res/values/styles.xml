@@ -28,10 +28,10 @@
     </style>
     <!--end 폰트-->
 
-    <style name="common_button_style">
+    <style name="common_box_style">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:radius">5dp</item>
-        <item name="android:height">50dp</item>
-
+        <item name="android:layout_height">60dp</item>
     </style>
 
 </resources>
