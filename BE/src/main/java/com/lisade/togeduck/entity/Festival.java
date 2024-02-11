@@ -1,5 +1,7 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.Category;
+import com.lisade.togeduck.entity.enums.FestivalStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,10 +27,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Festival extends BaseEntity {
-
-    private enum Category {
-        SPORTS, MUSICAL, CONCERT, FAN_MEETING, ANIMATION, ETC
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,4 +60,8 @@ public class Festival extends BaseEntity {
 
     @OneToMany(mappedBy = "festival")
     private List<Route> routes;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private FestivalStatus festivalStatus;
 }

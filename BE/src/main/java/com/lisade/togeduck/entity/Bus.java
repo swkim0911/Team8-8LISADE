@@ -1,5 +1,6 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.BusType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AccessLevel;
@@ -27,10 +27,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bus {
 
-    private enum BusType {
-        SMALL, MEDIUM, BIG
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -43,8 +39,8 @@ public class Bus {
     @Column(name = "number_of_seats", nullable = false)
     private Integer numberOfSeats;
 
-    @OneToOne(mappedBy = "bus", fetch = FetchType.LAZY)
-    private Route route;
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    private List<Route> route;
 
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
     private List<PriceTable> priceTables;

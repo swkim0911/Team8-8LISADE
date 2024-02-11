@@ -1,5 +1,6 @@
 package com.lisade.togeduck.entity;
 
+import com.lisade.togeduck.entity.enums.AuthorityType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,9 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,14 +20,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
-
-    private enum AuthorityType {
-        ROLE_USER, ROLE_ADMIN
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +46,16 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<UserRoute> userRoutes;
+
+    @Builder
+    public User(Long id, String userId, String password, String nickname, String email,
+        AuthorityType authority) {
+        this.id = id;
+        this.userId = userId;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.authority = authority;
+        this.userRoutes = new ArrayList<>();
+    }
 }
