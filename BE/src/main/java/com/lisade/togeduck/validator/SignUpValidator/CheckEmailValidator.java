@@ -8,14 +8,17 @@ import org.springframework.validation.Errors;
 
 @RequiredArgsConstructor
 @Component
-public class CheckEmailValidator extends AbstractValidator<SignUpDto> {
+public class CheckEmailValidator extends AbstractValidator<Object> {
 
     private final UserRepository userRepository;
 
     @Override
-    protected void doValidate(SignUpDto dto, Errors errors) {
-        if (userRepository.existsByEmail(dto.getEmail())) {
-            errors.rejectValue("email", "email duplication", "이미 존재하는 이메일입니다.");
+    protected void doValidate(Object dto, Errors errors) {
+        if (dto instanceof SignUpDto signUpDto) {
+            if (userRepository.existsByEmail(signUpDto.getEmail())) {
+                errors.rejectValue("email", "email duplication", "이미 존재하는 이메일입니다.");
+            }
         }
+
     }
 }

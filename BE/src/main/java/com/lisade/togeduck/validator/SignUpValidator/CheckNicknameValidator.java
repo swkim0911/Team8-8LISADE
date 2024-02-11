@@ -8,14 +8,17 @@ import org.springframework.validation.Errors;
 
 @RequiredArgsConstructor
 @Component
-public class CheckNicknameValidator extends AbstractValidator<SignUpDto> {
+public class CheckNicknameValidator extends AbstractValidator<Object> {
 
     private final UserRepository userRepository;
 
     @Override
-    protected void doValidate(SignUpDto dto, Errors errors) {
-        if (userRepository.existsByNickname(dto.getNickname())) {
-            errors.rejectValue("nickname", "nickname duplication", "이미 존재하는 닉네임입니다.");
+    protected void doValidate(Object dto, Errors errors) {
+        if (dto instanceof SignUpDto signUpDto) {
+            if (userRepository.existsByNickname(signUpDto.getNickname())) {
+                errors.rejectValue("nickname", "nickname duplication", "이미 존재하는 닉네임입니다.");
+            }
         }
+
     }
 }

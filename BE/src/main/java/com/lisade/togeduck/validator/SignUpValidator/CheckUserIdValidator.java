@@ -8,14 +8,17 @@ import org.springframework.validation.Errors;
 
 @RequiredArgsConstructor
 @Component
-public class CheckUserIdValidator extends AbstractValidator<SignUpDto> {
+public class CheckUserIdValidator extends AbstractValidator<Object> {
 
     private final UserRepository userRepository;
 
     @Override
-    protected void doValidate(SignUpDto dto, Errors errors) {
-        if (userRepository.existsByUserId(dto.getUserId())) {
-            errors.rejectValue("userId", "ID duplication", "이미 존재하는 아이디입니다.");
+    protected void doValidate(Object dto, Errors errors) {
+        if (dto instanceof SignUpDto signUpDto) {
+            if (userRepository.existsByUserId(signUpDto.getUserId())) {
+                errors.rejectValue("userId", "ID duplication", "이미 존재하는 아이디입니다.");
+            }
         }
+
     }
 }
