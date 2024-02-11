@@ -20,7 +20,7 @@ public class UserIdValidator implements ConstraintValidator<ValidateUserId, Stri
 
     @Override
     public boolean isValid(String userId, ConstraintValidatorContext constraintValidatorContext) {
-        if (userId == null || userId.isEmpty() || userId.isBlank()) { // userId가 @Blank 에 걸리는 경우
+        if (userId.isBlank()) { // userId가 @Blank 에 걸리는 경우
             constraintValidatorContext.disableDefaultConstraintViolation();
             constraintValidatorContext.buildConstraintViolationWithTemplate("아이디를 입력해주세요.")
                 .addConstraintViolation();
