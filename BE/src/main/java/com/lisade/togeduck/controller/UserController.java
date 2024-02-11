@@ -7,6 +7,7 @@ import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginFailureDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.exception.InvalidLoginInfoException;
 import com.lisade.togeduck.exception.InvalidSignUpInfoException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
@@ -61,6 +62,7 @@ public class UserController {
     public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
         if (errors.hasErrors()) {
             LoginFailureDto loginFailureDto = userService.validateLogin(errors);
+            throw new InvalidLoginInfoException(BAD_REQUEST, loginFailureDto);
         }
         return null;
     }
