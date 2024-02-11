@@ -7,6 +7,7 @@ import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
 import com.lisade.togeduck.global.response.ApiResponse;
@@ -14,6 +15,8 @@ import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
 import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
 import com.lisade.togeduck.validator.SignUpValidator.CheckUserIdValidator;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -59,14 +62,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
+    public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto, Errors errors,
+        HttpServletRequest request) {
 
         if (errors.hasErrors()) {
             LoginEmptyFieldDto loginEmptyFieldDto = userService.validateLogin(errors);
             throw new LoginEmptyFieldException(BAD_REQUEST, loginEmptyFieldDto);
         }
         //로그인 정보가 맞지 않은 경우
-        Long id = userService.login(loginDto);
-        return ResponseEntity.ok(ApiResponse.onSuccess(id)); //todo header 만들어야함
+        User user = userService.login(loginDto);
+        HttpSession session = request.getSession();
+        session.setAttribute("hello", user);
+        return ResponseEntity.ok(ApiResponse.onSuccess(user.getUserId()));
     }
 }
