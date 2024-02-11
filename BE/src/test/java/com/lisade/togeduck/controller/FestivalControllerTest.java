@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.lisade.togeduck.dto.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;

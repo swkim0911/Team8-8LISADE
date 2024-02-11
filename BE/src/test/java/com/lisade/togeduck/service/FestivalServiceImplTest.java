@@ -7,7 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.lisade.togeduck.dto.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
