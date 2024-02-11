@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginFailureDto {
+public class LoginEmptyFieldDto {
 
     private String userId;
 

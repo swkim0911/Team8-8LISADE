@@ -5,10 +5,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.LoginFailureDto;
+import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
-import com.lisade.togeduck.exception.InvalidLoginInfoException;
-import com.lisade.togeduck.exception.InvalidSignUpInfoException;
+import com.lisade.togeduck.exception.InvalidSignUpException;
+import com.lisade.togeduck.exception.LoginEmptyFieldException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
@@ -52,7 +52,7 @@ public class UserController {
 
         if (errors.hasErrors()) {
             SignUpFailureDto signUpFailureDto = userService.validateSignUp(errors);
-            throw new InvalidSignUpInfoException(BAD_REQUEST, signUpFailureDto);
+            throw new InvalidSignUpException(BAD_REQUEST, signUpFailureDto);
         }
         Long id = userService.join(signUpDto);
         return new ResponseEntity<>(ApiResponse.of(CREATED.value(), CREATED.name(), id), CREATED);
@@ -62,8 +62,8 @@ public class UserController {
     public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto, Errors errors) {
 
         if (errors.hasErrors()) {
-            LoginFailureDto loginFailureDto = userService.validateLogin(errors);
-            throw new InvalidLoginInfoException(BAD_REQUEST, loginFailureDto);
+            LoginEmptyFieldDto loginEmptyFieldDto = userService.validateLogin(errors);
+            throw new LoginEmptyFieldException(BAD_REQUEST, loginEmptyFieldDto);
         }
         //로그인 정보가 맞지 않은 경우
         Long id = userService.login(loginDto);
