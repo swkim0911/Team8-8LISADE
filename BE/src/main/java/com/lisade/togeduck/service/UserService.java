@@ -2,6 +2,7 @@ package com.lisade.togeduck.service;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
+import com.lisade.togeduck.annotation.ValidateUserId;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
@@ -11,7 +12,6 @@ import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.repository.UserRepository;
-import com.lisade.togeduck.validator.annotation.ValidateUserId;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

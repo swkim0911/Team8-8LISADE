@@ -1,16 +1,20 @@
 package com.lisade.togeduck.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum SessionConst {
 
     LOGIN_USER("loginUser");
 
-    private String sessionName;
+    private final String sessionName;
 
     SessionConst(String sessionName) {
         this.sessionName = sessionName;
     }
 
-    public String getSessionName() {
+    @Override
+    public String toString() {
         return this.sessionName;
     }
 }

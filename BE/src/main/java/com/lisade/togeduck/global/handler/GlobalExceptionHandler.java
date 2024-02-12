@@ -3,11 +3,11 @@ package com.lisade.togeduck.global.handler;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
+import com.lisade.togeduck.annotation.ValidateUserId;
 import com.lisade.togeduck.dto.response.ValidateUserIdDto;
 import com.lisade.togeduck.global.exception.GeneralException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
-import com.lisade.togeduck.validator.annotation.ValidateUserId;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.metadata.ConstraintDescriptor;

@@ -1,9 +1,10 @@
 package com.lisade.togeduck.controller;
 
-import static com.lisade.togeduck.constant.SessionConstant.LOGIN_USER;
+import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
+import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @RestController
 @RequiredArgsConstructor
@@ -78,11 +78,10 @@ public class UserController {
 
     @GetMapping("/routes")
     public ResponseEntity<Object> getRoutes(
-        @SessionAttribute(name = LOGIN_USER, required = false) User user) {
+        @Login User user) {
         if (user == null) {
             throw new UnAuthenticationException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
         }
-
         return null;
     }
 }

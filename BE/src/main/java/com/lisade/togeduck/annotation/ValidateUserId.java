@@ -1,4 +1,4 @@
-package com.lisade.togeduck.validator.annotation;
+package com.lisade.togeduck.annotation;
 
 import com.lisade.togeduck.validator.UserIdValidator;
 import jakarta.validation.Constraint;
