@@ -69,7 +69,7 @@ public class UserController {
 
         User findUser = userService.login(loginDto);
         HttpSession session = request.getSession();
-        session.setAttribute(LOGIN_USER, findUser);
+        session.setAttribute(LOGIN_USER.getSessionName(), findUser);
         return ResponseEntity.ok(ApiResponse.onSuccess(findUser.getUserId()));
     }
 }

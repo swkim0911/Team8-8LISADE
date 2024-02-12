@@ -1,6 +1,16 @@
 package com.lisade.togeduck.constant;
 
-public class SessionConst {
+public enum SessionConst {
 
-    public static final String LOGIN_USER = "loginUser";
+    LOGIN_USER("loginUser");
+
+    private String sessionName;
+
+    SessionConst(String sessionName) {
+        this.sessionName = sessionName;
+    }
+
+    public String getSessionName() {
+        return this.sessionName;
+    }
 }
