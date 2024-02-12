@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_reserve_status"
+    app:startDestination="@id/reserveStatusDetailInfoFragment">
+
+    <fragment
+        android:id="@+id/reserveStatusDetailInfoFragment"
+        android:name="com.softeer.togeduck.ui.reserve_status.detail.ReserveStatusDetailInfoFragment"
+        android:label="fragment_reserve_status_detail_info"
+        tools:layout="@layout/fragment_reserve_status_detail_info">
+        <action
+            android:id="@+id/action_reserveStatusDetailInfoFragment_to_mobileTicketFragment"
+            app:destination="@id/mobileTicketFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mobileTicketFragment"
+        android:name="com.softeer.togeduck.ui.reserve_status.detail.MobileTicketFragment"
+        android:label="fragment_mobile_ticket"
+        tools:layout="@layout/fragment_mobile_ticket" />
+</navigation>
