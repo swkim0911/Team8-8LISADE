@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.databinding.FragmentHomeBinding
 import com.softeer.togeduck.data.model.PopularArticleModel
+import com.softeer.togeduck.utils.ItemClick
 
 private val dummyData = listOf(
     PopularArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "2024.02.07", "잠실종합운동장"),

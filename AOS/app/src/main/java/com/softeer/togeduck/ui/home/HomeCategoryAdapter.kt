@@ -1,16 +1,20 @@
 package com.softeer.togeduck.ui.home
 
+import android.graphics.Rect
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.data.model.PopularArticleModel
 import com.softeer.togeduck.databinding.RvItemCategoryBinding
 import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
+import com.softeer.togeduck.utils.ItemClick
 
 class HomeCategoryAdapter(private val items: List<HomeCategoryModel>) :
     RecyclerView.Adapter<CategoryViewHolder>() {
     private lateinit var binding: RvItemCategoryBinding
+    var itemClick: ItemClick? = null
     override fun getItemCount(): Int {
         return items.size
     }
@@ -26,6 +30,9 @@ class HomeCategoryAdapter(private val items: List<HomeCategoryModel>) :
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(items[holder.adapterPosition])
+        holder.itemView.setOnClickListener {
+            itemClick?.onClick(it, position)
+        }
     }
 }
 
