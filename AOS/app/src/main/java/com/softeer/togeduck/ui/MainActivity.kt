@@ -1,11 +1,11 @@
-package com.softeer.togeduck
+package com.softeer.togeduck.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
