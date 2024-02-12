@@ -24,7 +24,6 @@ public class SeatService {
 
     private final UserRouteRepository userRouteRepository;
     private final SeatRepository seatRepository;
-    private final RouteService routeService;
 
     public SeatListDto getList(Long routeId) {
         List<Seat> seats = seatRepository.findAllByRouteId(routeId);
@@ -41,14 +40,13 @@ public class SeatService {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     public void register(Long routeId, SeatRegistrationDto seatRegistration) {
         Seat seat = get(routeId, seatRegistration.getNo());
+        Route route = seat.getRoute();
 
         if (seat.getStatus().equals(SeatStatus.RESERVATION)) {
             throw new SeatAlreadyRegisterException();
         }
 
         seat.setStatus(SeatStatus.RESERVATION);
-
-        Route route = routeService.get(routeId);
 
         // TODO User 객체 넣기
         UserRoute userRoute = UserRoute.builder()
