@@ -18,6 +18,23 @@
     <string name="request_input_nickname">닉네임을 입력해주세요.</string>
     <string name="email">이메일</string>
     <string name="request_input_email">이메일을 입력해주세요.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="seat">좌석</string>
+    <string name="estimatedTime">예상 소요 시간</string>
+    <string name="time">시간</string>
+    <string name="recruitment_status">모집현황</string>
+    <string name="cost">금액</string>
+    <string name="krw">원</string>
+    <string name="departure">출발</string>
+    <string name="expected">(예정)</string>
+    <string name="arrival">도착</string>
+    <string name="driver_info">기사정보</string>
+    <string name="driver_name">성함</string>
+    <string name="agency">소속</string>
+    <string name="contact">연락처</string>
+    <string name="license_plate">번호판</string>
+    <string name="participate_in_route_chatting">노선 채팅방 참여</string>
+    <string name="check_ticket">티켓 확인</string>
+    <string name="cancle_reservation">예매 취소</string>
+    <string name="no_driver">아직 기사님이 배차되지 않았습니다.</string>
+
 </resources>

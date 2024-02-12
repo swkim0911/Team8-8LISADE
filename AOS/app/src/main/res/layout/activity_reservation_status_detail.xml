@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.reservation_status.ReservationStatusDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.reservation_status.ReservationStatusDetailActivity">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_contents" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_contents" />
+
+        <!--타이틀-->
+        <View
+            android:id="@+id/header_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon_back"
+            app:layout_constraintBottom_toBottomOf="@id/header_top"
+            app:layout_constraintStart_toStartOf="@id/header_top"
+            app:layout_constraintTop_toTopOf="@id/header_top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예약 상세 페이지"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/header_top"
+            app:layout_constraintEnd_toEndOf="@id/header_top"
+            app:layout_constraintStart_toStartOf="@id/header_top"
+            app:layout_constraintTop_toTopOf="@id/header_top" />
+        <!--end 타이틀-->
+
+        <!--행사 타이틀-->
+        <View
+            android:id="@+id/festivalTitleContainer"
+            style="@style/main_title_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_top" />
+
+        <TextView
+            android:id="@+id/festivalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/main"
+            android:text="행사명 입니다."
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/festivalTitleContainer"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toTopOf="@id/festivalTitleContainer" />
+
+        <TextView
+            android:id="@+id/festivalStatus"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rectangle_radius"
+            android:backgroundTint="@color/mint"
+            android:gravity="center"
+            android:text="모집중"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/festivalTitleContainer"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/festivalTitleContainer" />
+        <!--end 행사 타이틀-->
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/participateInChatting"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@+id/festivalTitleContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineContents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.45" />
+
+                <!--행사 정보-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/festivalImgWrapper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.38">
+
+                    <ImageView
+                        android:id="@+id/festivalImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/dumi_reservation_list" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/festivalSeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/seat"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toTopOf="@id/festivalImgWrapper" />
+
+                <TextView
+                    android:id="@+id/festivalSeatValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2A"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/festivalSeat"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/estimatedTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/estimatedTime"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toBottomOf="@id/festivalSeat" />
+
+                <TextView
+                    android:id="@+id/estimatedTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/estimatedTime"
+                    app:layout_constraintEnd_toStartOf="@id/estimatedTimeValueUnit" />
+
+                <TextView
+                    android:id="@+id/estimatedTimeValueUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/estimatedTime"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/recruitmentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/recruitment_status"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toBottomOf="@id/estimatedTime" />
+
+                <TextView
+                    android:id="@+id/recruitmentStatusValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4/6"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/recruitmentStatus"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/cost"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toBottomOf="@id/recruitmentStatus" />
+
+                <TextView
+                    android:id="@+id/costValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30,000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/cost"
+                    app:layout_constraintEnd_toStartOf="@id/costValueUnit" />
+
+                <TextView
+                    android:id="@+id/costValueUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/krw"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/cost"
+                    app:layout_constraintEnd_toEndOf="parent" />
+                <!--end 행사 정보-->
+
+                <!--노선 위치 정보-->
+
+                <TextView
+                    android:id="@+id/departure"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/circle_border"
+                    android:gravity="center"
+                    android:text="@string/departure"
+                    android:textColor="@color/gray400"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/festivalImgWrapper" />
+
+                <TextView
+                    android:id="@+id/departureValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="[부산] 부산 시청 앞"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/departure"
+                    app:layout_constraintStart_toEndOf="@id/departure"
+                    app:layout_constraintTop_toTopOf="@id/departure" />
+
+                <TextView
+                    android:id="@+id/departureTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="14:00"
+                    android:textColor="@color/main"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/departure"
+                    app:layout_constraintStart_toEndOf="@id/departureValue"
+                    app:layout_constraintTop_toTopOf="@id/departure" />
+
+                <View
+                    android:id="@+id/lineDepartureArrival"
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:background="@color/gray100"
+                    app:layout_constraintEnd_toEndOf="@id/departure"
+                    app:layout_constraintStart_toStartOf="@id/departure"
+                    app:layout_constraintTop_toBottomOf="@id/departure" />
+
+                <TextView
+                    android:id="@+id/arrival"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:background="@drawable/circle_border"
+                    android:gravity="center"
+                    android:text="@string/arrival"
+                    android:textColor="@color/gray400"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineDepartureArrival" />
+
+                <TextView
+                    android:id="@+id/arrivalValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="[서울] 올림픽 경기장 앞"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/arrival"
+                    app:layout_constraintStart_toEndOf="@id/arrival"
+                    app:layout_constraintTop_toTopOf="@id/arrival" />
+
+                <TextView
+                    android:id="@+id/arrivalTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="17:00"
+                    android:textColor="@color/main"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/arrival"
+                    app:layout_constraintStart_toEndOf="@id/arrivalValue"
+                    app:layout_constraintTop_toTopOf="@id/arrival" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="@string/expected"
+                    android:textColor="@color/main"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/arrival"
+                    app:layout_constraintStart_toEndOf="@id/arrivalTime"
+                    app:layout_constraintTop_toTopOf="@id/arrival" />
+                <!--end 노선 위치 정보-->
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/gray100"
+                    app:layout_constraintTop_toBottomOf="@id/arrival" />
+
+                <!--기사 정보-->
+                <TextView
+                    android:id="@+id/driverInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/driver_info"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/driverImgWrapper"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="@{vm.driverDispatch==true ? View.VISIBLE : View.GONE}"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/driverInfo"
+                    app:layout_constraintWidth_percent="0.38">
+
+                    <ImageView
+                        android:id="@+id/driverImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/dumi_driver" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/driverName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/driver_name"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toTopOf="@id/driverImgWrapper" />
+
+                <TextView
+                    android:id="@+id/driverNameValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박춘배"
+                    android:textSize="18sp"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/driverName"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/agency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/agency"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toBottomOf="@id/driverName" />
+
+                <TextView
+                    android:id="@+id/agencyValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="경부고속"
+                    android:textSize="18sp"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/agency"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/contact"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toBottomOf="@id/agency" />
+
+                <TextView
+                    android:id="@+id/contactValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="010-1234-5678"
+                    android:textSize="18sp"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/contact"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/licensePlate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/license_plate"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="@id/guidelineContents"
+                    app:layout_constraintTop_toBottomOf="@id/contact" />
+
+                <TextView
+                    android:id="@+id/licensePlateValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123가 1234"
+                    android:textSize="18sp"
+                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/licensePlate"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/noDriverText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="80dp"
+                    android:paddingBottom="80dp"
+                    android:text="@string/no_driver"
+                    android:textSize="18sp"
+                    android:visibility="@{vm.driverDispatch ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/driverInfo" />
+                <!--end 기사 정보-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/participateInChatting"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toTopOf="@id/checkTicket"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:strokeColor="@color/gray300"
+            app:strokeWidth="1dp" />
+
+        <ImageView
+            android:id="@+id/chatIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/icon_chat"
+            app:layout_constraintBottom_toBottomOf="@id/participateInChatting"
+            app:layout_constraintEnd_toStartOf="@id/chatText"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/participateInChatting"
+            app:layout_constraintTop_toTopOf="@id/participateInChatting" />
+
+        <TextView
+            android:id="@+id/chatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/participate_in_route_chatting"
+            android:textColor="@color/gray700"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/participateInChatting"
+            app:layout_constraintEnd_toEndOf="@id/participateInChatting"
+            app:layout_constraintStart_toEndOf="@id/chatIcon"
+            app:layout_constraintTop_toTopOf="@id/participateInChatting" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkTicket"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/main"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cancleReservation"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:strokeWidth="0dp" />
+
+        <ImageView
+            android:id="@+id/checkTicketIcon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/main"
+            android:src="@drawable/icon_check"
+            app:layout_constraintBottom_toBottomOf="@id/checkTicket"
+            app:layout_constraintEnd_toStartOf="@id/checkTicketText"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/checkTicket"
+            app:layout_constraintTop_toTopOf="@id/checkTicket" />
+
+        <TextView
+            android:id="@+id/checkTicketText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/main"
+            android:text="@string/check_ticket"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/checkTicket"
+            app:layout_constraintEnd_toEndOf="@id/checkTicket"
+            app:layout_constraintStart_toEndOf="@id/checkTicketIcon"
+            app:layout_constraintTop_toTopOf="@id/checkTicket" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancleReservation"
+            style="@style/Widget.Material3.Button.IconButton.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/checkTicket"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toEndOf="@id/checkTicket"
+            app:strokeColor="@color/main"
+            app:strokeWidth="1dp" />
+
+        <ImageView
+            android:id="@+id/cancleReservationIcon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/icon_trash"
+            app:layout_constraintBottom_toBottomOf="@id/cancleReservation"
+            app:layout_constraintEnd_toStartOf="@id/cancleReservationText"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/cancleReservation"
+            app:layout_constraintTop_toTopOf="@id/cancleReservation" />
+
+        <TextView
+            android:id="@+id/cancleReservationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancle_reservation"
+            android:textColor="@color/main"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/cancleReservation"
+            app:layout_constraintEnd_toEndOf="@id/cancleReservation"
+            app:layout_constraintStart_toEndOf="@id/cancleReservationIcon"
+            app:layout_constraintTop_toTopOf="@id/cancleReservation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

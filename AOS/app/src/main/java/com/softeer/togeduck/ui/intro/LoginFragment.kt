@@ -45,6 +45,10 @@ class LoginFragment : Fragment() {
         view.findViewById<Button>(R.id.register_btn).setOnClickListener {
             findNavController().navigate(R.id.action_intro_login_to_intro_register)
         }
+        view.findViewById<Button>(R.id.login_btn).setOnClickListener {
+            findNavController().navigate(R.id.action_intro_login_to_mainActivity)
+        }
+
     }
 
     companion object {

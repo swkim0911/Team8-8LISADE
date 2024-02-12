@@ -3,66 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/menu_home">
+    app:startDestination="@id/menuHome">
 
     <fragment
-        android:id="@+id/menu_reserve_list"
-        android:name="com.softeer.togeduck.ui.reservation_status.ReservationListFragment"
+        android:id="@+id/menuReserveList"
+        android:name="com.softeer.togeduck.ui.reservation_status.ReservationStatusFragment"
         android:label="fragment_reservation_list"
-        tools:layout="@layout/fragment_reservation_list">
+        tools:layout="@layout/fragment_reservation_status">
         <action
-            android:id="@+id/action_menu_reserve_list_to_menu_home"
-            app:destination="@id/menu_home" />
-        <action
-            android:id="@+id/action_menu_reserve_list_to_chattingFragment"
-            app:destination="@id/menu_chat" />
-        <action
-            android:id="@+id/action_menu_reserve_list_to_menu_my_page"
-            app:destination="@id/menu_my_page" />
+            android:id="@+id/action_menuReserveList_to_reservationStatusDetailActivity"
+            app:destination="@id/reservationStatusDetailActivity" />
     </fragment>
     <fragment
-        android:id="@+id/menu_home"
+        android:id="@+id/menuHome"
         android:name="com.softeer.togeduck.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_menu_home_to_menu_reserve_list"
-            app:destination="@id/menu_reserve_list" />
-        <action
-            android:id="@+id/action_menu_home_to_chattingFragment"
-            app:destination="@id/menu_chat" />
-        <action
-            android:id="@+id/action_menu_home_to_menu_my_page"
-            app:destination="@id/menu_my_page" />
     </fragment>
     <fragment
-        android:id="@+id/menu_chat"
+        android:id="@+id/menuChat"
         android:name="com.softeer.togeduck.ui.chatting.ChattingFragment"
         android:label="fragment_chatting"
         tools:layout="@layout/fragment_chatting">
-        <action
-            android:id="@+id/action_chattingFragment_to_menu_reserve_list"
-            app:destination="@id/menu_reserve_list" />
-        <action
-            android:id="@+id/action_chattingFragment_to_menu_home"
-            app:destination="@id/menu_home" />
-        <action
-            android:id="@+id/action_chattingFragment_to_menu_my_page"
-            app:destination="@id/menu_my_page" />
     </fragment>
     <fragment
-        android:id="@+id/menu_my_page"
+        android:id="@+id/menuMyPage"
         android:name="com.softeer.togeduck.ui.mypage.MyPageFragment"
         android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page">
-        <action
-            android:id="@+id/action_menu_my_page_to_menu_home"
-            app:destination="@id/menu_home" />
-        <action
-            android:id="@+id/action_menu_my_page_to_menu_reserve_list"
-            app:destination="@id/menu_reserve_list" />
-        <action
-            android:id="@+id/action_menu_my_page_to_chattingFragment"
-            app:destination="@id/menu_chat" />
     </fragment>
+    <activity
+        android:id="@+id/reservationStatusDetailActivity"
+        android:name="com.softeer.togeduck.ui.reservation_status.ReservationStatusDetailActivity"
+        android:label="activity_reservation_status_detail"
+        tools:layout="@layout/activity_reservation_status_detail" />
 </navigation>
