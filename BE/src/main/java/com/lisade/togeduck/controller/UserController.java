@@ -13,9 +13,7 @@ import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
-import com.lisade.togeduck.validator.SignUpValidator.CheckEmailValidator;
-import com.lisade.togeduck.validator.SignUpValidator.CheckNicknameValidator;
-import com.lisade.togeduck.validator.SignUpValidator.CheckUserIdValidator;
+import com.lisade.togeduck.validator.SignUpValidator.SignUpValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,13 +35,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
-    private final CheckUserIdValidator checkUserIdValidator;
-    private final CheckNicknameValidator checkNicknameValidator;
-    private final CheckEmailValidator checkEmailValidator;
+    private final SignUpValidator signUpValidator;
 
-    @InitBinder // UserController 요청에 대한 커U스텀 validator 추가
+    @InitBinder // UserController 요청에 대한 커스텀 validator 추가
     public void validatorBinder(WebDataBinder binder) {
-        binder.addValidators(checkUserIdValidator, checkNicknameValidator, checkEmailValidator);
+        binder.addValidators(signUpValidator);
     }
 
     @GetMapping("/{user_id}")
@@ -70,7 +66,7 @@ public class UserController {
             LoginEmptyFieldDto loginEmptyFieldDto = userService.validateLogin(errors);
             throw new LoginEmptyFieldException(BAD_REQUEST, loginEmptyFieldDto);
         }
-        
+
         User findUser = userService.login(loginDto);
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_USER, findUser);

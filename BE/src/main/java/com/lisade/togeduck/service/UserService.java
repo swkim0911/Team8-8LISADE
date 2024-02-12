@@ -46,6 +46,19 @@ public class UserService {
         return UserMapper.toLoginEmptyFieldDto(validationResult);
     }
 
+    @Transactional(readOnly = true)
+    public void exist(SignUpDto signUpDto, Errors errors) {
+        if (userRepository.existsByUserId(signUpDto.getUserId())) {
+            errors.rejectValue("userId", "ID duplication", "이미 존재하는 아이디입니다.");
+        }
+        if (userRepository.existsByNickname(signUpDto.getNickname())) {
+            errors.rejectValue("nickname", "nickname duplication", "이미 존재하는 닉네임입니다.");
+        }
+        if (userRepository.existsByEmail(signUpDto.getEmail())) {
+            errors.rejectValue("email", "email duplication", "이미 존재하는 이메일입니다.");
+        }
+    }
+
     @Transactional
     public User login(LoginDto loginDto) {
         return userRepository.findByUserIdAndPassword(loginDto.getUserId(),
