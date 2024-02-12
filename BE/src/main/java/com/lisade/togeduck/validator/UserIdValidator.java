@@ -1,7 +1,7 @@
-package com.lisade.togeduck.validator.SignUpValidator;
+package com.lisade.togeduck.validator;
 
-import com.lisade.togeduck.annotation.ValidateUserId;
 import com.lisade.togeduck.repository.UserRepository;
+import com.lisade.togeduck.validator.annotation.ValidateUserId;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
