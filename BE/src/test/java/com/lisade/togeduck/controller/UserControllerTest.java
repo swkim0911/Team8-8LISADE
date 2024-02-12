@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.service.UserService;
-import com.lisade.togeduck.validator.SignUpValidator.SignUpValidator;
+import com.lisade.togeduck.validator.SignUpValidator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

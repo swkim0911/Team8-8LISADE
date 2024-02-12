@@ -1,4 +1,4 @@
-package com.lisade.togeduck.validator.SignUpValidator;
+package com.lisade.togeduck.validator;
 
 
 import lombok.extern.slf4j.Slf4j;

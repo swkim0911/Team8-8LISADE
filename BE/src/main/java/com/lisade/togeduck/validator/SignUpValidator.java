@@ -1,4 +1,4 @@
-package com.lisade.togeduck.validator.SignUpValidator;
+package com.lisade.togeduck.validator;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.service.UserService;

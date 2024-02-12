@@ -13,7 +13,7 @@ import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
-import com.lisade.togeduck.validator.SignUpValidator.SignUpValidator;
+import com.lisade.togeduck.validator.SignUpValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
