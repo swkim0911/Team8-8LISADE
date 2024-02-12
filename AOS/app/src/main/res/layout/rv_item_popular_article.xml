@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="popularArticle"
             type="com.softeer.togeduck.data.model.PopularArticleModel" />
@@ -12,7 +13,9 @@
         android:id="@+id/item_slide_layout"
         android:layout_width="200dp"
         android:layout_height="150dp"
-        >
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/item_popular_article_box"
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/concert_img"
@@ -28,7 +31,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:textColor="@color/black"
             android:text="@{popularArticle.concertTitle}"
+            android:layout_marginTop="4dp"
+            android:textSize="10sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/concert_img" />
@@ -37,8 +46,11 @@
             android:id="@+id/concert_date_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:gravity="start"
+            android:paddingStart="4dp"
             android:text="@{popularArticle.concertDate}"
+            android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@id/concert_arrival_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/concert_title_text" />
@@ -46,9 +58,12 @@
         <TextView
             android:id="@+id/concert_arrival_text"
             android:layout_width="0dp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:gravity="end"
+            android:paddingEnd="4dp"
             android:text="@{popularArticle.concertArrival}"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/concert_date_text"
             app:layout_constraintTop_toBottomOf="@id/concert_title_text" />

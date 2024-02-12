@@ -33,5 +33,12 @@
         <item name="android:radius">5dp</item>
         <item name="android:layout_height">60dp</item>
     </style>
+    <style name="popularArticleBoxStyle">
+        <item name="android:strokeColor">@color/gray400</item>
+        <item name="borderWidth">2dp</item>
+        <item name="strokeWidth">20dp</item>
+        <item name="android:radius">5dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
 
 </resources>
