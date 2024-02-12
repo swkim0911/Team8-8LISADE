@@ -7,10 +7,6 @@ spring:
       generate-ddl: 'true'
       hibernate:
         format_sql: true
-server:
-  servlet:
-    session:
-      timeout: 1800 # 가장 최근에 세션에 접근한 시간을 기준으로 30분을 유지
 
 logging.level:
   org.hibernate.SQL: debug
