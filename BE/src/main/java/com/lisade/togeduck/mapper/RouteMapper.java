@@ -1,5 +1,7 @@
 package com.lisade.togeduck.mapper;
 
+import com.lisade.togeduck.dto.response.RouteDetailDao;
+import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteRegistrationDto;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
@@ -36,6 +38,20 @@ public class RouteMapper {
         return RouteRegistrationDto.builder()
             .routeId(route.getId())
             .festivalId(route.getFestival().getId())
+            .build();
+    }
+
+    public static RouteDetailDto toRouteDetailDto(RouteDetailDao route) {
+        return RouteDetailDto.builder()
+            .id(route.getId())
+            .startedAt(route.getStartedAt())
+            .source(route.getSource())
+            .destination(route.getDestination())
+            .departureAt(route.getArrivalAt().minusHours(4))
+            .arrivalAt(route.getArrivalAt())
+            .totalSeats(route.getTotalSeats())
+            .reservedSeats(route.getReservedSeats())
+            .cost(route.getCost())
             .build();
     }
 }
