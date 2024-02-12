@@ -38,6 +38,18 @@
             app:layout_constraintStart_toStartOf="parent"
              />
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/categoryFragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:defaultNavHost="true"
+            app:layout_constraintTop_toBottomOf="@id/rvItemPopularArticle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:navGraph="@navigation/nav_home_category"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

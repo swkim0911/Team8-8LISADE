@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui
+package com.softeer.togeduck
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

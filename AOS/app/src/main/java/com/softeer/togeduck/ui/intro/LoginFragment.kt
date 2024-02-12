@@ -28,7 +28,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_intro_login_to_intro_register)
         }
         binding.loginBtn.setOnClickListener{
-            findNavController().navigate(R.id.mainActivity)
+            findNavController().navigate(R.id.action_intro_login_to_mainActivity)
         }
     }
 }

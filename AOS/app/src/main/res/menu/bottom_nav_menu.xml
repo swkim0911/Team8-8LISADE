@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_home"
+        android:id="@+id/menuHome"
         android:enabled="true"
         android:icon="@drawable/bottom_nav_icon_home"
         android:title="@string/home" />
     <item
-        android:id="@+id/menu_reserve_list"
+        android:id="@+id/menuReserveList"
         android:enabled="true"
         android:icon="@drawable/bottom_nav_icon_timer"
         android:title="@string/reserve_list" />
     <item
-        android:id="@+id/menu_chat"
+        android:id="@+id/menuChat"
         android:enabled="true"
         android:icon="@drawable/bottom_nav_icon_chat"
         android:title="@string/chat" />
     <item
-        android:id="@+id/menu_my_page"
+        android:id="@+id/menuMyPage"
         android:enabled="true"
         android:icon="@drawable/bottom_nav_icon_mypage"
         android:title="@string/my_page" />
