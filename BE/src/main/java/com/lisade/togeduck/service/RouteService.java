@@ -8,6 +8,7 @@ import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.BusNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
+import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.BusRepository;
@@ -56,6 +57,10 @@ public class RouteService {
         seatService.saveAll(SeatMapper.toSeats(route, bus.getNumberOfSeats()));
 
         return RouteMapper.toRouteRegistrationDto(route);
+    }
+
+    public Route get(Long routeId) {
+        return routeRepository.findById(routeId).orElseThrow(RouteNotFoundException::new);
     }
 
     public Bus getBus(Long busId) {
