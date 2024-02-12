@@ -30,12 +30,26 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             style="@style/root_margin"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/categoryFragmentContainerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:navGraph="@navigation/nav_main"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/categoryFragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            style="@style/root_margin"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@id/bottom_nav"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:navGraph="@navigation/nav_main"
+            app:navGraph="@navigation/nav_home_category"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="1dp" />
 
