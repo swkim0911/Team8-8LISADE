@@ -9,9 +9,9 @@ import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.entity.User;
-import com.lisade.togeduck.exception.AuthenticationRequiredException;
 import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
+import com.lisade.togeduck.exception.UnAuthenticationException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.SignUpValidator;
@@ -80,8 +80,9 @@ public class UserController {
     public ResponseEntity<Object> getRoutes(
         @SessionAttribute(name = LOGIN_USER, required = false) User user) {
         if (user == null) {
-            throw new AuthenticationRequiredException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
+            throw new UnAuthenticationException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
         }
+
         return null;
     }
 }
