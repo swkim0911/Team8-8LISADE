@@ -41,4 +41,8 @@ public class Seat extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
+
+    public void setStatus(SeatStatus status) {
+        this.status = status;
+    }
 }
