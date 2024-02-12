@@ -1,6 +1,6 @@
 package com.lisade.togeduck.controller;
 
-import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
+import static com.lisade.togeduck.constant.SessionConstant.LOGIN_USER;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -9,6 +9,7 @@ import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.entity.User;
+import com.lisade.togeduck.exception.AuthenticationRequiredException;
 import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
 import com.lisade.togeduck.global.response.ApiResponse;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,7 +50,7 @@ public class UserController {
         return userService.checkUserId(userId);
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
@@ -71,5 +74,14 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_USER.getSessionName(), findUser);
         return ResponseEntity.ok(ApiResponse.onSuccess(findUser.getUserId()));
+    }
+
+    @GetMapping("/routes")
+    public ResponseEntity<Object> getRoutes(
+        @SessionAttribute(name = LOGIN_USER, required = false) User user) {
+        if (user == null) {
+            throw new AuthenticationRequiredException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
+        }
+        return null;
     }
 }
