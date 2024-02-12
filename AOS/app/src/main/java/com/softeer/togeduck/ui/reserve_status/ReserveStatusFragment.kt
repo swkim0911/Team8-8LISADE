@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.reservation_status
+package com.softeer.togeduck.ui.reserve_status
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.softeer.togeduck.R
-import com.softeer.togeduck.databinding.FragmentReservationStatusBinding
 import com.softeer.togeduck.data.model.ReservationStatusModel
+import com.softeer.togeduck.databinding.FragmentReserveStatusBinding
 import com.softeer.togeduck.utils.ItemClick
 import java.text.DecimalFormat
 
-class ReservationStatusFragment : Fragment() {
-    private var _binding: FragmentReservationStatusBinding? = null
+class ReserveStatusFragment : Fragment() {
+    private var _binding: FragmentReserveStatusBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ReservationStatusAdapter
 
@@ -26,7 +26,7 @@ class ReservationStatusFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentReservationStatusBinding.inflate(inflater, container, false)
+        _binding = FragmentReserveStatusBinding.inflate(inflater, container, false)
 
         return binding.root
     }
