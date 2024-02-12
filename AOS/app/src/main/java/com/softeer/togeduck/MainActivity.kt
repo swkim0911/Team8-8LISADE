@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.softeer.togeduck.databinding.ActivityMainBinding
-import com.softeer.togeduck.ui.reservation_status.ReservationStatusAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

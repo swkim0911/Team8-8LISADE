@@ -1,10 +1,10 @@
-package com.softeer.togeduck.ui.reservation_status
+package com.softeer.togeduck.ui.reserve_status.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ReservationStatusDetailViewModel : ViewModel() {
+class ReserveStatusDetailViewModel : ViewModel() {
     private var _driverDispatch = MutableLiveData<Boolean>(true)
     val driverDispatch: LiveData<Boolean> = _driverDispatch
 }

@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AOS"
         tools:targetApi="31">
         <activity
-            android:name=".ui.reservation_status.ReservationStatusDetailActivity"
+            android:name=".ui.reserve_status.detail.ReserveStatusDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.intro.IntroActivity"

@@ -1,17 +1,17 @@
-package com.softeer.togeduck.ui.reservation_status
+package com.softeer.togeduck.ui.reserve_status
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.databinding.RvItemReservationStatusBinding
 import com.softeer.togeduck.data.model.ReservationStatusModel
+import com.softeer.togeduck.databinding.RvItemReserveStatusBinding
 import com.softeer.togeduck.utils.ItemClick
 
 
 class ReservationStatusAdapter(private val items: List<ReservationStatusModel>) :
     RecyclerView.Adapter<ViewHolder>() {
 
-    private lateinit var binding: RvItemReservationStatusBinding
+    private lateinit var binding: RvItemReserveStatusBinding
     var itemClick: ItemClick? = null
 
     override fun getItemCount(): Int {
@@ -19,7 +19,7 @@ class ReservationStatusAdapter(private val items: List<ReservationStatusModel>) 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = RvItemReservationStatusBinding.inflate(
+        binding = RvItemReserveStatusBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -38,7 +38,7 @@ class ReservationStatusAdapter(private val items: List<ReservationStatusModel>) 
     }
 }
 
-class ViewHolder(private val binding: RvItemReservationStatusBinding) :
+class ViewHolder(private val binding: RvItemReserveStatusBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: ReservationStatusModel) {
         binding.reserveStatus = item
