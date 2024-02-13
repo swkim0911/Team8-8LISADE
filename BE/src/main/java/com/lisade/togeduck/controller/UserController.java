@@ -50,7 +50,7 @@ public class UserController {
         return userService.checkUserId(userId);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
