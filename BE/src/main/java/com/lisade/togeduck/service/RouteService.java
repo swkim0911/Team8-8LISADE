@@ -16,6 +16,8 @@ import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.BusRepository;
 import com.lisade.togeduck.repository.RouteRepository;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,7 +82,12 @@ public class RouteService {
         Long routeFestivalId = routeDetailDao.getFestivalId();
         validateFestivalAndRoute(festivalId, routeFestivalId);
 
-        return RouteMapper.toRouteDetailDto(routeDetailDao);
+        LocalDateTime startedAt = routeDetailDao.getStartedAt();
+        LocalTime expectedAt = routeDetailDao.getExpectedAt();
+
+        LocalTime arrivalAt = startedAt.toLocalTime().plusHours(expectedAt.getHour())
+            .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
+        return RouteMapper.toRouteDetailDto(routeDetailDao, arrivalAt);
 
     }
 

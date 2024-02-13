@@ -41,7 +41,7 @@ public class RouteMapper {
             .build();
     }
 
-    public static RouteDetailDto toRouteDetailDto(RouteDetailDao route) {
+    public static RouteDetailDto toRouteDetailDto(RouteDetailDao route, LocalTime arrivalAt) {
         LocalTime expectedAt = route.getExpectedAt();
         LocalDateTime startedAt = route.getStartedAt();
         return RouteDetailDto.builder()
@@ -50,8 +50,7 @@ public class RouteMapper {
             .source(route.getSource())
             .destination(route.getDestination())
             .expectedAt(expectedAt)
-            .arrivalAt(startedAt.toLocalTime().plusHours(expectedAt.getHour())
-                .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond()))
+            .arrivalAt(arrivalAt)
             .totalSeats(route.getTotalSeats())
             .reservedSeats(route.getReservedSeats())
             .cost(route.getCost())
