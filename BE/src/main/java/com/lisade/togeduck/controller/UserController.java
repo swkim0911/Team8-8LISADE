@@ -4,6 +4,7 @@ import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
+import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
@@ -11,6 +12,7 @@ import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
+import com.lisade.togeduck.exception.UnAuthenticationException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
 import com.lisade.togeduck.validator.SignUpValidator;
@@ -18,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -47,7 +50,7 @@ public class UserController {
         return userService.checkUserId(userId);
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
@@ -71,5 +74,14 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_USER.getSessionName(), findUser);
         return ResponseEntity.ok(ApiResponse.onSuccess(findUser.getUserId()));
+    }
+
+    @GetMapping("/routes")
+    public ResponseEntity<Object> getRoutes(
+        @Login User user) {
+        if (user == null) {
+            throw new UnAuthenticationException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
+        }
+        return null;
     }
 }

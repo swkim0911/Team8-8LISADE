@@ -3,15 +3,12 @@ package com.lisade.togeduck.global.handler;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
-import com.lisade.togeduck.dto.response.ValidateUserIdDto;
 import com.lisade.togeduck.global.exception.GeneralException;
 import com.lisade.togeduck.global.response.ApiResponse;
-import com.lisade.togeduck.mapper.UserMapper;
-import com.lisade.togeduck.validator.annotation.ValidateUserId;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.metadata.ConstraintDescriptor;
-import java.lang.annotation.Annotation;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,18 +45,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleViolationException(ConstraintViolationException ex,
         WebRequest webRequest) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-        for (ConstraintViolation<?> violation : violations) {
-            ConstraintDescriptor<?> constraintDescriptor = violation.getConstraintDescriptor();
-            Annotation annotation = constraintDescriptor.getAnnotation();
-            if (annotation instanceof ValidateUserId) { // 검증 애노테이션 구분. (확장성으로 일단 만들어 둠)
-                ValidateUserIdDto validateUserIdDto = UserMapper.toValidateUserIdDto(
-                    violation.getMessage());
+        Map<String, String> errors = new LinkedHashMap<>();
 
-                return makeExceptionResponse(validateUserIdDto, ex, BAD_REQUEST, HttpHeaders.EMPTY,
-                    webRequest);
-            }
-        }
-        return null;
+        violations.stream()
+            .forEach((violation) -> {
+                String path = violation.getPropertyPath().toString();
+                String field = path.substring(path.lastIndexOf(".") + 1);
+                String message = violation.getMessage();
+
+                errors.merge(field, message,
+                    (oldMessage, newMessage) -> oldMessage + ", " + newMessage);
+            });
+
+        return makeExceptionResponse(errors, ex, BAD_REQUEST, HttpHeaders.EMPTY,
+            webRequest);
     }
 
     @ExceptionHandler // controller 에서 발생한 예외중에 GeneralException 외 모든 예외 처리
