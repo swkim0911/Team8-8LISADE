@@ -19,6 +19,8 @@
     <string name="email">이메일</string>
     <string name="request_input_email">이메일을 입력해주세요.</string>
     <string name="seat">좌석</string>
+    <string name="seat_number">좌석번호</string>
+    <string name="seating_chart">좌석 배치도</string>
     <string name="estimatedTime">예상 소요 시간</string>
     <string name="time">시간</string>
     <string name="recruitment_status">모집현황</string>
@@ -36,6 +38,10 @@
     <string name="check_ticket">티켓 확인</string>
     <string name="cancle_reservation">예매 취소</string>
     <string name="no_driver">아직 기사님이 배차되지 않았습니다.</string>
+    <string name="share">공유하기</string>
+    <string name="real_time_bus_location">실시간 버스 위치</string>
+    <string name="check_bus_location">버스 위치 확인</string>
+
 
     <string name="search">검색</string>
     <string name="popular_article_title">HOT DUCK</string>
