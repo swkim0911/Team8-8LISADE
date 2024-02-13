@@ -1,14 +1,13 @@
 package com.softeer.togeduck.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.softeer.togeduck.databinding.FragmentHomeBinding
 import com.softeer.togeduck.data.model.PopularArticleModel
-import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.databinding.FragmentHomeBinding
 
 private val dummyData = listOf(
     PopularArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "2024.02.07", "잠실종합운동장"),
@@ -23,6 +22,10 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,10 +36,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+        init()
     }
 
-    private fun setupRecyclerView() {
+    private fun init() {
         binding.rvItemPopularArticle.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = PopularArticleAdapter(dummyData)

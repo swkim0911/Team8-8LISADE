@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.home
+package com.softeer.togeduck.ui.home.main
 
 import android.content.res.Resources
 import android.graphics.Rect
@@ -8,14 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeCategoryModel
-import com.softeer.togeduck.data.model.PopularArticleModel
-import com.softeer.togeduck.databinding.FragmentHomeBinding
 import com.softeer.togeduck.databinding.FragmentHomeCatergoryBinding
 import com.softeer.togeduck.utils.ItemClick
 

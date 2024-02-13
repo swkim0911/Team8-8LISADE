@@ -10,9 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeCategoryFragment">
-
-
+        tools:context=".ui.home.main.HomeCategoryFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvItemCategory"

@@ -1,14 +1,10 @@
-package com.softeer.togeduck.ui.home
+package com.softeer.togeduck.ui.home.main
 
-import android.graphics.Rect
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.data.model.HomeCategoryModel
-import com.softeer.togeduck.data.model.PopularArticleModel
 import com.softeer.togeduck.databinding.RvItemCategoryBinding
-import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
 import com.softeer.togeduck.utils.ItemClick
 
 class HomeCategoryAdapter(private val items: List<HomeCategoryModel>) :
