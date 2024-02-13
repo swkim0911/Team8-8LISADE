@@ -56,6 +56,6 @@ public class User extends BaseEntity {
         this.nickname = nickname;
         this.email = email;
         this.authority = authority;
-        this.userRoutes = new ArrayList<>();
+        this.userRoutes = new ArrayList<>(); //todo 할필요가 없네
     }
 }
