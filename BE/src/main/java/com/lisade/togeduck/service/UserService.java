@@ -7,6 +7,7 @@ import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.global.response.ApiResponse;
@@ -15,6 +16,7 @@ import com.lisade.togeduck.repository.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +68,15 @@ public class UserService {
             .orElseThrow(() -> new UserNotFoundException(BAD_REQUEST, "아이디 또는 비밀번호가 잘못되었습니다."));
     }
 
+    public ResponseEntity<Object> checkUserId(@ValidateUserId String userId) {
+        return ResponseEntity.ok(
+            ApiResponse.onSuccess(UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.")));
+    }
+
+    public Slice<UserReservedRouteDto> getReservedRouteList(Long userId) {
+
+    }
+
     private Map<String, String> getErrorField(Errors errors) {
         Map<String, String> validationResult = new HashMap<>();
 
@@ -75,11 +86,6 @@ public class UserService {
         }
 
         return validationResult;
-    }
-
-    public ResponseEntity<Object> checkUserId(@ValidateUserId String userId) {
-        return ResponseEntity.ok(
-            ApiResponse.onSuccess(UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.")));
     }
 
 }
