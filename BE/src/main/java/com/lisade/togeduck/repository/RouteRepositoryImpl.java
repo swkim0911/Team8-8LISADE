@@ -1,5 +1,6 @@
 package com.lisade.togeduck.repository;
 
+import static com.lisade.togeduck.entity.QBus.bus;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 
@@ -41,13 +42,13 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return Optional.ofNullable(routeDetailDao);
     }
 
-    private static Expression<Long> getTotalSeats(Long routeId) {
+    private Expression<Integer> getTotalSeats(Long routeId) {
         return ExpressionUtils.as(
-            JPAExpressions.select(seat.id.count()).from(seat).where(seat.route.id.eq(routeId)),
+            JPAExpressions.select(bus.numberOfSeats).from(bus).where(bus.eq(route.bus)),
             "totalSeats");
     }
 
-    private static Expression<Long> getReservationSeats(Long routeId) {
+    private Expression<Long> getReservationSeats(Long routeId) {
         return ExpressionUtils.as(JPAExpressions.select(seat.id.count())
             .from(seat)
             .where(seat.route.id.eq(routeId)

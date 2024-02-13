@@ -97,7 +97,7 @@ class RouteServiceTest {
             .source("City A")
             .destination("City B")
             .arrivalAt(LocalTime.of(12, 30))
-            .totalSeats(50L)
+            .totalSeats(50)
             .reservedSeats(20L)
             .cost(25)
             .build();

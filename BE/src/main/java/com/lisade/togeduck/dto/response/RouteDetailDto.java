@@ -15,7 +15,7 @@ public class RouteDetailDto {
     String destination;
     LocalTime departureAt;
     LocalTime arrivalAt;
-    Long totalSeats;
+    Integer totalSeats;
     Long reservedSeats;
     Integer cost;
 }

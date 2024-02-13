@@ -47,7 +47,7 @@ class RouteControllerTest {
             .destination("Destination")
             .departureAt(LocalTime.of(6, 24))
             .arrivalAt(LocalTime.of(10, 24))
-            .totalSeats(100L)
+            .totalSeats(100)
             .reservedSeats(20L)
             .cost(50)
             .build();
