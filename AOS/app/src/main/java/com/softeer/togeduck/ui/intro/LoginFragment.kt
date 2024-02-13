@@ -13,7 +13,7 @@ import com.softeer.togeduck.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding : FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,11 +24,14 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.registerBtn.setOnClickListener{
+        binding.registerBtn.setOnClickListener {
             findNavController().navigate(R.id.action_intro_login_to_intro_register)
         }
-        binding.loginBtn.setOnClickListener{
+        binding.loginBtn.setOnClickListener {
             findNavController().navigate(R.id.action_intro_login_to_mainActivity)
+        }
+        binding.loginBtn.setOnClickListener {
+            findNavController().navigate(R.id.mainActivity)
         }
     }
 }
