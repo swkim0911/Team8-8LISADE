@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.main.HomeListFragment">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategoryList"
             android:layout_width="0dp"
@@ -19,35 +18,49 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/entire"/>
 
         <TextView
             android:id="@+id/entire"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/entire"
+            android:text= "전체 3"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/listSortMenu"
+            android:gravity="start"
+            app:layout_constraintEnd_toStartOf="@id/divider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
-
+            app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList"/>
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerInsetStart="16dp"
+            app:dividerInsetEnd="16dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/entire"
+            app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList"
+            app:layout_constraintEnd_toStartOf="@id/listSortMenu"/>
         <Spinner
             android:id="@+id/listSortMenu"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@id/entire"
-            app:layout_constraintTop_toBottomOf="@id/rvCategoryList" />
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArticleList"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listSortMenu" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

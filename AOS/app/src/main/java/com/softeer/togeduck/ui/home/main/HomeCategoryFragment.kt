@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeCatergoryBinding
+import com.softeer.togeduck.utils.GridSpacingItemDecoration
 import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.fromDpToPx
 
 
 private val dummyData = listOf(
@@ -65,38 +67,3 @@ class HomeCategoryFragment : Fragment() {
 }
 
 
-//////////추후 체크 필요!!!!//////////
-internal class GridSpacingItemDecoration(
-    private val spanCount: Int,
-    private val spacing: Int
-) : RecyclerView.ItemDecoration() {
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        val position: Int = parent.getChildAdapterPosition(view)
-
-        if (position >= 0) {
-            val column = position % spanCount
-            outRect.apply {
-                left = spacing - column * spacing / spanCount
-                right = (column + 1) * spacing / spanCount
-                if (position < spanCount) top = spacing
-                bottom = spacing
-            }
-        } else {
-            outRect.apply {
-                left = 0
-                right = 0
-                top = 0
-                bottom = 0
-            }
-        }
-    }
-}
-
-fun Float.fromDpToPx(): Int =
-    (this * Resources.getSystem().displayMetrics.density).toInt()
