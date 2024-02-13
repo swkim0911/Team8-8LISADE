@@ -47,13 +47,19 @@ class RouteServiceTest {
         // then
         assertThat(routeDetailDto).isNotNull();
         verify(routeRepository, times(1)).findRouteDetail(routeId);
-
-        assertThat(routeDetailDto)
-            .usingRecursiveComparison()
-            .ignoringFields("departureAt") // departureAt는 arrivalAt을 기반으로 계산되므로 무시합니다.
-            .isEqualTo(routeDetailDao);
-        assertThat(routeDetailDto.getDepartureAt()).isEqualTo(
-            routeDetailDao.getArrivalAt().minusHours(4));
+        
+        LocalTime expectedAt = routeDetailDao.getExpectedAt();
+        assertThat(routeDetailDto.getId()).isEqualTo(routeDetailDao.getId());
+        assertThat(routeDetailDto.getStartedAt()).isEqualTo(routeDetailDao.getStartedAt());
+        assertThat(routeDetailDto.getSource()).isEqualTo(routeDetailDao.getSource());
+        assertThat(routeDetailDto.getDestination()).isEqualTo(routeDetailDao.getDestination());
+        assertThat(routeDetailDto.getExpectedAt()).isEqualTo(routeDetailDao.getExpectedAt());
+        assertThat(routeDetailDto.getArrivalAt()).isEqualTo(
+            routeDetailDao.getStartedAt().toLocalTime().plusHours(expectedAt.getHour())
+                .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond()));
+        assertThat(routeDetailDto.getTotalSeats()).isEqualTo(routeDetailDao.getTotalSeats());
+        assertThat(routeDetailDto.getReservedSeats()).isEqualTo(routeDetailDao.getReservedSeats());
+        assertThat(routeDetailDto.getCost()).isEqualTo(routeDetailDao.getCost());
     }
 
     @Test
@@ -96,7 +102,7 @@ class RouteServiceTest {
             .startedAt(LocalDateTime.now())
             .source("City A")
             .destination("City B")
-            .arrivalAt(LocalTime.of(12, 30))
+            .expectedAt(LocalTime.of(3, 30))
             .totalSeats(50)
             .reservedSeats(20L)
             .cost(25)

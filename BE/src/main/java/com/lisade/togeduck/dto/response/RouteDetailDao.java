@@ -16,9 +16,9 @@ public class RouteDetailDao {
     LocalDateTime startedAt;
     String source;
     String destination;
-    LocalTime arrivalAt;
+    LocalTime expectedAt;
     Integer totalSeats;
     Long reservedSeats;
     Integer cost;
-
+    
 }

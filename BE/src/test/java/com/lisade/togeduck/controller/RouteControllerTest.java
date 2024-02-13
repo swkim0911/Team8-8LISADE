@@ -40,13 +40,16 @@ class RouteControllerTest {
     @DisplayName("사용자가 특적 페스티벌 id와 노선 id를 전달하였을때 해당 노선에 대한 자세한 정보를 return 한다.")
     void getDetail() throws Exception {
         //given
+        LocalTime expectedAt = LocalTime.of(10, 24);
+        LocalDateTime startedAt = LocalDateTime.now();
         RouteDetailDto mockResponse = RouteDetailDto.builder()
             .id(1L)
-            .startedAt(LocalDateTime.now())
+            .startedAt(startedAt)
             .source("Source")
             .destination("Destination")
-            .departureAt(LocalTime.of(6, 24))
-            .arrivalAt(LocalTime.of(10, 24))
+            .expectedAt(expectedAt)
+            .arrivalAt(startedAt.toLocalTime().plusHours(expectedAt.getHour())
+                .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond()))
             .totalSeats(100)
             .reservedSeats(20L)
             .cost(50)
