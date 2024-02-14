@@ -1,5 +1,7 @@
 package com.lisade.togeduck.mapper;
 
+import com.lisade.togeduck.dto.response.DistancePricesDto;
+import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
 import com.lisade.togeduck.dto.response.LocationDto;
 import com.lisade.togeduck.dto.response.LocationListDto;
 import com.lisade.togeduck.dto.response.StationDto;
@@ -38,6 +40,15 @@ public class LocationMapper {
                     .map((city) -> toLocationDto(city, city.getStations()))
                     .toList()
             )
+            .build();
+    }
+
+    public static DistancePricesDto toDistancePricesDto(List<BusInfo> busInfos, Integer distance,
+        Integer expectedTime) {
+        return DistancePricesDto.builder()
+            .busInfos(busInfos)
+            .distance(distance)
+            .expectedTime(expectedTime)
             .build();
     }
 }
