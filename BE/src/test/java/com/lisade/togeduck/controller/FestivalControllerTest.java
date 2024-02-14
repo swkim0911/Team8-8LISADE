@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.lisade.togeduck.dto.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
@@ -57,37 +57,37 @@ class FestivalControllerTest {
 
         //given
         FestivalDto mockFestivalDto = FestivalDto.builder().id(1L)
-            .title("test1")
-            .location("테스트 로케이션")
-            .paths(List.of("filePath"))
-            .startedAt(LocalDate.of(2024, 2, 8)).build();
+                .title("test1")
+                .location("테스트 로케이션")
+                .paths(List.of("filePath"))
+                .startedAt(LocalDate.of(2024, 2, 8)).build();
 
         Slice<FestivalDto> mockSlice = new PageImpl<>(Collections.singletonList(mockFestivalDto));
 
         //when
         when(festivalService.getList(any(Pageable.class), any(Category.class),
-            any(FestivalStatus.class), any(String.class))).thenReturn(mockSlice);
+                any(FestivalStatus.class), any(String.class))).thenReturn(mockSlice);
 
         ResultActions resultActions = mockMvc.perform(get("/festivals")
-                .param("category", "3")
-                .param("filter", "popular")
-                .param("status", "1")
-                .param("page", "1")
-                .param("size", "5")
-                .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+                        .param("category", "3")
+                        .param("filter", "popular")
+                        .param("status", "1")
+                        .param("page", "1")
+                        .param("size", "5")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
         //then
         verify(festivalService).getList(
-            eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
-            eq(Category.CONCERT),
-            eq(FestivalStatus.RECRUITMENT), eq("popular"));
+                eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
+                eq(Category.CONCERT),
+                eq(FestivalStatus.RECRUITMENT), eq("popular"));
 
         resultActions.andExpect(jsonPath("$.content[0].id").value(mockFestivalDto.getId()))
-            .andExpect(jsonPath("$.content[0].title").value(mockFestivalDto.getTitle()))
-            .andExpect(jsonPath("$.content[0].location").value(mockFestivalDto.getLocation()))
-            .andExpect(jsonPath("$.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
-            .andExpect(jsonPath("$.content[0].startedAt").value("2024-02-08"));
+                .andExpect(jsonPath("$.content[0].title").value(mockFestivalDto.getTitle()))
+                .andExpect(jsonPath("$.content[0].location").value(mockFestivalDto.getLocation()))
+                .andExpect(jsonPath("$.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
+                .andExpect(jsonPath("$.content[0].startedAt").value("2024-02-08"));
     }
 
     @Test
@@ -100,9 +100,9 @@ class FestivalControllerTest {
 
         //when & then
         IllegalArgumentException exception = assertThrows(
-            IllegalArgumentException.class, () -> {
-                festivalController.getList(pageable, Category.of(invalidCategoryCode), null, null);
-            });
+                IllegalArgumentException.class, () -> {
+                    festivalController.getList(pageable, Category.of(invalidCategoryCode), null, null);
+                });
         Assertions.assertThat(exception.getMessage()).isEqualTo("일치하는 Category 코드가 없습니다.");
         verify(festivalService, never()).getList(any(), any(), any(), any());
     }

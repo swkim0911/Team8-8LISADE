@@ -1,7 +1,7 @@
 package com.lisade.togeduck.mapper;
 
-import com.lisade.togeduck.dto.FestivalDetailDto;
-import com.lisade.togeduck.dto.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalDetailDto;
+import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.FestivalImage;
 import java.util.List;
@@ -24,8 +24,8 @@ public interface FestivalMapper {
 
     default List<String> festivalImagesToPaths(List<FestivalImage> festivalImages) {
         return festivalImages.stream()
-            .map(FestivalImage::getPath)
-            .toList();
+                .map(FestivalImage::getPath)
+                .toList();
     }
 
     default Slice<FestivalDto> toFestivalDtoSlice(Slice<Festival> festivals) {

@@ -8,7 +8,6 @@ import org.springframework.validation.Validator;
 @Slf4j
 public abstract class AbstractValidator<T> implements Validator {
 
-
     @Override
     public boolean supports(Class<?> clazz) {
         return true;
