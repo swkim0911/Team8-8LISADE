@@ -59,8 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:hint="검색"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
+
                 android:padding="0dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray200"
@@ -76,7 +75,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/popular_article_title"
-            android:textColor="@color/primary"
+            android:textColor="@color/navy600"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/rvItemPopularArticle"

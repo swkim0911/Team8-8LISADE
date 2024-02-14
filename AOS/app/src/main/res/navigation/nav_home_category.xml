@@ -9,7 +9,7 @@
         android:id="@+id/homeCategoryFragment"
         android:name="com.softeer.togeduck.ui.home.main.HomeCategoryFragment"
         android:label="fragment_home_catergory"
-        tools:layout="@layout/fragment_home_catergory" >
+        tools:layout="@layout/fragment_home_catergory">
         <action
             android:id="@+id/action_homeCategoryFragment_to_homeListFragment"
             app:destination="@id/homeListFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/homeListFragment"
         android:name="com.softeer.togeduck.ui.home.main.HomeListFragment"
         android:label="fragment_home_list"
-        tools:layout="@layout/fragment_home_list" >
+        tools:layout="@layout/fragment_home_list">
         <action
             android:id="@+id/action_homeListFragment_to_homeCategoryFragment"
             app:destination="@id/homeCategoryFragment" />

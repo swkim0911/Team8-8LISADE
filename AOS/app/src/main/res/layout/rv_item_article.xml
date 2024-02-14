@@ -47,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/articlePlace"/>
+            app:layout_constraintBottom_toTopOf="@id/articlePlace" />
 
         <TextView
             android:id="@+id/articlePlace"
@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
             app:layout_constraintTop_toBottomOf="@id/articleTitle"
-            app:layout_constraintBottom_toTopOf="@id/articleStartDate"/>
+            app:layout_constraintBottom_toTopOf="@id/articleStartDate" />
 
         <TextView
             android:id="@+id/articleStartDate"
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
             app:layout_constraintTop_toBottomOf="@id/articlePlace"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

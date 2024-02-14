@@ -3,11 +3,8 @@ package com.softeer.togeduck.ui.home.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeArticleModel
-import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.databinding.RvItemArticleBinding
-import com.softeer.togeduck.databinding.RvItemCategoryBinding
 import com.softeer.togeduck.utils.ItemClick
 
 class HomeListArticleAdapter(private val items: List<HomeArticleModel>) :

@@ -1,14 +1,10 @@
 package com.softeer.togeduck.ui.home.main
 
-import android.content.res.Resources
-import android.graphics.Rect
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -17,9 +13,7 @@ import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeArticleModel
 import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeListBinding
-import com.softeer.togeduck.utils.GridSpacingItemDecoration
 import com.softeer.togeduck.utils.ItemClick
-import com.softeer.togeduck.utils.fromDpToPx
 
 
 private val dummyData = listOf(
@@ -70,7 +64,6 @@ class HomeListFragment : Fragment() {
         val arrayAdapter =
             ArrayAdapter(requireContext(), R.layout.item_category_sort_list, regionArray)
         binding.listSortMenu.adapter = arrayAdapter
-
     }
 
     private fun init() {
@@ -83,6 +76,7 @@ class HomeListFragment : Fragment() {
         rvCategoryList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
+
         }
         rvArticleList.apply {
             layoutManager = LinearLayoutManager(context)

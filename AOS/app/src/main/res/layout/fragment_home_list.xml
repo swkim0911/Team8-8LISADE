@@ -11,21 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.main.HomeListFragment">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategoryList"
             android:layout_width="0dp"
+            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            app:itemAnimator="@{null}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/entire"/>
+            app:layout_constraintBottom_toTopOf="@id/entire" />
 
         <TextView
             android:id="@+id/entire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text= "전체 3"
+            android:text="전체 3"
 
             android:textSize="12sp"
             android:textStyle="bold"
@@ -33,7 +36,7 @@
             app:layout_constraintEnd_toStartOf="@id/listSortMenu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
-            app:layout_constraintBottom_toTopOf="@id/rvArticleList"/>
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList" />
 
         <Spinner
             android:id="@+id/listSortMenu"
@@ -42,7 +45,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/entire"
             app:layout_constraintTop_toBottomOf="@id/rvCategoryList"
-            app:layout_constraintBottom_toTopOf="@id/rvArticleList"/>
+            app:layout_constraintBottom_toTopOf="@id/rvArticleList" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArticleList"

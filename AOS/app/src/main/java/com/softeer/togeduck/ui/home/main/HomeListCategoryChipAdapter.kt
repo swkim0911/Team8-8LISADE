@@ -7,6 +7,7 @@ import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.databinding.RvItemCategoryChipBinding
 import com.softeer.togeduck.utils.ItemClick
+
 class HomeListCategoryChipAdapter(private val items: List<HomeCategoryModel>) :
     RecyclerView.Adapter<CategoryChipViewHolder>() {
     private lateinit var binding: RvItemCategoryChipBinding
@@ -28,6 +29,7 @@ class HomeListCategoryChipAdapter(private val items: List<HomeCategoryModel>) :
 
     override fun onBindViewHolder(holder: CategoryChipViewHolder, position: Int) {
         holder.bind(items[holder.adapterPosition])
+
         holder.itemView.setOnClickListener {
             val previousSelectedPosition = selectedItemPosition
             selectedItemPosition = position
@@ -35,7 +37,7 @@ class HomeListCategoryChipAdapter(private val items: List<HomeCategoryModel>) :
                 notifyItemChanged(previousSelectedPosition)
             }
             notifyItemChanged(position)
-            itemClick?.onClick(it, position)
+
         }
         if (position == selectedItemPosition) {
             holder.itemView.setBackgroundResource(R.drawable.item_home_category_chip_clicked)

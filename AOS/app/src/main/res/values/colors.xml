@@ -10,7 +10,11 @@
     <color name="gray230">#CCCCCC</color>
     <color name="gray200">#AFBAC8</color>
     <color name="gray100">#eaeaea</color>
+    <color name="gray50">#F4F6FA</color>
+    <color name="gray30">#EAEDF4</color>
     <color name="mint">#00C5DC</color>
-    <color name="navy">#243059</color>
-    <color name="primary">#003D7A</color>
+    <color name="navy800">#243059</color>
+    <color name="navy600">#003D7A</color>
+
+
 </resources>
