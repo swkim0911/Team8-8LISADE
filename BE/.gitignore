@@ -8,9 +8,6 @@
 # .idea
 .idea/**
 
-# gradle/wrapper
-gradle/wrapper
-
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
@@ -182,4 +179,5 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij,java,gradle
 .env
-/src/main/generated/com/lisade/togeduck/mapper
+/src/main/generated/
+/src/main/resources/data.sql
