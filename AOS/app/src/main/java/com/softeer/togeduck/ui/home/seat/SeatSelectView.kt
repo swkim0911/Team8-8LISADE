@@ -23,7 +23,7 @@ class SeatSelectView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         ((seatSize + seatMargin) * seatsPerRow - seatMargin + aisleSize).fromDpToPx()
     private var viewHeightSize = ((seatSize + seatMargin) * totalRows + seatSize).fromDpToPx()
 
-    private var selectedSeatNum = -1
+    var selectedSeatNum = -1
     private var selectedSeat: TextView? = null
 
     init {

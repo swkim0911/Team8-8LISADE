@@ -1,288 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.seat.SeatSelectFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/guideline_contents" />
+    <data>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/guideline_contents" />
+        <variable
+            name="seatVm"
+            type="com.softeer.togeduck.ui.home.seat.SeatViewModel" />
+    </data>
 
-    <!--타이틀-->
-    <View
-        android:id="@+id/header_top"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="@id/guideRight"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@id/guideLeft"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/icon_back"
-        app:layout_constraintBottom_toBottomOf="@id/header_top"
-        app:layout_constraintStart_toStartOf="@id/header_top"
-        app:layout_constraintTop_toTopOf="@id/header_top" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="좌석 선택"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/header_top"
-        app:layout_constraintEnd_toEndOf="@id/header_top"
-        app:layout_constraintStart_toStartOf="@id/header_top"
-        app:layout_constraintTop_toTopOf="@id/header_top" />
-    <!--end 타이틀-->
-
-    <!--노선 정보-->
-    <View
-        android:id="@+id/courseInfoContainer"
-        style="@style/main_title_box"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        app:layout_constraintTop_toBottomOf="@id/header_top" />
+        android:layout_height="match_parent"
+        tools:context=".ui.home.seat.SeatSelectFragment">
 
-    <!--출발지 / 도착지-->
-    <TextView
-        android:id="@+id/courseSP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:text="부산(시청 앞)"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/seatTotalText"
-        app:layout_constraintStart_toStartOf="@id/guideLeft"
-        app:layout_constraintTop_toTopOf="@id/courseInfoContainer" />
-
-    <ImageView
-        android:id="@+id/courseArrow"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/transparent"
-        android:src="@drawable/icon_right_arrow2"
-        app:layout_constraintBottom_toBottomOf="@id/courseSP"
-        app:layout_constraintStart_toEndOf="@id/courseSP"
-        app:layout_constraintTop_toTopOf="@id/courseSP" />
-
-    <TextView
-        android:id="@+id/courseDP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@color/transparent"
-        android:text="서울(고척스카이돔)"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/courseArrow"
-        app:layout_constraintTop_toTopOf="@id/courseSP" />
-    <!--end 출발지 / 도착지-->
-
-    <!--잔여 좌석-->
-    <TextView
-        android:id="@+id/seatTotalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:text="@string/total"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
-        app:layout_constraintStart_toStartOf="@id/guideLeft"
-        app:layout_constraintTop_toBottomOf="@id/courseSP" />
-
-    <TextView
-        android:id="@+id/seatTotalValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="@color/transparent"
-        android:text="28"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/seatTotalText"
-        app:layout_constraintStart_toEndOf="@id/seatTotalText" />
-
-    <TextView
-        android:id="@+id/seatTotalUnit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:background="@color/transparent"
-        android:text="@string/seat_unit"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/seatTotalValue"
-        app:layout_constraintStart_toEndOf="@id/seatTotalValue" />
-
-    <View
-        android:id="@+id/dividerSeatInfo"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/seatTotalText"
-        app:layout_constraintStart_toEndOf="@id/seatTotalUnit"
-        app:layout_constraintTop_toTopOf="@id/seatTotalText" />
-
-    <TextView
-        android:id="@+id/seatLeftoverText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@color/transparent"
-        android:text="@string/leftover"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
-        app:layout_constraintStart_toEndOf="@id/dividerSeatInfo"
-        app:layout_constraintTop_toBottomOf="@id/courseSP" />
-
-    <TextView
-        android:id="@+id/seatLeftoverValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="@color/transparent"
-        android:text="22"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/seatTotalText"
-        app:layout_constraintStart_toEndOf="@id/seatLeftoverText" />
-
-    <TextView
-        android:id="@+id/seatLeftoverUnit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:background="@color/transparent"
-        android:text="@string/seat_unit"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/seatTotalValue"
-        app:layout_constraintStart_toEndOf="@id/seatLeftoverValue" />
-    <!--end 잔여 좌석-->
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/transparent"
-        android:src="@drawable/icon_refresh"
-        app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
-        app:layout_constraintEnd_toEndOf="@id/guideRight" />
-    <!--end 노선 정보-->
-
-    <TextView
-        android:id="@+id/driverSeatText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/driver_seat"
-        android:textColor="@color/gray300"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/guideLeft"
-        app:layout_constraintTop_toBottomOf="@id/courseInfoContainer" />
-
-    <TextView
-        android:id="@+id/entranceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/entrance"
-        android:textColor="@color/gray300"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/guideRight"
-        app:layout_constraintTop_toTopOf="@id/driverSeatText" />
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:scrollbarStyle="outsideInset"
-        app:layout_constraintBottom_toTopOf="@id/totalPriceText"
-        app:layout_constraintEnd_toEndOf="@id/entranceText"
-        app:layout_constraintStart_toStartOf="@id/driverSeatText"
-        app:layout_constraintTop_toBottomOf="@id/driverSeatText">
-
-        <com.softeer.togeduck.ui.home.seat.SeatSelectView
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
-    </ScrollView>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_contents" />
 
-    <TextView
-        android:id="@+id/totalPriceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/total_price"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
-        app:layout_constraintStart_toStartOf="@id/guideLeft" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_contents" />
 
-    <TextView
-        android:id="@+id/totalPriceValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="0"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
-        app:layout_constraintEnd_toStartOf="@id/totalPriceUnit" />
+        <!--타이틀-->
+        <View
+            android:id="@+id/header_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/totalPriceUnit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/krw"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
-        app:layout_constraintEnd_toEndOf="@id/guideRight" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon_back"
+            app:layout_constraintBottom_toBottomOf="@id/header_top"
+            app:layout_constraintStart_toStartOf="@id/header_top"
+            app:layout_constraintTop_toTopOf="@id/header_top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="좌석 선택"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/header_top"
+            app:layout_constraintEnd_toEndOf="@id/header_top"
+            app:layout_constraintStart_toStartOf="@id/header_top"
+            app:layout_constraintTop_toTopOf="@id/header_top" />
+        <!--end 타이틀-->
+
+        <!--노선 정보-->
+        <View
+            android:id="@+id/courseInfoContainer"
+            style="@style/main_title_box"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            app:layout_constraintTop_toBottomOf="@id/header_top" />
+
+        <!--출발지 / 도착지-->
+        <TextView
+            android:id="@+id/courseSP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="부산(시청 앞)"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/seatTotalText"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toTopOf="@id/courseInfoContainer" />
+
+        <ImageView
+            android:id="@+id/courseArrow"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_right_arrow2"
+            app:layout_constraintBottom_toBottomOf="@id/courseSP"
+            app:layout_constraintStart_toEndOf="@id/courseSP"
+            app:layout_constraintTop_toTopOf="@id/courseSP" />
+
+        <TextView
+            android:id="@+id/courseDP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@color/transparent"
+            android:text="서울(고척스카이돔)"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/courseArrow"
+            app:layout_constraintTop_toTopOf="@id/courseSP" />
+        <!--end 출발지 / 도착지-->
+
+        <!--잔여 좌석-->
+        <TextView
+            android:id="@+id/seatTotalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="@string/total"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/courseSP" />
+
+        <TextView
+            android:id="@+id/seatTotalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@color/transparent"
+            android:text="28"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/seatTotalText"
+            app:layout_constraintStart_toEndOf="@id/seatTotalText" />
+
+        <TextView
+            android:id="@+id/seatTotalUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:background="@color/transparent"
+            android:text="@string/seat_unit"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/seatTotalValue"
+            app:layout_constraintStart_toEndOf="@id/seatTotalValue" />
+
+        <View
+            android:id="@+id/dividerSeatInfo"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/seatTotalText"
+            app:layout_constraintStart_toEndOf="@id/seatTotalUnit"
+            app:layout_constraintTop_toTopOf="@id/seatTotalText" />
+
+        <TextView
+            android:id="@+id/seatLeftoverText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@color/transparent"
+            android:text="@string/leftover"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
+            app:layout_constraintStart_toEndOf="@id/dividerSeatInfo"
+            app:layout_constraintTop_toBottomOf="@id/courseSP" />
+
+        <TextView
+            android:id="@+id/seatLeftoverValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@color/transparent"
+            android:text="22"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/seatTotalText"
+            app:layout_constraintStart_toEndOf="@id/seatLeftoverText" />
+
+        <TextView
+            android:id="@+id/seatLeftoverUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:background="@color/transparent"
+            android:text="@string/seat_unit"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/seatTotalValue"
+            app:layout_constraintStart_toEndOf="@id/seatLeftoverValue" />
+        <!--end 잔여 좌석-->
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_refresh"
+            app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
+            app:layout_constraintEnd_toEndOf="@id/guideRight" />
+        <!--end 노선 정보-->
+
+        <TextView
+            android:id="@+id/driverSeatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/driver_seat"
+            android:textColor="@color/gray300"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/courseInfoContainer" />
+
+        <TextView
+            android:id="@+id/entranceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/entrance"
+            android:textColor="@color/gray300"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintTop_toTopOf="@id/driverSeatText" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:scrollbarStyle="outsideInset"
+            app:layout_constraintBottom_toTopOf="@id/totalPriceText"
+            app:layout_constraintEnd_toEndOf="@id/entranceText"
+            app:layout_constraintStart_toStartOf="@id/driverSeatText"
+            app:layout_constraintTop_toBottomOf="@id/driverSeatText">
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectCompleteBtn"
-        style="@style/Widget.Material3.Button.IconButton.Filled"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/gray300"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/selection_complete"
-        android:textSize="18sp"
-        app:cornerRadius="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideRight"
-        app:layout_constraintStart_toStartOf="@id/guideLeft" />
+            <com.softeer.togeduck.ui.home.seat.SeatSelectView
+                android:id="@+id/seatSelectView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+        </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/totalPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/total_price"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
+            app:layout_constraintStart_toStartOf="@id/guideLeft" />
+
+        <TextView
+            android:id="@+id/totalPriceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
+            app:layout_constraintEnd_toStartOf="@id/totalPriceUnit" />
+
+        <TextView
+            android:id="@+id/totalPriceUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/krw"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
+            app:layout_constraintEnd_toEndOf="@id/guideRight" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectCompleteBtn"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/gray300"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/selection_complete"
+            android:textSize="18sp"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintStart_toStartOf="@id/guideLeft" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
