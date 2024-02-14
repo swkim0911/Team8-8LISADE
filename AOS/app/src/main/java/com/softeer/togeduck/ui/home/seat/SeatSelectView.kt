@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -56,7 +55,6 @@ class SeatSelectView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
         item.setOnClickListener {
             val clickedSeatNum = item.text.toString().toInt()
-            Log.e("?", clickedSeatNum.toString())
             if (selectedSeatNum == clickedSeatNum) {
                 deselectSeat(item, seatNumber)
             } else {

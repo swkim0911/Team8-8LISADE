@@ -220,9 +220,9 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toTopOf="@id/totalPriceText"
         app:layout_constraintEnd_toEndOf="@id/entranceText"
         app:layout_constraintStart_toStartOf="@id/driverSeatText"
@@ -230,7 +230,8 @@
 
         <com.softeer.togeduck.ui.home.seat.SeatSelectView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
     </ScrollView>
 
     <TextView
