@@ -1,8 +1,10 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.dto.response.DistancePricesDto;
 import com.lisade.togeduck.dto.response.LocationListDto;
 import com.lisade.togeduck.dto.response.TMapResultDto;
 import com.lisade.togeduck.entity.City;
+import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.StationNotFoundException;
 import com.lisade.togeduck.mapper.LocationMapper;
@@ -54,6 +56,16 @@ public class LocationService {
 
     public Station getStation(Long stationId) {
         return stationRepository.findById(stationId).orElseThrow(StationNotFoundException::new);
+    }
+
+    public DistancePricesDto getDistance(Long stationId, Long festivalId) {
+        Station station = getStation(stationId);
+        Festival festival = festivalService.get(festivalId);
+
+        TMapResultDto tMapResultDto = requestTMap(station.getXPos(), station.getYPos(),
+            festival.getXPos(), festival.getYPos());
+
+        return null;
     }
 
     private TMapResultDto requestTMap(Double startX, Double startY, Double endX, Double endY) {
