@@ -61,6 +61,9 @@ public class Festival extends BaseEntity {
     @OneToMany(mappedBy = "festival")
     private List<Route> routes;
 
+    @OneToMany(mappedBy = "festival")
+    private List<View> views;
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status", nullable = false)
     private FestivalStatus festivalStatus;

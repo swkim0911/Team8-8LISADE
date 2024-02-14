@@ -1,6 +1,7 @@
 package com.lisade.togeduck.mapper;
 
 import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.AuthorityType;
@@ -14,6 +15,13 @@ public class UserMapper {
             .password(validationResult.get("password"))
             .nickname(validationResult.get("nickname"))
             .email(validationResult.get("email"))
+            .build();
+    }
+
+    public static LoginEmptyFieldDto toLoginEmptyFieldDto(Map<String, String> validationResult) {
+        return LoginEmptyFieldDto.builder()
+            .userId(validationResult.get("userId"))
+            .password(validationResult.get("password"))
             .build();
     }
 

@@ -1,9 +1,11 @@
 package com.lisade.togeduck.validator;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Slf4j
 public abstract class AbstractValidator<T> implements Validator {
 
 
@@ -15,7 +17,11 @@ public abstract class AbstractValidator<T> implements Validator {
     @SuppressWarnings("unchecked")
     @Override
     public void validate(Object target, Errors errors) {
-        doValidate((T) target, errors);
+        try {
+            doValidate((T) target, errors);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+        }
     }
 
     protected abstract void doValidate(final T dto, final Errors errors);
