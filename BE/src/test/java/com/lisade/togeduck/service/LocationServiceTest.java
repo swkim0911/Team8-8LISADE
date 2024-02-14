@@ -2,7 +2,7 @@ package com.lisade.togeduck.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.lisade.togeduck.dto.response.TMapResultDto;
+import com.lisade.togeduck.dto.response.DistancePricesDto;
 import com.lisade.togeduck.repository.CityRepository;
 import com.lisade.togeduck.repository.StationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,27 +20,27 @@ class LocationServiceTest {
     private StationRepository stationRepository;
     @Mock
     private FestivalService festivalService;
+    @Mock
+    private BusService busService;
 
     @BeforeEach
     void setUp() {
         RestTemplate restTemplate = new RestTemplate();
         locationService = new LocationService(restTemplate, cityRepository, stationRepository,
-            festivalService);
+            festivalService, busService);
     }
 
     @Test
     @DisplayName("TMap으로 요청을 했을 때 정상적으로 응답이 오는지 테스트")
     void getTMapResponseTest() {
         // given
-        Double startX = 126.982177;
-        Double startY = 37.564686;
-        Double endX = 129.032714;
-        Double endY = 35.106811;
+        Long stationId = 1L;
+        Long festivalId = 1L;
 
         // when
-        TMapResultDto tMapResultDto = locationService.getDistance(startX, startY, endX, endY);
+        DistancePricesDto distance = locationService.getDistance(stationId, festivalId);
 
         // then
-        assertNotNull(tMapResultDto);
+        assertNotNull(distance);
     }
 }
