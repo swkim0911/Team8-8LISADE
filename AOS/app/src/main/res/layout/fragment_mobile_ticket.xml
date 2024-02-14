@@ -339,7 +339,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/navy"
+        android:backgroundTint="@color/navy800"
         android:elevation="@dimen/ticket_elevation"
         android:insetLeft="0dp"
         android:insetTop="0dp"
