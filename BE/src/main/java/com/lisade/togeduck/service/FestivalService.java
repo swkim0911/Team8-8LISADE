@@ -11,7 +11,7 @@ import org.springframework.data.domain.Slice;
 public interface FestivalService {
 
     Slice<FestivalDto> getList(Pageable pageable, Category category, FestivalStatus festivalStatus,
-                               String filterType);
+        String filterType);
 
     Festival get(Long id);
 

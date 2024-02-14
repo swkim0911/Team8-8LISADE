@@ -15,7 +15,7 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
 
     @Query("SELECT DISTINCT f FROM Festival f LEFT JOIN FETCH f.festivalImages")
     Slice<Festival> findSliceByCategoryAndFestivalStatus(final Pageable pageable, Category category,
-                                                         FestivalStatus festivalStatus);
+        FestivalStatus festivalStatus);
 
     @Override
     @Query("SELECT DISTINCT f FROM Festival f LEFT JOIN FETCH f.festivalImages WHERE f.id = :id")

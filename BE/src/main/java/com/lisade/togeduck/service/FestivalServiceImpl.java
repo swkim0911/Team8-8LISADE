@@ -23,10 +23,10 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     public Slice<FestivalDto> getList(Pageable pageable, Category category,
-                                      FestivalStatus festivalStatus,
-                                      String filterType) {
+        FestivalStatus festivalStatus,
+        String filterType) {
         Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
-                pageable, category, festivalStatus);
+            pageable, category, festivalStatus);
         return festivalMapper.toFestivalDtoSlice(festivals);
     }
 

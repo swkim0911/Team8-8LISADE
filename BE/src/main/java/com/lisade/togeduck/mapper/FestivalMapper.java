@@ -24,8 +24,8 @@ public interface FestivalMapper {
 
     default List<String> festivalImagesToPaths(List<FestivalImage> festivalImages) {
         return festivalImages.stream()
-                .map(FestivalImage::getPath)
-                .toList();
+            .map(FestivalImage::getPath)
+            .toList();
     }
 
     default Slice<FestivalDto> toFestivalDtoSlice(Slice<Festival> festivals) {
