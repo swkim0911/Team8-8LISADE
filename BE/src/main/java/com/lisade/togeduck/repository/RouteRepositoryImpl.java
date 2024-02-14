@@ -63,7 +63,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.price,
                 bus.numberOfSeats,
                 getReservationSeats(),
-                getFestivalImagePath()))
+                festivalImage.path))
             .from(route)
             .join(station)
             .on(route.station.eq(station))
@@ -71,6 +71,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .on(festival.eq(route.festival))
             .join(bus)
             .on(route.bus.eq(bus))
+            .join(festivalImage)
+            .on(festivalImage.festival.eq(festival)
+                .and(festivalImage.id.eq(getMinFestivalImageId())))
             .where(route.id.in((getRouteId(userId))))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize() + 1) // 다음 페이지가 있는지 확인
@@ -83,17 +86,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
     }
 
-    private JPQLQuery<String> getFestivalImagePath() {
-        return JPAExpressions.select(festivalImage.path)
-            .from(route)
-            .join(festival)
-            .on(route.festival.eq(festival).and(festival.id.eq(getMinFestivalId())))
-            .join(festivalImage)
-            .on(festivalImage.festival.eq(festival))
-            .where(route.id.eq(id));
-    }
-
-    private JPQLQuery<Long> getMinFestivalId() {
+    private JPQLQuery<Long> getMinFestivalImageId() {
         return JPAExpressions.select(festivalImage.id.min())
             .from(festivalImage)
             .where(festivalImage.festival.id.eq(festival.id));

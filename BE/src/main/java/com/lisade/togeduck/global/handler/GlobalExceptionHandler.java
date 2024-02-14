@@ -67,8 +67,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAllOtherException(Exception exception,
         WebRequest webRequest) {
 
-        log.error(exception.getMessage());
-        exception.printStackTrace();
         return makeInternalExceptionResponse(
             exception,
             INTERNAL_SERVER_ERROR,
