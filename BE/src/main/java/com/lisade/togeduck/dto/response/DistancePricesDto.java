@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class DistancePricesDto {
 
     private Integer distance;
-    private String expectedTime;
+    private Integer expectedTime;
     List<BusInfo> busInfos;
 
     @Getter
