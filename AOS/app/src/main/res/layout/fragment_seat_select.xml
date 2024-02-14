@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="seatVm"
-            type="com.softeer.togeduck.ui.home.seat.SeatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -285,11 +282,13 @@
             android:layout_height="60dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/gray300"
+            android:enabled="false"
             android:insetLeft="0dp"
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
             android:text="@string/selection_complete"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"

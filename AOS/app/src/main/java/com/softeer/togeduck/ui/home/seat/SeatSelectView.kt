@@ -8,6 +8,8 @@ import android.view.Gravity
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.softeer.togeduck.R
 import com.softeer.togeduck.utils.fromDpToPx
 
@@ -23,11 +25,15 @@ class SeatSelectView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         ((seatSize + seatMargin) * seatsPerRow - seatMargin + aisleSize).fromDpToPx()
     private var viewHeightSize = ((seatSize + seatMargin) * totalRows + seatSize).fromDpToPx()
 
-    var selectedSeatNum = -1
+    private var selectedSeatNum = -1
     private var selectedSeat: TextView? = null
+
+    private var _selectSeat = MutableLiveData<Boolean>(false)
+    val selectSeat: LiveData<Boolean> get() = _selectSeat
 
     init {
         val aisleSeatCol = calcAisleSeatCol()
+
         for (row in 0..totalRows) {
             for (col in 0..<seatsPerRow) {
                 val seatNumber = row * seatsPerRow + col + 1
@@ -119,6 +125,7 @@ class SeatSelectView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     private fun deselectSeat(item: TextView, seatNumber: Int) {
         selectedSeatNum = -1
         selectedSeat = null
+        _selectSeat.value = false
 
         setSeatItemProperty(item, seatNumber)
     }
@@ -130,6 +137,7 @@ class SeatSelectView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
         selectedSeatNum = seatNumber
         selectedSeat = item
+        _selectSeat.value = true
 
         setSelectedSeatItemProperty(item)
     }
