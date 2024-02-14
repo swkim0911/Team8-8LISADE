@@ -12,10 +12,12 @@ import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
+import com.lisade.togeduck.repository.RouteRepository;
 import com.lisade.togeduck.repository.UserRepository;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ import org.springframework.validation.annotation.Validated;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RouteRepository routeRepository;
 
     public SignUpFailureDto validateSignUp(Errors errors) {
         Map<String, String> validationResult = getErrorField(errors);
@@ -73,8 +76,8 @@ public class UserService {
             ApiResponse.onSuccess(UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.")));
     }
 
-    public Slice<UserReservedRouteDto> getReservedRouteList(Long userId) {
-
+    public Slice<UserReservedRouteDto> getReservedRouteList(Pageable pageable, Long userId) {
+        return routeRepository.findReservedRoutes(pageable, userId);
     }
 
     private Map<String, String> getErrorField(Errors errors) {

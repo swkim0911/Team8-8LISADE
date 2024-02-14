@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -56,6 +55,5 @@ public class User extends BaseEntity {
         this.nickname = nickname;
         this.email = email;
         this.authority = authority;
-        this.userRoutes = new ArrayList<>(); //todo 할필요가 없네
     }
 }

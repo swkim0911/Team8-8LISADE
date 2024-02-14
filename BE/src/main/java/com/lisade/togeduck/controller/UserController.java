@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,10 +81,10 @@ public class UserController {
 
     @GetMapping("/routes")
     public Slice<UserReservedRouteDto> getRoutes(
-        @Login User user) {
+        @Login User user, Pageable pageable) {
         if (user == null) {
             throw new UnAuthenticationException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
         }
-        return userService.getReservedRouteList(user.getId());
+        return userService.getReservedRouteList(pageable, user.getId());
     }
 }
