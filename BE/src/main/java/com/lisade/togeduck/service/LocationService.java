@@ -1,6 +1,7 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.response.DistancePricesDto;
+import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
 import com.lisade.togeduck.dto.response.LocationListDto;
 import com.lisade.togeduck.dto.response.TMapResultDto;
 import com.lisade.togeduck.entity.City;
@@ -43,6 +44,7 @@ public class LocationService {
     private final CityRepository cityRepository;
     private final StationRepository stationRepository;
     private final FestivalService festivalService;
+    private final BusService busService;
 
     public LocationListDto getList() {
         List<City> cities = getCities();
@@ -65,7 +67,13 @@ public class LocationService {
         TMapResultDto tMapResultDto = requestTMap(station.getXPos(), station.getYPos(),
             festival.getXPos(), festival.getYPos());
 
-        return null;
+        Integer distance =
+            tMapResultDto.getFeatures().get(0).getProperties().getTotalDistance() / 1000;
+        Integer expectedTime = tMapResultDto.getFeatures().get(0).getProperties().getTotalTime();
+
+        List<BusInfo> busInfos = busService.getBusInfo(distance);
+
+        return LocationMapper.toDistancePricesDto(busInfos, distance, expectedTime);
     }
 
     private TMapResultDto requestTMap(Double startX, Double startY, Double endX, Double endY) {
