@@ -21,6 +21,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -58,18 +59,24 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.festival.title,
                 route.startedAt,
                 route.festival.location,
-                route.station.name,
+                route.station.name.as("stationName"),
                 route.price,
-                route.bus.numberOfSeats,
-                getTotalSeats(Long.valueOf(route.id.toString())),
-                getFestivalImagePath(Long.valueOf(route.id.toString()))))
+                route.bus.numberOfSeats.as("totalSeats"),
+                getReservationSeats(toRouteId()),
+                getFestivalImagePath(toRouteId())))
             .from(route)
             .join(route.station)
             .join(route.festival)
             .join(route.bus)
             .where(route.id.eq((getRouteId(userId))))
             .fetch();
-        return null;
+
+        boolean hasNext = false;
+        if (userReservedRoutes.size() > pageable.getPageSize()) {
+            userReservedRoutes.remove(pageable.getPageSize());
+            hasNext = true;
+        }
+        return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
     }
 
     private Expression<?> getFestivalImagePath(Long routeId) {
@@ -103,5 +110,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 .where(user.id.eq(userId)),
             "routeId"
         );
+    }
+
+    private Long toRouteId() {
+        return Long.valueOf(route.id.toString());
     }
 }
