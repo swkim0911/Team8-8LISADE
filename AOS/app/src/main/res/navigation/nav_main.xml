@@ -18,20 +18,17 @@
         android:id="@+id/menuHome"
         android:name="com.softeer.togeduck.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
-    </fragment>
+        tools:layout="@layout/fragment_home"></fragment>
     <fragment
         android:id="@+id/menuChat"
         android:name="com.softeer.togeduck.ui.chatting.ChattingFragment"
         android:label="fragment_chatting"
-        tools:layout="@layout/fragment_chatting">
-    </fragment>
+        tools:layout="@layout/fragment_chatting"></fragment>
     <fragment
         android:id="@+id/menuMyPage"
         android:name="com.softeer.togeduck.ui.mypage.MyPageFragment"
         android:label="fragment_my_page"
-        tools:layout="@layout/fragment_my_page">
-    </fragment>
+        tools:layout="@layout/fragment_my_page"></fragment>
     <activity
         android:id="@+id/reservationStatusDetailActivity"
         android:name="com.softeer.togeduck.ui.reserve_status.detail.ReserveStatusDetailActivity"

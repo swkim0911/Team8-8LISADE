@@ -1,12 +1,7 @@
 package com.softeer.togeduck.ui.intro
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-
-import androidx.fragment.app.commit
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.appcompat.app.AppCompatActivity
 import com.softeer.togeduck.R
 
 class IntroActivity : AppCompatActivity() {
