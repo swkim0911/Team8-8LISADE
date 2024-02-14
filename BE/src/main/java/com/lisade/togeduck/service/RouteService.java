@@ -34,7 +34,6 @@ public class RouteService {
     private final LocationService locationService;
     private final RouteRepository routeRepository;
 
-
     @Transactional
     public com.lisade.togeduck.dto.response.RouteRegistrationDto save(Long festivalId,
         RouteRegistrationDto routeRegistration) {
@@ -86,7 +85,7 @@ public class RouteService {
 
         LocalTime arrivalAt = startedAt.toLocalTime().plusHours(expectedAt.getHour())
             .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
-        
+
         return RouteMapper.toRouteDetailDto(routeDetailDao, arrivalAt);
     }
 
