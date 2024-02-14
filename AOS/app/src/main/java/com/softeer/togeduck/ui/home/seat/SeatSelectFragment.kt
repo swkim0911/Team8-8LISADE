@@ -42,7 +42,7 @@ class SeatSelectFragment : Fragment() {
             if (selectSeat!!.value == true) {
                 binding.selectCompleteBtn.setBackgroundColor(
                     ContextCompat.getColor(
-                        requireContext(), R.color.main
+                        requireContext(), R.color.navy300
                     )
                 )
                 binding.selectCompleteBtn.isEnabled = true
