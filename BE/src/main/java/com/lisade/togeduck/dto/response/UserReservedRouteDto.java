@@ -1,6 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,11 +14,11 @@ public class UserReservedRouteDto {
 
     private Long id;
     private String title;
-    private LocalDate startedAt;
+    private LocalDateTime startedAt;
     private String location;
     private String stationName;
     private Integer price;
     private Integer totalSeats;
-    private Integer reservedSeats;
+    private Long reservedSeats;
     private String imagePath;
 }
