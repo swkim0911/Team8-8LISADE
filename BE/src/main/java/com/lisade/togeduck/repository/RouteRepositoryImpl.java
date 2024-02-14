@@ -69,6 +69,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(route.festival)
             .join(route.bus)
             .where(route.id.eq((getRouteId(userId))))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize() + 1) // 다음 페이지가 있는지 확인
             .fetch();
 
         boolean hasNext = false;
