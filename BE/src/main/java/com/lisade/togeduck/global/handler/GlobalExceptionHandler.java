@@ -9,13 +9,16 @@ import com.lisade.togeduck.global.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -30,6 +33,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         WebRequest request) {
         ApiResponse<Object> body = ApiResponse.of(status.value(), status.toString(), null);
         return new ResponseEntity<>(body, status);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+        MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status,
+        WebRequest request) {
+        List<FieldError> allErrors = ex.getFieldErrors();
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        allErrors.forEach((error) -> {
+            String name = error.getField();
+            String message = error.getDefaultMessage();
+
+            errors.merge(name, message, (oldMessage, newMessage) -> oldMessage + ", " + newMessage);
+        });
+
+        return makeExceptionResponse(errors, ex, BAD_REQUEST, HttpHeaders.EMPTY, request);
     }
 
     @ExceptionHandler(GeneralException.class)
@@ -50,15 +70,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         Map<String, String> errors = new LinkedHashMap<>();
 
-        violations.stream()
-            .forEach((violation) -> {
-                String path = violation.getPropertyPath().toString();
-                String field = path.substring(path.lastIndexOf(".") + 1);
-                String message = violation.getMessage();
+        violations.forEach((violation) -> {
+            String path = violation.getPropertyPath().toString();
+            String field = path.substring(path.lastIndexOf(".") + 1);
+            String message = violation.getMessage();
 
-                errors.merge(field, message,
-                    (oldMessage, newMessage) -> oldMessage + ", " + newMessage);
-            });
+            errors.merge(field, message,
+                (oldMessage, newMessage) -> oldMessage + ", " + newMessage);
+        });
 
         return makeExceptionResponse(errors, ex, BAD_REQUEST, HttpHeaders.EMPTY,
             webRequest);
