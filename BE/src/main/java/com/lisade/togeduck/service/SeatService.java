@@ -6,6 +6,7 @@ import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
 import com.lisade.togeduck.mapper.SeatMapper;
@@ -27,6 +28,10 @@ public class SeatService {
 
     public SeatListDto getList(Long routeId) {
         List<Seat> seats = seatRepository.findAllByRouteId(routeId);
+
+        if (seats.isEmpty()) {
+            throw new RouteNotFoundException();
+        }
 
         return SeatMapper.toSeatListDto(seats);
     }
