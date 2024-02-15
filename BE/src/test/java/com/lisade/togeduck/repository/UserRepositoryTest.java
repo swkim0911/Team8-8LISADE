@@ -81,7 +81,7 @@ class UserRepositoryTest {
 
         //when
         User findUser = userRepository.findByUserIdAndPassword(userId, password)
-            .orElseThrow(() -> new UserNotFoundException(null, null));
+            .orElseThrow(UserNotFoundException::new);
 
         //then
         assertThat(findUser.getUserId()).isEqualTo(userId);
@@ -107,7 +107,7 @@ class UserRepositoryTest {
 
         //when, then
         Assertions.assertThatThrownBy(() -> userRepository.findByUserIdAndPassword(userId, password)
-                .orElseThrow(() -> new UserNotFoundException(null, null)))
+                .orElseThrow(UserNotFoundException::new))
             .isEqualTo(UserNotFoundException.class);
     }
 }
