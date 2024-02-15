@@ -15,7 +15,7 @@ import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.HomeArticleModel
 import com.softeer.togeduck.data.model.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeListBinding
-import com.softeer.togeduck.ui.article_detail.RouteViewModel
+import com.softeer.togeduck.ui.home.article_detail.RouteViewModel
 import com.softeer.togeduck.utils.ItemClick
 
 

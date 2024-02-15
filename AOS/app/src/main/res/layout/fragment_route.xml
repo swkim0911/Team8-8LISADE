@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.softeer.togeduck.ui.article_detail.RouteViewModel" />
+            type="com.softeer.togeduck.ui.home.article_detail.RouteViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        tools:context=".ui.article_detail.RouteFragment">
+        tools:context=".ui.home.article_detail.RouteFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLeft"
