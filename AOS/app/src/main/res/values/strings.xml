@@ -76,5 +76,9 @@
     <string name="busan">부산</string>
     <string name="make_route">노선 개설</string>
     <string name="detail_info">상세정보</string>
+    <string name="concert_info">콘서트 정보</string>
+    <string name="dummy_concert_title">EXO PLANET ＃3 - The EXO\'rDIUM</string>
+    <string name="select_course">경로 선택</string>
+    <string name="select">선택</string>
 
 </resources>

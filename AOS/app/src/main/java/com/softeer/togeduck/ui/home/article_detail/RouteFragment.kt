@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
@@ -62,6 +63,9 @@ class RouteFragment : Fragment() {
         setUpArrayAdapter()
         init()
         makePopUp()
+        binding.makeRouteBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_routeFragment_to_openRouteActivity)
+        }
     }
     private fun setUpArrayAdapter() {
         val regionArray = resources.getStringArray(R.array.article_detail_sort_list)
@@ -92,9 +96,5 @@ class RouteFragment : Fragment() {
             true
         }
     }
-
-//    private fun getArticleSize(){
-//        routeViewModel.getItemSize(articleAdapter.itemCount.toString())
-//    }
 
 }

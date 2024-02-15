@@ -22,5 +22,12 @@
         <action
             android:id="@+id/action_routeFragment_to_articleDetailFragment"
             app:destination="@id/articleDetailFragment" />
+        <action
+            android:id="@+id/action_routeFragment_to_openRouteActivity"
+            app:destination="@id/openRouteActivity" />
     </fragment>
+    <activity
+        android:id="@+id/openRouteActivity"
+        android:name="com.softeer.togeduck.ui.open_route.OpenRouteActivity"
+        android:label="OpenRouteActivity" />
 </navigation>
