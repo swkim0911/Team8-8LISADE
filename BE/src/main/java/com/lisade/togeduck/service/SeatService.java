@@ -29,6 +29,7 @@ public class SeatService {
 
     private final UserRouteRepository userRouteRepository;
     private final SeatRepository seatRepository;
+    private final BusService busService;
 
     public SeatListDto getList(Long festivalId, Long routeId) {
         List<Seat> seats = seatRepository.findAllByRouteId(routeId);
