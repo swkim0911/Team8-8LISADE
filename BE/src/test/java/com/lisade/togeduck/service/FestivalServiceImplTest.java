@@ -9,8 +9,8 @@ import static org.mockito.Mockito.when;
 
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
+import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.entity.Festival;
-import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.FestivalRepository;
@@ -65,12 +65,12 @@ class FestivalServiceImplTest {
 
         //when
         Slice<FestivalDto> result = festivalService.getList(PageRequest.of(0, 10),
-            Category.SPORTS, FestivalStatus.RECRUITMENT, "testFilter");
+            3L, FestivalStatus.RECRUITMENT, "testFilter");
 
         //then
         verify(festivalRepository, times(1)).findSliceByCategoryAndFestivalStatus(
             any(PageRequest.class),
-            eq(Category.SPORTS), eq(FestivalStatus.RECRUITMENT));
+            eq(3L), eq(FestivalStatus.RECRUITMENT));
         verify(festivalMapper, times(1)).toFestivalDtoSlice(mockFestivalSlice);
         assertThat(result.getContent().size()).isEqualTo(1);
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
@@ -84,7 +84,7 @@ class FestivalServiceImplTest {
         return Festival.builder()
             .id(festivalId)
             .title("Fake Festival")
-            .category(Category.SPORTS)
+            .category(Category.builder().id(3L).build())
             .content("This is a fake festival")
             .location("Fake location")
             .xPos(0.0)

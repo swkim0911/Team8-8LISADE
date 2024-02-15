@@ -1,7 +1,6 @@
 package com.lisade.togeduck.config;
 
 import com.lisade.togeduck.resolver.LoginArgumentResolver;
-import com.lisade.togeduck.util.CategoryRequestConverter;
 import com.lisade.togeduck.util.FestivalStatusRequestConverter;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new CategoryRequestConverter());
         registry.addConverter(new FestivalStatusRequestConverter());
     }
 
