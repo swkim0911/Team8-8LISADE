@@ -2,13 +2,12 @@ package com.lisade.togeduck.controller;
 
 import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
 import static org.springframework.data.domain.Sort.Direction.DESC;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
-
+import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.UnAuthenticationException;
 import com.lisade.togeduck.global.response.ApiResponse;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
