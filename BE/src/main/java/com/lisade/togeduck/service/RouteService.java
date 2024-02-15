@@ -8,14 +8,12 @@ import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
-import com.lisade.togeduck.exception.BusNotFoundException;
 import com.lisade.togeduck.exception.FestivalNotIncludeRouteException;
 import com.lisade.togeduck.exception.NotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
-import com.lisade.togeduck.repository.BusRepository;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,11 +28,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RouteService {
 
-    private final FestivalService festivalService;
+    private final BusService busService;
     private final SeatService seatService;
+    private final FestivalService festivalService;
     private final LocationService locationService;
     private final RouteRepository routeRepository;
-    private final BusRepository busRepository;
 
     @Transactional
     public com.lisade.togeduck.dto.response.RouteRegistrationDto save(Long festivalId,
@@ -45,7 +43,7 @@ public class RouteService {
 
         Festival festival = festivalService.get(festivalId);
         Station station = locationService.getStation(routeRegistration.getStationId());
-        Bus bus = getBus(routeRegistration.getBusId());
+        Bus bus = busService.get(routeRegistration.getBusId());
 
         List<PriceTable> priceTables = bus.getPriceTables();
 
@@ -71,11 +69,6 @@ public class RouteService {
         return routeRepository.findById(routeId).orElseThrow(RouteNotFoundException::new);
     }
 
-    public Bus getBus(Long busId) {
-        return busRepository.findBusByIdWithPriceTable(busId)
-            .orElseThrow(BusNotFoundException::new);
-    }
-
     public boolean exists(Long festivalId, Long stationId) {
         return routeRepository.existsByFestivalIdAndStationId(festivalId, stationId);
     }
@@ -92,8 +85,8 @@ public class RouteService {
 
         LocalTime arrivalAt = startedAt.toLocalTime().plusHours(expectedAt.getHour())
             .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
-        return RouteMapper.toRouteDetailResponse(routeDetailDto, arrivalAt);
 
+        return RouteMapper.toRouteDetailResponse(routeDetailDto, arrivalAt);
     }
 
     private RouteDetailDto validateRouteDetailDao(
