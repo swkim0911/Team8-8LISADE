@@ -1,5 +1,11 @@
 package com.lisade.togeduck.exception;
 
-public class RouteAlreadyExistsException extends RuntimeException {
+import com.lisade.togeduck.global.exception.GeneralException;
+import org.springframework.http.HttpStatus;
 
+public class RouteAlreadyExistsException extends GeneralException {
+
+    public RouteAlreadyExistsException(HttpStatus httpStatus, Object result) {
+        super(httpStatus, result);
+    }
 }
