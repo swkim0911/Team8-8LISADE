@@ -74,8 +74,8 @@ public class RouteService {
     }
 
     public RouteDetailResponse getDetail(Long festivalId, Long routeId) {
-        Optional<RouteDetailDto> optionalRouteDetailDao = routeRepository.findRouteDetail(routeId);
-        RouteDetailDto routeDetailDto = validateRouteDetailDao(optionalRouteDetailDao);
+        Optional<RouteDetailDto> optionalRouteDetailDto = routeRepository.findRouteDetail(routeId);
+        RouteDetailDto routeDetailDto = validateRouteDetailDto(optionalRouteDetailDto);
 
         Long routeFestivalId = routeDetailDto.getFestivalId();
         validateFestivalAndRoute(festivalId, routeFestivalId);
@@ -89,12 +89,12 @@ public class RouteService {
         return RouteMapper.toRouteDetailResponse(routeDetailDto, arrivalAt);
     }
 
-    private RouteDetailDto validateRouteDetailDao(
-        Optional<RouteDetailDto> optionalRouteDetailDao) {
-        if (optionalRouteDetailDao.isEmpty()) {
+    private RouteDetailDto validateRouteDetailDto(
+        Optional<RouteDetailDto> optionalRouteDetailDto) {
+        if (optionalRouteDetailDto.isEmpty()) {
             throw new NotFoundException();
         }
-        return optionalRouteDetailDao.get();
+        return optionalRouteDetailDto.get();
     }
 
     private void validateFestivalAndRoute(Long festivalId, Long routeFestivalId) {
