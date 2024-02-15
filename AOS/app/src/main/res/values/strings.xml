@@ -43,4 +43,11 @@
     <string name="check_bus_location">버스 위치 확인</string>
 
 
+    <string name="search">검색</string>
+    <string name="popular_article_title">HOT DUCK</string>
+    <string-array name="category_sort_list">
+        <item>인기순</item>
+        <item>최신순</item>
+    </string-array>
+    <string name="entire">전체</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.RouteRegistrationDto;
-import com.lisade.togeduck.dto.response.RouteDetailDao;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
@@ -73,24 +73,24 @@ public class RouteService {
         return routeRepository.existsByFestivalIdAndStationId(festivalId, stationId);
     }
 
-    public RouteDetailDto getDetail(Long festivalId, Long routeId) {
-        Optional<RouteDetailDao> optionalRouteDetailDao = routeRepository.findRouteDetail(routeId);
-        RouteDetailDao routeDetailDao = validateRouteDetailDao(optionalRouteDetailDao);
+    public RouteDetailResponse getDetail(Long festivalId, Long routeId) {
+        Optional<RouteDetailDto> optionalRouteDetailDao = routeRepository.findRouteDetail(routeId);
+        RouteDetailDto routeDetailDto = validateRouteDetailDao(optionalRouteDetailDao);
 
-        Long routeFestivalId = routeDetailDao.getFestivalId();
+        Long routeFestivalId = routeDetailDto.getFestivalId();
         validateFestivalAndRoute(festivalId, routeFestivalId);
 
-        LocalDateTime startedAt = routeDetailDao.getStartedAt();
-        LocalTime expectedAt = routeDetailDao.getExpectedAt();
+        LocalDateTime startedAt = routeDetailDto.getStartedAt();
+        LocalTime expectedAt = routeDetailDto.getExpectedAt();
 
         LocalTime arrivalAt = startedAt.toLocalTime().plusHours(expectedAt.getHour())
             .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
 
-        return RouteMapper.toRouteDetailDto(routeDetailDao, arrivalAt);
+        return RouteMapper.toRouteDetailResponse(routeDetailDto, arrivalAt);
     }
 
-    private RouteDetailDao validateRouteDetailDao(
-        Optional<RouteDetailDao> optionalRouteDetailDao) {
+    private RouteDetailDto validateRouteDetailDao(
+        Optional<RouteDetailDto> optionalRouteDetailDao) {
         if (optionalRouteDetailDao.isEmpty()) {
             throw new NotFoundException();
         }
