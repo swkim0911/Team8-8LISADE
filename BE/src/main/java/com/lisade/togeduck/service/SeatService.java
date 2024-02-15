@@ -1,6 +1,8 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
+import com.lisade.togeduck.dto.response.BusLayoutDto;
+import com.lisade.togeduck.dto.response.SeatDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
