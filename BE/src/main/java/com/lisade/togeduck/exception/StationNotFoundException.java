@@ -1,11 +1,16 @@
 package com.lisade.togeduck.exception;
 
+import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
-import org.springframework.http.HttpStatus;
 
 public class StationNotFoundException extends GeneralException {
 
-    public StationNotFoundException(HttpStatus httpStatus, Object result) {
-        super(httpStatus, result);
+    public StationNotFoundException() {
+        super(Error.STATION_NOT_FOUND_ERROR);
     }
+
+    public StationNotFoundException(Error error) {
+        super(error);
+    }
+
 }
