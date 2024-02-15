@@ -5,7 +5,6 @@ import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
-import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.exception.NotFoundException;
 import com.lisade.togeduck.mapper.FestivalMapper;
@@ -13,12 +12,14 @@ import com.lisade.togeduck.repository.FestivalRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalRepository festivalRepository;
@@ -26,11 +27,11 @@ public class FestivalServiceImpl implements FestivalService {
     private final ViewService viewService;
 
     @Override
-    public Slice<FestivalDto> getList(Pageable pageable, Category category,
+    public Slice<FestivalDto> getList(Pageable pageable, Long categoryId,
         FestivalStatus festivalStatus,
         String filterType) {
         Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
-            pageable, category, festivalStatus);
+            pageable, categoryId, festivalStatus);
         return festivalMapper.toFestivalDtoSlice(festivals);
     }
 

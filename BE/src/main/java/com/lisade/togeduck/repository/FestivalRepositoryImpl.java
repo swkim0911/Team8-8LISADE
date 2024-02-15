@@ -2,7 +2,7 @@ package com.lisade.togeduck.repository;
 
 import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
-import static com.lisade.togeduck.entity.QView.view;
+import static com.lisade.togeduck.entity.QFestivalView.festivalView;
 
 import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.querydsl.core.types.Projections;
@@ -28,9 +28,9 @@ public class FestivalRepositoryImpl implements FestivalRepositoryCustom {
                 festival.id,
                 festivalImage.path.as("path")
             ))
-            .from(view)
-            .leftJoin(festival).on(festival.id.eq(view.festival.id)
-                .and(view.measurementAt.after(oneWeekAgo)))
+            .from(festivalView)
+            .leftJoin(festival).on(festival.id.eq(festivalView.festival.id)
+                .and(festivalView.measurementAt.after(oneWeekAgo)))
             .leftJoin(festival.festivalImages, festivalImage)
             .on(festival.id.eq(festivalImage.festival.id)
                 .and(festivalImage.id.eq(
@@ -41,7 +41,7 @@ public class FestivalRepositoryImpl implements FestivalRepositoryCustom {
                 ))
             .groupBy(festival.id)
             .limit(limit)
-            .orderBy(view.count.sum().desc())
+            .orderBy(festivalView.count.sum().desc())
             .fetch();
     }
 }
