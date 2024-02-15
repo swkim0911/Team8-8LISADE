@@ -4,6 +4,7 @@ import com.lisade.togeduck.dto.response.DistancePricesDto;
 import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
 import com.lisade.togeduck.dto.response.LocationListDto;
 import com.lisade.togeduck.dto.response.TMapResultDto;
+import com.lisade.togeduck.dto.response.TMapResultDto.Properties;
 import com.lisade.togeduck.entity.City;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Station;
@@ -67,9 +68,10 @@ public class LocationService {
         TMapResultDto tMapResultDto = requestTMap(station.getXPos(), station.getYPos(),
             festival.getXPos(), festival.getYPos());
 
-        Integer distance =
-            tMapResultDto.getFeatures().get(0).getProperties().getTotalDistance() / 1000;
-        Integer expectedTime = tMapResultDto.getFeatures().get(0).getProperties().getTotalTime();
+        Properties properties = tMapResultDto.getFeatures().get(0).getProperties();
+
+        Integer distance = properties.getTotalDistance() / 1000;
+        Integer expectedTime = properties.getTotalTime();
 
         List<BusInfo> busInfos = busService.getBusInfo(distance);
 
