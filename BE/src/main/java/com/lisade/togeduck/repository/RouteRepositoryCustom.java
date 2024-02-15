@@ -9,7 +9,7 @@ import org.springframework.data.domain.Slice;
 public interface RouteRepositoryCustom {
 
 
-    Optional<RouteDetailDto> findRouteDetail(Long routeId);
+    Optional<RouteDetailDto> findRouteDetail(Long routeId, Long festivalId);
 
     Slice<UserReservedRouteDto> findReservedRoutes(Pageable pageable, Long userId);
 }

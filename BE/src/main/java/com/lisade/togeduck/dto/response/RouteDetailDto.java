@@ -12,7 +12,6 @@ import lombok.Data;
 public class RouteDetailDto {
 
     Long id;
-    Long festivalId;
     LocalDateTime startedAt;
     String source;
     String destination;
