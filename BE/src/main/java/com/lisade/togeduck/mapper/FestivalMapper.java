@@ -23,7 +23,7 @@ public interface FestivalMapper {
     FestivalDto toFestivalDto(Festival festival);
 
     @Mapping(target = "paths", source = "festivalImages")
-    @Mapping(target = "category", source = "category.type")
+    @Mapping(target = "category", source = "category.name")
     FestivalDetailDto toFestivalDetailDto(Festival festival);
 
     @Mapping(target = "totalSize", source = "totalSize")
