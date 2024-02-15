@@ -1,7 +1,7 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.dto.request.RouteRegistrationDto;
-import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class RouteController {
     }
 
     @GetMapping("/routes/{route_id}")
-    public RouteDetailDto getDetail(@PathVariable("festival_id") Long festivalId,
+    public RouteDetailResponse getDetail(@PathVariable("festival_id") Long festivalId,
         @PathVariable("route_id") Long routeId) {
         return routeService.getDetail(festivalId, routeId);
     }

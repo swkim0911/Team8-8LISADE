@@ -41,7 +41,13 @@
     <string name="share">공유하기</string>
     <string name="real_time_bus_location">실시간 버스 위치</string>
     <string name="check_bus_location">버스 위치 확인</string>
-
+    <string name="total">전체</string>
+    <string name="seat_unit">석</string>
+    <string name="leftover">잔여</string>
+    <string name="selection_complete">선택완료</string>
+    <string name="total_price">총 결제금액</string>
+    <string name="driver_seat">운전석</string>
+    <string name="entrance">출입구</string>
 
     <string name="search">검색</string>
     <string name="popular_article_title">HOT DUCK</string>

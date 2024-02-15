@@ -7,8 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.lisade.togeduck.dto.response.RouteDetailDao;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.exception.FestivalNotIncludeRouteException;
 import com.lisade.togeduck.exception.NotFoundException;
 import com.lisade.togeduck.repository.RouteRepository;
@@ -38,28 +38,29 @@ class RouteServiceTest {
         Long festivalId = 1L;
         Long routeId = 100L;
 
-        RouteDetailDao routeDetailDao = createDummyRouteDetailDao(festivalId, routeId);
-        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDao));
+        RouteDetailDto routeDetailDto = createDummyRouteDetailDto(festivalId, routeId);
+        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDto));
 
         // when
-        RouteDetailDto routeDetailDto = routeService.getDetail(festivalId, routeId);
+        RouteDetailResponse routeDetailResponse = routeService.getDetail(festivalId, routeId);
 
         // then
-        assertThat(routeDetailDto).isNotNull();
+        assertThat(routeDetailResponse).isNotNull();
         verify(routeRepository, times(1)).findRouteDetail(routeId);
-        
-        LocalTime expectedAt = routeDetailDao.getExpectedAt();
-        assertThat(routeDetailDto.getId()).isEqualTo(routeDetailDao.getId());
-        assertThat(routeDetailDto.getStartedAt()).isEqualTo(routeDetailDao.getStartedAt());
-        assertThat(routeDetailDto.getSource()).isEqualTo(routeDetailDao.getSource());
-        assertThat(routeDetailDto.getDestination()).isEqualTo(routeDetailDao.getDestination());
-        assertThat(routeDetailDto.getExpectedAt()).isEqualTo(routeDetailDao.getExpectedAt());
-        assertThat(routeDetailDto.getArrivalAt()).isEqualTo(
-            routeDetailDao.getStartedAt().toLocalTime().plusHours(expectedAt.getHour())
+
+        LocalTime expectedAt = routeDetailDto.getExpectedAt();
+        assertThat(routeDetailResponse.getId()).isEqualTo(routeDetailDto.getId());
+        assertThat(routeDetailResponse.getStartedAt()).isEqualTo(routeDetailDto.getStartedAt());
+        assertThat(routeDetailResponse.getSource()).isEqualTo(routeDetailDto.getSource());
+        assertThat(routeDetailResponse.getDestination()).isEqualTo(routeDetailDto.getDestination());
+        assertThat(routeDetailResponse.getExpectedAt()).isEqualTo(routeDetailDto.getExpectedAt());
+        assertThat(routeDetailResponse.getArrivalAt()).isEqualTo(
+            routeDetailDto.getStartedAt().toLocalTime().plusHours(expectedAt.getHour())
                 .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond()));
-        assertThat(routeDetailDto.getTotalSeats()).isEqualTo(routeDetailDao.getTotalSeats());
-        assertThat(routeDetailDto.getReservedSeats()).isEqualTo(routeDetailDao.getReservedSeats());
-        assertThat(routeDetailDto.getCost()).isEqualTo(routeDetailDao.getCost());
+        assertThat(routeDetailResponse.getTotalSeats()).isEqualTo(routeDetailDto.getTotalSeats());
+        assertThat(routeDetailResponse.getReservedSeats()).isEqualTo(
+            routeDetailDto.getReservedSeats());
+        assertThat(routeDetailResponse.getCost()).isEqualTo(routeDetailDto.getCost());
     }
 
     @Test
@@ -84,9 +85,9 @@ class RouteServiceTest {
         // given
         Long festivalId = 1L;
         Long routeId = 100L;
-        RouteDetailDao routeDetailDao = createDummyRouteDetailDao(2L, routeId);
+        RouteDetailDto routeDetailDto = createDummyRouteDetailDto(2L, routeId);
 
-        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDao));
+        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDto));
 
         // when & then
         assertThatThrownBy(() -> routeService.getDetail(festivalId, routeId))
@@ -95,8 +96,8 @@ class RouteServiceTest {
         verify(routeRepository, times(1)).findRouteDetail(routeId);
     }
 
-    public RouteDetailDao createDummyRouteDetailDao(Long festivalId, Long routeId) {
-        return RouteDetailDao.builder()
+    public RouteDetailDto createDummyRouteDetailDto(Long festivalId, Long routeId) {
+        return RouteDetailDto.builder()
             .id(routeId)
             .festivalId(festivalId)
             .startedAt(LocalDateTime.now())

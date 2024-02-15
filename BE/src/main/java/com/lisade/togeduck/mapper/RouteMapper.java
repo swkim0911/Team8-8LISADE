@@ -1,7 +1,7 @@
 package com.lisade.togeduck.mapper;
 
-import com.lisade.togeduck.dto.response.RouteDetailDao;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.dto.response.RouteRegistrationDto;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
@@ -41,10 +41,11 @@ public class RouteMapper {
             .build();
     }
 
-    public static RouteDetailDto toRouteDetailDto(RouteDetailDao route, LocalTime arrivalAt) {
+    public static RouteDetailResponse toRouteDetailResponse(RouteDetailDto route,
+        LocalTime arrivalAt) {
         LocalTime expectedAt = route.getExpectedAt();
         LocalDateTime startedAt = route.getStartedAt();
-        return RouteDetailDto.builder()
+        return RouteDetailResponse.builder()
             .id(route.getId())
             .startedAt(startedAt)
             .source(route.getSource())
