@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.home.seat
 
+import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
 
@@ -39,21 +41,26 @@ class SeatSelectFragment : Fragment() {
         val selectSeat = seatSelectView.selectSeat
 
         selectSeat.observe(viewLifecycleOwner, Observer {
-            if (selectSeat!!.value == true) {
-                binding.selectCompleteBtn.setBackgroundColor(
+            var vgColor = R.color.gray300
+            var selectCompleteBtnEnabled = false
+
+            if (selectSeat.value == true) {
+                vgColor = R.color.navy300
+                selectCompleteBtnEnabled = true
+            }
+
+            binding.run {
+                selectCompleteBtn.setBackgroundColor(
                     ContextCompat.getColor(
-                        requireContext(), R.color.navy300
+                        requireContext(), vgColor
                     )
                 )
-                binding.selectCompleteBtn.isEnabled = true
-            } else {
-                binding.selectCompleteBtn.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(), R.color.gray300
-                    )
-                )
-                binding.selectCompleteBtn.isEnabled = false
+                selectCompleteBtn.isEnabled = selectCompleteBtnEnabled
             }
         })
+
+        binding.selectCompleteBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_seatSelectFragment_to_seatPaymentFragment)
+        }
     }
 }
