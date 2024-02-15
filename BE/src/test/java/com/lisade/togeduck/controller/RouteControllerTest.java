@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.service.RouteService;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -42,7 +42,7 @@ class RouteControllerTest {
         //given
         LocalTime expectedAt = LocalTime.of(10, 24);
         LocalDateTime startedAt = LocalDateTime.now();
-        RouteDetailDto mockResponse = RouteDetailDto.builder()
+        RouteDetailResponse mockResponse = RouteDetailResponse.builder()
             .id(1L)
             .startedAt(startedAt)
             .source("Source")

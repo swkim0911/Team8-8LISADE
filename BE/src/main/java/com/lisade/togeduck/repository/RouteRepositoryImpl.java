@@ -4,7 +4,7 @@ import static com.lisade.togeduck.entity.QBus.bus;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 
-import com.lisade.togeduck.dto.response.RouteDetailDao;
+import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.ExpressionUtils;
@@ -22,9 +22,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<RouteDetailDao> findRouteDetail(Long routeId) {
-        RouteDetailDao routeDetailDao = queryFactory.select(Projections.constructor(
-                RouteDetailDao.class,
+    public Optional<RouteDetailDto> findRouteDetail(Long routeId) {
+        RouteDetailDto routeDetailDto = queryFactory.select(Projections.constructor(
+                RouteDetailDto.class,
                 route.id,
                 route.festival.id,
                 route.startedAt,
@@ -39,7 +39,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .leftJoin(route.festival)
             .where(route.id.eq(routeId))
             .fetchOne();
-        return Optional.ofNullable(routeDetailDao);
+        return Optional.ofNullable(routeDetailDto);
     }
 
     private Expression<Integer> getTotalSeats(Long routeId) {
