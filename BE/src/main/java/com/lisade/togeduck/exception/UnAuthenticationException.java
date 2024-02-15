@@ -1,12 +1,15 @@
 package com.lisade.togeduck.exception;
 
+import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
-import org.springframework.http.HttpStatus;
 
 public class UnAuthenticationException extends GeneralException {
 
-    public UnAuthenticationException(HttpStatus httpStatus,
-        Object result) {
-        super(httpStatus, result);
+    public UnAuthenticationException() {
+        super(Error.UN_AUTHENTICATION_ERROR);
+    }
+
+    public UnAuthenticationException(Error error) {
+        super(error);
     }
 }
