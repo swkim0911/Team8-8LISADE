@@ -3,6 +3,7 @@ package com.lisade.togeduck.global.handler;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
+import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
@@ -34,10 +35,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(GeneralException.class)
     public ResponseEntity<Object> handleGeneralException(GeneralException generalException,
         WebRequest webRequest) {
-        Object result = generalException.getResult();
-        HttpStatus httpStatus = generalException.getHttpStatus();
+        Error error = generalException.getError();
 
-        return makeExceptionResponse(result, generalException, httpStatus, HttpHeaders.EMPTY,
+        HttpStatus httpStatus = error.getHttpStatus();
+        String message = error.getMessage();
+
+        return makeExceptionResponse(message, generalException, httpStatus, HttpHeaders.EMPTY,
             webRequest);
     }
 
