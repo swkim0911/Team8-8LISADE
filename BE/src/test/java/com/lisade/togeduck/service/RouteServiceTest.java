@@ -38,7 +38,7 @@ class RouteServiceTest {
         Long festivalId = 1L;
         Long routeId = 100L;
 
-        RouteDetailDto routeDetailDto = createDummyRouteDetailDao(festivalId, routeId);
+        RouteDetailDto routeDetailDto = createDummyRouteDetailDto(festivalId, routeId);
         when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDto));
 
         // when
@@ -85,7 +85,7 @@ class RouteServiceTest {
         // given
         Long festivalId = 1L;
         Long routeId = 100L;
-        RouteDetailDto routeDetailDto = createDummyRouteDetailDao(2L, routeId);
+        RouteDetailDto routeDetailDto = createDummyRouteDetailDto(2L, routeId);
 
         when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDto));
 
@@ -96,7 +96,7 @@ class RouteServiceTest {
         verify(routeRepository, times(1)).findRouteDetail(routeId);
     }
 
-    public RouteDetailDto createDummyRouteDetailDao(Long festivalId, Long routeId) {
+    public RouteDetailDto createDummyRouteDetailDto(Long festivalId, Long routeId) {
         return RouteDetailDto.builder()
             .id(routeId)
             .festivalId(festivalId)

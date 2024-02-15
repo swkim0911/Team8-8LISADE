@@ -34,7 +34,7 @@ public interface FestivalMapper {
     @Named("toBanner")
     default List<Banner> dtoToBanner(List<BestFestivalDto> bestFestivalDto) {
         return bestFestivalDto.stream()
-            .map(dao -> Banner.builder().id(dao.getId()).path(dao.getPath()).build())
+            .map(dto -> Banner.builder().id(dto.getId()).path(dto.getPath()).build())
             .toList();
     }
 
