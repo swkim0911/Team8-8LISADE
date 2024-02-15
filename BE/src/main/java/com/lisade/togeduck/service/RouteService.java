@@ -8,7 +8,6 @@ import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
-import com.lisade.togeduck.exception.FestivalNotIncludeRouteException;
 import com.lisade.togeduck.exception.NotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
@@ -18,12 +17,13 @@ import com.lisade.togeduck.repository.RouteRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RouteService {
@@ -74,12 +74,9 @@ public class RouteService {
     }
 
     public RouteDetailResponse getDetail(Long festivalId, Long routeId) {
-        Optional<RouteDetailDto> optionalRouteDetailDto = routeRepository.findRouteDetail(routeId);
+        Optional<RouteDetailDto> optionalRouteDetailDto = routeRepository.findRouteDetail(routeId,
+            festivalId);
         RouteDetailDto routeDetailDto = validateRouteDetailDto(optionalRouteDetailDto);
-
-        Long routeFestivalId = routeDetailDto.getFestivalId();
-        validateFestivalAndRoute(festivalId, routeFestivalId);
-
         LocalDateTime startedAt = routeDetailDto.getStartedAt();
         LocalTime expectedAt = routeDetailDto.getExpectedAt();
 
@@ -92,14 +89,9 @@ public class RouteService {
     private RouteDetailDto validateRouteDetailDto(
         Optional<RouteDetailDto> optionalRouteDetailDto) {
         if (optionalRouteDetailDto.isEmpty()) {
+            log.error("NotFound 에러 발생");
             throw new NotFoundException();
         }
         return optionalRouteDetailDto.get();
-    }
-
-    private void validateFestivalAndRoute(Long festivalId, Long routeFestivalId) {
-        if (!Objects.equals(routeFestivalId, festivalId)) {
-            throw new FestivalNotIncludeRouteException();
-        }
     }
 }

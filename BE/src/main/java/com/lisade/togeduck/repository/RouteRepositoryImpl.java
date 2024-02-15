@@ -9,7 +9,6 @@ import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
-
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
@@ -32,11 +31,10 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<RouteDetailDto> findRouteDetail(Long routeId) {
+    public Optional<RouteDetailDto> findRouteDetail(Long routeId, Long festivalId) {
         RouteDetailDto routeDetailDto = queryFactory.select(Projections.constructor(
                 RouteDetailDto.class,
                 route.id,
-                route.festival.id,
                 route.startedAt,
                 route.station.name,
                 route.festival.location,
@@ -45,9 +43,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 getReservationSeats(routeId),
                 route.price
             )).from(route)
-            .leftJoin(route.station)
-            .leftJoin(route.festival)
-            .where(route.id.eq(routeId))
+            .join(route.station)
+            .join(route.festival)
+            .where(route.id.eq(routeId).and(festival.id.eq(festivalId)))
             .fetchOne();
         return Optional.ofNullable(routeDetailDto);
     }
