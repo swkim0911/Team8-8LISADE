@@ -34,6 +34,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class LocationService {
 
+    private static final String T_MAP_APP_KEY_HEADER_NAME = "appKey";
+    private static final String T_MAP_PARAMETER_VERSION = "version";
+    private static final String T_MAP_BODY_TOTAL_VALUE = "totalValue";
+    private static final String T_MAP_BODY_START_X = "startX";
+    private static final String T_MAP_BODY_START_Y = "startY";
+    private static final String T_MAP_BODY_END_X = "endX";
+    private static final String T_MAP_BODY_END_Y = "endY";
+
     @Setter
     @Value(("${T_MAP_URL}"))
     private String T_MAP_URL;
@@ -81,7 +89,7 @@ public class LocationService {
     private TMapResultDto requestTMap(Double startX, Double startY, Double endX, Double endY) {
         UriComponents uriComponentsBuilder = makeTMapUri();
         HttpEntity<?> httpEntity = makeTMapHttpRequest(startX, startY, endX, endY);
-        
+
         ResponseEntity<TMapResultDto> response = restTemplate.postForEntity(
             uriComponentsBuilder.toUri(),
             httpEntity,
@@ -93,7 +101,7 @@ public class LocationService {
     private UriComponents makeTMapUri() {
         return UriComponentsBuilder.fromHttpUrl(
                 T_MAP_URL)
-            .queryParam("version", 1)
+            .queryParam(T_MAP_PARAMETER_VERSION, 1)
             .encode(StandardCharsets.UTF_8)
             .build();
     }
@@ -103,15 +111,15 @@ public class LocationService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        httpHeaders.set("appKey", T_MAP_APP_KEY);
+        httpHeaders.set(T_MAP_APP_KEY_HEADER_NAME, T_MAP_APP_KEY);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
-        body.add("totalValue", 2);
-        body.add("startX", startX);
-        body.add("startY", startY);
-        body.add("endX", endX);
-        body.add("endY", endY);
+        body.add(T_MAP_BODY_TOTAL_VALUE, 2);
+        body.add(T_MAP_BODY_START_X, startX);
+        body.add(T_MAP_BODY_START_Y, startY);
+        body.add(T_MAP_BODY_END_X, endX);
+        body.add(T_MAP_BODY_END_Y, endY);
 
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(body,
             httpHeaders);
