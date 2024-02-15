@@ -1,6 +1,5 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
 import com.lisade.togeduck.entity.Route;
@@ -8,6 +7,7 @@ import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.lisade.togeduck.exception.FestivalNotIncludeRouteException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
@@ -28,13 +28,12 @@ public class SeatService {
     private final UserRouteRepository userRouteRepository;
     private final SeatRepository seatRepository;
 
-    public SeatListDto getList(Long routeId) {
+    public SeatListDto getList(Long festivalId, Long routeId) {
         List<Seat> seats = seatRepository.findAllByRouteId(routeId);
 
-        if (seats.isEmpty()) {
-            throw new RouteNotFoundException();
-        }
-
+        validateSeats(seats);
+        validateRoute(seats.get(0).getRoute(), festivalId);
+        
         return SeatMapper.toSeatListDto(seats);
     }
 
@@ -45,16 +44,16 @@ public class SeatService {
 
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public Long register(@Login User user, Long routeId, SeatRegistrationDto seatRegistration) {
+    public Long register(User user, Long festivalId, Long routeId,
+        SeatRegistrationDto seatRegistration) {
         Seat seat = get(routeId, seatRegistration.getNo());
         Route route = seat.getRoute();
 
-        if (seat.getStatus().equals(SeatStatus.RESERVATION)) {
-            throw new SeatAlreadyRegisterException();
-        }
+        validateSeat(seat);
+        validateRoute(route, festivalId);
 
         seat.setStatus(SeatStatus.RESERVATION);
-        
+
         UserRoute userRoute = UserRoute.builder()
             .user(user)
             .seat(seat)
@@ -67,5 +66,23 @@ public class SeatService {
     public Seat get(Long routeId, Integer no) {
         return seatRepository.findByRouteIdAndNo(routeId, no).orElseThrow(
             SeatNotFoundException::new);
+    }
+
+    private void validateRoute(Route route, Long festivalId) {
+        if (!route.getFestival().getId().equals(festivalId)) {
+            throw new FestivalNotIncludeRouteException();
+        }
+    }
+
+    private void validateSeat(Seat seat) {
+        if (seat.getStatus().equals(SeatStatus.RESERVATION)) {
+            throw new SeatAlreadyRegisterException();
+        }
+    }
+
+    private void validateSeats(List<Seat> seats) {
+        if (seats.isEmpty()) {
+            throw new RouteNotFoundException();
+        }
     }
 }
