@@ -79,12 +79,27 @@ public class LocationService {
     }
 
     private TMapResultDto requestTMap(Double startX, Double startY, Double endX, Double endY) {
-        UriComponents uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(
+        UriComponents uriComponentsBuilder = makeTMapUri();
+        HttpEntity<?> httpEntity = makeTMapHttpRequest(startX, startY, endX, endY);
+        
+        ResponseEntity<TMapResultDto> response = restTemplate.postForEntity(
+            uriComponentsBuilder.toUri(),
+            httpEntity,
+            TMapResultDto.class);
+
+        return response.getBody();
+    }
+
+    private UriComponents makeTMapUri() {
+        return UriComponentsBuilder.fromHttpUrl(
                 T_MAP_URL)
             .queryParam("version", 1)
             .encode(StandardCharsets.UTF_8)
             .build();
+    }
 
+    private HttpEntity<?> makeTMapHttpRequest(Double startX, Double startY, Double endX,
+        Double endY) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
@@ -101,11 +116,6 @@ public class LocationService {
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(body,
             httpHeaders);
 
-        ResponseEntity<TMapResultDto> response = restTemplate.postForEntity(
-            uriComponentsBuilder.toUri(),
-            httpEntity,
-            TMapResultDto.class);
-
-        return response.getBody();
+        return httpEntity;
     }
 }
