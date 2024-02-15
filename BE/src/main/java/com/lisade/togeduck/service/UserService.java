@@ -2,6 +2,7 @@ package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.NicknameAlreadyExistsException;
@@ -17,7 +18,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +43,10 @@ public class UserService {
         return userRepository.findByUserIdAndPassword(loginDto.getUserId(),
                 loginDto.getPassword())
             .orElseThrow(UserNotFoundException::new);
+    }
+
+    public Slice<UserReservedRouteDto> getReservedRouteList(Pageable pageable, Long userId) {
+        return routeRepository.findReservedRoutes(pageable, userId);
     }
 
     public ResponseEntity<Object> checkUserId(String userId) {
