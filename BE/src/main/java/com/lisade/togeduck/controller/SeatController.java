@@ -26,10 +26,10 @@ public class SeatController {
     }
 
     @PostMapping("/seats")
-    public void register(
+    public Long register(
         @PathVariable(name = "festival_id") Long festivalId,
         @PathVariable(name = "route_id") Long routeId,
         @RequestBody SeatRegistrationDto seatRegistration) {
-        seatService.register(routeId, seatRegistration);
+        return seatService.register(routeId, seatRegistration);
     }
 }
