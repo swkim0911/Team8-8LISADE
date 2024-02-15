@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class BestFestivalDao {
+public class BestFestivalDto {
 
     Long id;
     String path;

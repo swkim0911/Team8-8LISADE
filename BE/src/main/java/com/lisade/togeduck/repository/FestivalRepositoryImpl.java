@@ -4,7 +4,7 @@ import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
 import static com.lisade.togeduck.entity.QView.view;
 
-import com.lisade.togeduck.dto.response.BestFestivalDao;
+import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -22,9 +22,9 @@ public class FestivalRepositoryImpl implements FestivalRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<BestFestivalDao> findBest(Integer limit) {
+    public List<BestFestivalDto> findBest(Integer limit) {
         LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
-        return queryFactory.select(Projections.constructor(BestFestivalDao.class,
+        return queryFactory.select(Projections.constructor(BestFestivalDto.class,
                 festival.id,
                 festivalImage.path.as("path")
             ))

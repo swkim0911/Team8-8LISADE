@@ -1,6 +1,6 @@
 package com.lisade.togeduck.mapper;
 
-import com.lisade.togeduck.dto.response.BestFestivalDao;
+import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.BestFestivalResponse.Banner;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
@@ -27,13 +27,13 @@ public interface FestivalMapper {
     FestivalDetailDto toFestivalDetailDto(Festival festival);
 
     @Mapping(target = "totalSize", source = "totalSize")
-    @Mapping(target = "banner", source = "bestFestivalDao", qualifiedByName = "toBanner")
+    @Mapping(target = "banner", source = "bestFestivalDto", qualifiedByName = "toBanner")
     BestFestivalResponse toBestFestivalResponse(Integer totalSize,
-        List<BestFestivalDao> bestFestivalDao);
+        List<BestFestivalDto> bestFestivalDto);
 
     @Named("toBanner")
-    default List<Banner> daoToBanner(List<BestFestivalDao> bestFestivalDao) {
-        return bestFestivalDao.stream()
+    default List<Banner> dtoToBanner(List<BestFestivalDto> bestFestivalDto) {
+        return bestFestivalDto.stream()
             .map(dao -> Banner.builder().id(dao.getId()).path(dao.getPath()).build())
             .toList();
     }

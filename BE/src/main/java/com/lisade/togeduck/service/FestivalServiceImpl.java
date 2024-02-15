@@ -1,6 +1,6 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.dto.response.BestFestivalDao;
+import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
@@ -51,7 +51,7 @@ public class FestivalServiceImpl implements FestivalService {
     @Override
     public BestFestivalResponse getBest() {
         Integer defaultLimit = 8;
-        List<BestFestivalDao> best = festivalRepository.findBest(defaultLimit);
+        List<BestFestivalDto> best = festivalRepository.findBest(defaultLimit);
         return festivalMapper.toBestFestivalResponse(best.size(), best);
     }
 }
