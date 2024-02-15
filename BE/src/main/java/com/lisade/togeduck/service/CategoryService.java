@@ -1,5 +1,6 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.dto.response.CategoryResponse;
 import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.exception.InternalServerException;
 import com.lisade.togeduck.repository.CategoryRepository;
@@ -13,11 +14,12 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<Category> getList() {
+    public CategoryResponse getList() {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             throw new InternalServerException();
         }
-        return categoryRepository.findAll();
+        return CategoryResponse.builder().numberOfCategories(categories.size())
+            .categories(categories).build();
     }
 }
