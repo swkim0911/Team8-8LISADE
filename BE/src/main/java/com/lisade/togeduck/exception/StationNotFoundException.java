@@ -1,5 +1,16 @@
 package com.lisade.togeduck.exception;
 
-public class StationNotFoundException extends RuntimeException {
+import com.lisade.togeduck.global.exception.Error;
+import com.lisade.togeduck.global.exception.GeneralException;
+
+public class StationNotFoundException extends GeneralException {
+
+    public StationNotFoundException() {
+        super(Error.STATION_NOT_FOUND_ERROR);
+    }
+
+    public StationNotFoundException(Error error) {
+        super(error);
+    }
 
 }
