@@ -1,11 +1,15 @@
 package com.lisade.togeduck.exception;
 
+import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
-import org.springframework.http.HttpStatus;
 
 public class UserNotFoundException extends GeneralException {
 
-    public UserNotFoundException(HttpStatus httpStatus, Object result) {
-        super(httpStatus, result);
+    public UserNotFoundException() {
+        super(Error.USER_NOT_FOUND_ERROR);
+    }
+
+    public UserNotFoundException(Error error) {
+        super(error);
     }
 }
