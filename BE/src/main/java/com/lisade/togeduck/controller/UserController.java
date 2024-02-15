@@ -1,6 +1,7 @@
 package com.lisade.togeduck.controller;
 
 import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -9,6 +10,7 @@ import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
 import com.lisade.togeduck.dto.response.SignUpFailureDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.InvalidSignUpException;
 import com.lisade.togeduck.exception.LoginEmptyFieldException;
@@ -20,6 +22,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -50,7 +55,7 @@ public class UserController {
         return userService.checkUserId(userId);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto, Errors errors) {
 
         if (errors.hasErrors()) {
@@ -77,11 +82,12 @@ public class UserController {
     }
 
     @GetMapping("/routes")
-    public ResponseEntity<Object> getRoutes(
-        @Login User user) {
+    public Slice<UserReservedRouteDto> getRoutes(
+        @Login User user,
+        @PageableDefault(sort = "createdDate", direction = DESC) Pageable pageable) {
         if (user == null) {
             throw new UnAuthenticationException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
         }
-        return null;
+        return userService.getReservedRouteList(pageable, user.getId());
     }
 }

@@ -12,9 +12,4 @@ public enum SessionConst {
     SessionConst(String sessionName) {
         this.sessionName = sessionName;
     }
-
-    @Override
-    public String toString() {
-        return this.sessionName;
-    }
 }
