@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
-import com.lisade.togeduck.exception.FestivalNotIncludeRouteException;
 import com.lisade.togeduck.exception.NotFoundException;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.time.LocalDateTime;
@@ -39,14 +38,15 @@ class RouteServiceTest {
         Long routeId = 100L;
 
         RouteDetailDto routeDetailDto = createDummyRouteDetailDto(festivalId, routeId);
-        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDto));
+        when(routeRepository.findRouteDetail(anyLong(), anyLong())).thenReturn(
+            Optional.of(routeDetailDto));
 
         // when
         RouteDetailResponse routeDetailResponse = routeService.getDetail(festivalId, routeId);
 
         // then
         assertThat(routeDetailResponse).isNotNull();
-        verify(routeRepository, times(1)).findRouteDetail(routeId);
+        verify(routeRepository, times(1)).findRouteDetail(routeId, festivalId);
 
         LocalTime expectedAt = routeDetailDto.getExpectedAt();
         assertThat(routeDetailResponse.getId()).isEqualTo(routeDetailDto.getId());
@@ -70,13 +70,13 @@ class RouteServiceTest {
         Long festivalId = 1L;
         Long routeId = 100L;
 
-        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.empty());
+        when(routeRepository.findRouteDetail(anyLong(), anyLong())).thenReturn(Optional.empty());
 
         // when & then
         assertThatThrownBy(() -> routeService.getDetail(festivalId, routeId))
             .isInstanceOf(NotFoundException.class);
 
-        verify(routeRepository, times(1)).findRouteDetail(routeId);
+        verify(routeRepository, times(1)).findRouteDetail(routeId, festivalId);
     }
 
     @Test
@@ -85,21 +85,20 @@ class RouteServiceTest {
         // given
         Long festivalId = 1L;
         Long routeId = 100L;
-        RouteDetailDto routeDetailDto = createDummyRouteDetailDto(2L, routeId);
 
-        when(routeRepository.findRouteDetail(anyLong())).thenReturn(Optional.of(routeDetailDto));
+        when(routeRepository.findRouteDetail(anyLong(), anyLong())).thenReturn(
+            Optional.ofNullable(null));
 
         // when & then
         assertThatThrownBy(() -> routeService.getDetail(festivalId, routeId))
-            .isInstanceOf(FestivalNotIncludeRouteException.class);
+            .isInstanceOf(NotFoundException.class);
 
-        verify(routeRepository, times(1)).findRouteDetail(routeId);
+        verify(routeRepository, times(1)).findRouteDetail(routeId, festivalId);
     }
 
     public RouteDetailDto createDummyRouteDetailDto(Long festivalId, Long routeId) {
         return RouteDetailDto.builder()
             .id(routeId)
-            .festivalId(festivalId)
             .startedAt(LocalDateTime.now())
             .source("City A")
             .destination("City B")
