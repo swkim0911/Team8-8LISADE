@@ -9,19 +9,22 @@ import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
 import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
+import com.lisade.togeduck.repository.RouteRepository;
 import com.lisade.togeduck.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
-@Validated
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RouteRepository routeRepository;
 
     @Transactional
     public Long join(SignUpDto signUpDto) {

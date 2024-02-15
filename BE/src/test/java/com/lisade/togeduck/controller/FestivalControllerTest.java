@@ -1,10 +1,7 @@
 package com.lisade.togeduck.controller;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,13 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.lisade.togeduck.dto.response.FestivalDto;
-import com.lisade.togeduck.entity.enums.Category;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,7 +60,7 @@ class FestivalControllerTest {
         Slice<FestivalDto> mockSlice = new PageImpl<>(Collections.singletonList(mockFestivalDto));
 
         //when
-        when(festivalService.getList(any(Pageable.class), any(Category.class),
+        when(festivalService.getList(any(Pageable.class), any(Long.class),
             any(FestivalStatus.class), any(String.class))).thenReturn(mockSlice);
 
         ResultActions resultActions = mockMvc.perform(get("/festivals")
@@ -80,7 +75,7 @@ class FestivalControllerTest {
         //then
         verify(festivalService).getList(
             eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
-            eq(Category.CONCERT),
+            eq(3L),
             eq(FestivalStatus.RECRUITMENT), eq("popular"));
 
         resultActions.andExpect(jsonPath("$.content[0].id").value(mockFestivalDto.getId()))
@@ -88,22 +83,5 @@ class FestivalControllerTest {
             .andExpect(jsonPath("$.content[0].location").value(mockFestivalDto.getLocation()))
             .andExpect(jsonPath("$.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
             .andExpect(jsonPath("$.content[0].startedAt").value("2024-02-08"));
-    }
-
-    @Test
-    @DisplayName("사용자가 존재하지 않는 카테고리를 선택할 시 IllegalArgumentExcaption을 던진다.")
-    void getIllegalCategoryThenThrowException() throws Exception {
-
-        //given
-        Pageable pageable = mock(Pageable.class);
-        String invalidCategoryCode = "InvalidCode";
-
-        //when & then
-        IllegalArgumentException exception = assertThrows(
-            IllegalArgumentException.class, () -> {
-                festivalController.getList(pageable, Category.of(invalidCategoryCode), null, null);
-            });
-        Assertions.assertThat(exception.getMessage()).isEqualTo("일치하는 Category 코드가 없습니다.");
-        verify(festivalService, never()).getList(any(), any(), any(), any());
     }
 }
