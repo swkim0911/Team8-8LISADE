@@ -11,3 +11,5 @@ AOS/.idea/
 .cxx
 local.properties
 .idea
+AOS/app/release/
+AOS/app/google-services.json
