@@ -77,11 +77,12 @@ class FestivalControllerTest {
             eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
             eq(3L),
             eq(FestivalStatus.RECRUITMENT), eq("popular"));
-
-        resultActions.andExpect(jsonPath("$.content[0].id").value(mockFestivalDto.getId()))
-            .andExpect(jsonPath("$.content[0].title").value(mockFestivalDto.getTitle()))
-            .andExpect(jsonPath("$.content[0].location").value(mockFestivalDto.getLocation()))
-            .andExpect(jsonPath("$.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
-            .andExpect(jsonPath("$.content[0].startedAt").value("2024-02-08"));
+        resultActions.andExpect(jsonPath("$.result.content[0].id").value(mockFestivalDto.getId()))
+            .andExpect(jsonPath("$.result.content[0].title").value(mockFestivalDto.getTitle()))
+            .andExpect(
+                jsonPath("$.result.content[0].location").value(mockFestivalDto.getLocation()))
+            .andExpect(
+                jsonPath("$.result.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
+            .andExpect(jsonPath("$.result.content[0].startedAt").value("2024-02-08"));
     }
 }
