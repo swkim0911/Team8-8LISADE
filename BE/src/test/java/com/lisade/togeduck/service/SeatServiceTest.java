@@ -10,7 +10,10 @@ import static org.mockito.Mockito.verify;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationDto;
 import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.entity.Festival;
+import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
@@ -48,7 +51,7 @@ class SeatServiceTest {
             .when(seatRepository).findAllByRouteId(any(Long.class));
 
         // when
-        SeatListDto seatListDto = seatService.getList(1L);
+        SeatListDto seatListDto = seatService.getList(1L, 1L);
 
         // then
         assertEquals(5, seatListDto.getNumberOfSeats());
@@ -67,7 +70,7 @@ class SeatServiceTest {
 
         // when & then
         assertThrows(RouteNotFoundException.class, () -> {
-            SeatListDto seatListDto = seatService.getList(1L);
+            SeatListDto seatListDto = seatService.getList(1L, 1L);
         });
     }
 
@@ -75,30 +78,30 @@ class SeatServiceTest {
     @DisplayName("좌석 등록 성공 테스트")
     void registerSeatTest() {
         // given
-        Long routeId = 1L;
         Integer no = 1;
+        Long festivalId = 1L;
+        Long routeId = 1L;
 
         SeatRegistrationDto request = SeatRegistrationDto.builder()
             .no(no)
             .build();
 
-        Seat seat = Seat.builder()
-            .no(no)
-            .status(SeatStatus.AVAILABLE)
+        User user = User.builder()
+            .userId("userId")
             .build();
 
         UserRoute userRoute = UserRoute.builder()
             .id(1L)
             .build();
 
-        doReturn(Optional.of(seat)).when(seatRepository)
+        doReturn(Optional.of(seat())).when(seatRepository)
             .findByRouteIdAndNo(routeId, no);
 
         doReturn(userRoute).when(userRouteRepository)
             .save(any(UserRoute.class));
 
         // when
-        seatService.register(routeId, request);
+        seatService.register(user, festivalId, routeId, request);
 
         // then
         verify(seatRepository, times(1))
@@ -111,8 +114,13 @@ class SeatServiceTest {
     @DisplayName("존재하지 않는 Seat가 주어졌을 때 좌석 등록 실패 테스트")
     void registerSeatWithNonExistsSeatTest() {
         // given
+        Long festivalId = 1L;
         Long routeId = 1L;
         Integer no = 1;
+
+        User user = User.builder()
+            .userId("userId")
+            .build();
 
         SeatRegistrationDto request = SeatRegistrationDto.builder()
             .no(no)
@@ -123,7 +131,7 @@ class SeatServiceTest {
 
         // when & then
         assertThrows(SeatNotFoundException.class, () -> {
-            seatService.register(routeId, request);
+            seatService.register(user, festivalId, routeId, request);
         });
     }
 
@@ -131,11 +139,16 @@ class SeatServiceTest {
     @DisplayName("해당 Seat가 이미 예약 상태일 때 좌석 등록 실패 테스트")
     void registerReservationSeatTest() {
         // given
+        Long festivalId = 1L;
         Long routeId = 1L;
         Integer no = 1;
 
         SeatRegistrationDto request = SeatRegistrationDto.builder()
             .no(no)
+            .build();
+
+        User user = User.builder()
+            .userId("userId")
             .build();
 
         Seat seat = Seat.builder()
@@ -148,8 +161,28 @@ class SeatServiceTest {
 
         // when
         assertThrows(SeatAlreadyRegisterException.class, () -> {
-            seatService.register(routeId, request);
+            seatService.register(user, festivalId, routeId, request);
         });
+    }
+
+    private Seat seat() {
+        Integer no = 1;
+
+        return Seat.builder()
+            .no(no)
+            .status(SeatStatus.AVAILABLE)
+            .route(route())
+            .build();
+    }
+
+    private Route route() {
+        Festival festival = Festival.builder()
+            .id(1L)
+            .build();
+
+        return Route.builder()
+            .festival(festival)
+            .build();
     }
 
     private List<Seat> seatsResponse() {
@@ -160,6 +193,7 @@ class SeatServiceTest {
                 .id((long) i)
                 .no(i + 1)
                 .status(SeatStatus.AVAILABLE)
+                .route(route())
                 .build());
         }
 
