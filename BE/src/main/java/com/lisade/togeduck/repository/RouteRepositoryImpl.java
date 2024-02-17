@@ -1,6 +1,9 @@
 package com.lisade.togeduck.repository;
 
 import static com.lisade.togeduck.entity.QBus.bus;
+import static com.lisade.togeduck.entity.QCity.city;
+import static com.lisade.togeduck.entity.QDriver.driver;
+import static com.lisade.togeduck.entity.QDriverRoute.driverRoute;
 import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
 import static com.lisade.togeduck.entity.QRoute.route;
@@ -10,6 +13,11 @@ import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.Projections;
@@ -60,6 +68,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 festival.location,
                 station.name,
                 route.price,
+                route.status.stringValue(),
                 bus.numberOfSeats,
                 getReservationSeats(),
                 festivalImage.path))
@@ -85,6 +94,95 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
     }
 
+    @Override
+    public Optional<RouteAndFestivalInfo> findRouteAndFestivalInfo(Long routeId) {
+        RouteAndFestivalInfo routeAndFestivalInfo = queryFactory.select(Projections.constructor(
+                RouteAndFestivalInfo.class,
+                festival.id,
+                festival.title,
+                route.expectedTime,
+                route.status.stringValue(),
+                route.price,
+                route.startedAt,
+                festival.location,
+                festival.city.name,
+                festivalImage.path))
+            .from(route)
+            .join(festival)
+            .on(route.festival.eq(festival))
+            .join(festivalImage)
+            .on(festivalImage.festival.eq(festival)
+                .and(festivalImage.id.eq(getMinFestivalImageId())))
+            .join(city)
+            .on(festival.city.eq(city))
+            .where(route.id.eq(routeId))
+            .fetchOne();
+        return Optional.ofNullable(routeAndFestivalInfo);
+    }
+
+    @Override
+    public Optional<StationInfo> findStationInfo(Long routeId) {
+        StationInfo stationInfo = queryFactory.select(Projections.constructor(
+                StationInfo.class,
+                station.name,
+                city.name))
+            .from(route)
+            .join(station)
+            .on(route.station.eq(station))
+            .join(city)
+            .on(station.city.eq(city))
+            .where(route.id.eq(routeId))
+            .fetchOne();
+        return Optional.ofNullable(stationInfo);
+    }
+
+    @Override
+    public Optional<DriverInfo> findDriverInfo(Long routeId) {
+        DriverInfo driverInfo = queryFactory.select(Projections.constructor(
+                DriverInfo.class,
+                driver.id,
+                driver.name,
+                driver.company,
+                driver.phoneNumber,
+                driverRoute.carNumber))
+            .from(driverRoute)
+            .join(driver)
+            .on(driverRoute.driver.eq(driver))
+            .where(driverRoute.route.id.eq(routeId).and(route.id.eq(routeId)))
+            .fetchOne();
+        return Optional.ofNullable(driverInfo);
+    }
+
+    @Override
+    public Optional<BusInfo> findBusInfo(Long routeId) {
+        BusInfo busInfo = queryFactory.select(Projections.constructor(
+                BusInfo.class,
+                bus.numberOfSeats))
+            .from(route)
+            .join(bus)
+            .on(route.bus.eq(bus))
+            .where(route.id.eq(routeId))
+            .fetchOne();
+        return Optional.ofNullable(busInfo);
+    }
+
+    @Override
+    public Optional<SeatInfo> findSeatInfo(Long routeId, Long userId) {
+        SeatInfo seatInfo = queryFactory.select(Projections.constructor(
+                SeatInfo.class,
+                seat.no,
+                getReservationSeats(routeId)))
+            .from(seat)
+            .where(seat.id.eq(getSeatId(routeId, userId))).fetchOne();
+        return Optional.ofNullable(seatInfo);
+    }
+
+    private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
+        return JPAExpressions.select(userRoute.seat.id).from(userRoute)
+            .where(userRoute.user.id.eq(userId).and(userRoute.route.id.eq(routeId)));
+    }
+
+
     private JPQLQuery<Long> getMinFestivalImageId() {
         return JPAExpressions.select(festivalImage.id.min())
             .from(festivalImage)
@@ -92,21 +190,22 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     private JPQLQuery<Integer> getTotalSeats(Long routeId) {
-        return JPAExpressions.select(bus.numberOfSeats).from(route)
+        return JPAExpressions.select(bus.numberOfSeats)
+            .from(route)
             .where(route.id.eq(routeId))
             .join(bus)
             .on(route.bus.eq(bus));
     }
 
-    private JPQLQuery<Long> getReservationSeats() {
-        return JPAExpressions.select(seat.id.count())
+    private JPQLQuery<Integer> getReservationSeats() {
+        return JPAExpressions.select(seat.id.count().intValue())
             .from(seat)
             .where(seat.route.id.eq(route.id)
                 .and(seat.status.eq(SeatStatus.RESERVATION)));
     }
 
-    private JPQLQuery<Long> getReservationSeats(Long routeId) {
-        return JPAExpressions.select(seat.id.count())
+    private JPQLQuery<Integer> getReservationSeats(Long routeId) {
+        return JPAExpressions.select(seat.id.count().intValue())
             .from(seat)
             .where(seat.route.id.eq(routeId)
                 .and(seat.status.eq(SeatStatus.RESERVATION)));
