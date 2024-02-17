@@ -51,7 +51,7 @@ class RouteControllerTest {
             .arrivalAt(startedAt.toLocalTime().plusHours(expectedAt.getHour())
                 .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond()))
             .totalSeats(100)
-            .reservedSeats(20L)
+            .reservedSeats(20)
             .cost(50)
             .build();
 
@@ -64,11 +64,11 @@ class RouteControllerTest {
             .andExpect(status().isOk());
         //then
         verify(routeService).getDetail(eq(1L), eq(2L));
-        result.andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.source").value("Source"))
-            .andExpect(jsonPath("$.destination").value("Destination"))
-            .andExpect(jsonPath("$.totalSeats").value(100))
-            .andExpect(jsonPath("$.reservedSeats").value(20))
-            .andExpect(jsonPath("$.cost").value(50));
+        result.andExpect(jsonPath("$.result.id").value(1))
+            .andExpect(jsonPath("$.result.source").value("Source"))
+            .andExpect(jsonPath("$.result.destination").value("Destination"))
+            .andExpect(jsonPath("$.result.totalSeats").value(100))
+            .andExpect(jsonPath("$.result.reservedSeats").value(20))
+            .andExpect(jsonPath("$.result.cost").value(50));
     }
 }
