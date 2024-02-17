@@ -1,8 +1,9 @@
 package com.lisade.togeduck.mapper;
 
+import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
-import com.lisade.togeduck.dto.response.RouteRegistrationDto;
+import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
@@ -10,32 +11,39 @@ import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.entity.enums.RouteStatus;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class RouteMapper {
 
     public static Route toRoute(
         Festival festival,
         Bus bus,
         Station station,
-        Integer distance,
+        RouteRegistrationRequest routeRegistrationRequest,
         Integer price
     ) {
-        // TODO expectedTime, startAt 설정하기
+        int expectedHour = routeRegistrationRequest.getExpectedTime() / 60 / 60;
+        int expectedMinute = routeRegistrationRequest.getExpectedTime() % (60 * 60) / 60;
+
+        LocalTime expectedTime = LocalTime.of(expectedHour, expectedMinute);
+        LocalDateTime startedAt = festival.getStartedAt().minusHours(expectedHour + 1)
+            .minusMinutes(expectedMinute);
 
         return Route.builder()
             .bus(bus)
             .festival(festival)
             .price(price)
-            .distance(distance)
+            .distance(routeRegistrationRequest.getDistance())
             .station(station)
             .status(RouteStatus.PROGRESS)
-            .expectedTime(LocalTime.now())
-            .startedAt(LocalDateTime.now())
+            .expectedTime(expectedTime)
+            .startedAt(startedAt)
             .build();
     }
 
-    public static RouteRegistrationDto toRouteRegistrationDto(Route route) {
-        return RouteRegistrationDto.builder()
+    public static RouteRegistrationResponse toRouteRegistrationDto(Route route) {
+        return RouteRegistrationResponse.builder()
             .routeId(route.getId())
             .festivalId(route.getFestival().getId())
             .build();

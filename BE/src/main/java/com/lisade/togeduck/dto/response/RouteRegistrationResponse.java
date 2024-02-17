@@ -1,4 +1,4 @@
-package com.lisade.togeduck.dto.request;
+package com.lisade.togeduck.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteRegistrationDto {
+public class RouteRegistrationResponse {
 
-    private Long stationId;
-    private Long busId;
-    private Integer distance;
+    private Long routeId;
+    private Long festivalId;
 }
