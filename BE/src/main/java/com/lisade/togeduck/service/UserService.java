@@ -9,13 +9,13 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFesti
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
+import com.lisade.togeduck.dto.response.ValidateUserIdDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.NicknameAlreadyExistsException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
 import com.lisade.togeduck.exception.UserNotFoundException;
-import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.repository.RouteRepository;
 import com.lisade.togeduck.repository.UserRepository;
@@ -25,7 +25,6 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,11 +54,10 @@ public class UserService {
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public ResponseEntity<Object> checkUserId(String userId) {
+    public ValidateUserIdDto checkUserId(String userId) {
         validateByUserId(userId);
 
-        return ResponseEntity.ok(
-            ApiResponse.onSuccess(UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.")));
+        return UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.");
     }
 
     public Slice<UserReservedRouteDto> getReservedRouteList(Pageable pageable, Long userId) {

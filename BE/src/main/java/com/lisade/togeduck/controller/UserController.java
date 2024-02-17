@@ -8,9 +8,9 @@ import com.lisade.togeduck.dto.request.LoginDto;
 import com.lisade.togeduck.dto.request.SignUpDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
+import com.lisade.togeduck.dto.response.ValidateUserIdDto;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.UnAuthenticationException;
-import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -34,23 +34,23 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<Object> checkUserId(@PathVariable(name = "user_id") String userId) {
+    public ValidateUserIdDto checkUserId(@PathVariable(name = "user_id") String userId) {
         return userService.checkUserId(userId);
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> signUp(@RequestBody @Valid SignUpDto signUpDto) {
+    public ResponseEntity<Long> signUp(@RequestBody @Valid SignUpDto signUpDto) {
         Long id = userService.join(signUpDto);
-        return new ResponseEntity<>(ApiResponse.of(CREATED.value(), CREATED.name(), id), CREATED);
+        return new ResponseEntity<>(id, CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody @Valid LoginDto loginDto,
+    public String login(@RequestBody @Valid LoginDto loginDto,
         HttpServletRequest request) {
         User loginUser = userService.login(loginDto);
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_USER.getSessionName(), loginUser);
-        return ResponseEntity.ok(ApiResponse.onSuccess(loginUser.getUserId()));
+        return loginUser.getUserId();
     }
 
     @GetMapping("/routes")
