@@ -21,5 +21,5 @@ public interface FestivalService {
 
     BestFestivalResponse getBest();
 
-    Slice<FestivalRoutesDto> getRoutes(Pageable pageable, Long id, String city);
+    Slice<FestivalRoutesDto> getRoutes(Pageable pageable, Long id, String cityName);
 }

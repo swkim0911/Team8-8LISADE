@@ -20,16 +20,14 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFesti
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
-import com.lisade.togeduck.entity.Route;
+import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +35,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -66,8 +65,56 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
+    public Slice<FestivalRoutesDto> findRoutes(Pageable pageable, Long festivalId,
+        String cityName) {
+
+        JPAQuery<FestivalRoutesDto> query = queryFactory.select(Projections.constructor(
+                FestivalRoutesDto.class,
+                route.id,
+                route.startedAt,
+                station.name,
+                route.price,
+                route.status.stringValue(),
+                bus.numberOfSeats,
+                getReservationSeats()))
+            .from(route)
+            .join(station)
+            .on(route.station.eq(station))
+            .join(bus)
+            .on(route.bus.eq(bus))
+            .where(
+                route.festival.id.eq(festivalId).and(route.status.eq(RouteStatus.PROGRESS)));
+
+        if (!"all".equals(cityName)) { // cityName 조건
+            query = query.where(station.city.id.eq(JPAExpressions.select(city.id)
+                .from(city)
+                .where(city.name.eq(cityName))));
+        }
+
+        Sort sort = pageable.getSort();
+        Order createdAt = sort.getOrderFor("createdAt");
+        if (createdAt != null) {
+            query.orderBy(route.createdAt.desc());
+        }
+        List<FestivalRoutesDto> festivalRoutes = query.limit(pageable.getPageSize() + 1).fetch();
+
+        Order population = sort.getOrderFor("population");
+        if (population != null) { //todo orderBy 적용
+            festivalRoutes.sort(
+                Comparator.comparing(FestivalRoutesDto::getReservedSeats).reversed());
+        }
+
+        boolean hasNext = false;
+        if (festivalRoutes.size() > pageable.getPageSize()) {
+            festivalRoutes.remove(pageable.getPageSize());
+            hasNext = true;
+        }
+        return new SliceImpl<>(festivalRoutes, pageable, hasNext);
+    }
+
+    @Override
     public Slice<UserReservedRouteDto> findReservedRoutes(Pageable pageable, Long userId) {
-        List<UserReservedRouteDto> userReservedRoutes = queryFactory.select(Projections.constructor(
+        JPAQuery<UserReservedRouteDto> query = queryFactory.select(Projections.constructor(
                 UserReservedRouteDto.class,
                 route.id,
                 festival.title,
@@ -89,9 +136,16 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(festivalImage)
             .on(festivalImage.festival.eq(festival)
                 .and(festivalImage.id.eq(getMinFestivalImageId())))
-            .where(route.id.in((getRouteId(userId))))
-            .orderBy(getOrderSpecifiers(pageable.getSort()).toArray(OrderSpecifier[]::new))
-            .limit(pageable.getPageSize() + 1) // 다음 페이지가 있는지 확인
+            .where(route.id.in((getRouteId(userId))));
+
+        Sort sort = pageable.getSort();
+        Sort.Order order = sort.getOrderFor("createdAt");
+        if (order != null) {
+            query.orderBy(route.createdAt.desc());
+        }
+
+        List<UserReservedRouteDto> userReservedRoutes = query.limit(
+                pageable.getPageSize() + 1) // 다음 페이지 있는지 확인
             .fetch();
 
         boolean hasNext = false;
@@ -185,12 +239,6 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return Optional.ofNullable(seatInfo);
     }
 
-    @Override
-    public Optional<Slice<FestivalRoutesDto>> findRoutes(Pageable pageable, Long festivalId,
-        String city) {
-        return Optional.empty();
-    }
-
     private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
         return JPAExpressions.select(userRoute.seat.id).from(userRoute)
             .where(userRoute.user.id.eq(userId).and(userRoute.route.id.eq(routeId)));
@@ -211,7 +259,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     private JPQLQuery<Integer> getReservationSeats() {
-        return JPAExpressions.select(seat.id.count().intValue())
+        return JPAExpressions.select(seat.id.count().intValue().as("reservedSeats"))
             .from(seat)
             .where(seat.route.id.eq(route.id)
                 .and(seat.status.eq(SeatStatus.RESERVATION)));
@@ -230,17 +278,5 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(userRoute)
             .on(userRoute.user.eq(user))
             .where(user.id.eq(userId));
-    }
-
-    private List<OrderSpecifier<?>> getOrderSpecifiers(
-        Sort sort) { // pageable에 담긴 정렬 적용. 정렬 기준이 여러 개 일 수도 있어 list에 담음
-        List<OrderSpecifier<?>> orders = new ArrayList<>();
-        sort.stream().forEach(order -> {
-            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
-            String property = order.getProperty();
-            PathBuilder<?> pathBuilder = new PathBuilder<>(Route.class, "route");
-            orders.add(new OrderSpecifier(direction, pathBuilder.get(property)));
-        });
-        return orders;
     }
 }

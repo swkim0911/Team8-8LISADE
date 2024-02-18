@@ -29,5 +29,5 @@ public interface RouteRepositoryCustom {
 
     Optional<SeatInfo> findSeatInfo(Long routeId, Long userId);
 
-    Optional<Slice<FestivalRoutesDto>> findRoutes(Pageable pageable, Long festivalId, String city);
+    Slice<FestivalRoutesDto> findRoutes(Pageable pageable, Long festivalId, String cityName);
 }
