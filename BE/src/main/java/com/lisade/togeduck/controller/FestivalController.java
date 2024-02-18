@@ -44,8 +44,10 @@ public class FestivalController {
     }
 
     @GetMapping("/{id}/routes")
-    public Slice<FestivalRoutesDto> getRoutes(@PathVariable(value = "id") Long id,
+    public Slice<FestivalRoutesDto> getRoutes(
+        @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable,
+        @PathVariable(value = "id") Long id,
         @RequestParam("city") String city) {
-        return null;
+        return festivalService.getRoutes(pageable, id, city);
     }
 }
