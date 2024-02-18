@@ -6,7 +6,7 @@ import com.lisade.togeduck.global.exception.GeneralException;
 public class FestivalNotFoundException extends GeneralException {
 
     public FestivalNotFoundException() {
-        super(Error.NOT_FOUND_ERROR);
+        super(Error.FESTIVAL_NOT_FOUND_ERROR);
     }
 
     public FestivalNotFoundException(Error error) {
