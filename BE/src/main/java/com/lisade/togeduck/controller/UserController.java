@@ -18,6 +18,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,17 +48,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid LoginDto loginDto,
+    public ResponseEntity<Long> login(@RequestBody @Valid LoginDto loginDto,
         HttpServletRequest request) {
         User loginUser = userService.login(loginDto);
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_USER.getSessionName(), loginUser);
-        return loginUser.getUserId();
+        return new ResponseEntity<>(loginUser.getId(), HttpStatus.OK);
     }
 
     @GetMapping("/routes")
     public Slice<UserReservedRouteDto> getRoutes(
-        @Login User user, Pageable pageable) {
+        @Login User user,
+        @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable) {
         if (user == null) {
             throw new UnAuthenticationException();
         }

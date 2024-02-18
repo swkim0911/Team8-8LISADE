@@ -3,6 +3,7 @@ package com.lisade.togeduck.controller;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalRoutesDto;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,11 @@ public class FestivalController {
     @GetMapping("/best")
     public BestFestivalResponse getBest() {
         return festivalService.getBest();
+    }
+
+    @GetMapping("/{id}/routes")
+    public Slice<FestivalRoutesDto> getRoutes(@PathVariable(value = "id") Long id,
+        @RequestParam("city") String city) {
+        return null;
     }
 }

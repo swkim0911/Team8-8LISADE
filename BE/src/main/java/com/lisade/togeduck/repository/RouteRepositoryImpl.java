@@ -19,17 +19,23 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFesti
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
+import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -83,15 +89,28 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .on(festivalImage.festival.eq(festival)
                 .and(festivalImage.id.eq(getMinFestivalImageId())))
             .where(route.id.in((getRouteId(userId))))
-            .offset(pageable.getOffset())
+            .orderBy(getOrderSpecifiers(pageable.getSort()).toArray(OrderSpecifier[]::new))
             .limit(pageable.getPageSize() + 1) // 다음 페이지가 있는지 확인
             .fetch();
+
         boolean hasNext = false;
         if (userReservedRoutes.size() > pageable.getPageSize()) {
-            userReservedRoutes.remove(pageable.getPageSize());
+            userReservedRoutes.remove(pageable.getPageSize()); //한개 더 가져왔으니 더 가져온 데이터 삭제
             hasNext = true;
         }
         return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
+    }
+
+    private List<OrderSpecifier<?>> getOrderSpecifiers(
+        Sort sort) { // pageable에 담긴 정렬 적용. 정렬 기준이 여러 개 일 수도 있어 list에 담음
+        List<OrderSpecifier<?>> orders = new ArrayList<>();
+        sort.stream().forEach(order -> {
+            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
+            String property = order.getProperty();
+            PathBuilder<?> pathBuilder = new PathBuilder<>(Route.class, "route");
+            orders.add(new OrderSpecifier(direction, pathBuilder.get(property)));
+        });
+        return orders;
     }
 
     @Override
