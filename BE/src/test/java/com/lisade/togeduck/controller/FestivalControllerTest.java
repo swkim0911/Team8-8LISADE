@@ -55,7 +55,7 @@ class FestivalControllerTest {
             .title("test1")
             .location("테스트 로케이션")
             .paths(List.of("filePath"))
-            .startedAt(LocalDateTime.of(2024, 2, 8, 11, 2, 5)).build();
+            .startedAt(LocalDateTime.of(2024, 2, 8, 11, 2)).build();
 
         Slice<FestivalDto> mockSlice = new PageImpl<>(Collections.singletonList(mockFestivalDto));
 
@@ -83,6 +83,6 @@ class FestivalControllerTest {
                 jsonPath("$.result.content[0].location").value(mockFestivalDto.getLocation()))
             .andExpect(
                 jsonPath("$.result.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
-            .andExpect(jsonPath("$.result.content[0].startedAt").value("2024-02-08T11:02:05"));
+            .andExpect(jsonPath("$.result.content[0].startedAt").value("2024.02.08 11:02"));
     }
 }
