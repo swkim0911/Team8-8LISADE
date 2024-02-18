@@ -10,7 +10,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
+        android:paddingBottom="16dp"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.Guideline
@@ -29,18 +30,17 @@
 
         <View
             android:id="@+id/dividerHeader"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
             android:layout_marginTop="16dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toTopOf="@id/regionList"
+            android:background="@color/divider"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/regionList"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
@@ -51,9 +51,9 @@
 
         <View
             android:id="@+id/verticalDivider"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:layout_width="2dp"
+            android:layout_height="560dp"
+            android:background="@color/divider"
             app:layout_constraintTop_toBottomOf="@id/dividerHeader"
             app:layout_constraintBottom_toTopOf="@id/bottomDivider"
             app:layout_constraintStart_toEndOf="@id/regionList"
@@ -66,14 +66,14 @@
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@id/verticalDivider"
             app:layout_constraintTop_toBottomOf="@id/dividerHeader"
-            app:layout_constraintEnd_toStartOf="@id/guideRight"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintBottom_toTopOf="@id/bottomDivider"/>
 
         <View
             android:id="@+id/bottomDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/divider"
             app:layout_constraintStart_toEndOf="@id/guideLeft"
             app:layout_constraintEnd_toStartOf="@id/guideRight"
             app:layout_constraintTop_toBottomOf="@id/verticalDivider"
@@ -88,7 +88,7 @@
             android:backgroundTint="@color/main"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="선택완료"
+            android:text="@string/select_complete"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"

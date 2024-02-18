@@ -18,6 +18,7 @@
     <color name="navy600">#003D7A</color>
     <color name="navy300">#435FA7</color>
     <color name="blue">#435FA7</color>
+    <color name="divider">#B2B7BD</color>
 
 
 </resources>
