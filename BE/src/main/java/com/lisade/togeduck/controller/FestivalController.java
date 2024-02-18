@@ -47,7 +47,7 @@ public class FestivalController {
     public Slice<FestivalRoutesDto> getRoutes(
         @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable,
         @PathVariable(value = "id") Long id,
-        @RequestParam("city") String city) {
+        @RequestParam(name = "city", required = false, defaultValue = "all") String city) {
         return festivalService.getRoutes(pageable, id, city);
     }
 }
