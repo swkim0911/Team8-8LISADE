@@ -3,13 +3,13 @@ package com.lisade.togeduck.exception;
 import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
 
-public class NotFoundException extends GeneralException {
+public class FestivalNotFoundException extends GeneralException {
 
-    public NotFoundException() {
+    public FestivalNotFoundException() {
         super(Error.NOT_FOUND_ERROR);
     }
 
-    public NotFoundException(Error error) {
+    public FestivalNotFoundException(Error error) {
         super(error);
     }
 }

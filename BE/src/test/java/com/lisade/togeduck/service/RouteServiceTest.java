@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
-import com.lisade.togeduck.exception.NotFoundException;
+import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -74,7 +74,7 @@ class RouteServiceTest {
 
         // when & then
         assertThatThrownBy(() -> routeService.getDetail(festivalId, routeId))
-            .isInstanceOf(NotFoundException.class);
+            .isInstanceOf(FestivalNotFoundException.class);
 
         verify(routeRepository, times(1)).findRouteDetail(routeId, festivalId);
     }
@@ -91,7 +91,7 @@ class RouteServiceTest {
 
         // when & then
         assertThatThrownBy(() -> routeService.getDetail(festivalId, routeId))
-            .isInstanceOf(NotFoundException.class);
+            .isInstanceOf(FestivalNotFoundException.class);
 
         verify(routeRepository, times(1)).findRouteDetail(routeId, festivalId);
     }

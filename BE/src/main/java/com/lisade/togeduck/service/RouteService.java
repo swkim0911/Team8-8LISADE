@@ -9,7 +9,7 @@ import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
-import com.lisade.togeduck.exception.NotFoundException;
+import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.mapper.RouteMapper;
@@ -82,7 +82,7 @@ public class RouteService {
         Optional<RouteDetailDto> optionalRouteDetailDto) {
         if (optionalRouteDetailDto.isEmpty()) {
             log.error("NotFound 에러 발생");
-            throw new NotFoundException();
+            throw new FestivalNotFoundException();
         }
         return optionalRouteDetailDto.get();
     }

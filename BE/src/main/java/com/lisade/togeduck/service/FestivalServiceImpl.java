@@ -6,7 +6,7 @@ import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
-import com.lisade.togeduck.exception.NotFoundException;
+import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.FestivalRepository;
 import java.util.List;
@@ -38,13 +38,13 @@ public class FestivalServiceImpl implements FestivalService {
     @Override
     public Festival get(Long id) {
         Optional<Festival> optionalFestival = festivalRepository.findById(id);
-        return optionalFestival.orElseThrow(NotFoundException::new);
+        return optionalFestival.orElseThrow(FestivalNotFoundException::new);
     }
 
     @Override
     public FestivalDetailDto getDetail(Long id) {
         Optional<Festival> optionalFestival = festivalRepository.findById(id);
-        Festival festival = optionalFestival.orElseThrow(NotFoundException::new);
+        Festival festival = optionalFestival.orElseThrow(FestivalNotFoundException::new);
         viewService.add(festival);
         return festivalMapper.toFestivalDetailDto(festival);
     }
