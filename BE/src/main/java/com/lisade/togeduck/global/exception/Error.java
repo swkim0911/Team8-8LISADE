@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum Error {
     UN_AUTHENTICATION_ERROR(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
 
-    NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "찾을 수 없습니다."),
+    FESTIVAL_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "Festival을 찾을 수 없습니다."),
     BUS_NOT_FOIND_ERROR(HttpStatus.NOT_FOUND, "Bus를 찾을 수 없습니다."),
     SEAT_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "Seat를 찾을 수 없습니다."),
     ROUTE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "Route를 찾을 수 없습니다."),

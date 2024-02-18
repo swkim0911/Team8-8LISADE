@@ -1,6 +1,7 @@
 package com.lisade.togeduck.dto.response;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ public class FestivalDto {
     private Long id;
     private String title;
     private String location;
-    private LocalDate startedAt;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
+    private LocalDateTime startedAt;
     private List<String> paths;
 }
