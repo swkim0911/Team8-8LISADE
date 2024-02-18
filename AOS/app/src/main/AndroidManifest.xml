@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AOS"
         tools:targetApi="31">
         <activity
-            android:name=".ui.open_route.OpenRouteActivity"
+            android:name=".ui.home.open_route.OpenRouteActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.article_detail.ArticleDetailActivity"

@@ -28,6 +28,6 @@
     </fragment>
     <activity
         android:id="@+id/openRouteActivity"
-        android:name="com.softeer.togeduck.ui.open_route.OpenRouteActivity"
+        android:name="com.softeer.togeduck.ui.home.open_route.OpenRouteActivity"
         android:label="OpenRouteActivity" />
 </navigation>

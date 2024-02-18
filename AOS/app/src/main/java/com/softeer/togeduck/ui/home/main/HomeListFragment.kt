@@ -85,7 +85,6 @@ class HomeListFragment : Fragment() {
         rvCategoryList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
-
         }
         rvArticleList.apply {
             layoutManager = LinearLayoutManager(context)

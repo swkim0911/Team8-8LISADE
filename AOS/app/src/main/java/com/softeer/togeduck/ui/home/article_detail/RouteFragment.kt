@@ -21,15 +21,6 @@ import com.softeer.togeduck.databinding.FragmentRouteBinding
 
 
 
-//data class RouteListModel(
-//    val startDate: String,
-//    val place: String,
-//    val price: String,
-//    val totalPeople: Int,
-//    val currentPeople: Int,
-//    val currentType: String,
-//)
-
 private val dummyData = listOf(
     RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
     RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
