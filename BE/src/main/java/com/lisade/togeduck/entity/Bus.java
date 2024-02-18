@@ -39,6 +39,15 @@ public class Bus {
     @Column(name = "number_of_seats", nullable = false)
     private Integer numberOfSeats;
 
+    @Column(name = "row_count", nullable = false)
+    private Integer row;
+
+    @Column(name = "column_count", nullable = false)
+    private Integer column;
+
+    @Column(name = "back_seats", nullable = false)
+    private Integer backSeats;
+
     @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
     private List<Route> route;
 
