@@ -15,6 +15,7 @@ import com.softeer.togeduck.utils.ItemClickWithData
 class RegionListAdapter(private val items: List<RegionListModel>) :
     RecyclerView.Adapter<ViewHolder>() {
     private lateinit var binding: RvItemSelectRegionBinding
+    private var selectedItemPosition = RecyclerView.NO_POSITION
     var itemClick: ItemClickWithData? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = RvItemSelectRegionBinding.inflate(
@@ -29,8 +30,19 @@ class RegionListAdapter(private val items: List<RegionListModel>) :
         val list = items[holder.adapterPosition]
         holder.bind(list)
         holder.itemView.setOnClickListener{
+            val previousSelectedPosition = selectedItemPosition
             itemClick?.onClick(it, position, list.detailList)
+            selectedItemPosition = position
+            if (previousSelectedPosition >= 0) {
+                notifyItemChanged(previousSelectedPosition)
+            }
+            notifyItemChanged(position)
         }
+//        if (position == selectedItemPosition) {
+//            holder.itemView.setBackgroundResource(R.drawable.item_home_category_chip_clicked)
+//        } else {
+//            holder.itemView.setBackgroundResource(R.drawable.)
+//        }
     }
 
     override fun getItemCount(): Int {

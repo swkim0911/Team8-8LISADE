@@ -3,6 +3,7 @@ package com.softeer.togeduck.ui.home.article_detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.PopularArticleModel
 import com.softeer.togeduck.data.model.RouteListModel
 import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
@@ -30,6 +31,7 @@ class RouteListAdapter(private val items: List<RouteListModel>) :
         holder.bind(items[holder.adapterPosition])
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
+
         }
     }
 }

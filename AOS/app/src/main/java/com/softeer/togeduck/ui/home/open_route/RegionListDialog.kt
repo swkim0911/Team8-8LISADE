@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.data.model.RegionDetailModel
 import com.softeer.togeduck.data.model.RegionListModel
 import com.softeer.togeduck.databinding.DialogSelectRegionBinding
@@ -33,6 +34,7 @@ class RegionListDialog : DialogFragment() {
 
     private lateinit var regionListAdapter: RegionListAdapter
     private var regionDetailListAdapter: RegionDetailListAdapter? = null
+
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
