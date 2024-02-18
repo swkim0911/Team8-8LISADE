@@ -15,7 +15,9 @@ public class RouteDetailResponse {
     LocalDateTime startedAt;
     String source;
     String destination;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime expectedAt;
+    @JsonFormat(pattern = "HH:mm")
     LocalTime arrivalAt;
     Integer totalSeats;
     Integer reservedSeats;
