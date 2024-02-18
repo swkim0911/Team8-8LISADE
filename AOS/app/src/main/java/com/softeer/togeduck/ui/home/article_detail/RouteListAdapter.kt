@@ -7,10 +7,12 @@ import com.softeer.togeduck.data.model.PopularArticleModel
 import com.softeer.togeduck.data.model.RouteListModel
 import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
 import com.softeer.togeduck.databinding.RvItemRouteListBinding
+import com.softeer.togeduck.utils.ItemClick
 
 class RouteListAdapter(private val items: List<RouteListModel>) :
     RecyclerView.Adapter<ViewHolder>() {
     private lateinit var binding: RvItemRouteListBinding
+    var itemClick: ItemClick? = null
     override fun getItemCount(): Int {
         return items.size
     }
@@ -26,6 +28,9 @@ class RouteListAdapter(private val items: List<RouteListModel>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[holder.adapterPosition])
+        holder.itemView.setOnClickListener {
+            itemClick?.onClick(it, position)
+        }
     }
 }
 
