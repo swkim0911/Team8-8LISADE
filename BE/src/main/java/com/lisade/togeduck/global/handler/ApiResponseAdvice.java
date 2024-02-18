@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -27,8 +28,15 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
         int code = servletResponse.getStatus();
         HttpStatus status = HttpStatus.resolve(code);
 
+        if (body instanceof ProblemDetail problemDetail) {
+            return ApiResponse.builder().status(code).message(problemDetail.getTitle())
+                .result(problemDetail.getDetail()).build();
+        }
+
         if (status.isError()) {
-            return body;
+            return ApiResponse.builder().status(code)
+                .message(status.name())
+                .result(body).build();
         }
 
         return ApiResponse.builder()

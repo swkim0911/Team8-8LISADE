@@ -1,11 +1,9 @@
 package com.lisade.togeduck.global.handler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
-import com.lisade.togeduck.global.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
@@ -33,8 +31,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
         HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status,
         WebRequest request) {
-        ApiResponse<Object> body = ApiResponse.of(status.value(), status.toString(), null);
-        return new ResponseEntity<>(body, status);
+        return makeExceptionResponse(null, ex, HttpStatus.valueOf(status.value()), headers,
+            request);
     }
 
     @Override
@@ -92,8 +90,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("", exception);
         return makeInternalExceptionResponse(
             exception,
-            INTERNAL_SERVER_ERROR,
-            HttpHeaders.EMPTY,
             webRequest);
     }
 
@@ -101,26 +97,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> makeExceptionResponse(Object result, Exception exception,
         HttpStatus httpStatus,
         HttpHeaders headers, WebRequest webRequest) {
-        ApiResponse<Object> body = ApiResponse.of(httpStatus.value(), httpStatus.name(), result);
 
         return super.handleExceptionInternal(
             exception,
-            body,
+            result,
             headers,
             httpStatus,
             webRequest);
     }
 
     private ResponseEntity<Object> makeInternalExceptionResponse(Exception exception,
-        HttpStatus httpStatus,
-        HttpHeaders headers, WebRequest webRequest) {
-        ApiResponse<Object> body = ApiResponse.of(httpStatus.value(), httpStatus.name(), null);
-
+        WebRequest webRequest) {
+        log.error("Internal Error 발생 + {}", exception.getMessage());
         return super.handleExceptionInternal(
             exception,
-            body,
-            headers,
-            httpStatus,
+            null,
+            HttpHeaders.EMPTY,
+            HttpStatus.INTERNAL_SERVER_ERROR,
             webRequest);
     }
 }
