@@ -108,7 +108,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<Object> makeInternalExceptionResponse(Exception exception,
         WebRequest webRequest) {
-
+        log.error("Internal Error 발생 + {}", exception.getMessage());
         return super.handleExceptionInternal(
             exception,
             null,
