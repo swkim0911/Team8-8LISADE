@@ -61,6 +61,6 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     public Slice<FestivalRoutesDto> getRoutes(Pageable pageable, Long id, String city) {
-        return routeRepository.findRoutes(pageable, id, city);
+        return routeRepository.findRoutes(pageable, id, city).orElseThrow(null);
     }
 }

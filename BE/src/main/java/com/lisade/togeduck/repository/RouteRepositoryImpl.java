@@ -12,6 +12,7 @@ import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
+import com.lisade.togeduck.dto.response.FestivalRoutesDto;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
@@ -101,18 +102,6 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
     }
 
-    private List<OrderSpecifier<?>> getOrderSpecifiers(
-        Sort sort) { // pageable에 담긴 정렬 적용. 정렬 기준이 여러 개 일 수도 있어 list에 담음
-        List<OrderSpecifier<?>> orders = new ArrayList<>();
-        sort.stream().forEach(order -> {
-            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
-            String property = order.getProperty();
-            PathBuilder<?> pathBuilder = new PathBuilder<>(Route.class, "route");
-            orders.add(new OrderSpecifier(direction, pathBuilder.get(property)));
-        });
-        return orders;
-    }
-
     @Override
     public Optional<RouteAndFestivalInfo> findRouteAndFestivalInfo(Long routeId) {
         RouteAndFestivalInfo routeAndFestivalInfo = queryFactory.select(Projections.constructor(
@@ -196,11 +185,16 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return Optional.ofNullable(seatInfo);
     }
 
+    @Override
+    public Optional<Slice<FestivalRoutesDto>> findRoutes(Pageable pageable, Long festivalId,
+        String city) {
+        return Optional.empty();
+    }
+
     private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
         return JPAExpressions.select(userRoute.seat.id).from(userRoute)
             .where(userRoute.user.id.eq(userId).and(userRoute.route.id.eq(routeId)));
     }
-
 
     private JPQLQuery<Long> getMinFestivalImageId() {
         return JPAExpressions.select(festivalImage.id.min())
@@ -236,5 +230,17 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(userRoute)
             .on(userRoute.user.eq(user))
             .where(user.id.eq(userId));
+    }
+
+    private List<OrderSpecifier<?>> getOrderSpecifiers(
+        Sort sort) { // pageable에 담긴 정렬 적용. 정렬 기준이 여러 개 일 수도 있어 list에 담음
+        List<OrderSpecifier<?>> orders = new ArrayList<>();
+        sort.stream().forEach(order -> {
+            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
+            String property = order.getProperty();
+            PathBuilder<?> pathBuilder = new PathBuilder<>(Route.class, "route");
+            orders.add(new OrderSpecifier(direction, pathBuilder.get(property)));
+        });
+        return orders;
     }
 }
