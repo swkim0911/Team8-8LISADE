@@ -22,12 +22,14 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
 import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -76,7 +78,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.price,
                 route.status.stringValue(),
                 bus.numberOfSeats,
-                getReservationSeats()))
+                ExpressionUtils.as(getReservationSeats(), "reservedSeats")))
             .from(route)
             .join(station)
             .on(route.station.eq(station))
@@ -92,17 +94,19 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         }
 
         Sort sort = pageable.getSort();
+
         Order createdAt = sort.getOrderFor("createdAt");
         if (createdAt != null) {
             query.orderBy(route.createdAt.desc());
         }
-        List<FestivalRoutesDto> festivalRoutes = query.limit(pageable.getPageSize() + 1).fetch();
 
-        Order population = sort.getOrderFor("population");
-        if (population != null) { //todo orderBy 적용
-            festivalRoutes.sort(
-                Comparator.comparing(FestivalRoutesDto::getReservedSeats).reversed());
+        Order population = sort.getOrderFor("reservedSeats");
+        if (population != null) {
+            StringPath aliasQuantity = Expressions.stringPath("reservedSeats");
+            query.orderBy(aliasQuantity.desc());
         }
+
+        List<FestivalRoutesDto> festivalRoutes = query.limit(pageable.getPageSize() + 1).fetch();
 
         boolean hasNext = false;
         if (festivalRoutes.size() > pageable.getPageSize()) {
@@ -259,7 +263,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     private JPQLQuery<Integer> getReservationSeats() {
-        return JPAExpressions.select(seat.id.count().intValue().as("reservedSeats"))
+        return JPAExpressions.select(seat.id.count().intValue())
             .from(seat)
             .where(seat.route.id.eq(route.id)
                 .and(seat.status.eq(SeatStatus.RESERVATION)));
