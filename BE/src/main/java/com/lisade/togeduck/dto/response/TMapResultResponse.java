@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TMapResultDto {
+public class TMapResultResponse {
 
     private String type;
     private List<Features> features;

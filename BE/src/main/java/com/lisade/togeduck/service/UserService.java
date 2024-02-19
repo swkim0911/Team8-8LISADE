@@ -1,15 +1,15 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.dto.request.LoginDto;
-import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDto;
-import com.lisade.togeduck.dto.response.ValidateUserIdDto;
+import com.lisade.togeduck.dto.request.LoginRequest;
+import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.NicknameAlreadyExistsException;
@@ -36,51 +36,49 @@ public class UserService {
     private final RouteRepository routeRepository;
 
     @Transactional
-    public Long join(SignUpDto signUpDto) {
-        validateByUserId(signUpDto.getUserId());
-        validateByNickname(signUpDto.getNickname());
-        validateByEmail(signUpDto.getEmail());
+    public Long join(SignUpRequest signUpRequest) {
+        validateByUserId(signUpRequest.getUserId());
+        validateByNickname(signUpRequest.getNickname());
+        validateByEmail(signUpRequest.getEmail());
 
-        User user = UserMapper.toUser(signUpDto);
+        User user = UserMapper.toUser(signUpRequest);
         User saveUser = userRepository.save(user);
 
         return saveUser.getId();
     }
 
     @Transactional
-    public User login(LoginDto loginDto) {
-        return userRepository.findByUserIdAndPassword(loginDto.getUserId(),
-                loginDto.getPassword())
+    public User login(LoginRequest loginRequest) {
+        return userRepository.findByUserIdAndPassword(loginRequest.getUserId(),
+                loginRequest.getPassword())
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public ValidateUserIdDto checkUserId(String userId) {
-        validateByUserId(userId);
+    @Transactional(readOnly = true)
+    public Optional<UserReservedRouteDetailResponse> getReservedRouteInfo(Long userId,
+        Long routeId) {
+        RouteAndFestivalInfo routeAndFestivalInfo = findRouteAndFestivalInfo(routeId);
+        StationInfo stationInfo = findStationInfo(routeId);
+        SeatInfo seatInfo = findSeatInfo(routeId, userId);
+        BusInfo busInfo = findBusInfo(routeId);
+        DriverInfo driverInfo = findDriverInfo(routeId);
+        LocalTime arrivedAt = getArrivedAt(routeAndFestivalInfo.getStartedAt(),
+            routeAndFestivalInfo.getExpectedDuration());
 
-        return UserMapper.toValidateUserIdDto("사용가능한 아이디입니다.");
+        return Optional.ofNullable(
+            UserMapper.toUserReservedRouteDetailResponse(routeAndFestivalInfo, stationInfo,
+                seatInfo,
+                busInfo, driverInfo, arrivedAt));
     }
 
-    public Slice<UserReservedRouteDto> getReservedRouteList(Pageable pageable, Long userId) {
+    public Slice<UserReservedRouteResponse> getReservedRouteList(Pageable pageable, Long userId) {
         return routeRepository.findReservedRoutes(pageable, userId);
     }
 
-    @Transactional(readOnly = true)
-    public Optional<UserReservedRouteDetailDto> getReservedRouteInfo(Long userId, Long routeId) {
-        RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfo(
-            routeId).orElseThrow(RouteNotFoundException::new);
-        StationInfo stationInfo = routeRepository.findStationInfo(routeId)
-            .orElseThrow(RouteNotFoundException::new);
-        SeatInfo seatInfo = routeRepository.findSeatInfo(routeId, userId)
-            .orElseThrow(RouteNotFoundException::new);
-        BusInfo busInfo = routeRepository.findBusInfo(routeId)
-            .orElseThrow(RouteNotFoundException::new);
-        DriverInfo driverInfo = routeRepository.findDriverInfo(routeId)
-            .orElseThrow(RouteNotFoundException::new);
-        LocalTime arrivedAt = getArrivedAt(routeAndFestivalInfo.getStartedAt(),
-            routeAndFestivalInfo.getExpectedDuration());
-        return Optional.ofNullable(
-            UserMapper.toUserReservedRouteDetailDto(routeAndFestivalInfo, stationInfo, seatInfo,
-                busInfo, driverInfo, arrivedAt));
+    public ValidateUserIdResponse checkUserId(String userId) {
+        validateByUserId(userId);
+
+        return UserMapper.toValidateUserIdResponse("사용가능한 아이디입니다.");
     }
 
     private void validateByUserId(String userId) {
@@ -99,6 +97,31 @@ public class UserService {
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException();
         }
+    }
+
+    private RouteAndFestivalInfo findRouteAndFestivalInfo(Long routeId) {
+        return routeRepository.findRouteAndFestivalInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
+    }
+
+    private StationInfo findStationInfo(Long routeId) {
+        return routeRepository.findStationInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
+    }
+
+    private SeatInfo findSeatInfo(Long routeId, Long userId) {
+        return routeRepository.findSeatInfo(routeId, userId)
+            .orElseThrow(RouteNotFoundException::new);
+    }
+
+    private BusInfo findBusInfo(Long routeId) {
+        return routeRepository.findBusInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
+    }
+
+    private DriverInfo findDriverInfo(Long routeId) {
+        return routeRepository.findDriverInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
     }
 
     private LocalTime getArrivedAt(LocalDateTime startedAt, LocalTime expectedAt) {

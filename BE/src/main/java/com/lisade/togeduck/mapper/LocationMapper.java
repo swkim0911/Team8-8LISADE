@@ -1,51 +1,52 @@
 package com.lisade.togeduck.mapper;
 
-import com.lisade.togeduck.dto.response.DistancePricesDto;
-import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
-import com.lisade.togeduck.dto.response.LocationDto;
+import com.lisade.togeduck.dto.response.DistancePricesResponse;
+import com.lisade.togeduck.dto.response.DistancePricesResponse.BusInfo;
 import com.lisade.togeduck.dto.response.LocationListDto;
-import com.lisade.togeduck.dto.response.StationDto;
+import com.lisade.togeduck.dto.response.LocationResponse;
+import com.lisade.togeduck.dto.response.StationResponse;
 import com.lisade.togeduck.entity.City;
 import com.lisade.togeduck.entity.Station;
 import java.util.List;
 
 public class LocationMapper {
 
-    public static StationDto toStationDto(Station station) {
-        return StationDto.builder()
+    public static StationResponse toStationResponse(Station station) {
+        return StationResponse.builder()
             .id(station.getId())
             .station(station.getName())
             .build();
     }
 
-    public static LocationDto toLocationDto(City city, List<Station> stations) {
-        return LocationDto.builder()
+    public static LocationResponse toLocationResponse(City city, List<Station> stations) {
+        return LocationResponse.builder()
             .id(city.getId())
             .city(city.getName())
             .stations(
                 stations
                     .stream()
-                    .map(LocationMapper::toStationDto)
+                    .map(LocationMapper::toStationResponse)
                     .toList()
             )
             .build();
     }
 
-    public static LocationListDto toLocationListDto(List<City> cities) {
+    public static LocationListDto toLocationListResponse(List<City> cities) {
         return LocationListDto.builder()
             .numberOfCities(cities.size())
             .locations(
                 cities
                     .stream()
-                    .map((city) -> toLocationDto(city, city.getStations()))
+                    .map((city) -> toLocationResponse(city, city.getStations()))
                     .toList()
             )
             .build();
     }
 
-    public static DistancePricesDto toDistancePricesDto(List<BusInfo> busInfos, Integer distance,
+    public static DistancePricesResponse toDistancePricesResponse(List<BusInfo> busInfos,
+        Integer distance,
         Integer expectedTime) {
-        return DistancePricesDto.builder()
+        return DistancePricesResponse.builder()
             .busInfos(busInfos)
             .distance(distance)
             .expectedTime(expectedTime)

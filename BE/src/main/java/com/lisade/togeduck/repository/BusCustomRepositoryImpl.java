@@ -4,8 +4,8 @@ import static com.lisade.togeduck.entity.QBus.bus;
 import static com.lisade.togeduck.entity.QPriceTable.priceTable;
 import static com.lisade.togeduck.entity.QRoute.route;
 
-import com.lisade.togeduck.dto.response.BusLayoutDto;
-import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
+import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.DistancePricesResponse.BusInfo;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
@@ -45,8 +45,8 @@ public class BusCustomRepositoryImpl implements BusCustomRepository {
     }
 
     @Override
-    public BusLayoutDto findBusLayoutByRouteId(Long routeId) {
-        return queryFactory.select(Projections.constructor(BusLayoutDto.class,
+    public BusLayoutResponse findBusLayoutByRouteId(Long routeId) {
+        return queryFactory.select(Projections.constructor(BusLayoutResponse.class,
                 bus.numberOfSeats, bus.row, bus.column, bus.backSeats))
             .from(route)
             .join(bus)

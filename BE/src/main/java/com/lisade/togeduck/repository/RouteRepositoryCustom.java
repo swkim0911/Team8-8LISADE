@@ -1,13 +1,13 @@
 package com.lisade.togeduck.repository;
 
-import com.lisade.togeduck.dto.response.FestivalRoutesDto;
+import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -17,7 +17,7 @@ public interface RouteRepositoryCustom {
 
     Optional<RouteDetailDto> findRouteDetail(Long routeId, Long festivalId);
 
-    Slice<UserReservedRouteDto> findReservedRoutes(Pageable pageable, Long userId);
+    Slice<UserReservedRouteResponse> findReservedRoutes(Pageable pageable, Long userId);
 
     Optional<RouteAndFestivalInfo> findRouteAndFestivalInfo(Long routeId);
 
@@ -29,5 +29,5 @@ public interface RouteRepositoryCustom {
 
     Optional<SeatInfo> findSeatInfo(Long routeId, Long userId);
 
-    Slice<FestivalRoutesDto> findRoutes(Pageable pageable, Long festivalId, String cityName);
+    Slice<FestivalRoutesResponse> findRoutes(Pageable pageable, Long festivalId, String cityName);
 }

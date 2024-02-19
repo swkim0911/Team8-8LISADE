@@ -51,7 +51,7 @@ public class RouteService {
 
         seatService.saveAll(SeatMapper.toSeats(route, bus.getNumberOfSeats()));
 
-        return RouteMapper.toRouteRegistrationDto(route);
+        return RouteMapper.toRouteRegistrationResponse(route);
     }
 
     public RouteDetailResponse getDetail(Long festivalId, Long routeId) {

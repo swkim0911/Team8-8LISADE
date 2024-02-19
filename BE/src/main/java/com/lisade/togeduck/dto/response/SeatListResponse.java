@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,10 +10,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpFailureDto {
+public class SeatListResponse {
 
-    private String userId;
-    private String password;
-    private String nickname;
-    private String email;
+    private Integer numberOfSeats;
+    private Integer row;
+    private Integer col;
+    private Integer backSeats;
+    private List<SeatResponse> seats;
 }

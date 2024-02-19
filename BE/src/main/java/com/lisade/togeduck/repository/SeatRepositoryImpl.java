@@ -3,7 +3,7 @@ package com.lisade.togeduck.repository;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 
-import com.lisade.togeduck.dto.response.SeatDto;
+import com.lisade.togeduck.dto.response.SeatResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -17,9 +17,9 @@ public class SeatRepositoryImpl implements SeatRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<SeatDto> findSeatsByRouteId(Long routeId) {
+    public List<SeatResponse> findSeatsByRouteId(Long routeId) {
         return queryFactory.select(Projections.constructor(
-                SeatDto.class,
+                SeatResponse.class,
                 seat.id, seat.no, seat.status))
             .from(route)
             .join(seat)

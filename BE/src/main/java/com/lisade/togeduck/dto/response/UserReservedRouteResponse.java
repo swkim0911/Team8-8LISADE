@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserReservedRouteDto {
+public class UserReservedRouteResponse {
 
     private Long id;
     private String title;

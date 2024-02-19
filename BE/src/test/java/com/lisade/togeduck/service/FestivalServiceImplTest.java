@@ -7,8 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.lisade.togeduck.dto.response.FestivalDetailDto;
-import com.lisade.togeduck.dto.response.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalDetailResponse;
+import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
@@ -51,27 +51,27 @@ class FestivalServiceImplTest {
         Slice<Festival> mockFestivalSlice = new SliceImpl<>(
             Collections.singletonList(mockFestival));
 
-        FestivalDto mockFestivalDto = FestivalDto.builder().id(1L)
+        FestivalResponse mockFestivalResponse = FestivalResponse.builder().id(1L)
             .title("Fake Festival")
             .location("Fake location")
             .paths(List.of("first")).build();
 
-        when(festivalMapper.toFestivalDtoSlice(any())).thenReturn(
-            new SliceImpl<>(Collections.singletonList(mockFestivalDto)));
+        when(festivalMapper.toFestivalResponseSlice(any())).thenReturn(
+            new SliceImpl<>(Collections.singletonList(mockFestivalResponse)));
 
         when(festivalRepository.findSliceByCategoryAndFestivalStatus(any(), any(),
             any())).thenReturn(
             mockFestivalSlice);
 
         //when
-        Slice<FestivalDto> result = festivalService.getList(PageRequest.of(0, 10),
+        Slice<FestivalResponse> result = festivalService.getList(PageRequest.of(0, 10),
             3L, FestivalStatus.RECRUITMENT, "testFilter");
 
         //then
         verify(festivalRepository, times(1)).findSliceByCategoryAndFestivalStatus(
             any(PageRequest.class),
             eq(3L), eq(FestivalStatus.RECRUITMENT));
-        verify(festivalMapper, times(1)).toFestivalDtoSlice(mockFestivalSlice);
+        verify(festivalMapper, times(1)).toFestivalResponseSlice(mockFestivalSlice);
         assertThat(result.getContent().size()).isEqualTo(1);
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
         assertThat(result.getContent().get(0).getTitle()).isEqualTo("Fake Festival");
@@ -100,12 +100,13 @@ class FestivalServiceImplTest {
         //given
         Long festivalId = 1L;
         Festival mockFestival = getMockFestival(festivalId);
-        FestivalDetailDto mockFestivalDetailDto = FestivalDetailDto
+        FestivalDetailResponse mockFestivalDetailResponse = FestivalDetailResponse
             .builder()
             .id(1L)
-            .title("Fake FestivalDetailDto").build();
+            .title("Fake FestivalDetailResponse").build();
         when(festivalRepository.findById(festivalId)).thenReturn(Optional.of(mockFestival));
-        when(festivalMapper.toFestivalDetailDto(mockFestival)).thenReturn(mockFestivalDetailDto);
+        when(festivalMapper.toFestivalDetailDto(mockFestival)).thenReturn(
+            mockFestivalDetailResponse);
 
         //when
         festivalService.getDetail(festivalId);

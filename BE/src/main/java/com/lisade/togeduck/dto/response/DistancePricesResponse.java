@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DistancePricesDto {
+public class DistancePricesResponse {
 
     private Integer distance;
     private Integer expectedTime;

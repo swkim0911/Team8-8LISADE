@@ -1,6 +1,5 @@
 package com.lisade.togeduck.dto.response;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationDto {
+public class ValidateUserIdResponse {
 
-    private Long id;
-    private String city;
-    private List<StationDto> stations;
+    private String userId;
 }

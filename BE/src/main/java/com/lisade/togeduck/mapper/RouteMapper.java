@@ -42,7 +42,7 @@ public class RouteMapper {
             .build();
     }
 
-    public static RouteRegistrationResponse toRouteRegistrationDto(Route route) {
+    public static RouteRegistrationResponse toRouteRegistrationResponse(Route route) {
         return RouteRegistrationResponse.builder()
             .routeId(route.getId())
             .festivalId(route.getFestival().getId())

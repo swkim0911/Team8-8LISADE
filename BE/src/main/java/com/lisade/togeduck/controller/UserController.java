@@ -4,11 +4,11 @@ import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.lisade.togeduck.annotation.Login;
-import com.lisade.togeduck.dto.request.LoginDto;
-import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDto;
-import com.lisade.togeduck.dto.response.ValidateUserIdDto;
+import com.lisade.togeduck.dto.request.LoginRequest;
+import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
+import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.UnAuthenticationException;
 import com.lisade.togeduck.service.UserService;
@@ -36,27 +36,27 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{user_id}")
-    public ValidateUserIdDto checkUserId(@PathVariable(name = "user_id") String userId) {
+    public ValidateUserIdResponse checkUserId(@PathVariable(name = "user_id") String userId) {
         return userService.checkUserId(userId);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Long> signUp(@RequestBody @Valid SignUpDto signUpDto) {
-        Long id = userService.join(signUpDto);
+    @PostMapping
+    public ResponseEntity<Long> signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
+        Long id = userService.join(signUpRequest);
         return new ResponseEntity<>(id, CREATED);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid LoginDto loginDto,
+    public String login(@RequestBody @Valid LoginRequest loginRequest,
         HttpServletRequest request) {
-        User loginUser = userService.login(loginDto);
+        User loginUser = userService.login(loginRequest);
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_USER.getSessionName(), loginUser);
         return loginUser.getUserId();
     }
 
     @GetMapping("/routes")
-    public Slice<UserReservedRouteDto> getRoutes(
+    public Slice<UserReservedRouteResponse> getRoutes(
         @Login User user,
         @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable) {
         if (user == null) {
@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @GetMapping("/routes/{route_id}")
-    public UserReservedRouteDetailDto getRouteInfo(@Login User user,
+    public UserReservedRouteDetailResponse getRouteInfo(@Login User user,
         @PathVariable(name = "route_id") Long routeId) {
         if (user == null) {
             throw new UnAuthenticationException();
