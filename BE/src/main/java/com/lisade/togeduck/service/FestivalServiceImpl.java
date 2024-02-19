@@ -4,11 +4,13 @@ import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalRoutesDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.FestivalRepository;
+import com.lisade.togeduck.repository.RouteRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FestivalServiceImpl implements FestivalService {
 
-    private final FestivalRepository festivalRepository;
-    private final FestivalMapper festivalMapper;
     private final ViewService viewService;
+    private final FestivalRepository festivalRepository;
+    private final RouteRepository routeRepository;
+    private final FestivalMapper festivalMapper;
 
     @Override
     public Slice<FestivalDto> getList(Pageable pageable, Long categoryId,
@@ -54,5 +57,10 @@ public class FestivalServiceImpl implements FestivalService {
         Integer defaultLimit = 8;
         List<BestFestivalDto> best = festivalRepository.findBest(defaultLimit);
         return festivalMapper.toBestFestivalResponse(best.size(), best);
+    }
+
+    @Override
+    public Slice<FestivalRoutesDto> getRoutes(Pageable pageable, Long id, String cityName) {
+        return routeRepository.findRoutes(pageable, id, cityName);
     }
 }

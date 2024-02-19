@@ -3,6 +3,7 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailDto;
 import com.lisade.togeduck.dto.response.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalRoutesDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,6 @@ public interface FestivalService {
     FestivalDetailDto getDetail(Long id);
 
     BestFestivalResponse getBest();
+
+    Slice<FestivalRoutesDto> getRoutes(Pageable pageable, Long id, String cityName);
 }

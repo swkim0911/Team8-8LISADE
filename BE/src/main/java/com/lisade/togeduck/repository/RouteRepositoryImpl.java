@@ -12,6 +12,7 @@ import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
+import com.lisade.togeduck.dto.response.FestivalRoutesDto;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
@@ -19,10 +20,15 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFesti
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDto;
+import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +36,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -59,8 +67,58 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
+    public Slice<FestivalRoutesDto> findRoutes(Pageable pageable, Long festivalId,
+        String cityName) {
+
+        JPAQuery<FestivalRoutesDto> query = queryFactory.select(Projections.constructor(
+                FestivalRoutesDto.class,
+                route.id,
+                route.startedAt,
+                station.name,
+                route.price,
+                route.status.stringValue(),
+                bus.numberOfSeats,
+                ExpressionUtils.as(getReservationSeats(), "reservedSeats")))
+            .from(route)
+            .join(station)
+            .on(route.station.eq(station))
+            .join(bus)
+            .on(route.bus.eq(bus))
+            .where(
+                route.festival.id.eq(festivalId).and(route.status.eq(RouteStatus.PROGRESS)));
+
+        if (!"all".equals(cityName)) { // cityName 조건
+            query = query.where(station.city.id.eq(JPAExpressions.select(city.id)
+                .from(city)
+                .where(city.name.eq(cityName))));
+        }
+
+        Sort sort = pageable.getSort();
+
+        Order createdAt = sort.getOrderFor("createdAt");
+        if (createdAt != null) {
+            query.orderBy(route.createdAt.desc());
+        }
+
+        Order population = sort.getOrderFor("reservedSeats");
+        if (population != null) {
+            StringPath aliasQuantity = Expressions.stringPath("reservedSeats");
+            query.orderBy(aliasQuantity.desc());
+        }
+
+        List<FestivalRoutesDto> festivalRoutes = query.limit(pageable.getPageSize() + 1).fetch();
+
+        boolean hasNext = false;
+        if (festivalRoutes.size() > pageable.getPageSize()) {
+            festivalRoutes.remove(pageable.getPageSize());
+            hasNext = true;
+        }
+        return new SliceImpl<>(festivalRoutes, pageable, hasNext);
+    }
+
+    @Override
     public Slice<UserReservedRouteDto> findReservedRoutes(Pageable pageable, Long userId) {
-        List<UserReservedRouteDto> userReservedRoutes = queryFactory.select(Projections.constructor(
+        JPAQuery<UserReservedRouteDto> query = queryFactory.select(Projections.constructor(
                 UserReservedRouteDto.class,
                 route.id,
                 festival.title,
@@ -82,13 +140,21 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(festivalImage)
             .on(festivalImage.festival.eq(festival)
                 .and(festivalImage.id.eq(getMinFestivalImageId())))
-            .where(route.id.in((getRouteId(userId))))
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize() + 1) // 다음 페이지가 있는지 확인
+            .where(route.id.in((getRouteId(userId))));
+
+        Sort sort = pageable.getSort();
+        Sort.Order order = sort.getOrderFor("createdAt");
+        if (order != null) {
+            query.orderBy(route.createdAt.desc());
+        }
+
+        List<UserReservedRouteDto> userReservedRoutes = query.limit(
+                pageable.getPageSize() + 1) // 다음 페이지 있는지 확인
             .fetch();
+
         boolean hasNext = false;
         if (userReservedRoutes.size() > pageable.getPageSize()) {
-            userReservedRoutes.remove(pageable.getPageSize());
+            userReservedRoutes.remove(pageable.getPageSize()); //한개 더 가져왔으니 더 가져온 데이터 삭제
             hasNext = true;
         }
         return new SliceImpl<>(userReservedRoutes, pageable, hasNext);
@@ -181,7 +247,6 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         return JPAExpressions.select(userRoute.seat.id).from(userRoute)
             .where(userRoute.user.id.eq(userId).and(userRoute.route.id.eq(routeId)));
     }
-
 
     private JPQLQuery<Long> getMinFestivalImageId() {
         return JPAExpressions.select(festivalImage.id.min())
