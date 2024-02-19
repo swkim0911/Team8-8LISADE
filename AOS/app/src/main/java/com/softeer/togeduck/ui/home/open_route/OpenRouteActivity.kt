@@ -12,9 +12,6 @@ class OpenRouteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityOpenRouteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.leftLayoutView.setOnClickListener {
-            RegionListDialog().show(supportFragmentManager, "ListDialogFragment")
-        }
     }
 }
 
