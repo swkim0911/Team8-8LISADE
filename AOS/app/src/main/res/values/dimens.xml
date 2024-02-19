@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="guideline_contents">16dp</dimen>
+    <dimen name="guideline_ticket_contents">32dp</dimen>
     <dimen name="ticket_elevation">8dp</dimen>
 </resources>
