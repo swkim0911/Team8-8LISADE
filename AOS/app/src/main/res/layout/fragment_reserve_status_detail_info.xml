@@ -32,7 +32,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/guideline_contents" />
 
-        <!--타이틀-->
         <View
             android:id="@+id/header_top"
             android:layout_width="0dp"
@@ -60,9 +59,7 @@
             app:layout_constraintEnd_toEndOf="@id/header_top"
             app:layout_constraintStart_toStartOf="@id/header_top"
             app:layout_constraintTop_toTopOf="@id/header_top" />
-        <!--end 타이틀-->
 
-        <!--행사 타이틀-->
         <View
             android:id="@+id/festivalTitleContainer"
             style="@style/main_title_box"
@@ -97,7 +94,6 @@
             app:layout_constraintBottom_toBottomOf="@id/festivalTitleContainer"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/festivalTitleContainer" />
-        <!--end 행사 타이틀-->
 
         <ScrollView
             android:layout_width="0dp"
@@ -120,7 +116,6 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.45" />
 
-                <!--행사 정보-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/festivalImgWrapper"
                     android:layout_width="0dp"
@@ -239,9 +234,6 @@
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/cost"
                     app:layout_constraintEnd_toEndOf="parent" />
-                <!--end 행사 정보-->
-
-                <!--노선 위치 정보-->
 
                 <TextView
                     android:id="@+id/departure"
@@ -336,7 +328,6 @@
                     app:layout_constraintBottom_toBottomOf="@id/arrival"
                     app:layout_constraintStart_toEndOf="@id/arrivalTime"
                     app:layout_constraintTop_toTopOf="@id/arrival" />
-                <!--end 노선 위치 정보-->
 
                 <View
                     android:id="@+id/divider"
@@ -346,7 +337,6 @@
                     android:background="@color/gray100"
                     app:layout_constraintTop_toBottomOf="@id/arrival" />
 
-                <!--기사 정보-->
                 <TextView
                     android:id="@+id/driverInfo"
                     android:layout_width="wrap_content"
@@ -477,7 +467,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/driverInfo" />
-                <!--end 기사 정보-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

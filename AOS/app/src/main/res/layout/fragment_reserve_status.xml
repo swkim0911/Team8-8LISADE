@@ -23,7 +23,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/guideline_contents" />
 
-        <!--타이틀-->
         <View
             android:id="@+id/header_top"
             android:layout_width="0dp"
@@ -51,7 +50,6 @@
             app:layout_constraintEnd_toEndOf="@id/header_top"
             app:layout_constraintStart_toStartOf="@id/header_top"
             app:layout_constraintTop_toTopOf="@id/header_top" />
-        <!--end 타이틀-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvReservationStatusList"

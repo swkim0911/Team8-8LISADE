@@ -27,7 +27,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/guideline_contents" />
 
-        <!--타이틀-->
         <View
             android:id="@+id/header_top"
             android:layout_width="0dp"
@@ -55,9 +54,7 @@
             app:layout_constraintEnd_toEndOf="@id/header_top"
             app:layout_constraintStart_toStartOf="@id/header_top"
             app:layout_constraintTop_toTopOf="@id/header_top" />
-        <!--end 타이틀-->
 
-        <!--노선 정보-->
         <View
             android:id="@+id/courseInfoContainer"
             style="@style/main_title_box"
@@ -65,7 +62,6 @@
             android:layout_height="90dp"
             app:layout_constraintTop_toBottomOf="@id/header_top" />
 
-        <!--출발지 / 도착지-->
         <TextView
             android:id="@+id/courseSP"
             android:layout_width="wrap_content"
@@ -102,9 +98,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/courseArrow"
             app:layout_constraintTop_toTopOf="@id/courseSP" />
-        <!--end 출발지 / 도착지-->
 
-        <!--잔여 좌석-->
         <TextView
             android:id="@+id/seatTotalText"
             android:layout_width="wrap_content"
@@ -188,7 +182,6 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/seatTotalValue"
             app:layout_constraintStart_toEndOf="@id/seatLeftoverValue" />
-        <!--end 잔여 좌석-->
 
         <ImageView
             android:layout_width="20dp"
@@ -199,7 +192,6 @@
             android:src="@drawable/icon_refresh"
             app:layout_constraintBottom_toBottomOf="@id/courseInfoContainer"
             app:layout_constraintEnd_toEndOf="@id/guideRight" />
-        <!--end 노선 정보-->
 
         <TextView
             android:id="@+id/driverSeatText"
@@ -234,7 +226,6 @@
             app:layout_constraintEnd_toEndOf="@id/entranceText"
             app:layout_constraintStart_toStartOf="@id/driverSeatText"
             app:layout_constraintTop_toBottomOf="@id/driverSeatText">
-
 
             <com.softeer.togeduck.ui.custom_view.SeatCustomView
                 android:id="@+id/seatSelectView"
@@ -275,7 +266,6 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@id/selectCompleteBtn"
             app:layout_constraintEnd_toEndOf="@id/guideRight" />
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/selectCompleteBtn"
