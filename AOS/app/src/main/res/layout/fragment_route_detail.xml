@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="360dp"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        tools:context=".ui.home.article_detail.RouteDetailDialogFragment">
+
+        <ImageView
+            android:id="@+id/mapImg"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/dummy_map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconSpDp"
+            android:layout_width="24dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/icon_sp_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mapImg" />
+
+        <TextView
+            android:id="@+id/departureText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="-8dp"
+            android:text="@string/departure"
+            android:textColor="@color/gray300"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/iconSpDp"
+            app:layout_constraintTop_toTopOf="@id/iconSpDp" />
+
+        <TextView
+            android:id="@+id/departurePlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="출발지점 입니다."
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/departureText"
+            app:layout_constraintStart_toEndOf="@id/departureText"
+            app:layout_constraintTop_toTopOf="@id/departureText" />
+
+        <TextView
+            android:id="@+id/arrivalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-9dp"
+            android:text="@string/arrival"
+            android:textColor="@color/gray300"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/iconSpDp"
+            app:layout_constraintStart_toStartOf="@id/departureText" />
+
+        <TextView
+            android:id="@+id/arrivalPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="도착지점 입니다."
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/arrivalText"
+            app:layout_constraintStart_toStartOf="@id/departurePlace" />
+
+        <ImageView
+            android:id="@+id/clockIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/icon_clock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iconSpDp" />
+
+        <TextView
+            android:id="@+id/duringTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="06:00 ~ 10:00"
+            android:textColor="@color/gray300"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/clockIcon"
+            app:layout_constraintStart_toStartOf="@id/departureText"
+            app:layout_constraintTop_toTopOf="@id/clockIcon" />
+
+        <ImageView
+            android:id="@+id/iconCalendar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/icon_calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clockIcon" />
+
+        <TextView
+            android:id="@+id/arrivalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1월11일 (월)"
+            android:textColor="@color/gray300"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/clockIcon"
+            app:layout_constraintStart_toStartOf="@id/departureText"
+            app:layout_constraintTop_toTopOf="@id/iconCalendar" />
+
+        <ImageView
+            android:id="@+id/iconUser"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/icon_user"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iconCalendar" />
+
+        <TextView
+            android:id="@+id/departureDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모집중 10  (수용인원 25명)"
+            android:textColor="@color/gray300"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/clockIcon"
+            app:layout_constraintStart_toStartOf="@id/departureText"
+            app:layout_constraintTop_toTopOf="@id/iconUser" />
+
+
+        <TextView
+            android:id="@+id/totalPriceText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/total_price"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iconUser" />
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="50,000 원"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/mapImg"
+            app:layout_constraintTop_toTopOf="@id/totalPriceText" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/joinButton"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/main"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/join"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="@id/mapImg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/totalPriceText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

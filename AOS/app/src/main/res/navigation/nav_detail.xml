@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/articleDetailFragment"
-        android:name="com.softeer.togeduck.ui.article_detail.ArticleDetailFragment"
+        android:name="com.softeer.togeduck.ui.home.article_detail.ArticleDetailFragment"
         android:label="fragment_article_detail"
         tools:layout="@layout/fragment_article_detail" >
         <action
@@ -16,11 +16,18 @@
     </fragment>
     <fragment
         android:id="@+id/routeFragment"
-        android:name="com.softeer.togeduck.ui.article_detail.RouteFragment"
+        android:name="com.softeer.togeduck.ui.home.article_detail.RouteFragment"
         android:label="fragment_route"
         tools:layout="@layout/fragment_route" >
         <action
             android:id="@+id/action_routeFragment_to_articleDetailFragment"
             app:destination="@id/articleDetailFragment" />
+        <action
+            android:id="@+id/action_routeFragment_to_openRouteActivity"
+            app:destination="@id/openRouteActivity" />
     </fragment>
+    <activity
+        android:id="@+id/openRouteActivity"
+        android:name="com.softeer.togeduck.ui.home.open_route.OpenRouteActivity"
+        android:label="OpenRouteActivity" />
 </navigation>

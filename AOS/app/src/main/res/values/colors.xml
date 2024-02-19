@@ -10,6 +10,7 @@
     <color name="gray230">#CCCCCC</color>
     <color name="gray200">#AFBAC8</color>
     <color name="gray100">#eaeaea</color>
+    <color name="gray80">#EEEEEE</color>
     <color name="gray50">#F4F6FA</color>
     <color name="gray30">#EAEDF4</color>
     <color name="mint">#00C5DC</color>
@@ -17,5 +18,7 @@
     <color name="navy600">#003D7A</color>
     <color name="navy300">#435FA7</color>
     <color name="blue">#435FA7</color>
+    <color name="divider">#B2B7BD</color>
+
 
 </resources>
