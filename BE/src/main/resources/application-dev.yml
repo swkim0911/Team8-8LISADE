@@ -1,26 +1,22 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/${H2_DATABASE_NAME}
-    username: ${H2_USERNAME}
-    password: ${H2_PASSWORD}
-    driverClassName: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/${MYSQL_TEST_DATABASE_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${MYSQL_TEST_USERNAME}
+    password: ${MYSQL_TEST_PASSWORD}
 ---
 spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         use_sql_comments: true
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
     defer-datasource-initialization: true
 
 ---
-spring:
-  sql:
-    init:
-      mode: always
 ---
 spring:
   data:
