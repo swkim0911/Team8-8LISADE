@@ -3,8 +3,8 @@ package com.lisade.togeduck.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.lisade.togeduck.dto.request.LoginDto;
-import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.request.LoginRequest;
+import com.lisade.togeduck.dto.request.SignUpRequest;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.mapper.UserMapper;
 import com.lisade.togeduck.repository.UserRepository;
@@ -29,17 +29,17 @@ class UserServiceTest {
     @DisplayName("회원가입 join() 잘되는지 테스트")
     void userJoin() {
         //given
-        SignUpDto signUpDto = SignUpDto.builder()
+        SignUpRequest signUpRequest = SignUpRequest.builder()
             .userId("userId")
             .password("password12@")
             .nickname("nickname")
             .email("right@email.com")
             .build();
-        User user = UserMapper.toUser(signUpDto);
+        User user = UserMapper.toUser(signUpRequest);
 
         //when
         when(userRepository.save(any())).thenReturn(user);
-        userService.join(signUpDto);// 실제 db가 아니여서 id를 검증할 수 없음.
+        userService.join(signUpRequest);// 실제 db가 아니여서 id를 검증할 수 없음.
     }
 
     @Test
@@ -49,25 +49,25 @@ class UserServiceTest {
         String userId = "userId";
         String password = "password12@";
 
-        LoginDto loginDto = LoginDto.builder()
+        LoginRequest loginRequest = LoginRequest.builder()
             .userId(password)
             .password(password)
             .build();
 
-        SignUpDto signUpDto = SignUpDto.builder()
+        SignUpRequest signUpRequest = SignUpRequest.builder()
             .userId("userId")
             .password("password12@")
             .nickname("nickname")
             .email("right@email.com")
             .build();
 
-        User user = UserMapper.toUser(signUpDto);
+        User user = UserMapper.toUser(signUpRequest);
 
         //when
         when(userRepository.findByUserIdAndPassword(any(), any())).thenReturn(
             Optional.ofNullable(user));
 
-        User loginUser = userService.login(loginDto);
+        User loginUser = userService.login(loginRequest);
 
         //then
         Assertions.assertThat(loginUser.getUserId()).isEqualTo(userId);

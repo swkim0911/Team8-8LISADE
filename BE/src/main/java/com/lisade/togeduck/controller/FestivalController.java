@@ -1,9 +1,9 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
-import com.lisade.togeduck.dto.response.FestivalDetailDto;
-import com.lisade.togeduck.dto.response.FestivalDto;
-import com.lisade.togeduck.dto.response.FestivalRoutesDto;
+import com.lisade.togeduck.dto.response.FestivalDetailResponse;
+import com.lisade.togeduck.dto.response.FestivalResponse;
+import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class FestivalController {
     private final FestivalService festivalService;
 
     @GetMapping
-    public Slice<FestivalDto> getList(
+    public Slice<FestivalResponse> getList(
         @PageableDefault(size = 10, sort = "startedAt", direction = Direction.ASC) Pageable pageable,
         @RequestParam(name = "category", required = true) Long categoryId,
         @RequestParam(name = "filter", required = false) String filterType,
@@ -34,7 +34,7 @@ public class FestivalController {
     }
 
     @GetMapping("/{id}")
-    public FestivalDetailDto getDetail(@PathVariable(value = "id") Long id) {
+    public FestivalDetailResponse getDetail(@PathVariable(value = "id") Long id) {
         return festivalService.getDetail(id);
     }
 
@@ -44,7 +44,7 @@ public class FestivalController {
     }
 
     @GetMapping("/{id}/routes")
-    public Slice<FestivalRoutesDto> getRoutes(
+    public Slice<FestivalRoutesResponse> getRoutes(
         @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable,
         @PathVariable(value = "id") Long id,
         @RequestParam(name = "city", required = false, defaultValue = "all") String cityName) {

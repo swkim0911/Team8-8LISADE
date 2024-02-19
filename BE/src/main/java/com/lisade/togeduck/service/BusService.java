@@ -1,7 +1,7 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.dto.response.BusLayoutDto;
-import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
+import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.DistancePricesResponse.BusInfo;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.exception.BusNotFoundException;
 import com.lisade.togeduck.repository.BusRepository;
@@ -29,7 +29,7 @@ public class BusService {
         return busRepository.findBusInfoByDistance(distance);
     }
 
-    public BusLayoutDto getBusLayout(Long routeId) {
+    public BusLayoutResponse getBusLayout(Long routeId) {
         return busRepository.findBusLayoutByRouteId(routeId);
     }
 }

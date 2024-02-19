@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class LocationListDto {
 
     private Integer numberOfCities;
-    private List<LocationDto> locations;
+    private List<LocationResponse> locations;
 }

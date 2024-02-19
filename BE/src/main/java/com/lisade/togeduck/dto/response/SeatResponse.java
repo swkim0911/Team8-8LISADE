@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
+import com.lisade.togeduck.entity.enums.SeatStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,9 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginEmptyFieldDto {
+public class SeatResponse {
 
-    private String userId;
+    private Long id;
+    private Integer seatNo;
+    private SeatStatus status;
 
-    private String password;
 }

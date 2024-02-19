@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lisade.togeduck.dto.request.SignUpDto;
+import com.lisade.togeduck.dto.request.SignUpRequest;
 import com.lisade.togeduck.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class UserControllerTest {
     @DisplayName("회원가입 확인")
     void joinUser() throws Exception {
         //given
-        SignUpDto signUpDto = SignUpDto.builder()
+        SignUpRequest signUpRequest = SignUpRequest.builder()
             .userId("userId")
             .password("password!12")
             .nickname("nickname")
@@ -45,6 +45,6 @@ class UserControllerTest {
 
         mockMvc.perform(post("/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(signUpDto)));
+            .content(new ObjectMapper().writeValueAsString(signUpRequest)));
     }
 }

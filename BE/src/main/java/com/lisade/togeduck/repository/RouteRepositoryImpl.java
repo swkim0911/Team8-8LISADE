@@ -12,14 +12,14 @@ import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
-import com.lisade.togeduck.dto.response.FestivalRoutesDto;
+import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDto;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.ExpressionUtils;
@@ -67,11 +67,11 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
-    public Slice<FestivalRoutesDto> findRoutes(Pageable pageable, Long festivalId,
+    public Slice<FestivalRoutesResponse> findRoutes(Pageable pageable, Long festivalId,
         String cityName) {
 
-        JPAQuery<FestivalRoutesDto> query = queryFactory.select(Projections.constructor(
-                FestivalRoutesDto.class,
+        JPAQuery<FestivalRoutesResponse> query = queryFactory.select(Projections.constructor(
+                FestivalRoutesResponse.class,
                 route.id,
                 route.startedAt,
                 station.name,
@@ -106,7 +106,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             query.orderBy(aliasQuantity.desc());
         }
 
-        List<FestivalRoutesDto> festivalRoutes = query.limit(pageable.getPageSize() + 1).fetch();
+        List<FestivalRoutesResponse> festivalRoutes = query.limit(pageable.getPageSize() + 1)
+            .fetch();
 
         boolean hasNext = false;
         if (festivalRoutes.size() > pageable.getPageSize()) {
@@ -117,9 +118,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
-    public Slice<UserReservedRouteDto> findReservedRoutes(Pageable pageable, Long userId) {
-        JPAQuery<UserReservedRouteDto> query = queryFactory.select(Projections.constructor(
-                UserReservedRouteDto.class,
+    public Slice<UserReservedRouteResponse> findReservedRoutes(Pageable pageable, Long userId) {
+        JPAQuery<UserReservedRouteResponse> query = queryFactory.select(Projections.constructor(
+                UserReservedRouteResponse.class,
                 route.id,
                 festival.title,
                 route.startedAt,
@@ -148,7 +149,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             query.orderBy(route.createdAt.desc());
         }
 
-        List<UserReservedRouteDto> userReservedRoutes = query.limit(
+        List<UserReservedRouteResponse> userReservedRoutes = query.limit(
                 pageable.getPageSize() + 1) // 다음 페이지 있는지 확인
             .fetch();
 

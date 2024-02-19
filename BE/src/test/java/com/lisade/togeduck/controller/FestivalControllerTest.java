@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.lisade.togeduck.dto.response.FestivalDto;
+import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import java.time.LocalDateTime;
@@ -51,13 +51,14 @@ class FestivalControllerTest {
     void getList() throws Exception {
 
         //given
-        FestivalDto mockFestivalDto = FestivalDto.builder().id(1L)
+        FestivalResponse mockFestivalResponse = FestivalResponse.builder().id(1L)
             .title("test1")
             .location("테스트 로케이션")
             .paths(List.of("filePath"))
             .startedAt(LocalDateTime.of(2024, 2, 8, 11, 2)).build();
 
-        Slice<FestivalDto> mockSlice = new PageImpl<>(Collections.singletonList(mockFestivalDto));
+        Slice<FestivalResponse> mockSlice = new PageImpl<>(Collections.singletonList(
+            mockFestivalResponse));
 
         //when
         when(festivalService.getList(any(Pageable.class), any(Long.class),
@@ -77,12 +78,13 @@ class FestivalControllerTest {
             eq(PageRequest.of(1, 5, Sort.by(Sort.Direction.ASC, "startedAt"))),
             eq(3L),
             eq(FestivalStatus.RECRUITMENT), eq("popular"));
-        resultActions.andExpect(jsonPath("$.result.content[0].id").value(mockFestivalDto.getId()))
-            .andExpect(jsonPath("$.result.content[0].title").value(mockFestivalDto.getTitle()))
+        resultActions.andExpect(
+                jsonPath("$.result.content[0].id").value(mockFestivalResponse.getId()))
+            .andExpect(jsonPath("$.result.content[0].title").value(mockFestivalResponse.getTitle()))
             .andExpect(
-                jsonPath("$.result.content[0].location").value(mockFestivalDto.getLocation()))
+                jsonPath("$.result.content[0].location").value(mockFestivalResponse.getLocation()))
             .andExpect(
-                jsonPath("$.result.content[0].paths").value(mockFestivalDto.getPaths().get(0)))
+                jsonPath("$.result.content[0].paths").value(mockFestivalResponse.getPaths().get(0)))
             .andExpect(jsonPath("$.result.content[0].startedAt").value("2024.02.08 11:02"));
     }
 }

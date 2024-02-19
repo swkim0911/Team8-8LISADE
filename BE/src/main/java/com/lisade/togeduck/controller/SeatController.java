@@ -1,8 +1,8 @@
 package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.annotation.Login;
-import com.lisade.togeduck.dto.request.SeatRegistrationDto;
-import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
+import com.lisade.togeduck.dto.response.SeatListResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.SeatService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class SeatController {
     private final SeatService seatService;
 
     @GetMapping
-    public SeatListDto getList(
+    public SeatListResponse getList(
         @PathVariable(name = "route_id") Long routeId) {
         return seatService.getList(routeId);
     }
@@ -30,7 +30,7 @@ public class SeatController {
     public Long register(
         @Login User user,
         @PathVariable(name = "route_id") Long routeId,
-        @RequestBody SeatRegistrationDto seatRegistration) {
+        @RequestBody SeatRegistrationRequest seatRegistration) {
         return seatService.register(user, routeId, seatRegistration);
     }
 }

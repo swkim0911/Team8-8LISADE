@@ -1,9 +1,9 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.dto.request.SeatRegistrationDto;
-import com.lisade.togeduck.dto.response.BusLayoutDto;
-import com.lisade.togeduck.dto.response.SeatDto;
-import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
+import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.SeatListResponse;
+import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
@@ -30,13 +30,13 @@ public class SeatService {
     private final SeatRepository seatRepository;
     private final BusService busService;
 
-    public SeatListDto getList(Long routeId) {
-        BusLayoutDto busLayoutDto = busService.getBusLayout(routeId);
-        List<SeatDto> seats = seatRepository.findSeatsByRouteId(routeId);
+    public SeatListResponse getList(Long routeId) {
+        BusLayoutResponse busLayoutResponse = busService.getBusLayout(routeId);
+        List<SeatResponse> seats = seatRepository.findSeatsByRouteId(routeId);
 
         validateSeats(seats);
 
-        return SeatMapper.toSeatListDto(busLayoutDto, seats);
+        return SeatMapper.toSeatListResponse(busLayoutResponse, seats);
     }
 
     @Transactional
@@ -47,7 +47,7 @@ public class SeatService {
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     public Long register(User user, Long routeId,
-        SeatRegistrationDto seatRegistration) {
+        SeatRegistrationRequest seatRegistration) {
         Seat seat = get(routeId, seatRegistration.getNo());
         Route route = seat.getRoute();
 
@@ -75,7 +75,7 @@ public class SeatService {
         }
     }
 
-    private void validateSeats(List<SeatDto> seats) {
+    private void validateSeats(List<SeatResponse> seats) {
         if (seats.isEmpty()) {
             throw new RouteNotFoundException();
         }

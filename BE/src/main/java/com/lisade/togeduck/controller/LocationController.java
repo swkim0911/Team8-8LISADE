@@ -1,6 +1,6 @@
 package com.lisade.togeduck.controller;
 
-import com.lisade.togeduck.dto.response.DistancePricesDto;
+import com.lisade.togeduck.dto.response.DistancePricesResponse;
 import com.lisade.togeduck.dto.response.LocationListDto;
 import com.lisade.togeduck.service.LocationService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class LocationController {
     }
 
     @GetMapping("/distance")
-    public DistancePricesDto getDistance(@RequestParam Long stationId,
+    public DistancePricesResponse getDistance(@RequestParam Long stationId,
         @RequestParam Long festivalId) {
         return locationService.getDistance(stationId, festivalId);
     }

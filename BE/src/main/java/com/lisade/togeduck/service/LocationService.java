@@ -1,10 +1,10 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.dto.response.DistancePricesDto;
-import com.lisade.togeduck.dto.response.DistancePricesDto.BusInfo;
+import com.lisade.togeduck.dto.response.DistancePricesResponse;
+import com.lisade.togeduck.dto.response.DistancePricesResponse.BusInfo;
 import com.lisade.togeduck.dto.response.LocationListDto;
-import com.lisade.togeduck.dto.response.TMapResultDto;
-import com.lisade.togeduck.dto.response.TMapResultDto.Properties;
+import com.lisade.togeduck.dto.response.TMapResultResponse;
+import com.lisade.togeduck.dto.response.TMapResultResponse.Properties;
 import com.lisade.togeduck.entity.City;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Station;
@@ -58,7 +58,7 @@ public class LocationService {
     public LocationListDto getList() {
         List<City> cities = getCities();
 
-        return LocationMapper.toLocationListDto(cities);
+        return LocationMapper.toLocationListResponse(cities);
     }
 
     public List<City> getCities() {
@@ -69,31 +69,31 @@ public class LocationService {
         return stationRepository.findById(stationId).orElseThrow(StationNotFoundException::new);
     }
 
-    public DistancePricesDto getDistance(Long stationId, Long festivalId) {
+    public DistancePricesResponse getDistance(Long stationId, Long festivalId) {
         Station station = getStation(stationId);
         Festival festival = festivalService.get(festivalId);
 
-        TMapResultDto tMapResultDto = requestTMap(station.getXPos(), station.getYPos(),
+        TMapResultResponse tMapResultResponse = requestTMap(station.getXPos(), station.getYPos(),
             festival.getXPos(), festival.getYPos());
 
-        Properties properties = tMapResultDto.getFeatures().get(0).getProperties();
+        Properties properties = tMapResultResponse.getFeatures().get(0).getProperties();
 
         Integer distance = properties.getTotalDistance() / 1000;
         Integer expectedTime = properties.getTotalTime();
 
         List<BusInfo> busInfos = busService.getBusInfo(distance);
 
-        return LocationMapper.toDistancePricesDto(busInfos, distance, expectedTime);
+        return LocationMapper.toDistancePricesResponse(busInfos, distance, expectedTime);
     }
 
-    private TMapResultDto requestTMap(Double startX, Double startY, Double endX, Double endY) {
+    private TMapResultResponse requestTMap(Double startX, Double startY, Double endX, Double endY) {
         UriComponents uriComponentsBuilder = makeTMapUri();
         HttpEntity<?> httpEntity = makeTMapHttpRequest(startX, startY, endX, endY);
 
-        ResponseEntity<TMapResultDto> response = restTemplate.postForEntity(
+        ResponseEntity<TMapResultResponse> response = restTemplate.postForEntity(
             uriComponentsBuilder.toUri(),
             httpEntity,
-            TMapResultDto.class);
+            TMapResultResponse.class);
 
         return response.getBody();
     }

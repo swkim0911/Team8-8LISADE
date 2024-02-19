@@ -12,9 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lisade.togeduck.dto.request.SeatRegistrationDto;
-import com.lisade.togeduck.dto.response.SeatDto;
-import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
+import com.lisade.togeduck.dto.response.SeatListResponse;
+import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
@@ -93,8 +93,9 @@ class SeatControllerTest {
             .andReturn();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        SeatListDto response = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
-            SeatListDto.class);
+        SeatListResponse response = objectMapper.readValue(
+            mvcResult.getResponse().getContentAsString(),
+            SeatListResponse.class);
 
         assertEquals(5, response.getNumberOfSeats());
     }
@@ -132,12 +133,12 @@ class SeatControllerTest {
     void registerSeatTest() throws Exception {
         // given
         Long routeId = 1L;
-        SeatRegistrationDto request = SeatRegistrationDto.builder()
+        SeatRegistrationRequest request = SeatRegistrationRequest.builder()
             .no(1)
             .build();
 
         when(seatService.register(any(User.class), any(Long.class),
-            any(SeatRegistrationDto.class)))
+            any(SeatRegistrationRequest.class)))
             .thenReturn(1L);
 
         // when
@@ -158,7 +159,7 @@ class SeatControllerTest {
         // given
         Long festivalId = 1L;
         Long routeId = 1L;
-        SeatRegistrationDto request = SeatRegistrationDto.builder()
+        SeatRegistrationRequest request = SeatRegistrationRequest.builder()
             .no(1)
             .build();
 
@@ -166,7 +167,7 @@ class SeatControllerTest {
         ResponseEntity<Object> response = getResponseEntity(seatNotFoundException);
 
         when(seatService.register(any(User.class), any(Long.class),
-            any(SeatRegistrationDto.class)))
+            any(SeatRegistrationRequest.class)))
             .thenThrow(seatNotFoundException);
 
         when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
@@ -194,7 +195,7 @@ class SeatControllerTest {
     void registerReservationSeatTest() throws Exception {
         // given
         Long routeId = 1L;
-        SeatRegistrationDto request = SeatRegistrationDto.builder()
+        SeatRegistrationRequest request = SeatRegistrationRequest.builder()
             .no(1)
             .build();
 
@@ -202,7 +203,7 @@ class SeatControllerTest {
         ResponseEntity<Object> response = getResponseEntity(seatAlreadyRegisterException);
 
         when(seatService.register(any(User.class), any(Long.class),
-            any(SeatRegistrationDto.class)))
+            any(SeatRegistrationRequest.class)))
             .thenThrow(seatAlreadyRegisterException);
 
         when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
@@ -219,18 +220,18 @@ class SeatControllerTest {
                 SeatAlreadyRegisterException.class));
     }
 
-    private SeatListDto seatsResponse() {
-        List<SeatDto> seats = new ArrayList<>();
+    private SeatListResponse seatsResponse() {
+        List<SeatResponse> seats = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            seats.add(SeatDto.builder()
+            seats.add(SeatResponse.builder()
                 .id((long) i)
                 .seatNo(i + 1)
                 .status(SeatStatus.AVAILABLE)
                 .build());
         }
 
-        return SeatListDto.builder()
+        return SeatListResponse.builder()
             .numberOfSeats(seats.size())
             .seats(seats)
             .build();

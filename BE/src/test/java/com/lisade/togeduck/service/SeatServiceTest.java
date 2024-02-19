@@ -9,10 +9,10 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.lisade.togeduck.dto.request.SeatRegistrationDto;
-import com.lisade.togeduck.dto.response.BusLayoutDto;
-import com.lisade.togeduck.dto.response.SeatDto;
-import com.lisade.togeduck.dto.response.SeatListDto;
+import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
+import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.SeatListResponse;
+import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
@@ -50,19 +50,19 @@ class SeatServiceTest {
     @DisplayName("특정 노선에 대한 좌석 상태 조회 성공 테스트")
     void getSeatsOfRouteTest() {
         // given
-        List<SeatDto> response = seatsResponse();
-        BusLayoutDto busLayoutDto = BusLayoutDto.builder().row(3).col(4).backSeats(4)
+        List<SeatResponse> response = seatsResponse();
+        BusLayoutResponse busLayoutResponse = BusLayoutResponse.builder().row(3).col(4).backSeats(4)
             .numberOfSeats(16).build();
 
         doReturn(response)
             .when(seatRepository).findSeatsByRouteId(any(Long.class));
-        doReturn(busLayoutDto).when(busService).getBusLayout(anyLong());
+        doReturn(busLayoutResponse).when(busService).getBusLayout(anyLong());
 
         // when
-        SeatListDto seatListDto = seatService.getList(1L);
+        SeatListResponse seatListResponse = seatService.getList(1L);
 
         // then
-        assertEquals(16, seatListDto.getNumberOfSeats());
+        assertEquals(16, seatListResponse.getNumberOfSeats());
 
         verify(seatRepository, times(1)).findSeatsByRouteId(any(Long.class));
     }
@@ -71,7 +71,7 @@ class SeatServiceTest {
     @DisplayName("존재하지 않는 Route가 주어질 때 좌석 조회 실패 테스트")
     void getSeatsOfRouteWithNonExistRouteTest() {
         // given
-        List<SeatDto> response = new ArrayList<>();
+        List<SeatResponse> response = new ArrayList<>();
 
         doReturn(response)
             .when(seatRepository).findSeatsByRouteId(any(Long.class));
@@ -89,7 +89,7 @@ class SeatServiceTest {
         Integer no = 1;
         Long routeId = 1L;
 
-        SeatRegistrationDto request = SeatRegistrationDto.builder()
+        SeatRegistrationRequest request = SeatRegistrationRequest.builder()
             .no(no)
             .build();
 
@@ -128,7 +128,7 @@ class SeatServiceTest {
             .userId("userId")
             .build();
 
-        SeatRegistrationDto request = SeatRegistrationDto.builder()
+        SeatRegistrationRequest request = SeatRegistrationRequest.builder()
             .no(no)
             .build();
 
@@ -148,7 +148,7 @@ class SeatServiceTest {
         Long routeId = 1L;
         Integer no = 1;
 
-        SeatRegistrationDto request = SeatRegistrationDto.builder()
+        SeatRegistrationRequest request = SeatRegistrationRequest.builder()
             .no(no)
             .build();
 
@@ -190,11 +190,11 @@ class SeatServiceTest {
             .build();
     }
 
-    private List<SeatDto> seatsResponse() {
-        List<SeatDto> seats = new ArrayList<>();
+    private List<SeatResponse> seatsResponse() {
+        List<SeatResponse> seats = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            seats.add(SeatDto.builder()
+            seats.add(SeatResponse.builder()
                 .id((long) i)
                 .seatNo(i + 1)
                 .status(SeatStatus.AVAILABLE)

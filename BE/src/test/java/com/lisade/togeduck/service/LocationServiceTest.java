@@ -35,7 +35,7 @@ class LocationServiceTest {
         Long festivalId = 1L;
 
         // when
-//        DistancePricesDto distance = locationService.getDistance(stationId, festivalId);
+//        DistancePricesResponse distance = locationService.getDistance(stationId, festivalId);
 
         // then
 //        assertNotNull(distance);

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FestivalDto {
+public class FestivalResponse {
 
     private Long id;
     private String title;

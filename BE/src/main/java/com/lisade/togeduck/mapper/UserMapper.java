@@ -1,58 +1,39 @@
 package com.lisade.togeduck.mapper;
 
-import com.lisade.togeduck.dto.request.SignUpDto;
-import com.lisade.togeduck.dto.response.LoginEmptyFieldDto;
-import com.lisade.togeduck.dto.response.SignUpFailureDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.BusInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.DriverInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.RouteAndFestivalInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.SeatInfo;
-import com.lisade.togeduck.dto.response.UserReservedRouteDetailDto.StationInfo;
-import com.lisade.togeduck.dto.response.ValidateUserIdDto;
+import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
+import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
+import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.AuthorityType;
 import java.time.LocalTime;
-import java.util.Map;
 
 public class UserMapper {
 
-    public static SignUpFailureDto toSignUpFailureDto(Map<String, String> validationResult) {
-        return SignUpFailureDto.builder()
-            .userId(validationResult.get("userId"))
-            .password(validationResult.get("password"))
-            .nickname(validationResult.get("nickname"))
-            .email(validationResult.get("email"))
-            .build();
-    }
-
-    public static LoginEmptyFieldDto toLoginEmptyFieldDto(Map<String, String> validationResult) {
-        return LoginEmptyFieldDto.builder()
-            .userId(validationResult.get("userId"))
-            .password(validationResult.get("password"))
-            .build();
-    }
-
-    public static User toUser(SignUpDto signUpDto) {
+    public static User toUser(SignUpRequest signUpRequest) {
         return User.builder()
-            .userId(signUpDto.getUserId())
-            .password(signUpDto.getPassword())
-            .nickname(signUpDto.getNickname())
-            .email(signUpDto.getEmail())
+            .userId(signUpRequest.getUserId())
+            .password(signUpRequest.getPassword())
+            .nickname(signUpRequest.getNickname())
+            .email(signUpRequest.getEmail())
             .authority(AuthorityType.ROLE_USER)
             .build();
     }
 
-    public static ValidateUserIdDto toValidateUserIdDto(String userIdMessage) {
-        return ValidateUserIdDto.builder()
+    public static ValidateUserIdResponse toValidateUserIdResponse(String userIdMessage) {
+        return ValidateUserIdResponse.builder()
             .userId(userIdMessage)
             .build();
     }
 
-    public static UserReservedRouteDetailDto toUserReservedRouteDetailDto(
+    public static UserReservedRouteDetailResponse toUserReservedRouteDetailResponse(
         RouteAndFestivalInfo routeAndFestivalInfo, StationInfo stationInfo, SeatInfo seatInfo,
         BusInfo busInfo, DriverInfo driverInfo, LocalTime arrivedAt) {
-        return UserReservedRouteDetailDto.builder()
+        return UserReservedRouteDetailResponse.builder()
             .festivalId(routeAndFestivalInfo.getFestivalId())
             .title(routeAndFestivalInfo.getTitle())
             .seatNo(seatInfo.getSeatNo())
