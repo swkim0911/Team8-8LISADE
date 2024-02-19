@@ -13,7 +13,7 @@ spring:
     properties:
       hibernate:
         use_sql_comments: true
-    database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
 
 ---
