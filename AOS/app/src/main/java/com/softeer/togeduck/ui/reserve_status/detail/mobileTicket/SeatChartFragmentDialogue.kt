@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.reserve_status.detail
+package com.softeer.togeduck.ui.reserve_status.detail.mobileTicket
 
 import android.os.Bundle
 import android.view.LayoutInflater
