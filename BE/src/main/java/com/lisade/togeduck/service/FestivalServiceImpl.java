@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +46,7 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
+    @Transactional
     public FestivalDetailDto getDetail(Long id) {
         Optional<Festival> optionalFestival = festivalRepository.findById(id);
         Festival festival = optionalFestival.orElseThrow(FestivalNotFoundException::new);

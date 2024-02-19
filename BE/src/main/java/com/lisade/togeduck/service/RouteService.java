@@ -11,7 +11,6 @@ import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
-import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.RouteRepository;
@@ -37,9 +36,7 @@ public class RouteService {
     @Transactional
     public RouteRegistrationResponse save(Long festivalId,
         RouteRegistrationRequest routeRegistration) {
-        if (exists(festivalId, routeRegistration.getStationId())) {
-            throw new RouteAlreadyExistsException();
-        }
+        validationExists(festivalId, routeRegistration.getStationId());
 
         Festival festival = festivalService.get(festivalId);
         Station station = locationService.getStation(routeRegistration.getStationId());
@@ -57,33 +54,31 @@ public class RouteService {
         return RouteMapper.toRouteRegistrationDto(route);
     }
 
-    public Route get(Long routeId) {
-        return routeRepository.findById(routeId).orElseThrow(RouteNotFoundException::new);
-    }
-
-    public boolean exists(Long festivalId, Long stationId) {
-        return routeRepository.existsByFestivalIdAndStationId(festivalId, stationId);
-    }
-
     public RouteDetailResponse getDetail(Long festivalId, Long routeId) {
         Optional<RouteDetailDto> optionalRouteDetailDto = routeRepository.findRouteDetail(routeId,
             festivalId);
         RouteDetailDto routeDetailDto = validateRouteDetailDto(optionalRouteDetailDto);
-        LocalDateTime startedAt = routeDetailDto.getStartedAt();
-        LocalTime expectedAt = routeDetailDto.getExpectedAt();
 
-        LocalTime arrivalAt = startedAt.toLocalTime().plusHours(expectedAt.getHour())
-            .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
+        LocalTime arrivalAt = getArrivalAt(routeDetailDto);
 
         return RouteMapper.toRouteDetailResponse(routeDetailDto, arrivalAt);
     }
 
+    private LocalTime getArrivalAt(RouteDetailDto routeDetailDto) {
+        LocalDateTime startedAt = routeDetailDto.getStartedAt();
+        LocalTime expectedAt = routeDetailDto.getExpectedAt();
+        return startedAt.toLocalTime().plusHours(expectedAt.getHour())
+            .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
+    }
+
+    private void validationExists(Long festivalId, Long stationId) {
+        if (routeRepository.existsByFestivalIdAndStationId(festivalId, stationId)) {
+            throw new RouteAlreadyExistsException();
+        }
+    }
+
     private RouteDetailDto validateRouteDetailDto(
         Optional<RouteDetailDto> optionalRouteDetailDto) {
-        if (optionalRouteDetailDto.isEmpty()) {
-            log.error("NotFound 에러 발생");
-            throw new FestivalNotFoundException();
-        }
-        return optionalRouteDetailDto.get();
+        return optionalRouteDetailDto.orElseThrow(FestivalNotFoundException::new);
     }
 }
