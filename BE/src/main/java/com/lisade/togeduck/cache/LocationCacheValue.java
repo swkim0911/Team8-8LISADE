@@ -1,0 +1,35 @@
+package com.lisade.togeduck.cache;
+
+
+import com.lisade.togeduck.dto.response.DistancePricesResponse;
+import java.io.Serializable;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
+
+@Getter
+@Setter
+@RedisHash("location")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class LocationCacheValue implements Serializable {
+
+    @Id
+    private String locationId;
+    private DistancePricesResponse distancePricesResponse;
+    @TimeToLive
+    private final Long ttl = 60 * 60 * 12L;
+
+    private LocationCacheValue(String locationId, DistancePricesResponse distancePricesResponse) {
+        this.locationId = locationId;
+        this.distancePricesResponse = distancePricesResponse;
+    }
+
+    public static LocationCacheValue of(String locationId,
+        DistancePricesResponse distancePricesResponse) {
+        return new LocationCacheValue(locationId, distancePricesResponse);
+    }
+}
