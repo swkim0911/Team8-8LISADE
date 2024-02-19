@@ -37,5 +37,5 @@ public class Driver extends BaseEntity {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "driver")
-    private List<DriverRoute> driverRoutes;
+    private List<Route> route;
 }

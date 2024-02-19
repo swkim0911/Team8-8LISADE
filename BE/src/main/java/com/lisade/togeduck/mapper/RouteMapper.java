@@ -36,7 +36,7 @@ public class RouteMapper {
             .price(price)
             .distance(routeRegistrationRequest.getDistance())
             .station(station)
-            .status(RouteStatus.PROGRESS)
+            .status(RouteStatus.RECRUIT)
             .expectedTime(expectedTime)
             .startedAt(startedAt)
             .build();

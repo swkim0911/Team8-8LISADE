@@ -51,6 +51,13 @@ public class Route extends BaseEntity {
     @Column(name = "distance", nullable = false)
     private Integer distance;
 
+    @Column(name = "car_number", length = 15)
+    private String carNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "station_id", nullable = false)
     private Station station;
@@ -61,12 +68,6 @@ public class Route extends BaseEntity {
 
     @OneToMany(mappedBy = "route")
     private List<Seat> seats;
-
-    @OneToMany(mappedBy = "route")
-    private List<UserRoute> userRoutes;
-
-    @OneToMany(mappedBy = "route")
-    private List<DriverRoute> driverRoutes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id", nullable = false)

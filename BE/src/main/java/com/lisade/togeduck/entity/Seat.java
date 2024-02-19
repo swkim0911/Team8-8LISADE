@@ -42,7 +42,12 @@ public class Seat extends BaseEntity {
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
-    public void setStatus(SeatStatus status) {
-        this.status = status;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public void reservation(User user) {
+        this.user = user;
+        this.status = SeatStatus.RESERVATION;
     }
 }

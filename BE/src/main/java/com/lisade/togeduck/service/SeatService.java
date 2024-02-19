@@ -4,17 +4,14 @@ import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
 import com.lisade.togeduck.dto.response.SeatListResponse;
 import com.lisade.togeduck.dto.response.SeatResponse;
-import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
-import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.SeatRepository;
-import com.lisade.togeduck.repository.UserRouteRepository;
 import jakarta.persistence.LockModeType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SeatService {
 
-    private final UserRouteRepository userRouteRepository;
     private final SeatRepository seatRepository;
     private final BusService busService;
 
@@ -47,21 +43,12 @@ public class SeatService {
     @Transactional
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     public Long register(User user, Long routeId,
-        SeatRegistrationRequest seatRegistration) {
-        Seat seat = get(routeId, seatRegistration.getNo());
-        Route route = seat.getRoute();
+        SeatRegistrationRequest seatRegistrationRequest) {
+        Seat seat = get(routeId, seatRegistrationRequest.getNo());
 
         validateSeat(seat);
-
-        seat.setStatus(SeatStatus.RESERVATION);
-
-        UserRoute userRoute = UserRoute.builder()
-            .user(user)
-            .seat(seat)
-            .route(route)
-            .build();
-
-        return userRouteRepository.save(userRoute).getId();
+        seat.reservation(user);
+        return seat.getId();
     }
 
     public Seat get(Long routeId, Integer no) {

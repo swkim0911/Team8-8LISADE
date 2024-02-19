@@ -1,5 +1,5 @@
 package com.lisade.togeduck.entity.enums;
 
 public enum RouteStatus {
-    PROGRESS, COMPLETE
+    RECRUIT, RECRUIT_COMPLETE, OPERATION_CONFIRM, OPERATION_COMPLETE
 }
