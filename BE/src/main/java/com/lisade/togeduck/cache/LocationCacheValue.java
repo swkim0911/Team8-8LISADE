@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
 @Setter
@@ -18,6 +19,8 @@ import org.springframework.data.redis.core.TimeToLive;
 public class LocationCacheValue implements Serializable {
 
     @Id
+    private String id;
+    @Indexed
     private String locationId;
     private DistancePricesResponse distancePricesResponse;
     @TimeToLive
