@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.home.seat
+package com.softeer.togeduck.ui.custom_view
 
 import android.content.Context
 import android.graphics.Canvas
