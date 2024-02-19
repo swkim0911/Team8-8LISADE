@@ -88,7 +88,7 @@
             android:backgroundTint="@color/main"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="@string/select_complete"
+            android:text="@string/selection_complete"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"

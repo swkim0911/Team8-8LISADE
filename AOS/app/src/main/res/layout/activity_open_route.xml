@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.home.open_route.RegionListViewModel" />
 
     </data>
 
@@ -56,10 +59,8 @@
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerHeader"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp"
             app:layout_constraintBottom_toTopOf="@id/concertImg"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
@@ -78,11 +79,10 @@
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerImg"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp"
+
             app:layout_constraintBottom_toTopOf="@id/concertInfo"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
@@ -147,11 +147,9 @@
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerConcertInfo"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/concertAge" />
@@ -317,7 +315,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="가격"
+            android:text="@string/price"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/totalPriceText"
@@ -346,7 +344,7 @@
             android:backgroundTint="@color/main"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="개설하기"
+            android:text="@string/opened"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"

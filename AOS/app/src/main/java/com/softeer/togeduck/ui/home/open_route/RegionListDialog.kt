@@ -2,14 +2,20 @@ package com.softeer.togeduck.ui.home.open_route
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.RegionDetailModel
 import com.softeer.togeduck.data.model.RegionListModel
 import com.softeer.togeduck.databinding.DialogSelectRegionBinding
+import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.ItemClickWithData
 
 private val dummyData = listOf(
@@ -32,10 +38,11 @@ class RegionListDialog : DialogFragment() {
     private var _binding: DialogSelectRegionBinding? = null
     private val binding get() = _binding!!
 
+
     private lateinit var regionListAdapter: RegionListAdapter
-    private var regionDetailListAdapter: RegionDetailListAdapter? = null
-
-
+    private lateinit var regionDetailListAdapter: RegionDetailListAdapter
+    private var selectedView: View? = null
+    private val regionListViewModel: RegionListViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
@@ -44,13 +51,13 @@ class RegionListDialog : DialogFragment() {
         val view = binding.root
 
         regionListAdapter = RegionListAdapter(dummyData)
+        regionDetailListAdapter = RegionDetailListAdapter(emptyList())
 
         binding.regionList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = regionListAdapter
         }
 
-        regionDetailListAdapter = RegionDetailListAdapter(emptyList())
         binding.placeList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = regionDetailListAdapter
@@ -58,12 +65,23 @@ class RegionListDialog : DialogFragment() {
 
         regionListAdapter.itemClick = object : ItemClickWithData {
             override fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>) {
+                selectedView?.setBackgroundColor(Color.TRANSPARENT)
+                val color = ContextCompat.getColor(requireContext(), R.color.main)
+                view.setBackgroundColor(color)
+                selectedView = view
                 regionDetailListAdapter = RegionDetailListAdapter(detailList).also {
                     binding.placeList.adapter = it
+                    it.itemClick = object : ItemClick {
+                        override fun onClick(view: View, position: Int) {
+//                            Log.d("TESTLOG",detailList[position].detail)
+                            regionListViewModel.setSelectedRegion(detailList[position].detail)
+                        }
+                    }
                 }
-            }
 
+            }
         }
+
         builder.setView(view)
         return builder.create()
     }
@@ -71,5 +89,9 @@ class RegionListDialog : DialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setUpDetailListAdapter() {
+
     }
 }

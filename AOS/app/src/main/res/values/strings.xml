@@ -80,8 +80,9 @@
     <string name="dummy_concert_title">EXO PLANET ＃3 - The EXO\'rDIUM</string>
     <string name="select_course">경로 선택</string>
     <string name="select">선택</string>
+    <string name="price">가격</string>
+    <string name="opened">개설하기</string>
+    <string name="join">신청하기</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="select_complete">선택완료</string>
 
 </resources>

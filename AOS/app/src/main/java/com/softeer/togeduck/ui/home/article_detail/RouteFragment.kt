@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.home.article_detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -99,9 +100,4 @@ class RouteFragment : Fragment() {
             true
         }
     }
-
-//    private fun showDialog(){
-//        val dialog = RouteDetailDialogFragment()
-//        dialog.show(parentFragmentManager. )
-//    }
 }

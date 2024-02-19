@@ -148,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:text="총 결제금액"
+            android:text="@string/total_price"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iconUser" />
@@ -176,7 +176,7 @@
             android:backgroundTint="@color/main"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="신청하기"
+            android:text="@string/join"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
