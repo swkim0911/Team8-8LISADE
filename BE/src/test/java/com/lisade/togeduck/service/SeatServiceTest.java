@@ -17,13 +17,11 @@ import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.User;
-import com.lisade.togeduck.entity.UserRoute;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.exception.SeatAlreadyRegisterException;
 import com.lisade.togeduck.exception.SeatNotFoundException;
 import com.lisade.togeduck.repository.SeatRepository;
-import com.lisade.togeduck.repository.UserRouteRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +41,6 @@ class SeatServiceTest {
     private SeatRepository seatRepository;
     @Mock
     private BusService busService;
-    @Mock
-    private UserRouteRepository userRouteRepository;
 
     @Test
     @DisplayName("특정 노선에 대한 좌석 상태 조회 성공 테스트")
@@ -97,24 +93,14 @@ class SeatServiceTest {
             .userId("userId")
             .build();
 
-        UserRoute userRoute = UserRoute.builder()
-            .id(1L)
-            .build();
-
         doReturn(Optional.of(seat())).when(seatRepository)
             .findByRouteIdAndNo(routeId, no);
-
-        doReturn(userRoute).when(userRouteRepository)
-            .save(any(UserRoute.class));
-
         // when
         seatService.register(user, routeId, request);
 
         // then
         verify(seatRepository, times(1))
             .findByRouteIdAndNo(any(Long.class), any(Integer.class));
-        verify(userRouteRepository, times(1))
-            .save(any(UserRoute.class));
     }
 
     @Test

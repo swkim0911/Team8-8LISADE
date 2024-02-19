@@ -69,9 +69,6 @@ public class Route extends BaseEntity {
     @OneToMany(mappedBy = "route")
     private List<Seat> seats;
 
-    @OneToMany(mappedBy = "route")
-    private List<UserRoute> userRoutes;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id", nullable = false)
     private Festival festival;

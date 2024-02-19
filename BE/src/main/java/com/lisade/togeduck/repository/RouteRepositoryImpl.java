@@ -9,7 +9,6 @@ import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
-import static com.lisade.togeduck.entity.QUserRoute.userRoute;
 
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
@@ -84,7 +83,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(bus)
             .on(route.bus.eq(bus))
             .where(
-                route.festival.id.eq(festivalId).and(route.status.eq(RouteStatus.PROGRESS)));
+                route.festival.id.eq(festivalId).and(route.status.eq(RouteStatus.RECRUIT)));
 
         if (!"all".equals(cityName)) { // cityName 조건
             query = query.where(station.city.id.eq(JPAExpressions.select(city.id)
@@ -239,13 +238,13 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 seat.no,
                 getReservationSeats(routeId)))
             .from(seat)
-            .where(seat.id.eq(getSeatId(routeId, userId))).fetchOne();
+            .where(seat.user.id.eq(userId).and(seat.route.id.eq(routeId))).fetchOne();
         return Optional.ofNullable(seatInfo);
     }
 
     private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
-        return JPAExpressions.select(userRoute.seat.id).from(userRoute)
-            .where(userRoute.user.id.eq(userId).and(userRoute.route.id.eq(routeId)));
+        return JPAExpressions.select(seat.id).from(seat)
+            .where(seat.user.id.eq(userId).and(seat.route.id.eq(routeId)));
     }
 
     private JPQLQuery<Long> getMinFestivalImageId() {
@@ -277,10 +276,10 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     public JPQLQuery<Long> getRouteId(Long userId) {
-        return JPAExpressions.select(userRoute.route.id)
+        return JPAExpressions.select(seat.route.id)
             .from(user)
-            .join(userRoute)
-            .on(userRoute.user.eq(user))
+            .join(seat)
+            .on(seat.user.eq(user))
             .where(user.id.eq(userId));
     }
 }
