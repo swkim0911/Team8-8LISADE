@@ -21,10 +21,11 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
     private var mode: SeatViewMode
 
-    private var seatsCntPerRow = 4
-    private var rearSeatsCnt = 5
+    private var seatsCntPerRow = 3
+    private var rearSeatsCnt = 4
     private var totalRows = 10
 
+    private var seatDiffCntInRearAndOtherRow: Int
     private var seatColWithAisleLeft: Int
     private var aisleSize: Int
     private var viewWidthSize: Int
@@ -45,6 +46,7 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
             }
         }
 
+        seatDiffCntInRearAndOtherRow = rearSeatsCnt - seatsCntPerRow
         seatColWithAisleLeft = calcSeatColWithAisleLeft()
         aisleSize = calcAisleSize()
         viewWidthSize =
@@ -64,8 +66,6 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     }
 
     private fun calcAisleSize(): Int {
-        val seatDiffCntInRearAndOtherRow = rearSeatsCnt - seatsCntPerRow
-
         return if (seatDiffCntInRearAndOtherRow == 0) {
             SEAT_SIZE
         } else {
@@ -91,7 +91,11 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         }
         for (col in 0..<rearSeatsCnt) { // 마지막 줄 좌석 추가
             val seatNumber = totalRows * seatsCntPerRow + col + 1
-            val item = createSeat(col, totalRows, 0)
+            val item = if (seatDiffCntInRearAndOtherRow == 0 && col >= seatColWithAisleLeft) {
+                createSeat(col, totalRows, aisleSize)
+            } else {
+                createSeat(col, totalRows, 0)
+            }
 
             addSeatToView(item, seatNumber)
         }
