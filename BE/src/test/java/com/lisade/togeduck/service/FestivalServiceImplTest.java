@@ -105,7 +105,7 @@ class FestivalServiceImplTest {
             .id(1L)
             .title("Fake FestivalDetailResponse").build();
         when(festivalRepository.findById(festivalId)).thenReturn(Optional.of(mockFestival));
-        when(festivalMapper.toFestivalDetailDto(mockFestival)).thenReturn(
+        when(festivalMapper.toFestivalDetailResponse(mockFestival)).thenReturn(
             mockFestivalDetailResponse);
 
         //when
@@ -114,6 +114,6 @@ class FestivalServiceImplTest {
         //then
         verify(festivalRepository, times(1)).findById(festivalId);
         verify(viewService, times(1)).add(mockFestival);
-        verify(festivalMapper, times(1)).toFestivalDetailDto(mockFestival);
+        verify(festivalMapper, times(1)).toFestivalDetailResponse(mockFestival);
     }
 }
