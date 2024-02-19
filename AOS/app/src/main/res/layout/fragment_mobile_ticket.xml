@@ -131,35 +131,35 @@
             app:layout_constraintStart_toStartOf="@id/guideTicketLeft"
             app:layout_constraintTop_toBottomOf="@id/ticketTitleContainer" />
 
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerHorizon1"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:background="@color/gray100"
             android:elevation="@dimen/ticket_elevation"
+            app:dividerColor="@color/gray100"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/ticketTitleContainer"
             app:layout_constraintVertical_bias="0.4" />
 
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerHorizon2"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:background="@color/gray100"
             android:elevation="@dimen/ticket_elevation"
+            app:dividerColor="@color/gray100"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/dividerHorizon1" />
 
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerVertical"
             android:layout_width="2dp"
             android:layout_height="0dp"
-            android:background="@color/gray100"
             android:elevation="@dimen/ticket_elevation"
+            app:dividerColor="@color/gray100"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
