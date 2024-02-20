@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -46,13 +48,17 @@ class RegionListDialog : DialogFragment() {
     private var selectedView: View? = null
     private val regionListViewModel: RegionListViewModel by activityViewModels()
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireActivity())
-        val inflater = requireActivity().layoutInflater
-        _binding = DialogSelectRegionBinding.inflate(inflater, null, false)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val view = binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
 
+    ): View? {
+        _binding = DialogSelectRegionBinding.inflate(inflater, null, false)
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         regionListAdapter = RegionListAdapter(dummyData)
         regionDetailListAdapter = RegionDetailListAdapter(emptyList())
 
@@ -67,11 +73,19 @@ class RegionListDialog : DialogFragment() {
         }
 
         init()
-
-        builder.setView(view)
-        return builder.create()
+        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
+        val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
+        dialog?.window?.setLayout(
+            width,
+            height
+        )
+        dialog?.window?.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.dialogue_radius
+            )
+        )
     }
-    
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -97,6 +111,5 @@ class RegionListDialog : DialogFragment() {
 
             }
         }
-
     }
 }
