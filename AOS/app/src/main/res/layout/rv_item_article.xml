@@ -18,7 +18,7 @@
         <!-- NeedFix: API연동시 수정 필요 이미지 수정 필요-->
         <ImageView
             android:id="@+id/articleImg"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
@@ -32,48 +32,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <TextView
             android:id="@+id/articleTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintVertical_chainStyle="packed"
             android:gravity="start|center"
+            android:paddingStart="16dp"
             android:text="@{homeArticle.title}"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/articlePlace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/articlePlace" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/articlePlace"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:gravity="start|center"
+            android:paddingStart="16dp"
             android:text="@{homeArticle.place}"
             android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/articleStartDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
-            app:layout_constraintTop_toBottomOf="@id/articleTitle"
-            app:layout_constraintBottom_toTopOf="@id/articleStartDate" />
+            app:layout_constraintTop_toBottomOf="@id/articleTitle" />
 
         <TextView
             android:id="@+id/articleStartDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:gravity="start|center"
+            android:paddingStart="16dp"
             android:text="@{homeArticle.startDate + ` ~ ` + homeArticle.endDate}"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
-            app:layout_constraintTop_toBottomOf="@id/articlePlace"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/articlePlace" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
