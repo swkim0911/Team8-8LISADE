@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -42,6 +43,7 @@ class RegionListDialog : DialogFragment() {
     private lateinit var regionDetailListAdapter: RegionDetailListAdapter
     private var selectedRegion = ""
     private var selectedView: View? = null
+    private var selectedDetailView: View? = null
     private val regionListViewModel: RegionListViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -93,6 +95,9 @@ class RegionListDialog : DialogFragment() {
                     binding.placeList.adapter = it
                     it.itemClick = object : ItemClick {
                         override fun onClick(view: View, position: Int) {
+                            selectedDetailView?.setBackgroundColor(Color.TRANSPARENT)
+                            view.setBackgroundColor(color)
+                            selectedDetailView = view
                             selectedRegion = detailList[position].detail
                         }
                     }
