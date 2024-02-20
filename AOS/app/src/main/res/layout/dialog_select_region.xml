@@ -13,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/dialog_fragment"
         android:paddingBottom="16dp">
 
         <androidx.constraintlayout.widget.Guideline
@@ -99,7 +98,6 @@
             app:layout_constraintEnd_toStartOf="@id/guideRight"
             app:layout_constraintStart_toEndOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/bottomDivider" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
