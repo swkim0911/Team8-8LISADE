@@ -54,22 +54,20 @@
             app:layout_constraintEnd_toEndOf="@id/header_top"
             app:layout_constraintStart_toStartOf="@id/header_top"
             app:layout_constraintTop_toTopOf="@id/header_top" />
-        <!--end 타이틀-->
 
-        <!--티켓-->
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideTicketLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="32dp" />
+            app:layout_constraintGuide_begin="@dimen/guideline_ticket_contents" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideTicketRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="32dp" />
+            app:layout_constraintGuide_end="@dimen/guideline_ticket_contents" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ticketContainer"
@@ -84,7 +82,6 @@
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/header_top" />
 
-        <!--티켓 타이틀-->
         <View
             android:id="@+id/ticketTitleContainer"
             android:layout_width="0dp"
@@ -123,7 +120,6 @@
             app:layout_constraintBottom_toBottomOf="@id/ticketTitleContainer"
             app:layout_constraintStart_toStartOf="@id/guideTicketLeft"
             app:layout_constraintTop_toBottomOf="@id/festivalName" />
-        <!--end 티켓 타이틀-->
 
         <ImageView
             android:layout_width="0dp"
@@ -135,43 +131,40 @@
             app:layout_constraintStart_toStartOf="@id/guideTicketLeft"
             app:layout_constraintTop_toBottomOf="@id/ticketTitleContainer" />
 
-        <!--티켓 구분선-->
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerHorizon1"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:background="@color/gray100"
             android:elevation="@dimen/ticket_elevation"
+            app:dividerColor="@color/gray100"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/ticketTitleContainer"
             app:layout_constraintVertical_bias="0.4" />
 
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerHorizon2"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:background="@color/gray100"
             android:elevation="@dimen/ticket_elevation"
+            app:dividerColor="@color/gray100"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/dividerHorizon1" />
 
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:id="@+id/dividerVertical"
             android:layout_width="2dp"
             android:layout_height="0dp"
-            android:background="@color/gray100"
             android:elevation="@dimen/ticket_elevation"
+            app:dividerColor="@color/gray100"
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
             app:layout_constraintTop_toBottomOf="@id/dividerHorizon1" />
-        <!--end 티켓 구분선-->
 
-        <!--출발/도착-->
         <TextView
             android:id="@+id/departureText"
             android:layout_width="wrap_content"
@@ -192,10 +185,11 @@
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
             android:text="부산(부산 시청 앞)"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/departureTime"
-            app:layout_constraintStart_toStartOf="@id/departureText"
-            app:layout_constraintTop_toBottomOf="@id/departureText"
+            app:layout_constraintEnd_toEndOf="@id/dividerVertical"
+            app:layout_constraintStart_toStartOf="@id/ticketContainer"
+            app:layout_constraintTop_toBottomOf="@id/dividerHorizon1"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
@@ -205,10 +199,10 @@
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
             android:text="09:00"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon2"
-            app:layout_constraintStart_toStartOf="@id/departureText"
+            app:layout_constraintStart_toStartOf="@id/departurePlace"
             app:layout_constraintTop_toBottomOf="@id/departurePlace" />
 
         <ImageView
@@ -243,10 +237,11 @@
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
             android:text="서울(고척스카이돔)"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/arrivalTime"
-            app:layout_constraintStart_toStartOf="@id/arrivalText"
-            app:layout_constraintTop_toBottomOf="@id/departureText"
+            app:layout_constraintEnd_toEndOf="@id/ticketContainer"
+            app:layout_constraintStart_toStartOf="@id/dividerVertical"
+            app:layout_constraintTop_toBottomOf="@id/dividerHorizon1"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
@@ -256,10 +251,10 @@
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
             android:text="14:30"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon2"
-            app:layout_constraintStart_toStartOf="@id/arrivalText"
+            app:layout_constraintStart_toStartOf="@id/arrivalPlace"
             app:layout_constraintTop_toBottomOf="@id/arrivalPlace" />
 
         <TextView
@@ -272,9 +267,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/arrivalTime"
             app:layout_constraintTop_toTopOf="@id/arrivalTime" />
-        <!--end 출발/도착-->
 
-        <!--좌석 번호 / 실시간 버스 위치-->
         <TextView
             android:id="@+id/seatNumberText"
             android:layout_width="wrap_content"
@@ -299,7 +292,8 @@
             app:layout_constraintBottom_toTopOf="@id/seatingChartBtn"
             app:layout_constraintEnd_toStartOf="@id/dividerVertical"
             app:layout_constraintStart_toStartOf="@id/ticketContainer"
-            app:layout_constraintTop_toBottomOf="@id/seatNumberText" />
+            app:layout_constraintTop_toBottomOf="@id/seatNumberText"
+            app:layout_constraintVertical_bias="0.3" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/seatingChartBtn"
@@ -316,6 +310,7 @@
             android:insetRight="0dp"
             android:insetBottom="0dp"
             android:text="@string/seating_chart"
+            android:padding="0dp"
             android:textColor="@color/white"
             android:textSize="13sp"
             android:textStyle="bold"
@@ -344,6 +339,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:padding="0dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/navy800"
             android:elevation="@dimen/ticket_elevation"
@@ -359,10 +355,7 @@
             app:layout_constraintBottom_toBottomOf="@id/ticketContainer"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
             app:layout_constraintStart_toEndOf="@id/dividerVertical" />
-        <!--end 좌석 번호 / 실시간 버스 위치-->
-        <!--end 티켓-->
 
-        <!--공유하기 버튼-->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/shareBtn"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
@@ -404,7 +397,6 @@
             app:layout_constraintEnd_toEndOf="@id/shareBtn"
             app:layout_constraintStart_toEndOf="@id/shareIcon"
             app:layout_constraintTop_toTopOf="@id/shareBtn" />
-        <!--end 공유하기 버튼-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
