@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_open_route"
     app:startDestination="@id/openRouteFragment">
 
     <fragment
         android:id="@+id/openRouteFragment"
         android:name="com.softeer.togeduck.ui.home.open_route.OpenRouteFragment"
-        android:label="OpenRouteFragment" />
+        android:label="OpenRouteFragment" >
+        <action
+            android:id="@+id/action_openRouteFragment_to_seatActivity"
+            app:destination="@id/seatActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/seatActivity"
+        android:name="com.softeer.togeduck.ui.home.seat.SeatActivity"
+        android:label="activity_seat"
+        tools:layout="@layout/activity_seat" />
 </navigation>

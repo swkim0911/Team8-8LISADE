@@ -3,9 +3,11 @@ package com.softeer.togeduck.ui.home.open_route
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -48,6 +50,7 @@ class RegionListDialog : DialogFragment() {
         val builder = AlertDialog.Builder(requireActivity())
         val inflater = requireActivity().layoutInflater
         _binding = DialogSelectRegionBinding.inflate(inflater, null, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val view = binding.root
 
         regionListAdapter = RegionListAdapter(dummyData)
@@ -63,6 +66,19 @@ class RegionListDialog : DialogFragment() {
             adapter = regionDetailListAdapter
         }
 
+        init()
+
+        builder.setView(view)
+        return builder.create()
+    }
+    
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun init(){
         regionListAdapter.itemClick = object : ItemClickWithData {
             override fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>) {
                 selectedView?.setBackgroundColor(Color.TRANSPARENT)
@@ -81,17 +97,6 @@ class RegionListDialog : DialogFragment() {
 
             }
         }
-
-        builder.setView(view)
-        return builder.create()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setUpDetailListAdapter() {
 
     }
 }

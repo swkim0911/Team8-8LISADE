@@ -24,6 +24,5 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/nav_open_route" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

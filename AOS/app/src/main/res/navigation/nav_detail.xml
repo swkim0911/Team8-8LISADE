@@ -25,9 +25,17 @@
         <action
             android:id="@+id/action_routeFragment_to_openRouteActivity"
             app:destination="@id/openRouteActivity" />
+        <action
+            android:id="@+id/action_routeFragment_to_seatActivity2"
+            app:destination="@id/seatActivity2" />
     </fragment>
     <activity
         android:id="@+id/openRouteActivity"
         android:name="com.softeer.togeduck.ui.home.open_route.OpenRouteActivity"
         android:label="OpenRouteActivity" />
+    <activity
+        android:id="@+id/seatActivity2"
+        android:name="com.softeer.togeduck.ui.home.seat.SeatActivity"
+        android:label="activity_seat"
+        tools:layout="@layout/activity_seat" />
 </navigation>

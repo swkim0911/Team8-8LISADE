@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
+import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentRouteDetailBinding
 
 class RouteDetailDialogFragment : DialogFragment() {
@@ -16,7 +18,15 @@ class RouteDetailDialogFragment : DialogFragment() {
         _binding = FragmentRouteDetailBinding.inflate(inflater, null, false)
         val view = binding.root
         builder.setView(view)
+        init()
         return builder.create()
+    }
+
+    private fun init() {
+        binding.joinButton.setOnClickListener {
+            dialog?.dismiss()
+            findNavController().navigate(R.id.action_routeFragment_to_seatActivity2)
+        }
     }
 
 
