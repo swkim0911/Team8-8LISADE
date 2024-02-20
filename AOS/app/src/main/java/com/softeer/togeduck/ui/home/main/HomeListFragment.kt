@@ -93,7 +93,6 @@ class HomeListFragment : Fragment() {
 
         categoryAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                Log.d("TESTLOG", "카테고리 클릭")
 
             }
         }
