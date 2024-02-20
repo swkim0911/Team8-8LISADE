@@ -34,14 +34,6 @@ class SeatChartFragmentDialogue : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.iconClose.setOnClickListener {
-            dialog?.dismiss()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
         val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
         val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
 
@@ -56,6 +48,9 @@ class SeatChartFragmentDialogue : DialogFragment() {
             )
         )
 
+        binding.iconClose.setOnClickListener {
+            dialog?.dismiss()
+        }
     }
 
 
