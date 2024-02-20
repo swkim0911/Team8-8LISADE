@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="com.softeer.togeduck.ui.custom_view.SeatViewMode" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -235,11 +236,12 @@
             app:layout_constraintTop_toBottomOf="@id/driverSeatText">
 
 
-            <com.softeer.togeduck.ui.home.seat.SeatSelectView
+            <com.softeer.togeduck.ui.custom_view.SeatCustomView
                 android:id="@+id/seatSelectView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                app:mode="selectable" />
         </ScrollView>
 
         <TextView

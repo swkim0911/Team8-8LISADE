@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mobileTicketFragment"
-        android:name="com.softeer.togeduck.ui.reserve_status.detail.MobileTicketFragment"
+        android:name="com.softeer.togeduck.ui.reserve_status.detail.mobileTicket.MobileTicketFragment"
         android:label="fragment_mobile_ticket"
         tools:layout="@layout/fragment_mobile_ticket" />
 </navigation>

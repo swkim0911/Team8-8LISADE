@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SeatCustomView">
+        <attr name="mode" format="enum">
+            <enum name="selectable" value="0" />
+            <enum name="read_only" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

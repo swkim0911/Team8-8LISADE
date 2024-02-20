@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.reserve_status.detail.mobileTicket.SeatChartFragmentDialogue">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_contents" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_contents" />
+
+        <View
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/dialogue_header_radius"
+            android:backgroundTint="@color/main"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/busType"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rectangle_radius"
+            android:backgroundTint="@color/mint"
+            android:gravity="center"
+            android:text="28인승"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/headerContainer"
+            app:layout_constraintEnd_toStartOf="@id/headerTitle"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/headerContainer"
+            app:layout_constraintTop_toTopOf="@id/headerContainer" />
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="@string/seating_chart"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/headerContainer"
+            app:layout_constraintEnd_toEndOf="@id/headerContainer"
+            app:layout_constraintStart_toEndOf="@id/busType"
+            app:layout_constraintTop_toTopOf="@id/headerContainer" />
+
+
+        <ImageView
+            android:id="@+id/iconClose"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_close_white"
+            app:layout_constraintBottom_toBottomOf="@id/headerContainer"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintTop_toTopOf="@id/headerContainer" />
+
+        <TextView
+            android:id="@+id/driverSeatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/driver_seat"
+            android:textColor="@color/gray300"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/headerContainer" />
+
+        <TextView
+            android:id="@+id/entranceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/entrance"
+            android:textColor="@color/gray300"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintTop_toTopOf="@id/driverSeatText" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:scrollbarStyle="outsideInset"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/entranceText"
+            app:layout_constraintStart_toStartOf="@id/driverSeatText"
+            app:layout_constraintTop_toBottomOf="@id/driverSeatText">
+
+
+            <com.softeer.togeduck.ui.custom_view.SeatCustomView
+                android:id="@+id/seatSelectView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:mode="read_only" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
