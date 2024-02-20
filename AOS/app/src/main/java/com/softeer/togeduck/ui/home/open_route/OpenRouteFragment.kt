@@ -34,7 +34,6 @@ class OpenRouteFragment : Fragment() {
     private fun init(){
         binding.vm = regionListViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        Log.d("TESTLOG2",regionListViewModel.selectedRegion.value!!)
         binding.leftLayoutView.setOnClickListener {
             RegionListDialog().show(parentFragmentManager, "ListDialogFragment")
         }

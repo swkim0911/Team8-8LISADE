@@ -123,7 +123,6 @@ class RegionListDialog : DialogFragment() {
     private fun selectComplete() {
         binding.selectConfirm.setOnClickListener {
             regionListViewModel.setSelectedRegion(selectedRegion)
-            Log.d("TESTLOG",selectedRegion.toString())
             dialog?.dismiss()
         }
 
