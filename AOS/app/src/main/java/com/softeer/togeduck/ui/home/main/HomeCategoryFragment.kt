@@ -48,7 +48,7 @@ class HomeCategoryFragment : Fragment() {
         rvList.adapter = adapter
         rvList.layoutManager = GridLayoutManager(context, 2)
         rvList.addItemDecoration(
-            GridSpacingItemDecoration(2, 56f.fromDpToPx())
+            GridSpacingItemDecoration(2, 16.fromDpToPx(), true)
         )
         adapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
