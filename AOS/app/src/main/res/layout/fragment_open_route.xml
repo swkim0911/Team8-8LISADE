@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="vm"
+            type="com.softeer.togeduck.ui.home.open_route.RegionListViewModel" />
 
     </data>
 
@@ -192,7 +195,7 @@
             android:backgroundTint="@color/gray50"
             android:elevation="8dp"
             android:gravity="center"
-            android:text="@string/select"
+            android:text="@{vm.selectedRegion}"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/leftLayoutView"
             app:layout_constraintEnd_toEndOf="@id/leftLayoutView"

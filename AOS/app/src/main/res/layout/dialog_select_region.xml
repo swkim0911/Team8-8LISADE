@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
-            name="list"
-            type="com.softeer.togeduck.data.model.RegionListModel" />
-
+            name="vm"
+            type="com.softeer.togeduck.ui.home.open_route.RegionListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
