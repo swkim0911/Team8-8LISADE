@@ -11,7 +11,7 @@ import com.softeer.togeduck.utils.ItemClick
 class HomeListCategoryChipAdapter(private val items: List<HomeCategoryModel>) :
     RecyclerView.Adapter<CategoryChipViewHolder>() {
     private lateinit var binding: RvItemCategoryChipBinding
-    private var selectedItemPosition = RecyclerView.NO_POSITION
+    private var selectedItemPosition = 0
     var itemClick: ItemClick? = null
 
     override fun getItemCount(): Int {

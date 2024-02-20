@@ -112,4 +112,8 @@ class RegionListDialog : DialogFragment() {
             }
         }
     }
+
+    private fun setUpDialogSize(){
+
+    }
 }
