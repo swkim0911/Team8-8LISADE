@@ -8,14 +8,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="16dp"
         tools:context=".ui.home.article_detail.RouteDetailDialogFragment">
 
         <ImageView
             android:id="@+id/mapImg"
-            android:layout_width="328dp"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:src="@drawable/dummy_map"
@@ -30,7 +30,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_sp_dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/mapImg" />
 
         <TextView
@@ -85,7 +85,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_clock"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/iconSpDp" />
 
         <TextView
@@ -106,7 +106,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_calendar"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/clockIcon" />
 
         <TextView
@@ -127,7 +127,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_user"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/iconCalendar" />
 
         <TextView
@@ -150,7 +150,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/total_price"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/iconUser" />
 
         <TextView
@@ -182,7 +182,7 @@
             android:textStyle="bold"
             app:cornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="@id/mapImg"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/totalPriceText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
