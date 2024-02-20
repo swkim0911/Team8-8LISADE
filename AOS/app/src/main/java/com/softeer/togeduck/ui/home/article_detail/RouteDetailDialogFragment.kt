@@ -47,6 +47,9 @@ class RouteDetailDialogFragment : DialogFragment() {
             dialog?.dismiss()
             findNavController().navigate(R.id.action_routeFragment_to_seatActivity2)
         }
+        binding.iconClose.setOnClickListener{
+            dialog?.dismiss()
+        }
     }
 
 

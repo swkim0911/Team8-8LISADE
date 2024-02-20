@@ -73,18 +73,8 @@ class RegionListDialog : DialogFragment() {
         }
 
         init()
-        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
-        val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
-        dialog?.window?.setLayout(
-            width,
-            height
-        )
-        dialog?.window?.setBackgroundDrawable(
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.dialogue_radius
-            )
-        )
+        setUpDialogSize()
+
     }
 
     override fun onDestroyView() {
@@ -111,9 +101,24 @@ class RegionListDialog : DialogFragment() {
 
             }
         }
+        binding.iconClose.setOnClickListener{
+            dialog?.dismiss()
+        }
     }
 
     private fun setUpDialogSize(){
-
+        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
+        val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
+        dialog?.window?.setLayout(
+            width,
+            height
+        )
+        dialog?.window?.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.dialogue_radius
+            )
+        )
     }
+
 }
