@@ -24,7 +24,7 @@ public class LocationCacheValue implements Serializable {
     private String locationId;
     private DistancePricesResponse distancePricesResponse;
     @TimeToLive
-    private final Long ttl = 60 * 60 * 12L;
+    private Long ttl = 60 * 60 * 12L;
 
     private LocationCacheValue(String locationId, DistancePricesResponse distancePricesResponse) {
         this.locationId = locationId;
