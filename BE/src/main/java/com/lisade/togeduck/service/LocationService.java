@@ -1,5 +1,7 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.cache.LocationCacheService;
+import com.lisade.togeduck.cache.LocationCacheValue;
 import com.lisade.togeduck.dto.response.DistancePricesResponse;
 import com.lisade.togeduck.dto.response.DistancePricesResponse.BusInfo;
 import com.lisade.togeduck.dto.response.LocationListDto;
@@ -14,6 +16,7 @@ import com.lisade.togeduck.repository.CityRepository;
 import com.lisade.togeduck.repository.StationRepository;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +55,7 @@ public class LocationService {
     private final RestTemplate restTemplate;
     private final CityRepository cityRepository;
     private final StationRepository stationRepository;
+    private final LocationCacheService locationCacheService;
     private final FestivalService festivalService;
     private final BusService busService;
 
@@ -70,6 +74,14 @@ public class LocationService {
     }
 
     public DistancePricesResponse getDistance(Long stationId, Long festivalId) {
+        String locationId = stationId + "," + festivalId;
+
+        Optional<LocationCacheValue> locationCacheValue = locationCacheService.get(locationId);
+
+        if (locationCacheValue.isPresent()) {
+            return locationCacheValue.get().getDistancePricesResponse();
+        }
+
         Station station = getStation(stationId);
         Festival festival = festivalService.get(festivalId);
 
@@ -83,7 +95,12 @@ public class LocationService {
 
         List<BusInfo> busInfos = busService.getBusInfo(distance);
 
-        return LocationMapper.toDistancePricesResponse(busInfos, distance, expectedTime);
+        DistancePricesResponse distancePricesResponse = LocationMapper.toDistancePricesResponse(
+            busInfos, distance, expectedTime);
+
+        locationCacheService.save(LocationCacheValue.of(locationId, distancePricesResponse));
+        
+        return distancePricesResponse;
     }
 
     private TMapResultResponse requestTMap(Double startX, Double startY, Double endX, Double endY) {
