@@ -10,7 +10,6 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
-import com.lisade.togeduck.exception.UnAuthenticationException;
 import com.lisade.togeduck.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -59,18 +58,14 @@ public class UserController {
     public Slice<UserReservedRouteResponse> getRoutes(
         @Login User user,
         @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable) {
-        if (user == null) {
-            throw new UnAuthenticationException();
-        }
+
         return userService.getReservedRouteList(pageable, user.getId());
     }
 
     @GetMapping("/routes/{route_id}")
     public UserReservedRouteDetailResponse getRouteInfo(@Login User user,
         @PathVariable(name = "route_id") Long routeId) {
-        if (user == null) {
-            throw new UnAuthenticationException();
-        }
+
         return userService.getReservedRouteInfo(user.getId(), routeId)
             .orElseThrow(RuntimeException::new);
     }

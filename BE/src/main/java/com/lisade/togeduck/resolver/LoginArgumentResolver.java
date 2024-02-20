@@ -4,6 +4,7 @@ import static com.lisade.togeduck.constant.SessionConst.LOGIN_USER;
 
 import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.entity.User;
+import com.lisade.togeduck.exception.UnAuthenticationException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.core.MethodParameter;
@@ -30,7 +31,7 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         HttpSession session = request.getSession(false);
         if (session == null) {
-            return null;
+            throw new UnAuthenticationException();
         }
         return session.getAttribute(LOGIN_USER.getSessionName());
     }
