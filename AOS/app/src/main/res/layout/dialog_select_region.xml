@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="list"
             type="com.softeer.togeduck.data.model.RegionListModel" />
@@ -11,8 +12,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="360dp"
-        android:paddingBottom="16dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_fragment"
+        android:paddingBottom="16dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLeft"
@@ -43,10 +45,10 @@
             android:layout_width="60dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="@id/guideLeft"
-            app:layout_constraintTop_toBottomOf="@id/dividerHeader"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/verticalDivider"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/dividerHeader" />
 
 
         <View
@@ -54,31 +56,31 @@
             android:layout_width="2dp"
             android:layout_height="560dp"
             android:background="@color/divider"
-            app:layout_constraintTop_toBottomOf="@id/dividerHeader"
             app:layout_constraintBottom_toTopOf="@id/bottomDivider"
+            app:layout_constraintEnd_toStartOf="@id/placeList"
             app:layout_constraintStart_toEndOf="@id/regionList"
-            app:layout_constraintEnd_toStartOf="@id/placeList"/>
+            app:layout_constraintTop_toBottomOf="@id/dividerHeader" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/placeList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/verticalDivider"
-            app:layout_constraintTop_toBottomOf="@id/dividerHeader"
+            app:layout_constraintBottom_toTopOf="@id/bottomDivider"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
-            app:layout_constraintBottom_toTopOf="@id/bottomDivider"/>
+            app:layout_constraintStart_toEndOf="@id/verticalDivider"
+            app:layout_constraintTop_toBottomOf="@id/dividerHeader" />
 
         <View
             android:id="@+id/bottomDivider"
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:background="@color/divider"
-            app:layout_constraintStart_toEndOf="@id/guideLeft"
-            app:layout_constraintEnd_toStartOf="@id/guideRight"
-            app:layout_constraintTop_toBottomOf="@id/verticalDivider"
             app:layout_constraintBottom_toTopOf="@id/selectConfirm"
-            />
+            app:layout_constraintEnd_toStartOf="@id/guideRight"
+            app:layout_constraintStart_toEndOf="@id/guideLeft"
+            app:layout_constraintTop_toBottomOf="@id/verticalDivider" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/selectConfirm"
             style="@style/Widget.Material3.Button.ElevatedButton"
@@ -93,10 +95,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideRight"
             app:layout_constraintStart_toEndOf="@id/guideLeft"
-            app:layout_constraintTop_toBottomOf="@id/bottomDivider"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/bottomDivider" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
