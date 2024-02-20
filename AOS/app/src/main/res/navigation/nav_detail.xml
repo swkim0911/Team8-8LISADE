@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_article_detail" >
         <action
             android:id="@+id/action_articleDetailFragment_to_routeFragment"
-            app:destination="@id/routeFragment" />
+            app:destination="@id/routeFragment"
+            app:popUpTo="@id/nav_detail"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/routeFragment"
@@ -21,7 +23,9 @@
         tools:layout="@layout/fragment_route" >
         <action
             android:id="@+id/action_routeFragment_to_articleDetailFragment"
-            app:destination="@id/articleDetailFragment" />
+            app:destination="@id/articleDetailFragment"
+            app:popUpTo="@id/nav_detail"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_routeFragment_to_openRouteActivity"
             app:destination="@id/openRouteActivity" />
