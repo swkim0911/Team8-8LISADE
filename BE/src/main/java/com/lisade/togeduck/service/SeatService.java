@@ -45,6 +45,7 @@ public class SeatService {
     public Long register(User user, Long routeId,
         SeatRegistrationRequest seatRegistrationRequest) {
         Seat seat = get(routeId, seatRegistrationRequest.getNo());
+        seat.getRoute().increaseNumberOfReservationSeats();
 
         validateSeat(seat);
         seat.reservation(user);
@@ -52,7 +53,7 @@ public class SeatService {
     }
 
     public Seat get(Long routeId, Integer no) {
-        return seatRepository.findByRouteIdAndNo(routeId, no).orElseThrow(
+        return seatRepository.findByRouteIdAndNoWithRoute(routeId, no).orElseThrow(
             SeatNotFoundException::new);
     }
 
