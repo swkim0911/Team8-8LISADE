@@ -125,7 +125,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 festival.location,
                 station.name,
                 route.price,
-                route.status.stringValue(),
+                route.status,
                 bus.numberOfSeats,
                 getReservationSeats(),
                 festivalImage.path))

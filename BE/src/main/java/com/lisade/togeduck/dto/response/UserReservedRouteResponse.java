@@ -1,6 +1,7 @@
 package com.lisade.togeduck.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.lisade.togeduck.entity.enums.RouteStatus;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class UserReservedRouteResponse {
     private String location;
     private String stationName;
     private Integer price;
-    private String status;
+    private RouteStatus status;
     private Integer totalSeats;
     private Integer reservedSeats;
     private String imagePath;
