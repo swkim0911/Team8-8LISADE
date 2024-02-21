@@ -16,8 +16,6 @@ import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.FestivalRepository;
 import com.lisade.togeduck.repository.RouteRepository;
 import com.mysema.commons.lang.Pair;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -140,19 +138,18 @@ public class FestivalServiceImpl implements FestivalService {
             return 0.0;
         }
 
-        return (double) reservedSeats / totalSeats;
+        Double ratio = (double) reservedSeats / totalSeats;
+        long hours =
+            festivalTotalSeatDto.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600
+                + 2;
+        Double time = Math.pow(hours, GRAVITY_CONSTANT);
+        return ratio / time;
     }
 
     private Double getViewScore(FestivalViewDto festivalViewDto) {
-        LocalDateTime createdAt;
-        createdAt = festivalViewDto.getCreatedAt();
-        Instant instant = createdAt.toInstant(ZoneOffset.UTC);
-        long hours = instant.getEpochSecond() / 3600;
-
-        Integer weeklyViews = festivalViewDto.getWeeklyViews();
-        hours += 2;
+        long hours =
+            festivalViewDto.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
         Double time = Math.pow(hours, GRAVITY_CONSTANT);
-
-        return weeklyViews / time;
+        return festivalViewDto.getWeeklyViews() / time;
     }
 }

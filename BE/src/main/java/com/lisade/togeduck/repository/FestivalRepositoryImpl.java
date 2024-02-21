@@ -73,8 +73,9 @@ public class FestivalRepositoryImpl implements FestivalRepositoryCustom {
                 Projections.constructor(FestivalTotalSeatDto.class,
                     festival.id,
                     seat.status.when(SeatStatus.AVAILABLE).then(1).otherwise(0).sum(),
-                    seat.status.when(SeatStatus.RESERVATION).then(1).otherwise(0).sum())
-            ).from(festival)
+                    seat.status.when(SeatStatus.RESERVATION).then(1).otherwise(0).sum(),
+                    festival.createdAt))
+            .from(festival)
             .join(festival.routes, route)
             .join(route.seats, seat)
             .where(festival.category.id.eq(categoryId))
