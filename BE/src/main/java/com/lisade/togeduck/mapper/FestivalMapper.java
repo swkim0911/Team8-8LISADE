@@ -5,6 +5,7 @@ import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.BestFestivalResponse.Banner;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
+import com.lisade.togeduck.dto.response.FestivalViewDto;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.FestivalImage;
 import java.util.List;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.Slice;
 public interface FestivalMapper {
 
     FestivalMapper INSTANCE = Mappers.getMapper(FestivalMapper.class);
-    
+
     FestivalResponse toFestivalResponse(Festival festival);
+
+    FestivalResponse toFestivalResponse(FestivalViewDto festivalViewDto);
 
     @Mapping(target = "paths", source = "festivalImages")
     @Mapping(target = "category", source = "category.name")

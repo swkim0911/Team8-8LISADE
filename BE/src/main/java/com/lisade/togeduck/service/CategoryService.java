@@ -21,6 +21,10 @@ public class CategoryService {
         return CategoryMapper.toCategoryResponse(categories);
     }
 
+    public List<Long> getIds() {
+        return categoryRepository.findIds();
+    }
+
     private void validateCategories(List<Category> categories) {
         if (categories.isEmpty()) {
             throw new InternalServerException();
