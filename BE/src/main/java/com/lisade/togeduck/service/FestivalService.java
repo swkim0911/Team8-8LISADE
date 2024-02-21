@@ -7,6 +7,8 @@ import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
+import java.util.List;
+import java.util.Map;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -23,4 +25,6 @@ public interface FestivalService {
     BestFestivalResponse getBest();
 
     Slice<FestivalRoutesResponse> getRoutes(Pageable pageable, Long id, String cityName);
+
+    Map<Long, List<FestivalResponse>> calculate();
 }
