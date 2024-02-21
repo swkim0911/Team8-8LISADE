@@ -27,6 +27,7 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     public Slice<ChatRoomListResponse> findJoinedChatRooms(Pageable pageable, Long userId) {
         JPAQuery<ChatRoomListResponse> query = queryFactory.select(Projections.constructor(
                 ChatRoomListResponse.class,
+                chatRoom.id,
                 chatRoom.roomName,
                 chatRoom.numberOfMembers,
                 festival.thumbnailPath))
