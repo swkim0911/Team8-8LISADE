@@ -4,7 +4,6 @@ import static com.lisade.togeduck.entity.QBus.bus;
 import static com.lisade.togeduck.entity.QCity.city;
 import static com.lisade.togeduck.entity.QDriver.driver;
 import static com.lisade.togeduck.entity.QFestival.festival;
-import static com.lisade.togeduck.entity.QFestivalImage.festivalImage;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 import static com.lisade.togeduck.entity.QStation.station;
@@ -128,7 +127,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.status.stringValue(),
                 bus.numberOfSeats,
                 getReservationSeats(),
-                festivalImage.path))
+                festival.thumbnailPath))
             .from(route)
             .join(station)
             .on(route.station.eq(station))
@@ -136,9 +135,6 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .on(festival.eq(route.festival))
             .join(bus)
             .on(route.bus.eq(bus))
-            .join(festivalImage)
-            .on(festivalImage.festival.eq(festival)
-                .and(festivalImage.id.eq(getMinFestivalImageId())))
             .where(route.id.in((getRouteId(userId))));
 
         Sort sort = pageable.getSort();
@@ -171,13 +167,10 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.startedAt,
                 festival.location,
                 festival.city.name,
-                festivalImage.path))
+                festival.thumbnailPath))
             .from(route)
             .join(festival)
             .on(route.festival.eq(festival))
-            .join(festivalImage)
-            .on(festivalImage.festival.eq(festival)
-                .and(festivalImage.id.eq(getMinFestivalImageId())))
             .join(city)
             .on(festival.city.eq(city))
             .where(route.id.eq(routeId))
@@ -245,12 +238,6 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
         return JPAExpressions.select(seat.id).from(seat)
             .where(seat.user.id.eq(userId).and(seat.route.id.eq(routeId)));
-    }
-
-    private JPQLQuery<Long> getMinFestivalImageId() {
-        return JPAExpressions.select(festivalImage.id.min())
-            .from(festivalImage)
-            .where(festivalImage.festival.id.eq(festival.id));
     }
 
     private JPQLQuery<Integer> getTotalSeats(Long routeId) {
