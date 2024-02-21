@@ -4,6 +4,7 @@ import com.lisade.togeduck.batch.FestivalItem;
 import com.lisade.togeduck.batch.FestivalItemProcessingResult;
 import com.lisade.togeduck.cache.FestivalClickCountCacheService;
 import com.lisade.togeduck.cache.FestivalClickCountCacheValue;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -52,12 +53,11 @@ public class BatchConfig {
 
     @Bean
     public Step saveClickCountStep(JobRepository jobRepository) {
-        // TODO Redis의 조회수를 읽고 DB에 반영하도록 reader, writer 등록
-
         return new StepBuilder("saveClickCount", jobRepository)
-            .chunk(1000, transactionManager())
+            .<FestivalClickCountCacheValue, FestivalClickCountCacheValue>chunk(1000,
+                transactionManager())
             .reader(festivalClickCountItemReader())
-            .writer()
+            .writer(festivalClickCountItemWriter())
             .build();
     }
 
@@ -74,7 +74,7 @@ public class BatchConfig {
     @Bean
     public ListItemReader<FestivalClickCountCacheValue> festivalClickCountItemReader() {
         List<FestivalClickCountCacheValue> festivalClickCountCacheValues = new ArrayList<>();
-        festivalClickCountCacheService.getList().forEach(festivalClickCountCacheValues::add);
+        festivalClickCountCacheService.getAll().forEach(festivalClickCountCacheValues::add);
 
         return new ListItemReader<>(festivalClickCountCacheValues);
     }
@@ -105,7 +105,29 @@ public class BatchConfig {
     }
 
     @Bean
+    public ItemWriter<FestivalClickCountCacheValue> festivalClickCountItemWriter() {
+        String sql = "INSERT INTO festival_view (festival_id, count, measurement_at) "
+            + "VALUES (?, ?, ?) "
+            + "ON DUPLICATE KEY UPDATE "
+            + "count = count + ?";
+
+        LocalDate now = LocalDate.now();
+
+        return items -> {
+            jdbcTemplate.batchUpdate(sql, items.getItems(), items.size(),
+                (ps, argument) -> {
+                    ps.setLong(1, argument.getFestivalId());
+                    ps.setInt(2, argument.getClickCount());
+                    ps.setDate(3, Date.valueOf(now));
+                    ps.setInt(4, argument.getClickCount());
+                });
+        };
+    }
+
+    @Bean
     public ItemWriter<FestivalItemProcessingResult> scoreItemWriter() {
+        festivalClickCountCacheService.deleteAll();
+
         String sql = "UPDATE festival SET popular_score = ? WHERE id = ?";
 
         return items -> {
