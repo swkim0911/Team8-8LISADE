@@ -15,7 +15,6 @@ import lombok.Setter;
 public class BatchDto {
 
     private Long id;
-    private String title;
     private Long weeklyViews;
     private Long totalSeats;
     private Long totalReservationSeats;
