@@ -54,6 +54,15 @@ public class Route extends BaseEntity {
     @Column(name = "car_number", length = 15)
     private String carNumber;
 
+    @Column(name = "number_of_seats")
+    private Integer numberOfSeats;
+
+    @Column(name = "number_of_reservation_seats")
+    private Integer numberOfReservationSeats;
+
+    @Column(name = "popular_score")
+    private Double popularScore;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     private Driver driver;
