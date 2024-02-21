@@ -74,7 +74,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.startedAt,
                 station.name,
                 route.price,
-                route.status.stringValue(),
+                route.status,
                 bus.numberOfSeats,
                 ExpressionUtils.as(getReservationSeats(), "reservedSeats")))
             .from(route)
