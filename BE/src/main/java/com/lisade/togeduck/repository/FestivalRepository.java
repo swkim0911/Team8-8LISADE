@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface FestivalRepository extends JpaRepository<Festival, Long>,
     FestivalRepositoryCustom {
 
-    @Query("SELECT f FROM Festival f LEFT JOIN FETCH f.category c WHERE c.id = :categoryId AND f.festivalStatus = :festivalStatus")
+    @Query("SELECT f FROM Festival f WHERE f.category.id = :categoryId AND f.festivalStatus = :festivalStatus")
     Slice<Festival> findSliceByCategoryAndFestivalStatus(@Param("pageable") Pageable pageable,
         @Param("categoryId") Long categoryId,
         @Param("festivalStatus") FestivalStatus festivalStatus);
@@ -22,5 +22,4 @@ public interface FestivalRepository extends JpaRepository<Festival, Long>,
     @Override
     @Query("SELECT f FROM Festival f LEFT JOIN FETCH f.festivalImages LEFT JOIN FETCH f.category WHERE f.id = :id")
     Optional<Festival> findById(Long id);
-
 }
