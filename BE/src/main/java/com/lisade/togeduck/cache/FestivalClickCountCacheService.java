@@ -17,7 +17,7 @@ public class FestivalClickCountCacheService {
         }
 
         userClickLogCacheService.addFestival(userId, festivalId);
-        
+
         Optional<FestivalClickCountCacheValue> festivalClickCountCacheValue =
             festivalClickCountCacheRepository.findByFestivalId(festivalId);
 
@@ -29,6 +29,10 @@ public class FestivalClickCountCacheService {
 
         festivalClickCountCacheValue.get().increaseClickCount();
         save(festivalClickCountCacheValue.get());
+    }
+
+    public Iterable<FestivalClickCountCacheValue> getAll() {
+        return festivalClickCountCacheRepository.findAll();
     }
 
     public void save(FestivalClickCountCacheValue festivalClickCountCacheValue) {
