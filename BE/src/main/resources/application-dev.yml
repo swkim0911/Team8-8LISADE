@@ -17,6 +17,10 @@ spring:
     defer-datasource-initialization: true
 
 ---
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
 ---
 spring:
   data:
