@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.di
+package com.softeer.togeduck.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
