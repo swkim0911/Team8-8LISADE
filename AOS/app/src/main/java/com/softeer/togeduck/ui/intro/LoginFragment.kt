@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentLoginBinding
@@ -13,6 +14,8 @@ import com.softeer.togeduck.databinding.FragmentLoginBinding
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private val loginViewModel: LoginViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,6 +30,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_intro_login_to_intro_register)
         }
         binding.loginBtn.setOnClickListener {
+            loginViewModel.saveSessionId()
             findNavController().navigate(R.id.action_intro_login_to_mainActivity)
         }
     }
