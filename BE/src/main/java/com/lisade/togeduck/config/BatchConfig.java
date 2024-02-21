@@ -1,7 +1,9 @@
 package com.lisade.togeduck.config;
 
 import com.lisade.togeduck.dto.BatchDto;
+import com.lisade.togeduck.dto.BatchProcessingResultDto;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -10,6 +12,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
@@ -22,6 +25,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @RequiredArgsConstructor
 public class BatchConfig {
 
+    public static final double GRAVITY_CONSTANT = 1.8;
     private final DataSource dataSource;
 
     @Bean
@@ -41,7 +45,7 @@ public class BatchConfig {
         // TODO ItemReader, ItemProcessor, ItemWriter 구현하기
 
         return new StepBuilder("step", jobRepository)
-            .<BatchDto, BatchDto>chunk(1000, transactionManager())
+            .<BatchDto, BatchProcessingResultDto>chunk(1000, transactionManager())
             .reader(itemReader())
             .writer(itemWriter())
             .build();
@@ -66,9 +70,39 @@ public class BatchConfig {
     }
 
     @Bean
-    public ItemWriter<BatchDto> itemWriter() {
+    public ItemProcessor<BatchDto, BatchProcessingResultDto> calcPopularScoreProcessor() {
+        return (item) -> BatchProcessingResultDto.of(item.getId(), getTotalScore(item));
+    }
+
+    @Bean
+    public ItemWriter<BatchProcessingResultDto> itemWriter() {
         return items -> {
             System.out.println(items.size());
         };
+    }
+
+    private Double getTotalScore(BatchDto batchDto) {
+        Double viewScore = getViewScore(batchDto);
+        Double reservationScore = getReservationRatioScore(batchDto);
+        return viewScore + reservationScore;
+    }
+
+    private Double getReservationRatioScore(BatchDto batchDto) {
+        Long totalSeats = batchDto.getTotalSeats();
+        Long reservedSeats = batchDto.getTotalReservationSeats();
+        if (totalSeats == null || totalSeats == 0) {
+            return 0.0;
+        }
+
+        Double ratio = (double) reservedSeats / totalSeats;
+        long hours = batchDto.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
+        Double time = Math.pow(hours, GRAVITY_CONSTANT);
+        return ratio / time;
+    }
+
+    private Double getViewScore(BatchDto batchDto) {
+        long hours = batchDto.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
+        Double time = Math.pow(hours, GRAVITY_CONSTANT);
+        return batchDto.getWeeklyViews() / time;
     }
 }
