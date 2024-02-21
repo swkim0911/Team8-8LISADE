@@ -243,8 +243,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/arrowIcon" />
@@ -254,7 +252,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="버스 선택"
+            android:text="@string/select_bus"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
@@ -305,8 +303,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
             app:layout_constraintTop_toBottomOf="@id/busBox" />
@@ -321,6 +317,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/totalPriceText"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintBottom_toTopOf="@id/openRouteButton"
             app:layout_constraintTop_toBottomOf="@id/dividerSelectBus" />
 
         <TextView
@@ -334,6 +331,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toEndOf="@id/totalPrice"
+            app:layout_constraintBottom_toTopOf="@id/openRouteButton"
             app:layout_constraintTop_toBottomOf="@id/dividerSelectBus" />
 
         <com.google.android.material.button.MaterialButton
@@ -352,6 +350,7 @@
             app:cornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/totalPriceText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -24,8 +24,7 @@
             app:destination="@id/homeCategoryFragment" />
         <action
             android:id="@+id/action_homeListFragment_to_articleDetailActivity"
-            app:destination="@id/articleDetailActivity"
-            app:popUpToInclusive="true" />
+            app:destination="@id/articleDetailActivity" />
     </fragment>
     <activity
         android:id="@+id/articleDetailActivity"
