@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
@@ -26,12 +28,16 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.registerBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_intro_login_to_intro_register)
-        }
-        binding.loginBtn.setOnClickListener {
-            loginViewModel.saveSessionId()
-            findNavController().navigate(R.id.action_intro_login_to_mainActivity)
+        binding.run{
+            registerBtn.setOnClickListener{
+                findNavController().navigate(R.id.action_intro_login_to_intro_register)
+            }
+            loginBtn.setOnClickListener{
+                loginViewModel.saveSessionId()
+                findNavController().navigate(R.id.action_intro_login_to_mainActivity)
+            }
         }
     }
+
+
 }
