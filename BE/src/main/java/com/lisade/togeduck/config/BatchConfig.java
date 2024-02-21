@@ -2,8 +2,12 @@ package com.lisade.togeduck.config;
 
 import com.lisade.togeduck.batch.FestivalItem;
 import com.lisade.togeduck.batch.FestivalItemProcessingResult;
+import com.lisade.togeduck.cache.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.FestivalClickCountCacheValue;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -16,6 +20,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
+import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,6 +35,7 @@ public class BatchConfig {
 
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
+    private final FestivalClickCountCacheService festivalClickCountCacheService;
 
     @Bean
     public DataSourceTransactionManager transactionManager() {
@@ -39,17 +45,18 @@ public class BatchConfig {
     @Bean
     public Job saveClickCountAndCalcPopularScoreJob(JobRepository jobRepository) {
         return new JobBuilder("calcPopularScoreJob", jobRepository)
-            .start(calcPopularScoreStep(jobRepository))
+            .start(saveClickCountStep(jobRepository))
+            .next(calcPopularScoreStep(jobRepository))
             .build();
     }
 
     @Bean
-    public Step saveClickCount(JobRepository jobRepository) {
+    public Step saveClickCountStep(JobRepository jobRepository) {
         // TODO Redis의 조회수를 읽고 DB에 반영하도록 reader, writer 등록
 
         return new StepBuilder("saveClickCount", jobRepository)
             .chunk(1000, transactionManager())
-            .reader()
+            .reader(festivalClickCountItemReader())
             .writer()
             .build();
     }
@@ -62,6 +69,14 @@ public class BatchConfig {
             .processor(calcPopularScoreProcessor())
             .writer(scoreItemWriter())
             .build();
+    }
+
+    @Bean
+    public ListItemReader<FestivalClickCountCacheValue> festivalClickCountItemReader() {
+        List<FestivalClickCountCacheValue> festivalClickCountCacheValues = new ArrayList<>();
+        festivalClickCountCacheService.getList().forEach(festivalClickCountCacheValues::add);
+
+        return new ListItemReader<>(festivalClickCountCacheValues);
     }
 
     @Bean
