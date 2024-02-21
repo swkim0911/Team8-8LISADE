@@ -1,9 +1,11 @@
 package com.lisade.togeduck.controller;
 
+import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +36,8 @@ public class FestivalController {
     }
 
     @GetMapping("/{id}")
-    public FestivalDetailResponse getDetail(@PathVariable(value = "id") Long id) {
-        return festivalService.getDetail(id);
+    public FestivalDetailResponse getDetail(@Login User user, @PathVariable(value = "id") Long id) {
+        return festivalService.getDetail(user, id);
     }
 
     @GetMapping("/best")

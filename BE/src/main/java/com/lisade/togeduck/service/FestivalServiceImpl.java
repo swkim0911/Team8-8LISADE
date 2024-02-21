@@ -1,11 +1,13 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.cache.FestivalClickCountCacheService;
 import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.entity.Festival;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.mapper.FestivalMapper;
@@ -25,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class FestivalServiceImpl implements FestivalService {
 
-    private final ViewService viewService;
+    private final FestivalClickCountCacheService festivalClickCountCacheService;
     private final FestivalRepository festivalRepository;
     private final RouteRepository routeRepository;
     private final FestivalMapper festivalMapper;
@@ -47,10 +49,12 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     @Transactional
-    public FestivalDetailResponse getDetail(Long id) {
+    public FestivalDetailResponse getDetail(User user, Long id) {
         Optional<Festival> optionalFestival = festivalRepository.findById(id);
         Festival festival = optionalFestival.orElseThrow(FestivalNotFoundException::new);
-        viewService.add(festival);
+
+        festivalClickCountCacheService.increase(user.getUserId(), id);
+
         return festivalMapper.toFestivalDetailResponse(festival);
     }
 
