@@ -166,7 +166,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 festival.id,
                 festival.title,
                 route.expectedTime,
-                route.status.stringValue(),
+                route.status,
                 route.price,
                 route.startedAt,
                 festival.location,
