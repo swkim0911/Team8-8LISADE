@@ -1,7 +1,7 @@
 package com.lisade.togeduck.config;
 
-import com.lisade.togeduck.dto.BatchDto;
-import com.lisade.togeduck.dto.BatchProcessingResultDto;
+import com.lisade.togeduck.batch.FestivalItem;
+import com.lisade.togeduck.batch.FestivalItemProcessingResult;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import javax.sql.DataSource;
@@ -45,8 +45,8 @@ public class BatchConfig {
 
     @Bean
     public Step calcPopularScoreStep(JobRepository jobRepository) {
-        return new StepBuilder("step", jobRepository)
-            .<BatchDto, BatchProcessingResultDto>chunk(1000, transactionManager())
+        return new StepBuilder("calcPopularScoreStep", jobRepository)
+            .<FestivalItem, FestivalItemProcessingResult>chunk(1000, transactionManager())
             .reader(festivalItemReader())
             .processor(calcPopularScoreProcessor())
             .writer(scoreItemWriter())
@@ -54,9 +54,9 @@ public class BatchConfig {
     }
 
     @Bean
-    public JdbcCursorItemReader<BatchDto> festivalItemReader() {
-        return new JdbcCursorItemReaderBuilder<BatchDto>()
-            .name("itemReader")
+    public JdbcCursorItemReader<FestivalItem> festivalItemReader() {
+        return new JdbcCursorItemReaderBuilder<FestivalItem>()
+            .name("festivalItemReader")
             .sql(
                 "select f.id as id, sum(fv.count) as weeklyViews, sum(r.number_of_seats) as totalSeats, sum(r.number_of_reservation_seats) as totalReservationSeats, f.created_at as createdAt "
                     + "from festival as f "
@@ -66,7 +66,7 @@ public class BatchConfig {
                     + "on f.id = r.festival_id "
                     + "where fv.measurement_at > ?"
                     + "group by f.id;")
-            .beanRowMapper(BatchDto.class)
+            .beanRowMapper(FestivalItem.class)
             .queryArguments(LocalDate.now().minusWeeks(1L))
             .fetchSize(1000)
             .dataSource(dataSource)
@@ -74,12 +74,12 @@ public class BatchConfig {
     }
 
     @Bean
-    public ItemProcessor<BatchDto, BatchProcessingResultDto> calcPopularScoreProcessor() {
-        return (item) -> BatchProcessingResultDto.of(item.getId(), getTotalScore(item));
+    public ItemProcessor<FestivalItem, FestivalItemProcessingResult> calcPopularScoreProcessor() {
+        return (item) -> FestivalItemProcessingResult.of(item.getId(), getTotalScore(item));
     }
 
     @Bean
-    public ItemWriter<BatchProcessingResultDto> scoreItemWriter() {
+    public ItemWriter<FestivalItemProcessingResult> scoreItemWriter() {
         String sql = "UPDATE festival SET popular_score = ? WHERE id = ?";
 
         return items -> {
@@ -91,28 +91,30 @@ public class BatchConfig {
         };
     }
 
-    private Double getTotalScore(BatchDto batchDto) {
-        Double viewScore = getViewScore(batchDto);
-        Double reservationScore = getReservationRatioScore(batchDto);
+    private Double getTotalScore(FestivalItem festivalItem) {
+        Double viewScore = getViewScore(festivalItem);
+        Double reservationScore = getReservationRatioScore(festivalItem);
         return viewScore + reservationScore;
     }
 
-    private Double getReservationRatioScore(BatchDto batchDto) {
-        Long totalSeats = batchDto.getTotalSeats();
-        Long reservedSeats = batchDto.getTotalReservationSeats();
+    private Double getReservationRatioScore(FestivalItem festivalItem) {
+        Long totalSeats = festivalItem.getTotalSeats();
+        Long reservedSeats = festivalItem.getTotalReservationSeats();
         if (totalSeats == null || totalSeats == 0) {
             return 0.0;
         }
 
         Double ratio = (double) reservedSeats / totalSeats;
-        long hours = batchDto.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
+        long hours =
+            festivalItem.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
         Double time = Math.pow(hours, GRAVITY_CONSTANT);
         return ratio / time;
     }
 
-    private Double getViewScore(BatchDto batchDto) {
-        long hours = batchDto.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
+    private Double getViewScore(FestivalItem festivalItem) {
+        long hours =
+            festivalItem.getCreatedAt().toInstant(ZoneOffset.UTC).getEpochSecond() / 3600 + 2;
         Double time = Math.pow(hours, GRAVITY_CONSTANT);
-        return batchDto.getWeeklyViews() / time;
+        return festivalItem.getWeeklyViews() / time;
     }
 }
