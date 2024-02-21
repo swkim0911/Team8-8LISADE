@@ -47,6 +47,7 @@ public class BatchConfig {
         return new StepBuilder("step", jobRepository)
             .<BatchDto, BatchProcessingResultDto>chunk(1000, transactionManager())
             .reader(itemReader())
+            .processor(calcPopularScoreProcessor())
             .writer(itemWriter())
             .build();
     }
