@@ -81,4 +81,8 @@ public class Route extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id", nullable = false)
     private Festival festival;
+
+    public void increaseNumberOfReservationSeats() {
+        this.numberOfReservationSeats++;
+    }
 }
