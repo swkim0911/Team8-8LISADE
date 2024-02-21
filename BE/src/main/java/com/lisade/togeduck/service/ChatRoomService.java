@@ -10,6 +10,8 @@ import com.lisade.togeduck.repository.ChatRoomRepository;
 import com.lisade.togeduck.repository.RouteRepository;
 import com.lisade.togeduck.repository.UserChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +42,8 @@ public class ChatRoomService {
         userChatRoomRepository.save(userChatRoom);
     }
 
-    public ChatRoomListResponse get(Long userId) {
-        return null;
+    public Slice<ChatRoomListResponse> get(Pageable pageable, Long userId) {
+        return chatRoomRepository.findJoinedChatRooms(pageable, userId);
     }
 
 }

@@ -6,6 +6,7 @@ import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,9 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping("/rooms")
-    public ChatRoomListResponse getList(@Login User user,
-        @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable) {
-        return chatRoomService.get(user.getId());
+    public Slice<ChatRoomListResponse> getList(
+        @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable,
+        @Login User user) {
+        return chatRoomService.get(pageable, user.getId());
     }
 }
