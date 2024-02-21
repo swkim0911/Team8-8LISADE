@@ -56,10 +56,12 @@ public class BatchConfig {
         return new JdbcCursorItemReaderBuilder<BatchDto>()
             .name("itemReader")
             .sql(
-                "select f.id as id, f.title as title, sum(fv.count) as count "
+                "select f.id as id, sum(fv.count) as weeklyViews, sum(r.number_of_seats) as totalSeats, sum(r.number_of_reservation_seats) as totalReservationSeats, f.created_at as createdAt "
                     + "from festival as f "
                     + "inner join festival_view as fv "
                     + "on f.id = fv.festival_id "
+                    + "inner join route as r "
+                    + "on f.id = r.festival_id "
                     + "where fv.measurement_at > ?"
                     + "group by f.id;")
             .beanRowMapper(BatchDto.class)
