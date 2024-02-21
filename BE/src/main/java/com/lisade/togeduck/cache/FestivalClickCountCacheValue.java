@@ -18,14 +18,14 @@ public class FestivalClickCountCacheValue {
     private String id;
     @Indexed
     private Long festivalId;
-    private Long clickCount;
+    private Integer clickCount;
 
-    private FestivalClickCountCacheValue(Long festivalId, Long clickCount) {
+    private FestivalClickCountCacheValue(Long festivalId, Integer clickCount) {
         this.festivalId = festivalId;
         this.clickCount = clickCount;
     }
 
-    public static FestivalClickCountCacheValue of(Long festivalId, Long clickCount) {
+    public static FestivalClickCountCacheValue of(Long festivalId, Integer clickCount) {
         return new FestivalClickCountCacheValue(festivalId, clickCount);
     }
 
