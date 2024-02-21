@@ -30,7 +30,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Configuration
 @EnableBatchProcessing
 @RequiredArgsConstructor
-public class BatchConfig {
+public class PopularScoringBatchConfig {
 
     public static final double GRAVITY_CONSTANT = 1.8;
 
