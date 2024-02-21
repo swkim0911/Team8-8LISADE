@@ -37,26 +37,24 @@ public class BatchConfig {
     }
 
     @Bean
-    public Job calcPopularScoreJob(JobRepository jobRepository) {
+    public Job saveClickCountAndCalcPopularScoreJob(JobRepository jobRepository) {
         return new JobBuilder("calcPopularScoreJob", jobRepository)
-            .start(step(jobRepository))
+            .start(calcPopularScoreStep(jobRepository))
             .build();
     }
 
     @Bean
-    public Step step(JobRepository jobRepository) {
-        // TODO ItemReader, ItemProcessor, ItemWriter 구현하기
-
+    public Step calcPopularScoreStep(JobRepository jobRepository) {
         return new StepBuilder("step", jobRepository)
             .<BatchDto, BatchProcessingResultDto>chunk(1000, transactionManager())
-            .reader(itemReader())
+            .reader(festivalItemReader())
             .processor(calcPopularScoreProcessor())
-            .writer(itemWriter())
+            .writer(scoreItemWriter())
             .build();
     }
 
     @Bean
-    public JdbcCursorItemReader<BatchDto> itemReader() {
+    public JdbcCursorItemReader<BatchDto> festivalItemReader() {
         return new JdbcCursorItemReaderBuilder<BatchDto>()
             .name("itemReader")
             .sql(
@@ -81,7 +79,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public ItemWriter<BatchProcessingResultDto> itemWriter() {
+    public ItemWriter<BatchProcessingResultDto> scoreItemWriter() {
         String sql = "UPDATE festival SET popular_score = ? WHERE id = ?";
 
         return items -> {
