@@ -11,12 +11,12 @@ import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.entity.Festival;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.FestivalRepository;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ class FestivalServiceImplTest {
         FestivalResponse mockFestivalResponse = FestivalResponse.builder().id(1L)
             .title("Fake Festival")
             .location("Fake location")
-            .paths(List.of("first")).build();
+            .thumbnailPath("first").build();
 
         when(festivalMapper.toFestivalResponseSlice(any())).thenReturn(
             new SliceImpl<>(Collections.singletonList(mockFestivalResponse)));
@@ -77,7 +77,7 @@ class FestivalServiceImplTest {
         assertThat(result.getContent().get(0).getTitle()).isEqualTo("Fake Festival");
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
         assertThat(result.getContent().get(0).getLocation()).isEqualTo("Fake location");
-        assertThat(result.getContent().get(0).getPaths()).contains("first");
+        assertThat(result.getContent().get(0).getThumbnailPath()).contains("first");
     }
 
     private Festival getMockFestival(Long festivalId) {
@@ -109,7 +109,7 @@ class FestivalServiceImplTest {
             mockFestivalDetailResponse);
 
         //when
-        festivalService.getDetail(festivalId);
+        festivalService.getDetail(any(User.class), festivalId);
 
         //then
         verify(festivalRepository, times(1)).findById(festivalId);
