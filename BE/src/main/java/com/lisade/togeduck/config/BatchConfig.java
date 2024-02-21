@@ -44,6 +44,17 @@ public class BatchConfig {
     }
 
     @Bean
+    public Step saveClickCount(JobRepository jobRepository) {
+        // TODO Redis의 조회수를 읽고 DB에 반영하도록 reader, writer 등록
+
+        return new StepBuilder("saveClickCount", jobRepository)
+            .chunk(1000, transactionManager())
+            .reader()
+            .writer()
+            .build();
+    }
+
+    @Bean
     public Step calcPopularScoreStep(JobRepository jobRepository) {
         return new StepBuilder("calcPopularScoreStep", jobRepository)
             .<FestivalItem, FestivalItemProcessingResult>chunk(1000, transactionManager())
