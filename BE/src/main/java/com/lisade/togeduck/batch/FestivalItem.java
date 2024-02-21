@@ -1,4 +1,4 @@
-package com.lisade.togeduck.dto;
+package com.lisade.togeduck.batch;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BatchDto {
+public class FestivalItem {
 
     private Long id;
     private Long weeklyViews;
