@@ -29,6 +29,7 @@ public class ChatRoomService {
         ChatRoom chatRoom = ChatRoom.builder()
             .route(findRoute)
             .roomName(festivalId + " 채팅방")
+            .numberOfMembers(1)
             .build();
         chatRoomRepository.save(chatRoom);
 
