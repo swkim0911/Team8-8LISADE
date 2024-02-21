@@ -18,6 +18,7 @@ import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
@@ -26,7 +27,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 public class BatchConfig {
 
     public static final double GRAVITY_CONSTANT = 1.8;
+
     private final DataSource dataSource;
+    private final JdbcTemplate jdbcTemplate;
 
     @Bean
     public DataSourceTransactionManager transactionManager() {
@@ -79,8 +82,14 @@ public class BatchConfig {
 
     @Bean
     public ItemWriter<BatchProcessingResultDto> itemWriter() {
+        String sql = "UPDATE festival SET popular_score = ? WHERE id = ?";
+
         return items -> {
-            System.out.println(items.size());
+            jdbcTemplate.batchUpdate(sql, items.getItems(), items.size(),
+                (ps, argument) -> {
+                    ps.setDouble(1, argument.getScore());
+                    ps.setLong(2, argument.getId());
+                });
         };
     }
 
