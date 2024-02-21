@@ -73,4 +73,7 @@ public class Festival extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status", nullable = false)
     private FestivalStatus festivalStatus;
+
+    @Column(name = "thumbnail_path", nullable = false)
+    private String thumbnailPath;
 }

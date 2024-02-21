@@ -18,8 +18,7 @@ import org.springframework.data.domain.Slice;
 public interface FestivalMapper {
 
     FestivalMapper INSTANCE = Mappers.getMapper(FestivalMapper.class);
-
-    @Mapping(target = "paths", source = "festivalImages")
+    
     FestivalResponse toFestivalResponse(Festival festival);
 
     @Mapping(target = "paths", source = "festivalImages")

@@ -1,5 +1,6 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.cache.LocationCacheService;
 import com.lisade.togeduck.repository.CityRepository;
 import com.lisade.togeduck.repository.StationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +20,14 @@ class LocationServiceTest {
     private FestivalService festivalService;
     @Mock
     private BusService busService;
+    @Mock
+    private LocationCacheService locationCacheService;
 
     @BeforeEach
     void setUp() {
         RestTemplate restTemplate = new RestTemplate();
         locationService = new LocationService(restTemplate, cityRepository, stationRepository,
+            locationCacheService,
             festivalService, busService);
     }
 
