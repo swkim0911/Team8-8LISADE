@@ -31,7 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
         HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status,
         WebRequest request) {
-        return makeExceptionResponse(null, ex, HttpStatus.valueOf(status.value()), headers,
+        return makeExceptionResponse("", ex, HttpStatus.valueOf(status.value()), headers,
             request);
     }
 
@@ -111,7 +111,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.error("Internal Error 발생 + {}", exception.getMessage());
         return super.handleExceptionInternal(
             exception,
-            null,
+            "",
             HttpHeaders.EMPTY,
             HttpStatus.INTERNAL_SERVER_ERROR,
             webRequest);
