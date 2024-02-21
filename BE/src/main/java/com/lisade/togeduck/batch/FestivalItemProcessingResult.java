@@ -1,4 +1,4 @@
-package com.lisade.togeduck.dto;
+package com.lisade.togeduck.batch;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +11,12 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BatchProcessingResultDto {
+public class FestivalItemProcessingResult {
 
     private Long id;
     private Double score;
 
-    public static BatchProcessingResultDto of(Long id, Double score) {
-        return new BatchProcessingResultDto(id, score);
+    public static FestivalItemProcessingResult of(Long id, Double score) {
+        return new FestivalItemProcessingResult(id, score);
     }
 }
