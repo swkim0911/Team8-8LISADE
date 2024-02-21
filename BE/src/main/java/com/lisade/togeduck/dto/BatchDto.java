@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,5 +16,8 @@ public class BatchDto {
 
     private Long id;
     private String title;
-    private Long count;
+    private Long weeklyViews;
+    private Long totalSeats;
+    private Long totalReservationSeats;
+    private LocalDateTime createdAt;
 }
