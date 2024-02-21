@@ -1,7 +1,9 @@
 package com.softeer.togeduck.ui.home.open_route
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import com.softeer.togeduck.databinding.ActivityOpenRouteBinding
 
 class OpenRouteActivity : AppCompatActivity() {
@@ -12,9 +14,6 @@ class OpenRouteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityOpenRouteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.leftLayoutView.setOnClickListener {
-            RegionListDialog().show(supportFragmentManager, "ListDialogFragment")
-        }
     }
 }
 

@@ -1,13 +1,9 @@
 package com.softeer.togeduck.ui.home.open_route
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.RegionDetailModel
 import com.softeer.togeduck.data.model.RegionListModel
-import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
 import com.softeer.togeduck.databinding.RvItemSelectRegionBinding
 import com.softeer.togeduck.utils.ItemClickWithData
 

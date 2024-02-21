@@ -8,29 +8,39 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="16dp"
         tools:context=".ui.home.article_detail.RouteDetailDialogFragment">
 
         <ImageView
+            android:id="@+id/iconClose"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_close"
+            app:layout_constraintBottom_toTopOf="@id/mapImg"
+            app:layout_constraintEnd_toEndOf="@id/mapImg"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/mapImg"
-            android:layout_width="328dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:src="@drawable/dummy_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/iconClose" />
 
         <ImageView
             android:id="@+id/iconSpDp"
             android:layout_width="24dp"
             android:layout_height="60dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_sp_dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/mapImg" />
 
         <TextView
@@ -48,8 +58,8 @@
         <TextView
             android:id="@+id/departurePlace"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
             android:text="출발지점 입니다."
             android:textSize="18sp"
             android:textStyle="bold"
@@ -82,10 +92,9 @@
             android:id="@+id/clockIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_clock"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/iconSpDp" />
 
         <TextView
@@ -103,10 +112,9 @@
             android:id="@+id/iconCalendar"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_calendar"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/clockIcon" />
 
         <TextView
@@ -124,10 +132,9 @@
             android:id="@+id/iconUser"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/icon_user"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/iconCalendar" />
 
         <TextView
@@ -146,11 +153,10 @@
             android:id="@+id/totalPriceText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="@string/total_price"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mapImg"
             app:layout_constraintTop_toBottomOf="@id/iconUser" />
 
         <TextView
@@ -170,9 +176,7 @@
             style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:backgroundTint="@color/main"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -182,7 +186,8 @@
             android:textStyle="bold"
             app:cornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="@id/mapImg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/totalPriceText" />
+            app:layout_constraintStart_toStartOf="@id/mapImg"
+            app:layout_constraintTop_toBottomOf="@id/totalPriceText"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

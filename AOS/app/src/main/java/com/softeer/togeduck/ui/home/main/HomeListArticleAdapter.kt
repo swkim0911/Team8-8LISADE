@@ -32,7 +32,6 @@ class HomeListArticleAdapter(private val items: List<HomeArticleModel>) :
         }
 
     }
-
 }
 
 class ArticleViewHolder(private val binding: RvItemArticleBinding) :

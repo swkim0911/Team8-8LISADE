@@ -68,9 +68,8 @@ class HomeListFragment : Fragment() {
     private fun setUpArrayAdapter() {
         val regionArray = resources.getStringArray(R.array.category_sort_list)
         val arrayAdapter =
-            ArrayAdapter(requireContext(), R.layout.item_category_sort_list, regionArray)
+            ArrayAdapter(requireContext(), R.layout.item_category_sort_list, R.id.textView,regionArray)
         binding.listSortMenu.adapter = arrayAdapter
-
     }
 
     private fun init() {
@@ -93,7 +92,6 @@ class HomeListFragment : Fragment() {
 
         categoryAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                Log.d("TESTLOG", "카테고리 클릭")
 
             }
         }

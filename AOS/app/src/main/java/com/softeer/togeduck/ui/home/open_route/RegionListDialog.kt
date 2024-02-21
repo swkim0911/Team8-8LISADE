@@ -1,15 +1,15 @@
 package com.softeer.togeduck.ui.home.open_route
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.RegionDetailModel
@@ -41,15 +41,23 @@ class RegionListDialog : DialogFragment() {
 
     private lateinit var regionListAdapter: RegionListAdapter
     private lateinit var regionDetailListAdapter: RegionDetailListAdapter
+    private var selectedRegion = ""
     private var selectedView: View? = null
+    private var selectedDetailView: View? = null
     private val regionListViewModel: RegionListViewModel by activityViewModels()
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireActivity())
-        val inflater = requireActivity().layoutInflater
-        _binding = DialogSelectRegionBinding.inflate(inflater, null, false)
-        val view = binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
 
+    ): View? {
+        _binding = DialogSelectRegionBinding.inflate(inflater, null, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         regionListAdapter = RegionListAdapter(dummyData)
         regionDetailListAdapter = RegionDetailListAdapter(emptyList())
 
@@ -63,6 +71,20 @@ class RegionListDialog : DialogFragment() {
             adapter = regionDetailListAdapter
         }
 
+        init()
+        setUpDialogSize()
+        selectComplete()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun init() {
+        binding.vm = regionListViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         regionListAdapter.itemClick = object : ItemClickWithData {
             override fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>) {
                 selectedView?.setBackgroundColor(Color.TRANSPARENT)
@@ -73,25 +95,42 @@ class RegionListDialog : DialogFragment() {
                     binding.placeList.adapter = it
                     it.itemClick = object : ItemClick {
                         override fun onClick(view: View, position: Int) {
-//                            Log.d("TESTLOG",detailList[position].detail)
-                            regionListViewModel.setSelectedRegion(detailList[position].detail)
+                            selectedDetailView?.setBackgroundColor(Color.TRANSPARENT)
+                            view.setBackgroundColor(color)
+                            selectedDetailView = view
+                            selectedRegion = detailList[position].detail
                         }
                     }
                 }
 
             }
         }
-
-        builder.setView(view)
-        return builder.create()
+        binding.iconClose.setOnClickListener {
+            dialog?.dismiss()
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setUpDialogSize() {
+        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
+        val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
+        dialog?.window?.setLayout(
+            width,
+            height
+        )
+        dialog?.window?.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.dialogue_radius
+            )
+        )
     }
 
-    private fun setUpDetailListAdapter() {
+    private fun selectComplete() {
+        binding.selectConfirm.setOnClickListener {
+            regionListViewModel.setSelectedRegion(selectedRegion)
+            dialog?.dismiss()
+        }
 
     }
+
 }
