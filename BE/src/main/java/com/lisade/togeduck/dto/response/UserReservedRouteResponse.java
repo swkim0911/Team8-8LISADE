@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ public class UserReservedRouteResponse {
 
     private Long id;
     private String title;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime startedAt;
     private String location;
     private String stationName;

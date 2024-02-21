@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
@@ -16,13 +17,16 @@ public class UserReservedRouteDetailResponse {
     private Long festivalId;
     private String title;
     private Integer seatNo;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime expectedDuration;
     private String status;
     private Integer totalSeats;
     private Integer reservedSeats;
     private Integer price;
     private String imagePath;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime startedAt;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime arrivedAt;
     private String stationName;
     private String stationCity;
