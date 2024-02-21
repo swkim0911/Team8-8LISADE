@@ -73,7 +73,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.startedAt,
                 station.name,
                 route.price,
-                route.status.stringValue(),
+                route.status,
                 bus.numberOfSeats,
                 ExpressionUtils.as(getReservationSeats(), "reservedSeats")))
             .from(route)
@@ -124,7 +124,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 festival.location,
                 station.name,
                 route.price,
-                route.status.stringValue(),
+                route.status,
                 bus.numberOfSeats,
                 getReservationSeats(),
                 festival.thumbnailPath))
@@ -162,7 +162,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 festival.id,
                 festival.title,
                 route.expectedTime,
-                route.status.stringValue(),
+                route.status,
                 route.price,
                 route.startedAt,
                 festival.location,
