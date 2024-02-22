@@ -6,7 +6,7 @@
 
         <variable
             name="category"
-            type="com.softeer.togeduck.data.model.HomeCategoryModel" />
+            type="com.softeer.togeduck.data.model.home.main.HomeCategoryModel" />
 
     </data>
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.softeer.togeduck.data.model.PopularArticleModel
+import com.softeer.togeduck.data.model.home.main.PopularArticleModel
 import com.softeer.togeduck.databinding.FragmentHomeBinding
 
 private val dummyData = listOf(

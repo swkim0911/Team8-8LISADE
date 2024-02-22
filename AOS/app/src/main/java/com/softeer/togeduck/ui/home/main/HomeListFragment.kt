@@ -1,7 +1,6 @@
 package com.softeer.togeduck.ui.home.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.HomeArticleModel
-import com.softeer.togeduck.data.model.HomeCategoryModel
+import com.softeer.togeduck.data.model.home.main.HomeArticleModel
+import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeListBinding
-import com.softeer.togeduck.ui.home.article_detail.RouteViewModel
 import com.softeer.togeduck.utils.ItemClick
 
 

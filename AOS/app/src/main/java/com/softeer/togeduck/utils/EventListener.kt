@@ -1,7 +1,7 @@
 package com.softeer.togeduck.utils
 
 import android.view.View
-import com.softeer.togeduck.data.model.RegionDetailModel
+import com.softeer.togeduck.data.model.home.open_route.RegionDetailModel
 
 interface ItemClick {
     fun onClick(view: View, position: Int)

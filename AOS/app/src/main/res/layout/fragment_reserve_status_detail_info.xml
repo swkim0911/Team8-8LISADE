@@ -9,13 +9,13 @@
 
         <variable
             name="vm"
-            type="com.softeer.togeduck.ui.reserve_status.detail.ReserveStatusDetailViewModel" />
+            type="com.softeer.togeduck.ui.reserve_status.reserve_detail.ReserveStatusDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.reserve_status.detail.ReserveStatusDetailInfoFragment">
+        tools:context=".ui.reserve_status.reserve_detail.ReserveStatusDetailInfoFragment">
 
 
         <androidx.constraintlayout.widget.Guideline

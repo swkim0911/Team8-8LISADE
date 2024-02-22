@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".TogeDuckApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -26,7 +26,7 @@
             android:name=".ui.home.seat.SeatActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.reserve_status.detail.ReserveStatusDetailActivity"
+            android:name=".ui.reserve_status.reserve_detail.ReserveStatusDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.intro.IntroActivity"

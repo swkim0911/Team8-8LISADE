@@ -5,7 +5,7 @@
     <data>
         <variable
             name="detail"
-            type="com.softeer.togeduck.data.model.RegionListModel" />
+            type="com.softeer.togeduck.data.model.home.open_route.RegionListModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

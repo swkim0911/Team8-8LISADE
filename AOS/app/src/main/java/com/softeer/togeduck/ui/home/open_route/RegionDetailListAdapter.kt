@@ -3,7 +3,7 @@ package com.softeer.togeduck.ui.home.open_route
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.data.model.RegionDetailModel
+import com.softeer.togeduck.data.model.home.open_route.RegionDetailModel
 import com.softeer.togeduck.databinding.RvItemSelectRegionDetailBinding
 import com.softeer.togeduck.utils.ItemClick
 

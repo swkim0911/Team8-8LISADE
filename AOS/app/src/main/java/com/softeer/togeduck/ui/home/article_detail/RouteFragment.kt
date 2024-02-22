@@ -1,6 +1,5 @@
 package com.softeer.togeduck.ui.home.article_detail
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.RouteListModel
+import com.softeer.togeduck.data.model.home.open_route.RouteListModel
 import com.softeer.togeduck.databinding.FragmentRouteBinding
-import com.softeer.togeduck.ui.home.article_detail.RouteDetailDialogFragment
-import com.softeer.togeduck.ui.home.open_route.RegionListDialog
-import com.softeer.togeduck.ui.reserve_status.ReservationStatusAdapter
 import com.softeer.togeduck.utils.ItemClick
 
 

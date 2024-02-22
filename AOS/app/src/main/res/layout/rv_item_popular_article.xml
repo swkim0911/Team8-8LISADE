@@ -6,7 +6,7 @@
 
         <variable
             name="popularArticle"
-            type="com.softeer.togeduck.data.model.PopularArticleModel" />
+            type="com.softeer.togeduck.data.model.home.main.PopularArticleModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

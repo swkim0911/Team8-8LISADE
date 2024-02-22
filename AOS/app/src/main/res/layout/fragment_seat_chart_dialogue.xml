@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.reserve_status.detail.mobileTicket.SeatChartFragmentDialogue">
+        tools:context=".ui.reserve_status.reserve_detail.SeatChartFragmentDialogue">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLeft"
