@@ -51,8 +51,12 @@ public class ChatRoomService {
         return chatRoomRepository.findJoinedChatRooms(pageable, userId);
     }
 
-    public ChatRoom get(Long chatRoomId) {
-        return chatRoomRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+    @Transactional
+    public ChatRoom get(Long roomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
+            .orElseThrow(ChatRoomNotFoundException::new);
+        chatRoom.increaseMember();
+        return chatRoom;
     }
 
 }

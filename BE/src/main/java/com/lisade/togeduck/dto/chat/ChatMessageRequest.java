@@ -19,4 +19,8 @@ public class ChatMessageRequest {
     private String message;
     private MessageAction action;
     private LocalDateTime createdAt;
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

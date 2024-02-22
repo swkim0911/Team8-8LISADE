@@ -2,8 +2,11 @@ package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.dto.chat.ChatMessageRequest;
 import com.lisade.togeduck.entity.ChatRoom;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.ChatRoomService;
 import com.lisade.togeduck.service.ChatService;
+import com.lisade.togeduck.service.UserChatRoomService;
+import com.lisade.togeduck.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -15,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private ChatService chatService;
-    private ChatRoomService chatRoomService;
-
+    private final ChatService chatService;
+    private final ChatRoomService chatRoomService;
+    private final UserChatRoomService userChatRoomService;
+    private final UserService userService;
     private final SimpMessageSendingOperations simpleMessageSendingOperations;
 
     /**
@@ -27,18 +31,23 @@ public class ChatController {
 
     @MessageMapping(value = "/chat/join")
     public void join(@RequestBody ChatMessageRequest chatMessageRequest) {
+        //todo @Login User user 하면 test 환경에서 안들어옴. 그래서 일단 User 조회
+        User findUser = userService.get(chatMessageRequest.getUserId());
+        String message = chatMessageRequest.getSender() + "님이 입장하셨습니다.";
+
         // 1. 채팅방에 user 가 이미 join 했는지 확인
         if (chatRoomService.exist(chatMessageRequest.getUserId(), chatMessageRequest.getRoomId())) {
             simpleMessageSendingOperations.convertAndSend(
                 "/topic/message/" + chatMessageRequest.getRoomId(),
-                chatMessageRequest.getSender() + "님이 입장하셨습니다.");
-            // 1.1 client에게 이전 채팅 목록 전달 Slice
+                message);
+
 
         }
-        // 2.1 그 채팅방
+        // 2.1 그 채팅방에 이미 있을 때
         ChatRoom chatRoom = chatRoomService.get(chatMessageRequest.getRoomId());
-
-//        chatService.save(chatMessageRequest, JOIN);
+        userChatRoomService.create(findUser, chatRoom);
+        chatMessageRequest.setMessage(message);
+        chatService.save(chatMessageRequest);
     }
 
     @MessageMapping(value = "/chat/message")

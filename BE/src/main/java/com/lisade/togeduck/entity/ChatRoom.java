@@ -38,4 +38,8 @@ public class ChatRoom extends BaseEntity {
 
     @OneToMany(mappedBy = "chatRoom")
     private List<UserChatRoom> userChatRooms;
+
+    public void increaseMember() {
+        numberOfMembers++;
+    }
 }
