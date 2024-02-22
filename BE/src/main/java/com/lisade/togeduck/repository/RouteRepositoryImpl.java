@@ -135,7 +135,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .on(festival.eq(route.festival))
             .join(bus)
             .on(route.bus.eq(bus))
-            .where(route.id.in((getRouteId(userId))));
+            .join(seat)
+            .on(route.id.eq(seat.route.id))
+            .where(seat.user.id.eq(userId));
 
         Sort sort = pageable.getSort();
         Sort.Order order = sort.getOrderFor("createdAt");
