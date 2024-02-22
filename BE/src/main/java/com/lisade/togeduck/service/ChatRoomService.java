@@ -30,7 +30,7 @@ public class ChatRoomService {
 
         ChatRoom chatRoom = ChatRoom.builder()
             .roomName(festival.getTitle() + " 채팅방")
-            .numberOfMembers(1)
+            .numberOfMembers(0)
             .thumbnailPath(festival.getThumbnailPath())
             .build();
         chatRoomRepository.save(chatRoom);
