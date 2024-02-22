@@ -1,6 +1,7 @@
 package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.remote.service.LoginService
+import com.softeer.togeduck.data.remote.service.ReserveStatusService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,9 +14,14 @@ import javax.inject.Singleton
 class ServiceModule {
     @Provides
     @Singleton
-    fun provideLoginService(
-        retrofit: Retrofit
-    ): LoginService {
+    fun provideLoginService(retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideReserveStatusService(retrofit: Retrofit): ReserveStatusService {
+        return retrofit.create(ReserveStatusService::class.java)
+    }
+
 }
