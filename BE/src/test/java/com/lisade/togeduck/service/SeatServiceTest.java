@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -141,8 +142,9 @@ class SeatServiceTest {
         User user = User.builder()
             .userId("userId")
             .build();
-
+        Route mockRoute = mock(Route.class);
         Seat seat = Seat.builder()
+            .route(mockRoute)
             .no(no)
             .status(SeatStatus.RESERVATION)
             .build();
@@ -158,8 +160,9 @@ class SeatServiceTest {
 
     private Seat seat() {
         Integer no = 1;
-
+        Route mockRoute = mock(Route.class);
         return Seat.builder()
+            .route(mockRoute)
             .no(no)
             .status(SeatStatus.AVAILABLE)
             .route(route())

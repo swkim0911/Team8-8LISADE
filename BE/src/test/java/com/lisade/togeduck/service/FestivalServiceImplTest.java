@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.lisade.togeduck.cache.FestivalClickCountCacheService;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.entity.Category;
@@ -34,6 +35,9 @@ class FestivalServiceImplTest {
 
     @Mock
     private FestivalRepository festivalRepository;
+
+    @Mock
+    private FestivalClickCountCacheService festivalClickCountCacheService;
 
     @Mock
     private FestivalMapper festivalMapper;
@@ -114,7 +118,7 @@ class FestivalServiceImplTest {
 
         //then
         verify(festivalRepository, times(1)).findById(festivalId);
-        verify(viewService, times(1)).add(mockFestival);
+        verify(festivalClickCountCacheService, times(1)).increase(mockUser.getUserId(), festivalId);
         verify(festivalMapper, times(1)).toFestivalDetailResponse(mockFestival);
     }
 }
