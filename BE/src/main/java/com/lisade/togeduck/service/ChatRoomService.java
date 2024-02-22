@@ -2,12 +2,12 @@ package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.response.ChatRoomListResponse;
 import com.lisade.togeduck.entity.ChatRoom;
-import com.lisade.togeduck.entity.Route;
+import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserChatRoom;
-import com.lisade.togeduck.exception.RouteNotFoundException;
+import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.repository.ChatRoomRepository;
-import com.lisade.togeduck.repository.RouteRepository;
+import com.lisade.togeduck.repository.FestivalRepository;
 import com.lisade.togeduck.repository.UserChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,17 +21,17 @@ public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final UserChatRoomRepository userChatRoomRepository;
-    private final RouteRepository routeRepository;
+    private final FestivalRepository festivalRepository;
 
     @Transactional
-    public void create(User user, Long routeId, Long festivalId) {
-        Route findRoute = routeRepository.findById(routeId)
-            .orElseThrow(RouteNotFoundException::new);
+    public void create(User user, Long festivalId) {
+        Festival festival = festivalRepository.findById(festivalId)
+            .orElseThrow(FestivalNotFoundException::new);
 
         ChatRoom chatRoom = ChatRoom.builder()
-            .route(findRoute)
-            .roomName(festivalId + " 채팅방")
+            .roomName(festival.getTitle() + " 채팅방")
             .numberOfMembers(1)
+            .thumbnailPath(festival.getThumbnailPath())
             .build();
         chatRoomRepository.save(chatRoom);
 

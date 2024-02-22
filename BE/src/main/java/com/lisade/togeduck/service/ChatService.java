@@ -1,7 +1,6 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.chat.ChatMessageRequest;
-import com.lisade.togeduck.entity.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ChatService {
 
-    private final ChatRepository chatRepository;
+//    private final ChatRepository chatRepository;
 
     @Transactional
     public void save(ChatMessageRequest chatMessageRequest) {
-        ChatMessage chatMessage = chatMapper.toChatMessage(chatMessageRequest);
-        chatRepository.save(chatMessage);
+//        ChatMessage chatMessage = chatMapper.toChatMessage(chatMessageRequest);
+//        chatRepository.save(chatMessage);
     }
 }
