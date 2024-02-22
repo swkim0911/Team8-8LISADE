@@ -9,7 +9,7 @@ import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 
 @Dao
 interface ChatRoomListDao {
-    @Query("select * from chat_room")
+    @Query("select * from chat_room order by recent_time desc")
     fun getAll() : List<ChatRoomListModel>
 
     @Insert
