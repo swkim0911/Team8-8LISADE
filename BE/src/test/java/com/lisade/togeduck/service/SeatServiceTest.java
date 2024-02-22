@@ -94,13 +94,13 @@ class SeatServiceTest {
             .build();
 
         doReturn(Optional.of(seat())).when(seatRepository)
-            .findByRouteIdAndNo(routeId, no);
+            .findByRouteIdAndNoWithRoute(routeId, no);
         // when
         seatService.register(user, routeId, request);
 
         // then
         verify(seatRepository, times(1))
-            .findByRouteIdAndNo(any(Long.class), any(Integer.class));
+            .findByRouteIdAndNoWithRoute(any(Long.class), any(Integer.class));
     }
 
     @Test
@@ -119,7 +119,7 @@ class SeatServiceTest {
             .build();
 
         doThrow(SeatNotFoundException.class).when(seatRepository)
-            .findByRouteIdAndNo(routeId, no);
+            .findByRouteIdAndNoWithRoute(routeId, no);
 
         // when & then
         assertThrows(SeatNotFoundException.class, () -> {
@@ -148,7 +148,7 @@ class SeatServiceTest {
             .build();
 
         doReturn(Optional.of(seat)).when(seatRepository)
-            .findByRouteIdAndNo(routeId, no);
+            .findByRouteIdAndNoWithRoute(routeId, no);
 
         // when
         assertThrows(SeatAlreadyRegisterException.class, () -> {

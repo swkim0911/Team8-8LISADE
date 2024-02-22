@@ -13,7 +13,6 @@ import com.lisade.togeduck.entity.enums.FestivalStatus;
 import com.lisade.togeduck.service.FestivalService;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,7 +53,7 @@ class FestivalControllerTest {
         FestivalResponse mockFestivalResponse = FestivalResponse.builder().id(1L)
             .title("test1")
             .location("테스트 로케이션")
-            .paths(List.of("filePath"))
+            .thumbnailPath("filePath")
             .startedAt(LocalDateTime.of(2024, 2, 8, 11, 2)).build();
 
         Slice<FestivalResponse> mockSlice = new PageImpl<>(Collections.singletonList(
@@ -84,7 +83,8 @@ class FestivalControllerTest {
             .andExpect(
                 jsonPath("$.result.content[0].location").value(mockFestivalResponse.getLocation()))
             .andExpect(
-                jsonPath("$.result.content[0].paths").value(mockFestivalResponse.getPaths().get(0)))
+                jsonPath("$.result.content[0].thumbnailPath").value(
+                    mockFestivalResponse.getThumbnailPath()))
             .andExpect(jsonPath("$.result.content[0].startedAt").value("2024.02.08 11:02"));
     }
 }

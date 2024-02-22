@@ -3,6 +3,7 @@ package com.lisade.togeduck.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -107,9 +108,9 @@ class FestivalServiceImplTest {
         when(festivalRepository.findById(festivalId)).thenReturn(Optional.of(mockFestival));
         when(festivalMapper.toFestivalDetailResponse(mockFestival)).thenReturn(
             mockFestivalDetailResponse);
-
+        User mockUser = mock(User.class);
         //when
-        festivalService.getDetail(any(User.class), festivalId);
+        festivalService.getDetail(mockUser, festivalId);
 
         //then
         verify(festivalRepository, times(1)).findById(festivalId);
