@@ -2,18 +2,16 @@ package com.softeer.togeduck.ui.home.open_route
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.RegionDetailModel
-import com.softeer.togeduck.data.model.RegionListModel
+import com.softeer.togeduck.data.model.home.open_route.RegionDetailModel
+import com.softeer.togeduck.data.model.home.open_route.RegionListModel
 import com.softeer.togeduck.databinding.DialogSelectRegionBinding
 import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.ItemClickWithData

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.ReservationStatusModel
+import com.softeer.togeduck.data.model.reserve_status.ReservationStatusModel
 import com.softeer.togeduck.databinding.FragmentReserveStatusBinding
 import com.softeer.togeduck.utils.ItemClick
 import java.text.DecimalFormat

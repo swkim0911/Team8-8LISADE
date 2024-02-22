@@ -1,10 +1,9 @@
 package com.softeer.togeduck.ui.intro
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softeer.togeduck.di.DataStoreManager
-import com.softeer.togeduck.data.network.model.LoginRequest
+import com.softeer.togeduck.data.local.datasource.LocalUserDataStore
+import com.softeer.togeduck.data.dto.request.LoginRequest
 import com.softeer.togeduck.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
@@ -12,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val dataStoreManager: DataStoreManager) :
+class LoginViewModel @Inject constructor(private val dataStoreManager: LocalUserDataStore) :
     ViewModel() {
     private val loginRepository = UserRepository()
     fun saveSessionId() {

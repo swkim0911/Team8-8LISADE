@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
-import com.softeer.togeduck.data.model.PopularArticleModel
+import com.softeer.togeduck.data.model.home.main.PopularArticleModel
 
 class PopularArticleAdapter(private val items: List<PopularArticleModel>) :
     RecyclerView.Adapter<ViewHolder>() {

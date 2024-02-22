@@ -42,7 +42,7 @@
         android:label="MainActivity" />
     <activity
         android:id="@+id/reserveStatusDetailActivity"
-        android:name="com.softeer.togeduck.ui.reserve_status.detail.ReserveStatusDetailActivity"
+        android:name="com.softeer.togeduck.ui.reserve_status.reserve_detail.ReserveStatusDetailActivity"
         android:label="activity_reserve_status_detail"
         tools:layout="@layout/activity_reserve_status_detail" />
 </navigation>

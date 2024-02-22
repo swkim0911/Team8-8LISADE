@@ -3,10 +3,7 @@ package com.softeer.togeduck.ui.home.article_detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softeer.togeduck.R
-import com.softeer.togeduck.data.model.PopularArticleModel
-import com.softeer.togeduck.data.model.RouteListModel
-import com.softeer.togeduck.databinding.RvItemPopularArticleBinding
+import com.softeer.togeduck.data.model.home.open_route.RouteListModel
 import com.softeer.togeduck.databinding.RvItemRouteListBinding
 import com.softeer.togeduck.utils.ItemClick
 
