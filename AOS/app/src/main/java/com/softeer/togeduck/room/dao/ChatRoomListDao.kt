@@ -8,7 +8,7 @@ import androidx.room.Update
 import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 
 @Dao
-interface ChatRoomsDao {
+interface ChatRoomListDao {
     @Query("select * from chat_room")
     fun getAll() : List<ChatRoomListModel>
 
