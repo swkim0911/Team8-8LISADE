@@ -47,7 +47,7 @@ class ChatRoomListAdapter(private val items: List<ChatRoomListModel>) :
         return items.size
     }
 
-    inner class MyViewHolder(private val binding: RvItemChatRoomListBinding) :
+    class MyViewHolder(private val binding: RvItemChatRoomListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(item: ChatRoomListModel) {
