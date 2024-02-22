@@ -21,7 +21,7 @@ public class ChatMessage {
     private Long roomId;
     private String nickname;
     private String message;
-    private LocalDateTime messageTime;
     private MessageType messageAction;
+    private LocalDateTime createdAt;
 
 }

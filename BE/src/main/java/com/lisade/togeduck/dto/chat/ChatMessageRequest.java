@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageRequest {
+public class ChatMessageRequest {
 
     private Long userId;
     private Long roomId;
