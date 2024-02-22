@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -27,6 +28,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
+@Slf4j
 @Configuration
 @EnableBatchProcessing
 @RequiredArgsConstructor
@@ -106,6 +108,8 @@ public class PopularScoringBatchConfig {
 
     @Bean
     public ItemWriter<FestivalClickCountCacheValue> festivalClickCountItemWriter() {
+        festivalClickCountCacheService.deleteAll();
+
         String sql = "INSERT INTO festival_view (festival_id, count, measurement_at) "
             + "VALUES (?, ?, ?) "
             + "ON DUPLICATE KEY UPDATE "
@@ -126,8 +130,6 @@ public class PopularScoringBatchConfig {
 
     @Bean
     public ItemWriter<FestivalItemProcessingResult> scoreItemWriter() {
-        festivalClickCountCacheService.deleteAll();
-
         String sql = "UPDATE festival SET popular_score = ? WHERE id = ?";
 
         return items -> {
