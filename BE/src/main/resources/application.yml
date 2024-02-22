@@ -9,7 +9,7 @@ spring:
       max-request-size: 50MB
   jpa:
     properties:
-      generate-ddl: 'true'
+      generate-ddl: true
       hibernate:
         format_sql: true
 

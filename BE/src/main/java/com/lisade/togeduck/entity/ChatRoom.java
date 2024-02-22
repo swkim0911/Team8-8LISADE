@@ -5,7 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AccessLevel;
@@ -26,6 +28,10 @@ public class ChatRoom extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "route_id")
+    private Route route;
 
     @Column(name = "room_name", nullable = false)
     private String roomName;
