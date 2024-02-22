@@ -1,9 +1,7 @@
 package com.softeer.togeduck.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
+import com.softeer.togeduck.data.local.datasource.UserDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,9 +12,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "USER_SESSION_ID")
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.dataStore
+    fun provideDataStore(@ApplicationContext context: Context): UserDataStore {
+        return UserDataStore(context)
+    }
 }
