@@ -22,7 +22,7 @@ public class FestivalClickCountCacheService {
             festivalClickCountCacheRepository.findByFestivalId(festivalId);
 
         if (festivalClickCountCacheValue.isEmpty()) {
-            save(FestivalClickCountCacheValue.of(festivalId, 1L));
+            save(FestivalClickCountCacheValue.of(festivalId, 1));
 
             return;
         }
