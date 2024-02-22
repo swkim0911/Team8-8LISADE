@@ -39,6 +39,8 @@ public class RouteMapper {
             .status(RouteStatus.RECRUIT)
             .expectedTime(expectedTime)
             .startedAt(startedAt)
+            .numberOfSeats(bus.getNumberOfSeats())
+            .numberOfReservationSeats(0)
             .build();
     }
 

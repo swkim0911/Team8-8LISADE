@@ -17,18 +17,22 @@ public class FestivalClickCountCacheService {
         }
 
         userClickLogCacheService.addFestival(userId, festivalId);
-        
+
         Optional<FestivalClickCountCacheValue> festivalClickCountCacheValue =
             festivalClickCountCacheRepository.findByFestivalId(festivalId);
 
         if (festivalClickCountCacheValue.isEmpty()) {
-            save(FestivalClickCountCacheValue.of(festivalId, 1L));
+            save(FestivalClickCountCacheValue.of(festivalId, 1));
 
             return;
         }
 
         festivalClickCountCacheValue.get().increaseClickCount();
         save(festivalClickCountCacheValue.get());
+    }
+
+    public Iterable<FestivalClickCountCacheValue> getAll() {
+        return festivalClickCountCacheRepository.findAll();
     }
 
     public void save(FestivalClickCountCacheValue festivalClickCountCacheValue) {

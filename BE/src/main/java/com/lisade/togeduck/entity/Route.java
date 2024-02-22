@@ -54,6 +54,12 @@ public class Route extends BaseEntity {
     @Column(name = "car_number", length = 15)
     private String carNumber;
 
+    @Column(name = "number_of_seats")
+    private Integer numberOfSeats;
+
+    @Column(name = "number_of_reservation_seats")
+    private Integer numberOfReservationSeats;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     private Driver driver;
@@ -72,4 +78,8 @@ public class Route extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "festival_id", nullable = false)
     private Festival festival;
+
+    public void increaseNumberOfReservationSeats() {
+        this.numberOfReservationSeats++;
+    }
 }
