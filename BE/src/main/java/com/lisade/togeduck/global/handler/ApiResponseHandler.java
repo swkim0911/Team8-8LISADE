@@ -34,6 +34,11 @@ public class ApiResponseHandler implements ResponseBodyAdvice<Object> {
         }
 
         if (status.isError()) {
+            if (body == "") {
+                return ApiResponse.builder().status(code)
+                    .message(status.name())
+                    .result(null).build();
+            }
             return ApiResponse.builder().status(code)
                 .message(status.name())
                 .result(body).build();
