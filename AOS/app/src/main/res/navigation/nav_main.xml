@@ -21,9 +21,9 @@
         tools:layout="@layout/fragment_home"></fragment>
     <fragment
         android:id="@+id/menuChat"
-        android:name="com.softeer.togeduck.ui.chatting.ChattingFragment"
+        android:name="com.softeer.togeduck.ui.chatting.ChatRoomListFragment"
         android:label="fragment_chatting"
-        tools:layout="@layout/fragment_chatting"></fragment>
+        tools:layout="@layout/fragment_chat_room_list"></fragment>
     <fragment
         android:id="@+id/menuMyPage"
         android:name="com.softeer.togeduck.ui.mypage.MyPageFragment"
