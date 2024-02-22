@@ -94,7 +94,14 @@ class SeatServiceTest {
             .userId("userId")
             .build();
 
-        doReturn(Optional.of(seat())).when(seatRepository)
+        Route mockRoute = mock(Route.class);
+        Seat seat = Seat.builder()
+            .route(mockRoute)
+            .no(no)
+            .status(SeatStatus.AVAILABLE)
+            .build();
+
+        doReturn(Optional.of(seat)).when(seatRepository)
             .findByRouteIdAndNoWithRoute(routeId, no);
         // when
         seatService.register(user, routeId, request);
@@ -156,17 +163,6 @@ class SeatServiceTest {
         assertThrows(SeatAlreadyRegisterException.class, () -> {
             seatService.register(user, routeId, request);
         });
-    }
-
-    private Seat seat() {
-        Integer no = 1;
-        Route mockRoute = mock(Route.class);
-        return Seat.builder()
-            .route(mockRoute)
-            .no(no)
-            .status(SeatStatus.AVAILABLE)
-            .route(route())
-            .build();
     }
 
     private Route route() {
