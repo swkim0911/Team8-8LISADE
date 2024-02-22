@@ -9,9 +9,9 @@ public class ChatMapper {
         return ChatMessage.builder()
             .userId(chatMessageRequest.getUserId())
             .roomId(chatMessageRequest.getRoomId())
-            .nickname(null) //todo controller에서 @Login user로 받아오기
+            .sender(chatMessageRequest.getSender())
             .message(chatMessageRequest.getMessage())
-            .messageAction(chatMessageRequest.getAction())
+            .action(chatMessageRequest.getAction())
             .createdAt(chatMessageRequest.getCreatedAt()).build();
     }
 }

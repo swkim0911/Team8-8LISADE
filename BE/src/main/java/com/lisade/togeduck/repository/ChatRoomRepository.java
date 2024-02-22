@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long>,
     ChatRoomRepositoryCustom {
 
+    
 }

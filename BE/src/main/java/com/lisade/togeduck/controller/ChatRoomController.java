@@ -24,6 +24,6 @@ public class ChatRoomController {
     public Slice<ChatRoomListResponse> getList(
         @PageableDefault(size = 10, sort = "createdAt", direction = Direction.DESC) Pageable pageable,
         @Login User user) {
-        return chatRoomService.get(pageable, user.getId());
+        return chatRoomService.getList(pageable, user.getId());
     }
 }

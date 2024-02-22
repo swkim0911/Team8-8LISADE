@@ -5,6 +5,7 @@ import com.lisade.togeduck.entity.ChatRoom;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.entity.UserChatRoom;
+import com.lisade.togeduck.exception.ChatRoomNotFoundException;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.repository.ChatRoomRepository;
 import com.lisade.togeduck.repository.FestivalRepository;
@@ -42,8 +43,16 @@ public class ChatRoomService {
         userChatRoomRepository.save(userChatRoom);
     }
 
-    public Slice<ChatRoomListResponse> get(Pageable pageable, Long userId) {
+    public boolean exist(Long userId, Long roomId) {
+        return userChatRoomRepository.existsByUserIdAndChatRoomId(userId, roomId);
+    }
+
+    public Slice<ChatRoomListResponse> getList(Pageable pageable, Long userId) {
         return chatRoomRepository.findJoinedChatRooms(pageable, userId);
+    }
+
+    public ChatRoom get(Long chatRoomId) {
+        return chatRoomRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
     }
 
 }
