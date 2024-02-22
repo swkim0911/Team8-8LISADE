@@ -29,7 +29,6 @@ public class FestivalServiceImpl implements FestivalService {
     private final FestivalRepository festivalRepository;
     private final RouteRepository routeRepository;
     private final FestivalMapper festivalMapper;
-    private final CategoryService categoryService;
 
     @Override
     public Slice<FestivalResponse> getList(Pageable pageable, Long categoryId,
