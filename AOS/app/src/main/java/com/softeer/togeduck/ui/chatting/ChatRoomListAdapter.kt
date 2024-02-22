@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.softeer.togeduck.data.model.chatting.ChatRoomsModel
+import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.databinding.RvItemChatRoomListBinding
 import com.softeer.togeduck.utils.ItemClick
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.util.Locale
 
-class ChatRoomListAdapter(private val items: List<ChatRoomsModel>) :
+class ChatRoomListAdapter(private val items: List<ChatRoomListModel>) :
     RecyclerView.Adapter<ChatRoomListAdapter.MyViewHolder>() {
 
     private lateinit var binding: RvItemChatRoomListBinding
@@ -51,7 +50,7 @@ class ChatRoomListAdapter(private val items: List<ChatRoomsModel>) :
     inner class MyViewHolder(private val binding: RvItemChatRoomListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(item: ChatRoomsModel) {
+        fun bind(item: ChatRoomListModel) {
             binding.apply {
                 Glide.with(binding.root.context)
                     .load(item.thumbnail)

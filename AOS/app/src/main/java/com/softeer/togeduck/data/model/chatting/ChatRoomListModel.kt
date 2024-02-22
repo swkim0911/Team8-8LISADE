@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "chat_room")
-data class ChatRoomsModel(
+data class ChatRoomListModel(
     @PrimaryKey
     val id: Long?,
     @ColumnInfo(name = "thumbnail")
