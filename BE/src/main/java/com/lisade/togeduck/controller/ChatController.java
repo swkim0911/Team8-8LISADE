@@ -29,25 +29,31 @@ public class ChatController {
      * 전송하면 /topic/message 구독자들에게 메시지가 전송됨 전송한 user도 /topic/message 구독자가 됨.
      */
 
+
     @MessageMapping(value = "/chat/join")
     public void join(@RequestBody ChatMessageRequest chatMessageRequest) {
         //todo @Login User user 하면 test 환경에서 안들어옴. 그래서 일단 User 조회
         User findUser = userService.get(chatMessageRequest.getUserId());
         String message = chatMessageRequest.getSender() + "님이 입장하셨습니다.";
+        chatRoomService.create(findUser, 1L);
 
-        // 1. 채팅방에 user 가 이미 join 했는지 확인
-        if (chatRoomService.exist(chatMessageRequest.getUserId(), chatMessageRequest.getRoomId())) {
-            simpleMessageSendingOperations.convertAndSend(
-                "/topic/message/" + chatMessageRequest.getRoomId(),
-                message);
-
-
-        }
-        // 2.1 그 채팅방에 이미 있을 때
         ChatRoom chatRoom = chatRoomService.get(chatMessageRequest.getRoomId());
         userChatRoomService.create(findUser, chatRoom);
         chatMessageRequest.setMessage(message);
         chatService.save(chatMessageRequest);
+        simpleMessageSendingOperations.convertAndSend(
+            "/topic/message/" + chatMessageRequest.getRoomId(), message);
+    }
+
+    @MessageMapping(value = "/chat/rejoin")
+    public void rejoin(@RequestBody ChatMessageRequest chatMessageRequest) {
+        // 1. 채팅방에 user 가 이미 join 했는지 확인
+//        if (chatRoomService.exist(chatMessageRequest.getUserId(), chatMessageRequest.getRoomId())) {
+//            simpleMessageSendingOperations.convertAndSend(
+//                "/topic/message/" + chatMessageRequest.getRoomId(),
+//                message);
+//        }
+        // 2.1 그 채팅방에 이미 있을 때
     }
 
     @MessageMapping(value = "/chat/message")
