@@ -4,6 +4,7 @@ import com.lisade.togeduck.batch.FestivalItem;
 import com.lisade.togeduck.batch.FestivalItemProcessingResult;
 import com.lisade.togeduck.cache.FestivalClickCountCacheService;
 import com.lisade.togeduck.cache.FestivalClickCountCacheValue;
+import com.lisade.togeduck.repository.FestivalRepository;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -17,6 +18,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.partition.support.TaskExecutorPartitionHandler;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
@@ -24,10 +26,13 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.batch.item.support.ListItemReader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Slf4j
 @Configuration
@@ -36,10 +41,12 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 public class PopularScoringBatchConfig {
 
     public static final double GRAVITY_CONSTANT = 1.8;
+    public static final int POOL_SIZE = 5;
 
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
     private final FestivalClickCountCacheService festivalClickCountCacheService;
+    private final FestivalRepository festivalRepository;
 
     @Bean
     public DataSourceTransactionManager transactionManager() {
@@ -50,7 +57,7 @@ public class PopularScoringBatchConfig {
     public Job saveClickCountAndCalcPopularScoreJob(JobRepository jobRepository) {
         return new JobBuilder("calcPopularScoreJob", jobRepository)
             .start(saveClickCountStep(jobRepository))
-            .next(calcPopularScoreStep(jobRepository))
+            .next(calcPopularScoreStepManager(jobRepository))
             .build();
     }
 
@@ -65,10 +72,19 @@ public class PopularScoringBatchConfig {
     }
 
     @Bean
+    public Step calcPopularScoreStepManager(JobRepository jobRepository) {
+        return new StepBuilder("calcPopularScore.StepManager", jobRepository)
+            .partitioner("calcPopularScoreStep", partitioner())
+            .taskExecutor(executor())
+            .partitionHandler(partitionHandler(jobRepository))
+            .build();
+    }
+
+    @Bean
     public Step calcPopularScoreStep(JobRepository jobRepository) {
         return new StepBuilder("calcPopularScoreStep", jobRepository)
             .<FestivalItem, FestivalItemProcessingResult>chunk(1000, transactionManager())
-            .reader(festivalItemReader())
+            .reader(festivalItemReader(null, null))
             .processor(calcPopularScoreProcessor())
             .writer(scoreItemWriter())
             .build();
@@ -90,7 +106,11 @@ public class PopularScoringBatchConfig {
     }
 
     @Bean
-    public JdbcCursorItemReader<FestivalItem> festivalItemReader() {
+    @StepScope
+    public JdbcCursorItemReader<FestivalItem> festivalItemReader(
+        @Value("#{stepExecutionContext[minId]}") Long minId,
+        @Value("#{stepExecutionContext[maxId]}") Long maxId) {
+        log.info("reader minId={}, maxId={}", minId, maxId);
         return new JdbcCursorItemReaderBuilder<FestivalItem>()
             .name("festivalItemReader")
             .sql(
@@ -100,21 +120,23 @@ public class PopularScoringBatchConfig {
                     + "on f.id = fv.festival_id "
                     + "inner join route as r "
                     + "on f.id = r.festival_id "
-                    + "where fv.measurement_at > ?"
+                    + "WHERE f.id BETWEEN ? AND ? "
+                    + "and fv.measurement_at > ?"
                     + "group by f.id;")
             .beanRowMapper(FestivalItem.class)
-            .queryArguments(LocalDate.now().minusWeeks(1L))
-            .fetchSize(1000)
+            .queryArguments(minId, maxId, LocalDate.now().minusWeeks(1L))
             .dataSource(dataSource)
             .build();
     }
 
     @Bean
+    @StepScope
     public ItemProcessor<FestivalItem, FestivalItemProcessingResult> calcPopularScoreProcessor() {
         return (item) -> FestivalItemProcessingResult.of(item.getId(), getTotalScore(item));
     }
 
     @Bean
+    @StepScope
     public ItemWriter<FestivalClickCountCacheValue> festivalClickCountItemWriter() {
         String sql = "INSERT INTO festival_view (festival_id, count, measurement_at) "
             + "VALUES (?, ?, ?) "
@@ -135,17 +157,43 @@ public class PopularScoringBatchConfig {
     }
 
     @Bean
+    @StepScope
     public ItemWriter<FestivalItemProcessingResult> scoreItemWriter() {
         String sql = "UPDATE festival SET popular_score = ? WHERE id = ?";
-
+        log.info("점수 update 시작");
         return items -> {
             jdbcTemplate.batchUpdate(sql, items.getItems(), items.size(),
                 (ps, argument) -> {
                     ps.setDouble(1, argument.getScore());
                     ps.setLong(2, argument.getId());
                 });
-            log.info("점수 업데이트 완료");
         };
+    }
+
+    @Bean
+    @StepScope
+    public FestivalIdRangePartitioner partitioner() {
+        return new FestivalIdRangePartitioner(festivalRepository);
+    }
+
+    @Bean(name = "calcPopularScoreJob_partitionHandler")
+    public TaskExecutorPartitionHandler partitionHandler(JobRepository jobRepository) {
+        TaskExecutorPartitionHandler partitionHandler = new TaskExecutorPartitionHandler();
+        partitionHandler.setStep(calcPopularScoreStep(jobRepository));
+        partitionHandler.setTaskExecutor(executor());
+        partitionHandler.setGridSize(POOL_SIZE);
+        return partitionHandler;
+    }
+
+    @Bean(name = "calcPopularScoreJob_taskPool")
+    public TaskExecutor executor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(POOL_SIZE);
+        executor.setMaxPoolSize(POOL_SIZE);
+        executor.setThreadNamePrefix("partition-thread");
+        executor.setWaitForTasksToCompleteOnShutdown(Boolean.TRUE);
+        executor.initialize();
+        return executor;
     }
 
     private Double getTotalScore(FestivalItem festivalItem) {
