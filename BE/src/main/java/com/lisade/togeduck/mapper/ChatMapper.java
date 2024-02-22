@@ -1,6 +1,6 @@
 package com.lisade.togeduck.mapper;
 
-import com.lisade.togeduck.dto.chat.ChatMessageRequest;
+import com.lisade.togeduck.dto.request.ChatMessageRequest;
 import com.lisade.togeduck.entity.ChatMessage;
 
 public class ChatMapper {

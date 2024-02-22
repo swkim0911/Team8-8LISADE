@@ -31,6 +31,7 @@ public class RouteController {
         RouteRegistrationRequest routeRegistration) {
         RouteRegistrationResponse registrationResponse = routeService.save(festivalId,
             routeRegistration);
+        
         chatRoomService.create(user, registrationResponse.getRouteId()); // 채팅방 생성
 
         return registrationResponse;

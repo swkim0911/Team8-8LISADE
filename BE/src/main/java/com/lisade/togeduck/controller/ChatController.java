@@ -1,7 +1,6 @@
 package com.lisade.togeduck.controller;
 
-import com.lisade.togeduck.dto.chat.ChatMessageRequest;
-import com.lisade.togeduck.entity.ChatRoom;
+import com.lisade.togeduck.dto.request.ChatMessageRequest;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.service.ChatRoomService;
 import com.lisade.togeduck.service.ChatService;
@@ -24,20 +23,13 @@ public class ChatController {
     private final UserService userService;
     private final SimpMessageSendingOperations simpleMessageSendingOperations;
 
-    /**
-     * 사용자가 /pub/chat/join uri로 메시지를 보내면 그건 채팅방 입장 요청 전달 받은 메시지를 mongodb에 저장 이 메시지를 /topic/message에
-     * 전송하면 /topic/message 구독자들에게 메시지가 전송됨 전송한 user도 /topic/message 구독자가 됨.
-     */
-
-
     @MessageMapping(value = "/chat/join")
     public void join(@RequestBody ChatMessageRequest chatMessageRequest) {
-        //todo @Login User user 하면 test 환경에서 안들어옴. 그래서 일단 User 조회
         User findUser = userService.get(chatMessageRequest.getUserId());
         String message = chatMessageRequest.getSender() + "님이 입장하셨습니다.";
-        chatRoomService.create(findUser, 1L);
+        chatRoomService.
 
-        ChatRoom chatRoom = chatRoomService.get(chatMessageRequest.getRoomId());
+            ChatRoom chatRoom = chatRoomService.get(chatMessageRequest.getRoomId());
         userChatRoomService.create(findUser, chatRoom);
         chatMessageRequest.setMessage(message);
         chatService.save(chatMessageRequest);
