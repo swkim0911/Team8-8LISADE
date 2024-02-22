@@ -13,6 +13,7 @@ public class ChatRepository {
 
     public void save(ChatMessage chatMessage) {
         String chatRoomName = "chat_room_" + chatMessage.getRoomId();
+        System.out.println("chatRoomName = " + chatRoomName);
         mongoTemplate.save(chatMessage, chatRoomName);
     }
 }
