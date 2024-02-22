@@ -1,5 +1,7 @@
 package com.lisade.togeduck.dto.chat;
 
+import com.lisade.togeduck.entity.enums.MessageType;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,9 +13,11 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatMessage {
+public class MessageRequest {
 
-    private String roomId;
-    private String writer;
+    private Long userId;
+    private Long roomId;
+    private MessageType action;
     private String message;
+    private LocalDateTime createdAt;
 }

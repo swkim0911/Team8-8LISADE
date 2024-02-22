@@ -15,13 +15,14 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat"); // 웹소켓 연결을 위해 3-handshake 수행하기 위한 URL
+        registry.addEndpoint("/ws/chat")
+            .setAllowedOriginPatterns("*").withSockJS(); // 웹소켓 연결을 위해 3-handshake 수행하기 위한 URL
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/pub");
-        registry.enableSimpleBroker("/sub"); // 스프링 내장 브로커 사용. client에게 메시지 보낼때
+        registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/topic"); // 스프링 내장 브로커 사용.
     }
 
     @Override

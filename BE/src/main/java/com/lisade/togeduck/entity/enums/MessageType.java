@@ -1,6 +1,6 @@
 package com.lisade.togeduck.entity.enums;
 
-public enum MessageAction {
+public enum MessageType {
     JOIN,
     MESSAGE,
     LEAVE

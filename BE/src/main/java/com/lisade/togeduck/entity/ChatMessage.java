@@ -1,6 +1,6 @@
 package com.lisade.togeduck.entity;
 
-import com.lisade.togeduck.entity.enums.MessageAction;
+import com.lisade.togeduck.entity.enums.MessageType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,10 +17,11 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    private Long userId;
+    private Long roomId;
     private String nickname;
     private String message;
-    private int roomNumber;
     private LocalDateTime messageTime;
-    private MessageAction messageAction;
+    private MessageType messageAction;
 
 }
