@@ -19,11 +19,9 @@ class UserDataStore @Inject constructor(
     private val context: Context
 ) {
     companion object {
-        // 세션 ID를 저장할 때 사용할 Preferences Key
         private val USER_SESSION_ID = stringPreferencesKey("user_session_id")
     }
 
-    // 세션 ID를 저장하는 함수
     suspend fun storeUser(sessionId: String) {
         context.dataStore.edit { preferences ->
             preferences[USER_SESSION_ID] = sessionId
