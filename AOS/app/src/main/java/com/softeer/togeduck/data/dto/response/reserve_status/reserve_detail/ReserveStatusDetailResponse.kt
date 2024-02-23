@@ -34,7 +34,7 @@ data class ReserveStatusDetailResponse(
     @Json(name = "festivalCity")
     val festivalCity: String,
     @Json(name = "driverInfo")
-    val driverInfo: DriverInfo,
+    val driverInfo: DriverInfoResponse,
 )
 
 enum class ReserveStatus(val value: String) {
@@ -44,7 +44,7 @@ enum class ReserveStatus(val value: String) {
     OPERATION_COMPLETE("운행완료"),
 }
 
-data class DriverInfo(
+data class DriverInfoResponse(
     @Json(name = "id")
     val id: Int,
     @Json(name = "name")
