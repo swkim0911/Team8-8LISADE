@@ -21,7 +21,7 @@ fun ReserveStatusResponse.toReserveStatusModel(): ReserveStatusModel {
             cost = it.price,
             formattedCost = it.price.addCommas(),
             recruitStatus = it.totalSeats == it.reservedSeats,
-            recruitPhrase = "${it.status}(${it.reservedSeats}/${it.totalSeats})",
+            recruitPhrase = "${it.status.value}(${it.reservedSeats}/${it.totalSeats})",
         )
     })
 }

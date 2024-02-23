@@ -1,5 +1,6 @@
 package com.softeer.togeduck.data.dto.response.reserve_status
 
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatus
 import com.squareup.moshi.Json
 
 data class ReserveStatusResponse(
@@ -37,7 +38,7 @@ data class ReserveStatusItemResponse(
     @Json(name = "price")
     val price: Int,
     @Json(name = "status")
-    val status: String,
+    val status: ReserveStatus,
     @Json(name = "totalSeats")
     val totalSeats: Int,
     @Json(name = "reservedSeats")
