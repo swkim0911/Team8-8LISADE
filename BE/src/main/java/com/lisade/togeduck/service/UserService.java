@@ -35,6 +35,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
 
+    public User get(Long userId) {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
+
     @Transactional
     public Long join(SignUpRequest signUpRequest) {
         validateByUserId(signUpRequest.getUserId());

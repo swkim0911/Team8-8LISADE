@@ -1,7 +1,6 @@
 package com.lisade.togeduck.repository;
 
 import static com.lisade.togeduck.entity.QChatRoom.chatRoom;
-import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QUserChatRoom.userChatRoom;
 
@@ -30,14 +29,10 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
                 chatRoom.id,
                 chatRoom.roomName,
                 chatRoom.numberOfMembers,
-                festival.thumbnailPath))
-            .from(route)
-            .join(chatRoom)
-            .on(chatRoom.route.id.eq(route.id))
+                chatRoom.thumbnailPath))
+            .from(chatRoom)
             .join(userChatRoom)
             .on(userChatRoom.chatRoom.id.eq(chatRoom.id))
-            .join(festival)
-            .on(festival.id.eq(route.festival.id))
             .where(userChatRoom.user.id.eq(userId));
 
         Sort sort = pageable.getSort();
