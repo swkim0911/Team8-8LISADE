@@ -1,5 +1,7 @@
 package com.lisade.togeduck.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,11 @@ public class BestFestivalResponse {
     public static class Banner {
 
         Long id;
-        String path;
+        String thumbnailPath;
+        String city;
+        String title;
+        @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
+        LocalDateTime startedAt;
+        String location;
     }
 }
