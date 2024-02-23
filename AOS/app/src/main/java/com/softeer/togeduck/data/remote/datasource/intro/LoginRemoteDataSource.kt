@@ -1,17 +1,17 @@
-package com.softeer.togeduck.data.remote.datasource
+package com.softeer.togeduck.data.remote.datasource.intro
 
 import com.softeer.togeduck.data.dto.BaseResponse
 import com.softeer.togeduck.data.dto.request.LoginRequest
-import com.softeer.togeduck.data.remote.service.LoginService
+import com.softeer.togeduck.data.remote.service.UserService
 import retrofit2.Response
 import javax.inject.Inject
 
 class LoginRemoteDataSource @Inject constructor(
-    private val loginService: LoginService
+    private val userService: UserService
 ) {
     suspend fun login(
         loginRequest: LoginRequest
     ): Response<String> {
-        return loginService.login(loginRequest)
+        return userService.login(loginRequest)
     }
 }

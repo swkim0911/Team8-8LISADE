@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.home
+package com.softeer.togeduck.ui.home.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

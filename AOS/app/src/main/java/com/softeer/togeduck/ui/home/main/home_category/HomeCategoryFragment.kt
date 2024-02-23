@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.softeer.togeduck.R
@@ -13,6 +14,7 @@ import com.softeer.togeduck.databinding.FragmentHomeCatergoryBinding
 import com.softeer.togeduck.utils.GridSpacingItemDecoration
 import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.fromDpToPx
+import dagger.hilt.android.AndroidEntryPoint
 
 
 private val dummyData = listOf(
@@ -24,10 +26,12 @@ private val dummyData = listOf(
     HomeCategoryModel("dummy", "스포츠"),
 )
 
+@AndroidEntryPoint
 class HomeCategoryFragment : Fragment() {
     private var _binding: FragmentHomeCatergoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: HomeCategoryAdapter
+    private val homeCategoryViewModel : HomeCategoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,9 @@ class HomeCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        // 백엔드 배포 필요!!
+//        homeCategoryViewModel.getCategory()
+
     }
 
     private fun setupRecyclerView() {

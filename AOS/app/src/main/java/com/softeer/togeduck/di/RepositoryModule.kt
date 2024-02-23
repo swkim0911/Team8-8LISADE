@@ -1,7 +1,7 @@
 package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.local.datasource.UserDataStore
-import com.softeer.togeduck.data.remote.datasource.LoginRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.intro.LoginRemoteDataSource
 import com.softeer.togeduck.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides

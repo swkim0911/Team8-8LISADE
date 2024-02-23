@@ -3,7 +3,7 @@ package com.softeer.togeduck.data.repository
 import com.softeer.togeduck.data.dto.BaseResponse
 import com.softeer.togeduck.data.dto.request.LoginRequest
 import com.softeer.togeduck.data.local.datasource.UserDataStore
-import com.softeer.togeduck.data.remote.datasource.LoginRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.intro.LoginRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject

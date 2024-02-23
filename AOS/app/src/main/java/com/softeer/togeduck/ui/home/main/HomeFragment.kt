@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.home
+package com.softeer.togeduck.ui.home.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.data.model.home.main.PopularArticleModel
 import com.softeer.togeduck.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 private val dummyData = listOf(
     PopularArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "2024.02.07", "잠실종합운동장"),
@@ -17,7 +18,7 @@ private val dummyData = listOf(
     PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
     PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청")
 )
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
