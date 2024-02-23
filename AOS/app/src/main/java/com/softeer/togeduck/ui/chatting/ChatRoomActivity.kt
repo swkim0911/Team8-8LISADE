@@ -38,6 +38,7 @@ class ChatRoomActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
@@ -74,7 +75,9 @@ class ChatRoomActivity : AppCompatActivity() {
                     keyBordShow()
                     Toast.makeText(this@ChatRoomActivity, "메세지를 입력하세요", Toast.LENGTH_SHORT).show()
                 } else {
+                    sendMessage(chatMessageEditText.text.toString())
                     chatMessageEditText.text.clear()
+                    rvChatRoomMessage.scrollToPosition(rvChatRoomMessage.adapter!!.itemCount - 1)
                 }
             }
         }
@@ -85,13 +88,20 @@ class ChatRoomActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         stomp.disconnect()
-        insertMessages()
+
+        if(newMessages.isNotEmpty()) {
+            updateChatRoom()
+        }
     }
 
     override fun onPause() {
         super.onPause()
         stomp.disconnect()
-        insertMessages()
+
+        if(newMessages.isNotEmpty()) {
+            insertMessages()
+            updateChatRoom()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -168,11 +178,11 @@ class ChatRoomActivity : AppCompatActivity() {
 
             var location = ""
 
-            val lastMessage = getLastMessage()
+            var lastMessage = getLastMessage()
 
             if (type == "JOIN" || type == "LEAVE") {
                 location = "CENTER"
-            } else if (nickname != lastMessage.nickname) {
+            } else if (lastMessage == null || nickname != lastMessage.nickname) {
                 location = "FIRST_LEFT"
             } else {
                 location = "LEFT"
@@ -187,8 +197,6 @@ class ChatRoomActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendMessage(message: String) {
-        addTimeMessage(message)
-
         val data = JSONObject()
         val now = TimeFormatter.now()
 
@@ -199,6 +207,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
         stomp.send("", data.toString()).subscribe()
 
+        addTimeMessage(now)
         updateMessage("!", message, now, "MESSAGE", "RIGHT")
     }
 
@@ -206,20 +215,34 @@ class ChatRoomActivity : AppCompatActivity() {
     private fun addTimeMessage(now: String) {
         val lastMessage = getLastMessage()
 
-        if (lastMessage.time == null) {
+        if (lastMessage == null) {
+            updateMessage("", TimeFormatter.yyyyMMddE(now), now, "DATE", "CENTER")
+
             return
         }
 
-        val lastMessageDate = TimeFormatter.toLocalDateTime(lastMessage.time).toLocalDate()
+        val lastMessageDate = TimeFormatter.toLocalDateTime(lastMessage.time!!).toLocalDate()
         val nowDate = TimeFormatter.toLocalDateTime(now).toLocalDate()
 
-        if (lastMessageDate.isEqual(nowDate)) {
+        if (!lastMessageDate.isEqual(nowDate)) {
             updateMessage("", TimeFormatter.yyyyMMddE(now), now, "DATE", "CENTER")
         }
     }
 
-    private fun getLastMessage(): ChatMessageModel {
+    private fun isFirstMessage(): Boolean {
         binding.apply {
+            val adapter = rvChatRoomMessage.adapter as ChatMessageListAdapter
+
+            return adapter.itemCount == 0
+        }
+    }
+
+    private fun getLastMessage(): ChatMessageModel? {
+        binding.apply {
+            if (isFirstMessage()){
+                return null
+            }
+
             val adapter = rvChatRoomMessage.adapter as ChatMessageListAdapter
 
             return adapter.getLastItem()
@@ -246,6 +269,19 @@ class ChatRoomActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             db!!.chatMessageDao().insertAll(newMessages)
+        }
+    }
+
+    private fun updateChatRoom() {
+        val db = TogeduckDatabase.getInstance(binding.root.context)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val chatRoomListModel = db!!.chatRoomsDao().get(id)
+
+            chatRoomListModel.recentTime = newMessages[newMessages.size - 1].time!!
+            chatRoomListModel.recentMessage = newMessages[newMessages.size - 1].message
+
+            db.chatRoomsDao().update(chatRoomListModel)
         }
     }
 }
