@@ -16,6 +16,13 @@ object TimeFormatter {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun yyyyMMddHHmm(time: String) : String {
+        val yyyyMMdd = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.KOREA)
+
+        return toLocalDateTime(time).format(yyyyMMdd)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun MMdd(time: String) : String {
         val MMdd = DateTimeFormatter.ofPattern("MM월 dd일", Locale.KOREA)
 
