@@ -43,10 +43,8 @@ fun ReserveStatusDetailResponse.toReserveStatusDetailModel(): ReserveStatusDetai
         imagePath = imagePath,
         departureTime = startedAt,
         arrivalTime = arrivedAt,
-        departurePlace = stationName,
-        departureCity = stationCity,
-        arrivalPlace = festivalLocation,
-        arrivalCity = festivalCity,
+        departurePlace = "[${stationName}] ${stationCity}",
+        arrivalPlace = "[${festivalCity}] ${festivalLocation}",
         driverDispatched = driverDispatched,
         driverInfo = DriverInfoModel(
             id = driverInfo.id,

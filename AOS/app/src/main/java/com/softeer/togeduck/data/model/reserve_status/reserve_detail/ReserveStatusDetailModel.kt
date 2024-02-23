@@ -15,9 +15,7 @@ data class ReserveStatusDetailModel(
     val departureTime: String,
     val arrivalTime: String,
     val departurePlace: String,
-    val departureCity: String,
     val arrivalPlace: String,
-    val arrivalCity: String,
     val driverDispatched: Boolean,
     val driverInfo: DriverInfoModel,
 )
