@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
 import com.softeer.togeduck.databinding.RvItemReserveStatusBinding
-import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.ItemClickWithRouteId
 
 class ReservationStatusAdapter(private val items: ReserveStatusModel) :
     RecyclerView.Adapter<ViewHolder>() {
 
     private lateinit var binding: RvItemReserveStatusBinding
-    var itemClick: ItemClick? = null
+    var itemClick: ItemClickWithRouteId? = null
 
     override fun getItemCount(): Int {
         return items.reserveStatus.size
@@ -33,7 +33,7 @@ class ReservationStatusAdapter(private val items: ReserveStatusModel) :
         holder.bind(items.reserveStatus[holder.adapterPosition])
 
         holder.itemView.setOnClickListener {
-            itemClick?.onClick(it, position)
+            itemClick?.onClick(it, position, items.reserveStatus[holder.adapterPosition].id)
         }
     }
 }

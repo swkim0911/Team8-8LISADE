@@ -45,6 +45,8 @@ class ReserveStatusDetailInfoFragment : Fragment() {
         binding.checkTicket.setOnClickListener {
             findNavController().navigate(R.id.action_reserveStatusDetailInfoFragment_to_mobileTicketFragment)
         }
+
+        reserveDetailViewModel.loadReserveStatusDetailData()
     }
 
     override fun onDestroyView() {

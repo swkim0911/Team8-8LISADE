@@ -1,16 +1,18 @@
 package com.softeer.togeduck.ui.reserve_status
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentReserveStatusBinding
-import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.ItemClickWithRouteId
+import com.softeer.togeduck.utils.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,17 +50,28 @@ class ReserveStatusFragment : Fragment() {
 
     private fun init() {
         reserveStatusViewModel.loadReserveStatusData()
-        adapter = ReservationStatusAdapter(reserveStatusViewModel.reserveStatusItems.value!!)
-        val rvList = binding.rvReservationStatusList
 
-        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        rvList.addItemDecoration(dividerItemDecoration)
-        rvList.adapter = adapter
+        reserveStatusViewModel.reserveStatusItems.observe(viewLifecycleOwner) {
+            adapter = ReservationStatusAdapter(it)
+            val rvList = binding.rvReservationStatusList
+            val dividerItemDecoration =
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            rvList.addItemDecoration(dividerItemDecoration)
+            rvList.adapter = adapter
 
-        adapter.itemClick = object : ItemClick {
-            override fun onClick(view: View, position: Int) {
-                findNavController().navigate(R.id.action_menuReserveList_to_reservationStatusDetailActivity)
+            adapter.itemClick = object : ItemClickWithRouteId {
+                override fun onClick(view: View, position: Int, routeId: Int) {
+                    val action =
+                        ReserveStatusFragmentDirections.actionMenuReserveListToReservationStatusDetailActivity(
+                            routeId
+                        )
+                    findNavController().navigate(action)
+                }
             }
+        }
+
+        reserveStatusViewModel.errMessage.observe(viewLifecycleOwner) {
+            showErrorToast(requireContext(), it.toString())
         }
     }
 

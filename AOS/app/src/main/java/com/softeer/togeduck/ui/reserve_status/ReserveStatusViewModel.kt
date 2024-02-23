@@ -1,10 +1,12 @@
 package com.softeer.togeduck.ui.reserve_status
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
+import com.softeer.togeduck.data.model.reserve_status.reserve_detail.ReserveStatusDetailModel
 import com.softeer.togeduck.data.repository.ReserveStatusRepository
 import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
 import com.softeer.togeduck.utils.recordErrLog
@@ -24,11 +26,24 @@ class ReserveStatusViewModel @Inject constructor(
     private var _reserveStatusItems = MutableLiveData<ReserveStatusModel>()
     val reserveStatusItems: LiveData<ReserveStatusModel> = _reserveStatusItems
 
+    private var _reserveStatusDetail = MutableLiveData<ReserveStatusDetailModel>()
+    val reserveStatusDetail: LiveData<ReserveStatusDetailModel> = _reserveStatusDetail
 
     fun loadReserveStatusData() {
         viewModelScope.launch {
             reserveStatusRepository.getReserveStatusList(1, 10).onSuccess {
                 _reserveStatusItems.value = it
+            }.onFailure {
+                recordErrLog(tag, it.message!!)
+                _errMessage.value = DATA_LOAD_ERROR_MESSAGE
+            }
+        }
+    }
+
+    fun loadReserveStatusDetailData(routeId: Int) {
+        viewModelScope.launch {
+            reserveStatusRepository.getReserveStatusDetail(routeId).onSuccess {
+                _reserveStatusDetail.value = it
             }.onFailure {
                 recordErrLog(tag, it.message!!)
                 _errMessage.value = DATA_LOAD_ERROR_MESSAGE
