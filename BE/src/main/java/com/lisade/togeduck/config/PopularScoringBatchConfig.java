@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -74,10 +75,17 @@ public class PopularScoringBatchConfig {
     }
 
     @Bean
+    @StepScope
     public ListItemReader<FestivalClickCountCacheValue> festivalClickCountItemReader() {
         List<FestivalClickCountCacheValue> festivalClickCountCacheValues = new ArrayList<>();
+        log.info("Redis 읽기 시작");
         festivalClickCountCacheService.getAll().forEach(festivalClickCountCacheValues::add);
-
+        log.info("Redis 읽기 종료");
+        if (!festivalClickCountCacheValues.isEmpty()) {
+            log.info("Redis 데이터 삭제 시작");
+            festivalClickCountCacheService.deleteAll();
+            log.info("Redis 데이터 삭제 종료");
+        }
         return new ListItemReader<>(festivalClickCountCacheValues);
     }
 
@@ -108,16 +116,13 @@ public class PopularScoringBatchConfig {
 
     @Bean
     public ItemWriter<FestivalClickCountCacheValue> festivalClickCountItemWriter() {
-        festivalClickCountCacheService.deleteAll();
-
         String sql = "INSERT INTO festival_view (festival_id, count, measurement_at) "
             + "VALUES (?, ?, ?) "
             + "ON DUPLICATE KEY UPDATE "
             + "count = count + ?";
-
-        LocalDate now = LocalDate.now();
-
         return items -> {
+            log.info("festival_view 업데이트 시작");
+            LocalDate now = LocalDate.now();
             jdbcTemplate.batchUpdate(sql, items.getItems(), items.size(),
                 (ps, argument) -> {
                     ps.setLong(1, argument.getFestivalId());
@@ -125,6 +130,7 @@ public class PopularScoringBatchConfig {
                     ps.setDate(3, Date.valueOf(now));
                     ps.setInt(4, argument.getClickCount());
                 });
+            log.info("festival_view 업데이트 완료");
         };
     }
 
@@ -138,6 +144,7 @@ public class PopularScoringBatchConfig {
                     ps.setDouble(1, argument.getScore());
                     ps.setLong(2, argument.getId());
                 });
+            log.info("점수 업데이트 완료");
         };
     }
 

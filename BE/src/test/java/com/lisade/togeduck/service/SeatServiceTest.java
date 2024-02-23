@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -93,14 +94,21 @@ class SeatServiceTest {
             .userId("userId")
             .build();
 
-        doReturn(Optional.of(seat())).when(seatRepository)
-            .findByRouteIdAndNo(routeId, no);
+        Route mockRoute = mock(Route.class);
+        Seat seat = Seat.builder()
+            .route(mockRoute)
+            .no(no)
+            .status(SeatStatus.AVAILABLE)
+            .build();
+
+        doReturn(Optional.of(seat)).when(seatRepository)
+            .findByRouteIdAndNoWithRoute(routeId, no);
         // when
         seatService.register(user, routeId, request);
 
         // then
         verify(seatRepository, times(1))
-            .findByRouteIdAndNo(any(Long.class), any(Integer.class));
+            .findByRouteIdAndNoWithRoute(any(Long.class), any(Integer.class));
     }
 
     @Test
@@ -119,7 +127,7 @@ class SeatServiceTest {
             .build();
 
         doThrow(SeatNotFoundException.class).when(seatRepository)
-            .findByRouteIdAndNo(routeId, no);
+            .findByRouteIdAndNoWithRoute(routeId, no);
 
         // when & then
         assertThrows(SeatNotFoundException.class, () -> {
@@ -141,29 +149,20 @@ class SeatServiceTest {
         User user = User.builder()
             .userId("userId")
             .build();
-
+        Route mockRoute = mock(Route.class);
         Seat seat = Seat.builder()
+            .route(mockRoute)
             .no(no)
             .status(SeatStatus.RESERVATION)
             .build();
 
         doReturn(Optional.of(seat)).when(seatRepository)
-            .findByRouteIdAndNo(routeId, no);
+            .findByRouteIdAndNoWithRoute(routeId, no);
 
         // when
         assertThrows(SeatAlreadyRegisterException.class, () -> {
             seatService.register(user, routeId, request);
         });
-    }
-
-    private Seat seat() {
-        Integer no = 1;
-
-        return Seat.builder()
-            .no(no)
-            .status(SeatStatus.AVAILABLE)
-            .route(route())
-            .build();
     }
 
     private Route route() {

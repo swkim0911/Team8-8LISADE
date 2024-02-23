@@ -3,10 +3,12 @@ package com.lisade.togeduck.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.lisade.togeduck.cache.FestivalClickCountCacheService;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.entity.Category;
@@ -33,6 +35,9 @@ class FestivalServiceImplTest {
 
     @Mock
     private FestivalRepository festivalRepository;
+
+    @Mock
+    private FestivalClickCountCacheService festivalClickCountCacheService;
 
     @Mock
     private FestivalMapper festivalMapper;
@@ -107,13 +112,13 @@ class FestivalServiceImplTest {
         when(festivalRepository.findById(festivalId)).thenReturn(Optional.of(mockFestival));
         when(festivalMapper.toFestivalDetailResponse(mockFestival)).thenReturn(
             mockFestivalDetailResponse);
-
+        User mockUser = mock(User.class);
         //when
-        festivalService.getDetail(any(User.class), festivalId);
+        festivalService.getDetail(mockUser, festivalId);
 
         //then
         verify(festivalRepository, times(1)).findById(festivalId);
-        verify(viewService, times(1)).add(mockFestival);
+        verify(festivalClickCountCacheService, times(1)).increase(mockUser.getUserId(), festivalId);
         verify(festivalMapper, times(1)).toFestivalDetailResponse(mockFestival);
     }
 }
