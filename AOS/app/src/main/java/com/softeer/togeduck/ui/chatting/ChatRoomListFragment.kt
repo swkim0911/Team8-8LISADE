@@ -47,6 +47,8 @@ class ChatRoomListFragment : Fragment() {
                             val intent = Intent(binding.root.context, ChatRoomActivity::class.java)
 
                             intent.putExtra("id", chatRooms[position].id)
+                            intent.putExtra("roomName", chatRooms[position].roomName)
+
                             startActivity(intent)
                         }
                     }
