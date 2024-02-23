@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentReserveStatusDetailInfoBinding
+import com.softeer.togeduck.utils.showErrorToast
 
 class ReserveStatusDetailInfoFragment : Fragment() {
     private var _binding: FragmentReserveStatusDetailInfoBinding? = null
@@ -47,6 +48,9 @@ class ReserveStatusDetailInfoFragment : Fragment() {
         }
 
         reserveDetailViewModel.loadReserveStatusDetailData()
+        reserveDetailViewModel.errMessage.observe(viewLifecycleOwner) {
+            showErrorToast(requireContext(), it.toString())
+        }
     }
 
     override fun onDestroyView() {
