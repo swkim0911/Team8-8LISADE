@@ -6,14 +6,12 @@ import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
-@Setter
 @RedisHash("location")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LocationCacheValue implements Serializable {

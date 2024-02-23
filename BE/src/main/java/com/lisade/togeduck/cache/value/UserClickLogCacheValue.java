@@ -5,13 +5,11 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
-@Setter
 @RedisHash("user_click_log")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserClickLogCacheValue {
