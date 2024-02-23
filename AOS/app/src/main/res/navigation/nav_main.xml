@@ -35,7 +35,7 @@
         android:label="activity_reservation_status_detail"
         tools:layout="@layout/activity_reserve_status_detail" >
         <argument
-            android:name="routId"
+            android:name="routeId"
             app:argType="integer"
             android:defaultValue="0" />
     </activity>
