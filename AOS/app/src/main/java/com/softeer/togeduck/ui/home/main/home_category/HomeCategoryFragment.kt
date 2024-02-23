@@ -18,15 +18,6 @@ import com.softeer.togeduck.utils.fromDpToPx
 import dagger.hilt.android.AndroidEntryPoint
 
 
-private val dummyData = listOf(
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "스포츠"),
-)
-
 @AndroidEntryPoint
 class HomeCategoryFragment : Fragment() {
     private var _binding: FragmentHomeCatergoryBinding? = null
@@ -44,11 +35,8 @@ class HomeCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 백엔드 배포 필요!!
-        homeCategoryViewModel.getCategory()
         homeCategoryViewModel.categoryList.observe(viewLifecycleOwner, Observer {
             setupRecyclerView(it)
-
         })
     }
 
