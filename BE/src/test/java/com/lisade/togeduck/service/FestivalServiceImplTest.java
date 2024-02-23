@@ -8,7 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.lisade.togeduck.cache.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.entity.Category;

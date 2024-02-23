@@ -2,10 +2,10 @@ package com.lisade.togeduck.config;
 
 import com.lisade.togeduck.batch.FestivalItem;
 import com.lisade.togeduck.batch.FestivalItemProcessingResult;
-import com.lisade.togeduck.cache.BestFestivalCacheService;
-import com.lisade.togeduck.cache.FestivalClickCountCacheService;
-import com.lisade.togeduck.cache.FestivalClickCountCacheValue;
-import com.lisade.togeduck.cache.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.service.BestFestivalCacheService;
+import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.value.FestivalClickCountCacheValue;
+import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.CategoryRepository;
 import com.lisade.togeduck.repository.FestivalRepository;

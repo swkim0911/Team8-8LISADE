@@ -1,4 +1,4 @@
-package com.lisade.togeduck.cache;
+package com.lisade.togeduck.cache.value;
 
 
 import com.lisade.togeduck.dto.response.DistancePricesResponse;

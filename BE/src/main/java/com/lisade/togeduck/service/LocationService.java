@@ -1,7 +1,7 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.cache.LocationCacheService;
-import com.lisade.togeduck.cache.LocationCacheValue;
+import com.lisade.togeduck.cache.service.LocationCacheService;
+import com.lisade.togeduck.cache.value.LocationCacheValue;
 import com.lisade.togeduck.dto.response.DistancePricesResponse;
 import com.lisade.togeduck.dto.response.DistancePricesResponse.BusInfo;
 import com.lisade.togeduck.dto.response.LocationListDto;
@@ -99,7 +99,7 @@ public class LocationService {
             busInfos, distance, expectedTime);
 
         locationCacheService.save(LocationCacheValue.of(locationId, distancePricesResponse));
-        
+
         return distancePricesResponse;
     }
 

@@ -1,10 +1,10 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.cache.BestFestivalCacheService;
-import com.lisade.togeduck.cache.BestFestivalCacheValue;
-import com.lisade.togeduck.cache.FestivalClickCountCacheService;
-import com.lisade.togeduck.cache.PopularFestivalCacheService;
-import com.lisade.togeduck.cache.PopularFestivalCacheValue;
+import com.lisade.togeduck.cache.service.BestFestivalCacheService;
+import com.lisade.togeduck.cache.value.BestFestivalCacheValue;
+import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.value.PopularFestivalCacheValue;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;

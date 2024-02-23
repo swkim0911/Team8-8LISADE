@@ -1,7 +1,7 @@
 package com.lisade.togeduck.util;
 
-import com.lisade.togeduck.cache.BestFestivalCacheService;
-import com.lisade.togeduck.cache.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.service.BestFestivalCacheService;
+import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
 import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;

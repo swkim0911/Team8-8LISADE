@@ -1,5 +1,7 @@
-package com.lisade.togeduck.cache;
+package com.lisade.togeduck.cache.service;
 
+import com.lisade.togeduck.cache.repository.PopularFestivalCacheRepository;
+import com.lisade.togeduck.cache.value.PopularFestivalCacheValue;
 import com.lisade.togeduck.dto.response.FestivalResponse;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import java.util.List;
