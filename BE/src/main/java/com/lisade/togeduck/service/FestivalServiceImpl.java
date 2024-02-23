@@ -1,7 +1,10 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.cache.BestFestivalCacheService;
+import com.lisade.togeduck.cache.BestFestivalCacheValue;
 import com.lisade.togeduck.cache.FestivalClickCountCacheService;
-import com.lisade.togeduck.dto.response.BestFestivalDto;
+import com.lisade.togeduck.cache.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.PopularFestivalCacheValue;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
 import com.lisade.togeduck.dto.response.FestivalResponse;
@@ -18,6 +21,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +30,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalClickCountCacheService festivalClickCountCacheService;
+    private final PopularFestivalCacheService popularFestivalCacheService;
+    private final BestFestivalCacheService bestFestivalCacheService;
+    private final CategoryService categoryService;
     private final FestivalRepository festivalRepository;
     private final RouteRepository routeRepository;
     private final FestivalMapper festivalMapper;
@@ -34,9 +41,31 @@ public class FestivalServiceImpl implements FestivalService {
     public Slice<FestivalResponse> getList(Pageable pageable, Long categoryId,
         FestivalStatus festivalStatus,
         String filterType) {
-        Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
-            pageable, categoryId, festivalStatus);
-        return festivalMapper.toFestivalResponseSlice(festivals);
+        if (filterType.equals("best")) {
+            PopularFestivalCacheValue popularFestivalCacheValue = popularFestivalCacheService.get(
+                categoryId.toString());
+            return getFestivalResponseSlice(
+                pageable, popularFestivalCacheValue);
+
+        } else {
+            Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
+                pageable, categoryId, festivalStatus);
+            return festivalMapper.toFestivalResponseSlice(festivals);
+        }
+    }
+
+    private Slice<FestivalResponse> getFestivalResponseSlice(Pageable pageable,
+        PopularFestivalCacheValue popularFestivalCacheValue) {
+        List<FestivalResponse> festivalResponses = popularFestivalCacheValue.getFestivalResponses();
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), festivalResponses.size());
+
+        List<FestivalResponse> slicedFestivalResponses = festivalResponses.subList(start, end);
+        boolean hasNext = end < festivalResponses.size();
+
+        // Slice 객체 생성 및 반환
+        return new SliceImpl<>(slicedFestivalResponses,
+            pageable, hasNext);
     }
 
     @Override
@@ -58,9 +87,8 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     public BestFestivalResponse getBest() {
-        Integer defaultLimit = 8;
-        List<BestFestivalDto> best = festivalRepository.findBest(defaultLimit);
-        return festivalMapper.toBestFestivalResponse(best.size(), best);
+        BestFestivalCacheValue bestFestivalCacheValue = bestFestivalCacheService.get();
+        return bestFestivalCacheValue.getBests();
     }
 
     @Override

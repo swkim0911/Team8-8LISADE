@@ -2,10 +2,11 @@ package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.response.CategoryResponse;
 import com.lisade.togeduck.entity.Category;
-import com.lisade.togeduck.exception.InternalServerException;
+import com.lisade.togeduck.exception.CategoryNotFoundException;
 import com.lisade.togeduck.mapper.CategoryMapper;
 import com.lisade.togeduck.repository.CategoryRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,12 @@ public class CategoryService {
 
     private void validateCategories(List<Category> categories) {
         if (categories.isEmpty()) {
-            throw new InternalServerException();
+            throw new CategoryNotFoundException();
         }
+    }
+
+    public Category get(Long categoryId) {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
+        return optionalCategory.orElseThrow(CategoryNotFoundException::new);
     }
 }
