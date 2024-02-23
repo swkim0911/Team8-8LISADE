@@ -27,15 +27,6 @@ private val dummyData = listOf(
     HomeCategoryModel("dummy", "기타"),
 )
 
-private val articleDummyData = listOf(
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02"),
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02"),
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02"),
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02"),
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02"),
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02"),
-    HomeArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "잠실 종합운동장 올림픽주경기장", "2023.06.30", "2023.07.02")
-)
 
 class HomeListFragment : Fragment() {
     private var _binding: FragmentHomeListBinding? = null

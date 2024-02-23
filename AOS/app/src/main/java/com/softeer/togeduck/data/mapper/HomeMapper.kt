@@ -25,6 +25,7 @@ fun HomeCategoryResponse.toHomeCategoryModel(): List<HomeCategoryModel> {
 fun HomeCategoryFestivalResponse.toHomeArticleModel(): List<HomeArticleModel> {
     return this.content.map { content ->
         HomeArticleModel(
+            id = content.id,
             imgUrl = content.thumbnailPath,
             title = content.title,
             place = content.location,
