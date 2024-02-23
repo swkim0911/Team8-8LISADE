@@ -12,13 +12,14 @@ import org.springframework.data.redis.core.RedisHash;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BestFestivalCacheValue {
 
+    public static final String BEST_CACHE_ID = "best";
     @Id
     private String id;
 
     private BestFestivalResponse bests;
 
-    public BestFestivalCacheValue(String id, BestFestivalResponse bests) {
-        this.id = id;
+    public BestFestivalCacheValue(BestFestivalResponse bests) {
+        this.id = BEST_CACHE_ID;
         this.bests = bests;
     }
 }

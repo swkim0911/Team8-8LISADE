@@ -16,7 +16,7 @@ public class BestFestivalCacheService {
     private final BestFestivalCacheRepository bestFestivalCacheRepository;
 
     public void save(BestFestivalResponse bestFestivalResponse) {
-        BestFestivalCacheValue best = new BestFestivalCacheValue(BEST_CACHE_ID,
+        BestFestivalCacheValue best = new BestFestivalCacheValue(
             bestFestivalResponse);
         bestFestivalCacheRepository.save(best);
     }
