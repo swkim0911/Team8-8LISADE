@@ -54,6 +54,7 @@ fun ReserveStatusDetailResponse.toReserveStatusDetailModel(): ReserveStatusDetai
             company = driverInfo.company,
             phoneNumber = driverInfo.phoneNumber,
             carNumber = driverInfo.carNumber,
+            imagePath = driverInfo.imagePath,
         )
     )
 }

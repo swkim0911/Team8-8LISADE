@@ -55,4 +55,6 @@ data class DriverInfoResponse(
     val phoneNumber: String,
     @Json(name = "carNumber")
     val carNumber: String,
+    @Json(name = "imagePath")
+    val imagePath: String,
 )

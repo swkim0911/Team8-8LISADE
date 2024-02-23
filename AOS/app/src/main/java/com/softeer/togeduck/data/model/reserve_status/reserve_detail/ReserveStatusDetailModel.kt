@@ -28,4 +28,5 @@ data class DriverInfoModel(
     val company: String,
     val phoneNumber: String,
     val carNumber: String,
+    val imagePath: String,
 )
