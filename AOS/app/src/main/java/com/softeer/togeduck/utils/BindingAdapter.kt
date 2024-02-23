@@ -1,5 +1,6 @@
 package com.softeer.togeduck.utils
 
+import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -16,26 +17,16 @@ fun loadImg(view: ImageView, url: String) {
 }
 
 @BindingAdapter("recruitmentStatusTag")
-fun loadRecruitmentStatusTag(view: TextView, status: ReserveStatus) {
-    view.text = status.value
+fun loadRecruitmentStatusTag(view: TextView, status: ReserveStatus?) {
+    view.text = status?.value
 
-    view.setBackgroundColor(
-        when (status) {
-            ReserveStatus.RECRUIT -> {
-                ContextCompat.getColor(view.context, R.color.mint)
-            }
-
-            ReserveStatus.RECRUIT_COMPLETE -> {
-                ContextCompat.getColor(view.context, R.color.navy300)
-            }
-
-            ReserveStatus.OPERATION_CONFIRM -> {
-                ContextCompat.getColor(view.context, R.color.navy800)
-            }
-
-            ReserveStatus.OPERATION_COMPLETE -> {
-                ContextCompat.getColor(view.context, R.color.gray400)
-            }
-        }
-    )
+    val background: GradientDrawable = view.background as GradientDrawable
+    val bgColor = when (status) {
+        ReserveStatus.RECRUIT -> R.color.mint
+        ReserveStatus.RECRUIT_COMPLETE -> R.color.navy300
+        ReserveStatus.OPERATION_CONFIRM -> R.color.navy800
+        ReserveStatus.OPERATION_COMPLETE -> R.color.gray400
+        else -> R.color.main
+    }
+    background.setColor(ContextCompat.getColor(view.context, bgColor))
 }

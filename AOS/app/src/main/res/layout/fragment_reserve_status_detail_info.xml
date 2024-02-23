@@ -93,7 +93,7 @@
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/festivalTitleContainer"
-            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintTop_toTopOf="@id/festivalTitleContainer" />
 
         <ScrollView
