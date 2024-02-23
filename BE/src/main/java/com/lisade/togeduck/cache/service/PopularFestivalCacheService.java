@@ -3,7 +3,6 @@ package com.lisade.togeduck.cache.service;
 import com.lisade.togeduck.cache.repository.PopularFestivalCacheRepository;
 import com.lisade.togeduck.cache.value.PopularFestivalCacheValue;
 import com.lisade.togeduck.dto.response.FestivalResponse;
-import com.lisade.togeduck.exception.FestivalNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +20,7 @@ public class PopularFestivalCacheService {
         popularFestivalCacheRepository.save(popularFestivalCacheValue);
     }
 
-    public PopularFestivalCacheValue get(String categoryId) {
-        Optional<PopularFestivalCacheValue> optionalPopularFestivalCacheValue = popularFestivalCacheRepository.findById(
-            categoryId);
-        return optionalPopularFestivalCacheValue.orElseThrow(
-            FestivalNotFoundException::new);
+    public Optional<PopularFestivalCacheValue> get(String categoryId) {
+        return popularFestivalCacheRepository.findById(categoryId);
     }
 }

@@ -20,20 +20,18 @@ public class CategoryService {
     private final CategoryCacheService categoryCacheService;
 
     public CategoryResponse getList() {
-        try {
-            CategoryCacheValue categoryCacheValue = categoryCacheService.get();
-            List<Category> categories = categoryCacheValue.getCategories();
-            return CategoryMapper.toCategoryResponse(categories);
-        } catch (CategoryNotFoundException e) {
-            List<Category> categories = categoryRepository.findAll();
-            categoryCacheService.save(categories);
-            validateCategories(categories);
-            return CategoryMapper.toCategoryResponse(categories);
-        }
+        List<Category> categories = categoryCacheService.get()
+            .map(CategoryCacheValue::getCategories)
+            .orElseGet(this::fetchAndCacheCategories);
+
+        return CategoryMapper.toCategoryResponse(categories);
     }
 
-    public List<Long> getIds() {
-        return categoryRepository.findIds();
+    private List<Category> fetchAndCacheCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        categoryCacheService.save(categories);
+        validateCategories(categories);
+        return categories;
     }
 
     private void validateCategories(List<Category> categories) {
