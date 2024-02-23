@@ -11,5 +11,5 @@ interface HomeService {
     suspend fun getCategory():HomeCategoryResponse
 
     @GET("festivals/best")
-    suspend fun getPopularArticle():Response<HomePopularArticleResponse>
+    suspend fun getPopularArticle():HomePopularArticleResponse
 }

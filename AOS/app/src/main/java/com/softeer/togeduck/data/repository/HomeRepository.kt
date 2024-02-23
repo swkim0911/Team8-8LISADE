@@ -1,21 +1,30 @@
 package com.softeer.togeduck.data.repository
 
+import android.util.Log
 import com.softeer.togeduck.data.dto.response.home.HomeCategoryResponse
-import com.softeer.togeduck.data.remote.datasource.home.HomeCategoryRemoteDataSource
+import com.softeer.togeduck.data.dto.response.home.HomePopularArticleResponse
+import com.softeer.togeduck.data.mapper.toHomeCategoryModel
+import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
+import com.softeer.togeduck.data.remote.datasource.home.HomeRemoteDataSource
 import retrofit2.Response
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
-    private val homeCategoryRemoteDataSource: HomeCategoryRemoteDataSource,
+    private val homeRemoteDataSource: HomeRemoteDataSource,
 ) {
 
-    suspend fun getCategory():Result<HomeCategoryResponse>{
+    suspend fun getCategory():Result<List<HomeCategoryModel>>{
         return kotlin.runCatching {
-            homeCategoryRemoteDataSource.getCategory()
+            homeRemoteDataSource.getCategory().toHomeCategoryModel()
+        }.onFailure {
+
         }
     }
 
-//    suspend fun getPopularArticle():Response<HomePopularArticleResponse>{
+//    suspend fun getPopularArticle():Result<List<HomePopularArticleResponse>>{
+//        return kotlin.runCatching {
+//            homeRemoteDataSource.getPopularArticle()
+//        }
 //    }
 
 }

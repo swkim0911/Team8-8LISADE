@@ -6,7 +6,7 @@ import com.softeer.togeduck.data.remote.service.UserService
 import retrofit2.Response
 import javax.inject.Inject
 
-class LoginRemoteDataSource @Inject constructor(
+class UserRemoteDataSource @Inject constructor(
     private val userService: UserService
 ) {
     suspend fun login(

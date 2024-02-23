@@ -22,8 +22,6 @@ class LoginViewModel @Inject constructor(
                 sessionId?.let {
                     viewModelScope.launch {
                         sessionStore(it)
-                        val data = loginRepository.getUserSessionId().first()
-                        Log.d("TESTLOG",response.code().toString())
                     }
                 }
             } else {
