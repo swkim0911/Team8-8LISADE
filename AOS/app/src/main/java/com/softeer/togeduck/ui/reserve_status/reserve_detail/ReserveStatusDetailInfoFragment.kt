@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentReserveStatusDetailInfoBinding
 import com.softeer.togeduck.utils.showErrorToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReserveStatusDetailInfoFragment : Fragment() {
     private var _binding: FragmentReserveStatusDetailInfoBinding? = null
     private val binding get() = _binding!!
@@ -42,6 +44,7 @@ class ReserveStatusDetailInfoFragment : Fragment() {
 
     private fun init() {
         binding.vm = reserveDetailViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.checkTicket.setOnClickListener {
             findNavController().navigate(R.id.action_reserveStatusDetailInfoFragment_to_mobileTicketFragment)

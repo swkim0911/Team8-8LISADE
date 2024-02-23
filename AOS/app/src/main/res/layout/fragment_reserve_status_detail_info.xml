@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/main"
-            android:text="행사명 입니다."
+            android:text="@{vm.reserveStatusDetail.title}"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -142,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/dumi_reservation_list" />
+                        android:src="@{vm.reserveStatusDetail.imagePath}" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -160,7 +160,7 @@
                     android:id="@+id/festivalSeatValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2A"
+                    android:text="@{String.valueOf(vm.reserveStatusDetail.seatNo)}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/festivalSeat"
@@ -181,7 +181,7 @@
                     android:id="@+id/estimatedTimeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3"
+                    android:text="@{vm.reserveStatusDetail.expectedDuration}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/estimatedTime"
@@ -211,7 +211,7 @@
                     android:id="@+id/recruitmentStatusValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4/6"
+                    android:text="@{vm.reserveStatusDetail.recruitStatus}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/recruitmentStatus"
@@ -232,7 +232,7 @@
                     android:id="@+id/costValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30,000"
+                    android:text="@{vm.reserveStatusDetail.formattedPrice}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/cost"
@@ -265,7 +265,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="[부산] 부산 시청 앞"
+                    android:text="@{vm.reserveStatusDetail.departurePlace}"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@id/departure"
                     app:layout_constraintStart_toEndOf="@id/departure"
@@ -276,7 +276,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="14:00"
+                    android:text="@{vm.reserveStatusDetail.departureTime}"
                     android:textColor="@color/main"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -310,7 +310,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="[서울] 올림픽 경기장 앞"
+                    android:text="@{vm.reserveStatusDetail.arrivalPlace}"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@id/arrival"
                     app:layout_constraintStart_toEndOf="@id/arrival"
@@ -321,7 +321,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="17:00"
+                    android:text="@{vm.reserveStatusDetail.arrivalTime}"
                     android:textColor="@color/main"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -365,7 +365,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:visibility="@{vm.driverDispatch==true ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched==true ? View.VISIBLE : View.GONE}"
                     app:cardCornerRadius="5dp"
                     app:layout_constraintStart_toStartOf="@id/guideContentLeft"
                     app:layout_constraintTop_toBottomOf="@id/driverInfo"
@@ -387,7 +387,7 @@
                     android:text="@string/driver_name"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="@id/guideContentText"
                     app:layout_constraintTop_toTopOf="@id/driverImgWrapper" />
 
@@ -395,9 +395,9 @@
                     android:id="@+id/driverNameValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="박춘배"
+                    android:text="@{vm.reserveStatusDetail.driverInfo.name}"
                     android:textSize="18sp"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@id/driverName"
                     app:layout_constraintEnd_toEndOf="@id/guideContentRight" />
 
@@ -409,7 +409,7 @@
                     android:text="@string/agency"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="@id/guideContentText"
                     app:layout_constraintTop_toBottomOf="@id/driverName" />
 
@@ -417,9 +417,9 @@
                     android:id="@+id/agencyValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="경부고속"
+                    android:text="@{vm.reserveStatusDetail.driverInfo.company}"
                     android:textSize="18sp"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@id/agency"
                     app:layout_constraintEnd_toEndOf="@id/guideContentRight" />
 
@@ -431,7 +431,7 @@
                     android:text="@string/contact"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="@id/guideContentText"
                     app:layout_constraintTop_toBottomOf="@id/agency" />
 
@@ -439,9 +439,9 @@
                     android:id="@+id/contactValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="010-1234-5678"
+                    android:text="@{vm.reserveStatusDetail.driverInfo.phoneNumber}"
                     android:textSize="18sp"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@id/contact"
                     app:layout_constraintEnd_toEndOf="@id/guideContentRight" />
 
@@ -453,7 +453,7 @@
                     android:text="@string/license_plate"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="@id/guideContentText"
                     app:layout_constraintTop_toBottomOf="@id/contact" />
 
@@ -461,9 +461,9 @@
                     android:id="@+id/licensePlateValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="123가 1234"
+                    android:text="@{vm.reserveStatusDetail.driverInfo.carNumber}"
                     android:textSize="18sp"
-                    android:visibility="@{vm.driverDispatch ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@id/licensePlate"
                     app:layout_constraintEnd_toEndOf="@id/guideContentRight" />
 
@@ -475,7 +475,7 @@
                     android:paddingBottom="80dp"
                     android:text="@string/no_driver"
                     android:textSize="18sp"
-                    android:visibility="@{vm.driverDispatch ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{vm.reserveStatusDetail.driverDispatched ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="@id/guideContentRight"
                     app:layout_constraintStart_toStartOf="@id/guideContentLeft"
                     app:layout_constraintTop_toBottomOf="@id/driverInfo" />

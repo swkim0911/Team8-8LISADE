@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.navArgs
 import com.softeer.togeduck.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReserveStatusDetailActivity : AppCompatActivity() {
 
     private val args: ReserveStatusDetailActivityArgs by navArgs()
@@ -19,7 +21,8 @@ class ReserveStatusDetailActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        reserveStatusDetailViewModel.setRouteId(args.routId)
+        val routeId = args.routeId
+        reserveStatusDetailViewModel.setRouteId(routeId)
     }
 
 }

@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.reserve_status.reserve_detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +9,11 @@ import com.softeer.togeduck.data.model.reserve_status.reserve_detail.ReserveStat
 import com.softeer.togeduck.data.repository.ReserveStatusRepository
 import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
 import com.softeer.togeduck.utils.recordErrLog
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ReserveStatusDetailViewModel @Inject constructor(private val reserveStatusRepository: ReserveStatusRepository) :
     ViewModel() {
     private val tag = this.javaClass.simpleName.substring(0, 22)
@@ -21,10 +24,6 @@ class ReserveStatusDetailViewModel @Inject constructor(private val reserveStatus
 
     private var _reserveStatusDetail = MutableLiveData<ReserveStatusDetailModel>()
     val reserveStatusDetail: LiveData<ReserveStatusDetailModel> = _reserveStatusDetail
-
-    private var _driverDispatch = MutableLiveData<Boolean>(true)
-    val driverDispatch: LiveData<Boolean> = _driverDispatch
-
 
     fun setRouteId(value: Int) {
         routeId = value
