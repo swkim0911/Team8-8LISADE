@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.home.main
+package com.softeer.togeduck.ui.home.main.home_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
