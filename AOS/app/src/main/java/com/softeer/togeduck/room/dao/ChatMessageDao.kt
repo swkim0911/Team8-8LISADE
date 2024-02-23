@@ -3,6 +3,7 @@ package com.softeer.togeduck.room.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.softeer.togeduck.data.model.chatting.ChatMessageModel
@@ -14,6 +15,9 @@ interface ChatMessageDao {
 
     @Insert
     fun insert(chatMessage: ChatMessageModel)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(chatMessage: List<ChatMessageModel>)
 
     @Update
     fun update(chatMessage: ChatMessageModel)
