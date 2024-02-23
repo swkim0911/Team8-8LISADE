@@ -12,11 +12,11 @@ interface ReserveStatusService {
     suspend fun getReserveStatusList(
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): Response<ReserveStatusResponse>
+    ): ReserveStatusResponse
 
 
     @GET("users/routes/{route_id}")
     suspend fun getReserveStatusDetail(
         @Path("route_id") routeId: Int
-    ): Response<ReserveStatusDetailResponse>
+    ): ReserveStatusDetailResponse
 }

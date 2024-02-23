@@ -12,13 +12,13 @@ class ReserveStatusRemoteDataSource @Inject constructor(
     suspend fun getReserveStatusList(
         page: Int,
         size: Int,
-    ): Response<ReserveStatusResponse> {
+    ): ReserveStatusResponse {
         return reserveStatusService.getReserveStatusList(page, size)
     }
 
     suspend fun getReserveStatusDetail(
         routeId: Int,
-    ): Response<ReserveStatusDetailResponse> {
+    ): ReserveStatusDetailResponse {
         return reserveStatusService.getReserveStatusDetail(routeId)
     }
 }

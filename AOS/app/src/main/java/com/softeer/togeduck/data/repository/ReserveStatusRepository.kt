@@ -15,7 +15,7 @@ class ReserveStatusRepository @Inject constructor(
         size: Int,
     ): Result<ReserveStatusModel> {
         return kotlin.runCatching {
-            reserveStatusRemoteDataSource.getReserveStatusList(page, size).body()!!
+            reserveStatusRemoteDataSource.getReserveStatusList(page, size)
                 .toReserveStatusModel()
         }
     }
@@ -24,7 +24,7 @@ class ReserveStatusRepository @Inject constructor(
         routeId: Int,
     ): Result<ReserveStatusDetailModel> {
         return kotlin.runCatching {
-            reserveStatusRemoteDataSource.getReserveStatusDetail(routeId).body()!!
+            reserveStatusRemoteDataSource.getReserveStatusDetail(routeId)
                 .toReserveStatusDetailModel()
         }
     }
