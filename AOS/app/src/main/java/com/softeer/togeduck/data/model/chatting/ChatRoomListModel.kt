@@ -19,5 +19,5 @@ data class ChatRoomListModel(
     @ColumnInfo(name = "recent_time")
     val recentTime: String,
     @ColumnInfo(name = "unread_message_count")
-    val unreadMessageCount: Int
+    var unreadMessageCount: Int
 )
