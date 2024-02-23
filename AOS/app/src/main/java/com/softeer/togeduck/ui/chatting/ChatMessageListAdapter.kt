@@ -93,6 +93,10 @@ class ChatMessageListAdapter(private val items: ArrayList<ChatMessageModel>) :
         notifyItemInserted(items.size - 1)
     }
 
+    fun getLastItem() : ChatMessageModel{
+        return items[items.size - 1]
+    }
+
     class FirstLeftViewHolder(private val binding: RvItemChatMessageFirstLeftBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
