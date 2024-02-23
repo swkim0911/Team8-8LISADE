@@ -32,3 +32,7 @@ spring:
       host: ${MONGODB_HOST}
       port: ${MONGODB_PORT}
       database: ${MONGODB_DATABASE}
+---
+fcm:
+  service-account-file: ${FIREBASE_KEY_PATH}
+  project-id: ${FIREBASE_PROJECT_ID}

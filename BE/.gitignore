@@ -21,6 +21,7 @@
 # *.iml
 # *.ipr
 
+
 # CMake
 cmake-build-*/
 
@@ -182,3 +183,6 @@ gradle-app.setting
 /src/main/generated/
 /src/main/resources/data.sql
 /src/main/resources/application-aws.yml
+
+# fcm json
+/src/main/resources/togeduck.json
