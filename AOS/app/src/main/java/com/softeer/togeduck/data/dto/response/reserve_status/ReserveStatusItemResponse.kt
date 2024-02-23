@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class ReserveStatusItemResponse(
     @Json(name = "id")
-    val id: String,
+    val id: Int,
     @Json(name = "title")
     val title: String,
     @Json(name = "startedAt")
@@ -18,7 +18,7 @@ data class ReserveStatusItemResponse(
     @Json(name = "totalSeats")
     val totalSeats: Int,
     @Json(name = "reservatedSeats")
-    val reservatedSeats: String,
+    val reservatedSeats: Int,
     @Json(name = "imagePath")
     val imagePath: String,
     @Json(name = "status")
