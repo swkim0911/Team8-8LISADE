@@ -10,7 +10,7 @@ import java.util.Locale
 object TimeFormatter {
     @RequiresApi(Build.VERSION_CODES.O)
     fun yyyyMMdd(time: String) : String {
-        val yyyyMMdd = DateTimeFormatter.ofPattern("yyyy.MM.dd일", Locale.KOREA)
+        val yyyyMMdd = DateTimeFormatter.ofPattern("yyyy.MM.dd", Locale.KOREA)
 
         return toLocalDateTime(time).format(yyyyMMdd)
     }
@@ -34,11 +34,26 @@ object TimeFormatter {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun yyyyMMddE(time: String) : String{
+        val yyyyMMddE = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 E요일", Locale.KOREA)
+
+        return toLocalDateTime(time).format(yyyyMMddE)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun toLocalDateTime(time: String) : LocalDateTime {
         val timeParser = DateTimeFormatterBuilder()
             .appendPattern("yyyy-MM-dd HH:mm:ss")
             .toFormatter()
 
         return LocalDateTime.parse(time, timeParser)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun now() : String {
+        val now = LocalDateTime.now()
+        val yyyyMMddHHmmss = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+
+        return now.format(yyyyMMddHHmmss)
     }
 }
