@@ -39,6 +39,7 @@ fun ReserveStatusDetailResponse.toReserveStatusDetailModel(): ReserveStatusDetai
         status = status,
         recruitStatus = "(${reservedSeats}/${totalSeats})",
         price = price,
+        formattedPrice = price.addCommas(),
         imagePath = imagePath,
         departureTime = startedAt,
         arrivalTime = arrivedAt,

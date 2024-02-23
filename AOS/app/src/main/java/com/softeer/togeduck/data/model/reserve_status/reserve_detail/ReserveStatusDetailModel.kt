@@ -10,6 +10,7 @@ data class ReserveStatusDetailModel(
     val status: ReserveStatus,
     val recruitStatus: String,
     val price: Int,
+    val formattedPrice: String,
     val imagePath: String,
     val departureTime: String,
     val arrivalTime: String,
