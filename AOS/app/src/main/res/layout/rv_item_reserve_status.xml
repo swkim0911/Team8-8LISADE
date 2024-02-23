@@ -8,7 +8,7 @@
 
         <variable
             name="reserveStatus"
-            type="com.softeer.togeduck.data.model.reserve_status.ReservationStatusModel" />
+            type="com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

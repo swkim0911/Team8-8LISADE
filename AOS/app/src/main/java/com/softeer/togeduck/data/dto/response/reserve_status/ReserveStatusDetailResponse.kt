@@ -15,6 +15,8 @@ data class ReserveStatusDetailResponse(
     val status: ReserveStatus,
     @Json(name = "totalSeats")
     val totalSeats: Int,
+    @Json(name = "reservedSeats")
+    val reservedSeats: Int,
     @Json(name = "price")
     val price: Int,
     @Json(name = "imagePath")
@@ -35,8 +37,11 @@ data class ReserveStatusDetailResponse(
     val driverInfo: DriverInfo,
 )
 
-enum class ReserveStatus {
-    RECRUIT, RECRUIT_COMPLETE, OPERATION_CONFIRM, OPERATION_COMPLETE,
+enum class ReserveStatus(val value: String) {
+    RECRUIT("모집중"),
+    RECRUIT_COMPLETE("모집완료"),
+    OPERATION_CONFIRM("출발확정"),
+    OPERATION_COMPLETE("운행완료"),
 }
 
 data class DriverInfo(
