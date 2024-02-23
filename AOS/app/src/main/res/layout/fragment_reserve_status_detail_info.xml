@@ -133,6 +133,7 @@
                     android:id="@+id/festivalImgWrapper"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="150dp"
                     app:cardCornerRadius="5dp"
                     app:layout_constraintStart_toStartOf="@id/guideContentLeft"
                     app:layout_constraintTop_toTopOf="parent"
@@ -185,15 +186,6 @@
                     android:text="@{vm.reserveStatusDetail.expectedDuration}"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/estimatedTime"
-                    app:layout_constraintEnd_toStartOf="@id/estimatedTimeValueUnit" />
-
-                <TextView
-                    android:id="@+id/estimatedTimeValueUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time"
-                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/estimatedTime"
                     app:layout_constraintEnd_toEndOf="@id/guideContentRight" />
 
@@ -366,6 +358,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:minHeight="150dp"
                     android:visibility="@{vm.reserveStatusDetail.driverDispatched==true ? View.VISIBLE : View.GONE}"
                     app:cardCornerRadius="5dp"
                     app:layout_constraintStart_toStartOf="@id/guideContentLeft"
