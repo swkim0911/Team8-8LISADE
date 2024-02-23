@@ -1,6 +1,6 @@
 package com.softeer.togeduck.di
 
-import com.softeer.togeduck.data.remote.datasource.intro.LoginRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.intro.UserRemoteDataSource
 import com.softeer.togeduck.data.remote.service.UserService
 import dagger.Module
 import dagger.Provides
@@ -14,7 +14,7 @@ class DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideLoginRemoteDataSource(service: UserService): LoginRemoteDataSource {
-        return LoginRemoteDataSource(service)
+    fun provideLoginRemoteDataSource(service: UserService): UserRemoteDataSource {
+        return UserRemoteDataSource(service)
     }
 }

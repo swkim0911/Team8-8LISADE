@@ -2,7 +2,7 @@ package com.softeer.togeduck.data.dto.response.home
 
 data class Category(
     val id: Int,
-    val category: String,
+    val name: String,
     val image: String,
 )
 

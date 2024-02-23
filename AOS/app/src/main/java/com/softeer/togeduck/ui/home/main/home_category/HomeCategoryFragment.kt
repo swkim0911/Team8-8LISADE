@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.softeer.togeduck.R
@@ -43,14 +44,16 @@ class HomeCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
         // 백엔드 배포 필요!!
-//        homeCategoryViewModel.getCategory()
+        homeCategoryViewModel.getCategory()
+        homeCategoryViewModel.categoryList.observe(viewLifecycleOwner, Observer {
+            setupRecyclerView(it)
 
+        })
     }
 
-    private fun setupRecyclerView() {
-        adapter = HomeCategoryAdapter(dummyData)
+    private fun setupRecyclerView(data:List<HomeCategoryModel>) {
+        adapter = HomeCategoryAdapter(data)
         val rvList = binding.rvItemCategory
         rvList.adapter = adapter
         rvList.layoutManager = GridLayoutManager(context, 2)

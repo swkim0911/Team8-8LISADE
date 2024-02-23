@@ -3,6 +3,8 @@ package com.softeer.togeduck.ui.home.main.home_category
 import android.media.metrics.Event
 import android.util.EventLog
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
@@ -16,18 +18,22 @@ import javax.inject.Inject
 class HomeCategoryViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
 ) : ViewModel() {
-    private lateinit var categoryList: List<HomeCategoryModel>
+    private val _categoryList = MutableLiveData<List<HomeCategoryModel>>()
+    val categoryList: LiveData<List<HomeCategoryModel>> = _categoryList
+    init{
+        getCategory()
+    }
     fun getCategory(){
         viewModelScope.launch {
           homeRepository.getCategory()
                 .onSuccess {
-                    Log.d("TESTLOG", it.toString())
+                    _categoryList.value = it
+//                    Log.d("TESTLOG", it.toString())
                 }
                 .onFailure {
-
+                    Log.d("TESTLOG", it.toString())
                 }
-
-
         }
     }
+
 }
