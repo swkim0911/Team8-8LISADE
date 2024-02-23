@@ -3,7 +3,9 @@ package com.softeer.togeduck.data.repository
 import android.util.Log
 import com.softeer.togeduck.data.dto.response.home.HomeCategoryResponse
 import com.softeer.togeduck.data.dto.response.home.HomePopularArticleResponse
+import com.softeer.togeduck.data.mapper.toHomeArticleModel
 import com.softeer.togeduck.data.mapper.toHomeCategoryModel
+import com.softeer.togeduck.data.model.home.main.HomeArticleModel
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.data.remote.datasource.home.HomeRemoteDataSource
 import retrofit2.Response
@@ -26,5 +28,11 @@ class HomeRepository @Inject constructor(
 //            homeRemoteDataSource.getPopularArticle()
 //        }
 //    }
+
+    suspend fun getCategoryFestival(params: Map<String, String>):Result<List<HomeArticleModel>>{
+        return kotlin.runCatching {
+            homeRemoteDataSource.getCategoryFestival(params).toHomeArticleModel()
+        }
+    }
 
 }

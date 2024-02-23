@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,49 +58,65 @@ class HomeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpArrayAdapter()
-
         init()
-        getArticleSize()
+
+        homeListViewModel.festivalList.observe(viewLifecycleOwner, Observer {
+            setUpRvArticleListRecyclerView(it)
+        })
+//        getArticleSize()
+    }
+
+
+    private fun init() {
+        setUpRvCategoryRecyclerView(dummyData)
+        setUpArrayAdapter()
+        binding.vm = homeListViewModel
+    }
+
+    private fun getArticleSize() {
+        homeListViewModel.setItemSize(articleAdapter.itemCount.toString())
+    }
+
+    private fun setUpRvCategoryRecyclerView(data: List<HomeCategoryModel>) {
+        val rvCategoryList = binding.rvCategoryList
+        categoryAdapter = HomeListCategoryChipAdapter(data)
+        rvCategoryList.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
+        }
+        categoryAdapter.itemClick = object : ItemClick {
+            override fun onClick(view: View, position: Int) {
+            }
+        }
     }
 
     private fun setUpArrayAdapter() {
         val regionArray = resources.getStringArray(R.array.category_sort_list)
         val arrayAdapter =
-            ArrayAdapter(requireContext(), R.layout.item_category_sort_list, R.id.textView,regionArray)
+            ArrayAdapter(
+                requireContext(),
+                R.layout.item_category_sort_list,
+                R.id.textView,
+                regionArray
+            )
         binding.listSortMenu.adapter = arrayAdapter
     }
 
-    private fun init() {
-        val rvCategoryList = binding.rvCategoryList
+    private fun setUpRvArticleListRecyclerView(data: List<HomeArticleModel>) {
+        articleAdapter = HomeListArticleAdapter(data)
         val rvArticleList = binding.rvArticleList
         val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        val rvList = binding.rvArticleList
         rvArticleList.addItemDecoration(dividerItemDecoration)
-        categoryAdapter = HomeListCategoryChipAdapter(dummyData)
-        articleAdapter = HomeListArticleAdapter(articleDummyData)
-        binding.vm = homeListViewModel
-
-        rvCategoryList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = categoryAdapter
-        }
-        rvArticleList.apply {
+        rvList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = articleAdapter
-        }
-
-        categoryAdapter.itemClick = object : ItemClick {
-            override fun onClick(view: View, position: Int) {
-
-            }
         }
         articleAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
                 findNavController().navigate(R.id.action_homeListFragment_to_articleDetailActivity)
             }
         }
-    }
-    private fun getArticleSize(){
-        homeListViewModel.setItemSize(articleAdapter.itemCount.toString())
+
     }
 }

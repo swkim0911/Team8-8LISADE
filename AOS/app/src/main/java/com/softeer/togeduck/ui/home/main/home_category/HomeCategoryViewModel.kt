@@ -23,12 +23,11 @@ class HomeCategoryViewModel @Inject constructor(
     init{
         getCategory()
     }
-    fun getCategory(){
+    private fun getCategory(){
         viewModelScope.launch {
           homeRepository.getCategory()
                 .onSuccess {
                     _categoryList.value = it
-//                    Log.d("TESTLOG", it.toString())
                 }
                 .onFailure {
                     Log.d("TESTLOG", it.toString())
