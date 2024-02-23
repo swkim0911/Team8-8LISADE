@@ -22,4 +22,10 @@ public interface FestivalRepository extends JpaRepository<Festival, Long>,
     @Override
     @Query("SELECT f FROM Festival f LEFT JOIN FETCH f.festivalImages LEFT JOIN FETCH f.category WHERE f.id = :id")
     Optional<Festival> findById(Long id);
+
+    @Query("select max(f.id) from Festival as f")
+    Long findMaxId();
+
+    @Query("select min(f.id) from Festival as f")
+    Long findMinId();
 }
