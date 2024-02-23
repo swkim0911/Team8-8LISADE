@@ -1,4 +1,4 @@
-package com.lisade.togeduck.util;
+package com.lisade.togeduck.batch;
 
 import com.lisade.togeduck.repository.FestivalRepository;
 import java.util.HashMap;

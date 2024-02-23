@@ -1,16 +1,16 @@
 package com.lisade.togeduck.config;
 
+import com.lisade.togeduck.batch.FestivalIdRangePartitioner;
 import com.lisade.togeduck.batch.FestivalItem;
 import com.lisade.togeduck.batch.FestivalItemProcessingResult;
+import com.lisade.togeduck.batch.PopularFestivalCacheUpdateTasklet;
 import com.lisade.togeduck.cache.service.BestFestivalCacheService;
 import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
-import com.lisade.togeduck.cache.value.FestivalClickCountCacheValue;
 import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.value.FestivalClickCountCacheValue;
 import com.lisade.togeduck.mapper.FestivalMapper;
 import com.lisade.togeduck.repository.CategoryRepository;
 import com.lisade.togeduck.repository.FestivalRepository;
-import com.lisade.togeduck.util.FestivalIdRangePartitioner;
-import com.lisade.togeduck.util.PopularFestivalCacheUpdateTasklet;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneOffset;

@@ -1,4 +1,4 @@
-package com.lisade.togeduck.util;
+package com.lisade.togeduck.batch;
 
 import com.lisade.togeduck.cache.service.BestFestivalCacheService;
 import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
@@ -37,13 +37,11 @@ public class PopularFestivalCacheUpdateTasklet implements Tasklet {
                 category.getId(), 100);
             popularFestivalCacheService.save(category.getId().toString(),
                 festivalsByCategorySortedByScore);
-            log.info("카테고리 인기순위 업데이트 {}", category.getId());
         }
         List<BestFestivalDto> best = festivalRepository.findBest(BEST_FESTIVAL_LIMIT);
         BestFestivalResponse bestFestivalResponse = festivalMapper.toBestFestivalResponse(
             BEST_FESTIVAL_LIMIT, best);
         bestFestivalCacheService.save(bestFestivalResponse);
-        log.info("인기 게시물 업데이트 완료");
         return RepeatStatus.FINISHED;
     }
 }
