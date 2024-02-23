@@ -2,6 +2,7 @@ package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.local.datasource.UserDataStore
 import com.softeer.togeduck.utils.CookieInterceptor
+import com.softeer.togeduck.utils.ResponseDataInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -26,8 +27,18 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(cookieInterceptor: CookieInterceptor): OkHttpClient {
+    fun provideResponseDataInterceptor(): ResponseDataInterceptor {
+        return ResponseDataInterceptor()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        cookieInterceptor: CookieInterceptor,
+        responseDataInterceptor: ResponseDataInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder().addInterceptor(cookieInterceptor)
+            .addInterceptor(responseDataInterceptor)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }).build()

@@ -12,7 +12,7 @@ class UserRepository @Inject constructor(
     private val loginRemoteDataSource: LoginRemoteDataSource,
     private val userDataStore: UserDataStore
 ) {
-    suspend fun login(loginRequest: LoginRequest): Response<BaseResponse<String>> {
+    suspend fun login(loginRequest: LoginRequest): Response<String> {
         return loginRemoteDataSource.login(loginRequest)
     }
 

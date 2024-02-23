@@ -11,7 +11,7 @@ class LoginRemoteDataSource @Inject constructor(
 ) {
     suspend fun login(
         loginRequest: LoginRequest
-    ): Response<BaseResponse<String>> {
+    ): Response<String> {
         return loginService.login(loginRequest)
     }
 }
