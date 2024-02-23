@@ -17,12 +17,10 @@ public class CategoryCacheValue {
 
     @Id
     private String id;
-    private Integer numberOfCategories;
     private List<Category> categories;
 
-    public CategoryCacheValue(Integer numberOfCategories, List<Category> categories) {
+    public CategoryCacheValue(List<Category> categories) {
         this.id = CATEGORY_CACHE_ID;
-        this.numberOfCategories = numberOfCategories;
         this.categories = categories;
     }
 }

@@ -1,5 +1,7 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.cache.service.CategoryCacheService;
+import com.lisade.togeduck.cache.value.CategoryCacheValue;
 import com.lisade.togeduck.dto.response.CategoryResponse;
 import com.lisade.togeduck.entity.Category;
 import com.lisade.togeduck.exception.CategoryNotFoundException;
@@ -15,11 +17,19 @@ import org.springframework.stereotype.Service;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryCacheService categoryCacheService;
 
     public CategoryResponse getList() {
-        List<Category> categories = categoryRepository.findAll();
-        validateCategories(categories);
-        return CategoryMapper.toCategoryResponse(categories);
+        try {
+            CategoryCacheValue categoryCacheValue = categoryCacheService.get();
+            List<Category> categories = categoryCacheValue.getCategories();
+            return CategoryMapper.toCategoryResponse(categories);
+        } catch (CategoryNotFoundException e) {
+            List<Category> categories = categoryRepository.findAll();
+            categoryCacheService.save(categories);
+            validateCategories(categories);
+            return CategoryMapper.toCategoryResponse(categories);
+        }
     }
 
     public List<Long> getIds() {

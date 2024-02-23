@@ -42,20 +42,30 @@ public class FestivalServiceImpl implements FestivalService {
         FestivalStatus festivalStatus,
         String filterType) {
         if (filterType.equals("best")) {
-            try {
-                PopularFestivalCacheValue popularFestivalCacheValue = popularFestivalCacheService.get(
-                    categoryId.toString());
-                return getFestivalResponseSlice(
-                    pageable, popularFestivalCacheValue);
-            } catch (FestivalNotFoundException e) {
-                Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatusBest(
-                    pageable, categoryId,
-                    festivalStatus);
-                return festivalMapper.toFestivalResponseSlice(festivals);
-            }
+            return getBestFestivalResponse(pageable, categoryId, festivalStatus);
         } else {
-            Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
-                pageable, categoryId, festivalStatus);
+            return getFestivalResponses(pageable, categoryId, festivalStatus);
+        }
+    }
+
+    private Slice<FestivalResponse> getFestivalResponses(Pageable pageable, Long categoryId,
+        FestivalStatus festivalStatus) {
+        Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
+            pageable, categoryId, festivalStatus);
+        return festivalMapper.toFestivalResponseSlice(festivals);
+    }
+
+    private Slice<FestivalResponse> getBestFestivalResponse(Pageable pageable, Long categoryId,
+        FestivalStatus festivalStatus) {
+        try {
+            PopularFestivalCacheValue popularFestivalCacheValue = popularFestivalCacheService.get(
+                categoryId.toString());
+            return getFestivalResponseSlice(
+                pageable, popularFestivalCacheValue);
+        } catch (FestivalNotFoundException e) {
+            Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatusBest(
+                pageable, categoryId,
+                festivalStatus);
             return festivalMapper.toFestivalResponseSlice(festivals);
         }
     }

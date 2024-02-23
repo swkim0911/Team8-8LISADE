@@ -17,8 +17,7 @@ public class CategoryCacheService {
     private final CategoryCacheRepository categoryCacheRepository;
 
     public void save(List<Category> categories) {
-        CategoryCacheValue categoryCacheValue = new CategoryCacheValue(categories.size(),
-            categories);
+        CategoryCacheValue categoryCacheValue = new CategoryCacheValue(categories);
         categoryCacheRepository.save(categoryCacheValue);
     }
 
