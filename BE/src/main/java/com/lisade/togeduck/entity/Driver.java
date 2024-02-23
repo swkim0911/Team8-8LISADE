@@ -36,6 +36,9 @@ public class Driver extends BaseEntity {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
+    @Column(name = "image_path", nullable = false)
+    private String imagePath;
+    
     @OneToMany(mappedBy = "driver")
     private List<Route> route;
 }
