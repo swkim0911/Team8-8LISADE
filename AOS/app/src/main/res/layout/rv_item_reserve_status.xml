@@ -8,7 +8,7 @@
 
         <variable
             name="reserveStatus"
-            type="com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel" />
+            type="com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +41,7 @@
             android:id="@+id/itemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{reserveStatus.festivalName}"
+            android:text="@{`[`+reserveStatus.festivalPlace +`]`+ reserveStatus.festivalName}"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/guidelineContents"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{reserveStatus.date + ` / ` +reserveStatus.departureTime +` 출발`}"
+            android:text="@{reserveStatus.departureTime +` 출발`}"
             android:textColor="@color/gray300"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{reserveStatus.place}"
+            android:text="@{reserveStatus.departurePlace}"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
             app:layout_constraintTop_toBottomOf="@id/itemDatetime" />
