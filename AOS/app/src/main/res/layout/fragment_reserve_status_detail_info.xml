@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatus" />
+
         <variable
             name="vm"
             type="com.softeer.togeduck.ui.reserve_status.reserve_detail.ReserveStatusDetailViewModel" />
@@ -82,12 +84,11 @@
 
         <TextView
             android:id="@+id/festivalStatus"
+            recruitmentStatusTag="@{vm.reserveStatusDetail.status}"
             android:layout_width="55dp"
             android:layout_height="30dp"
             android:background="@drawable/rectangle_radius"
-            android:backgroundTint="@color/mint"
             android:gravity="center"
-            android:text="모집중"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
