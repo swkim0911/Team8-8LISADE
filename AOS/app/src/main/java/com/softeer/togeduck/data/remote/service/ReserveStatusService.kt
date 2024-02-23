@@ -1,6 +1,6 @@
 package com.softeer.togeduck.data.remote.service
 
-import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusDetailResponse
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatusDetailResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import retrofit2.Response
 import retrofit2.http.GET

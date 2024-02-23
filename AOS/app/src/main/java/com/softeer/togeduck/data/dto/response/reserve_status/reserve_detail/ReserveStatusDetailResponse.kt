@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.dto.response.reserve_status
+package com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail
 
 import com.squareup.moshi.Json
 

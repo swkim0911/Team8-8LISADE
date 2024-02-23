@@ -1,6 +1,6 @@
 package com.softeer.togeduck.data.mapper
 
-import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusDetailResponse
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatusDetailResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel

@@ -1,6 +1,6 @@
 package com.softeer.togeduck.data.model.reserve_status.reserve_detail
 
-import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatus
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatus
 
 data class ReserveStatusDetailModel(
     val festivalId: Int,
