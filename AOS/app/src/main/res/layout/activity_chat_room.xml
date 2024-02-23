@@ -7,7 +7,7 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.chatting.ChatRoomActivity">
@@ -18,9 +18,10 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             android:elevation="5dp"
-            android:layout_alignParentTop="true"
             android:keepScreenOn="true"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <ImageButton
@@ -49,26 +50,32 @@
             android:id="@+id/rvChatRoomMessage"
             android:windowSoftInputMode="adjustPan"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/putMessageBar"
-            android:layout_below="@+id/chatRoomToolbar" />
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/chatRoomToolbar"
+            app:layout_constraintBottom_toTopOf="@id/messageLayout"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-        <RelativeLayout
-            android:id="@+id/putMessageBar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/messageLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
             android:elevation="20dp"
-            android:layout_alignParentBottom="true" >
+            android:layout_alignParentBottom="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:focusable="true">
+                android:focusable="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <EditText
-                    android:id="@+id/message_edtText"
+                    android:id="@+id/chatMessageEditText"
                     android:layout_width="0dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
@@ -79,16 +86,15 @@
                     android:textSize="18sp" />
 
                 <ImageButton
-                    android:id="@+id/adds"
+                    android:id="@+id/chatMessageSendBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="3dp"
-                    android:layout_toRightOf="@+id/message_edtText"
                     android:layout_weight="0.2"
                     android:elevation="10dp"
                     android:background="@drawable/chat_message_send_style" />
             </LinearLayout>
 
-        </RelativeLayout>
-    </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
