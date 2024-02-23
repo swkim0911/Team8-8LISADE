@@ -91,6 +91,7 @@ class ChatMessageListAdapter(private val items: ArrayList<ChatMessageModel>) :
     fun addItem(chatMessageModel: ChatMessageModel){
         items.add(chatMessageModel)
         notifyItemInserted(items.size - 1)
+        notifyItemChanged(items.size - 2)
     }
 
     fun getLastItem() : ChatMessageModel{
@@ -175,10 +176,12 @@ class ChatMessageListAdapter(private val items: ArrayList<ChatMessageModel>) :
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         private fun isTimeVisibility(items: List<ChatMessageModel>, position: Int) : Boolean {
             if (position + 1 == items.size) return true
 
-            return items[position].nickname != items[position + 1].nickname
+            return items[position].nickname == items[position + 1].nickname &&
+                    TimeFormatter.yyyyMMddHHmm(items[position].time!!) != TimeFormatter.yyyyMMddHHmm(items[position + 1].time!!)
         }
     }
 }
