@@ -4,7 +4,23 @@ import com.squareup.moshi.Json
 
 data class ReserveStatusResponse(
     @Json(name = "content")
-    val content: List<ReserveStatusItemResponse>
+    val content: List<ReserveStatusItemResponse>,
+    @Json(name = "pageable")
+    val pageable: Pageable,
+    @Json(name = "first")
+    val first: Boolean,
+    @Json(name = "last")
+    val last: Boolean,
+    @Json(name = "size")
+    val size: Int,
+    @Json(name = "number")
+    val number: Int,
+    @Json(name = "sort")
+    val sort: Sort,
+    @Json(name = "numberOfElements")
+    val numberOfElements: Int,
+    @Json(name = "empty")
+    val empty: Boolean,
 )
 
 data class ReserveStatusItemResponse(
@@ -20,12 +36,37 @@ data class ReserveStatusItemResponse(
     val stationName: String,
     @Json(name = "price")
     val price: Int,
-    @Json(name = "totalSeats")
-    val totalSeats: Int,
-    @Json(name = "reservatedSeats")
-    val reservatedSeats: Int,
-    @Json(name = "imagePath")
-    val imagePath: String,
     @Json(name = "status")
     val status: String,
+    @Json(name = "totalSeats")
+    val totalSeats: Int,
+    @Json(name = "reservedSeats")
+    val reservedSeats: Int,
+    @Json(name = "imagePath")
+    val imagePath: String,
+
+    )
+
+data class Pageable(
+    @Json(name = "pageNumber")
+    val pageNumber: Int,
+    @Json(name = "pageSize")
+    val pageSize: Int,
+    @Json(name = "sort")
+    val sort: Sort,
+    @Json(name = "offset")
+    val offset: Int,
+    @Json(name = "paged")
+    val paged: Boolean,
+    @Json(name = "unpaged")
+    val unpaged: Boolean,
+)
+
+data class Sort(
+    @Json(name = "empty")
+    val empty: Boolean,
+    @Json(name = "unsorted")
+    val unsorted: Boolean,
+    @Json(name = "sorted")
+    val sorted: Boolean,
 )
