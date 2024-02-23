@@ -1,9 +1,9 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.cache.service.BestFestivalCacheService;
-import com.lisade.togeduck.cache.value.BestFestivalCacheValue;
 import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
 import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.value.BestFestivalCacheValue;
 import com.lisade.togeduck.cache.value.PopularFestivalCacheValue;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
@@ -42,11 +42,17 @@ public class FestivalServiceImpl implements FestivalService {
         FestivalStatus festivalStatus,
         String filterType) {
         if (filterType.equals("best")) {
-            PopularFestivalCacheValue popularFestivalCacheValue = popularFestivalCacheService.get(
-                categoryId.toString());
-            return getFestivalResponseSlice(
-                pageable, popularFestivalCacheValue);
-
+            try {
+                PopularFestivalCacheValue popularFestivalCacheValue = popularFestivalCacheService.get(
+                    categoryId.toString());
+                return getFestivalResponseSlice(
+                    pageable, popularFestivalCacheValue);
+            } catch (FestivalNotFoundException e) {
+                Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatusBest(
+                    pageable, categoryId,
+                    festivalStatus);
+                return festivalMapper.toFestivalResponseSlice(festivals);
+            }
         } else {
             Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
                 pageable, categoryId, festivalStatus);
@@ -63,7 +69,6 @@ public class FestivalServiceImpl implements FestivalService {
         List<FestivalResponse> slicedFestivalResponses = festivalResponses.subList(start, end);
         boolean hasNext = end < festivalResponses.size();
 
-        // Slice 객체 생성 및 반환
         return new SliceImpl<>(slicedFestivalResponses,
             pageable, hasNext);
     }
