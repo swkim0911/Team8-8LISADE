@@ -8,6 +8,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.softeer.togeduck.R
+import com.softeer.togeduck.utils.ItemClickWithSeat
 import com.softeer.togeduck.utils.fromDpToPx
 
 class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
@@ -26,7 +27,7 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     private var selectedSeatNum: Int
     private var selectedSeat: TextView?
 
-    var existSelectedSeat: Boolean
+    var itemClick: ItemClickWithSeat? = null
 
     init {
         context.theme.obtainStyledAttributes(attrs, R.styleable.SeatCustomView, 0, 0).run {
@@ -56,7 +57,6 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         selectedSeatNum = -1
         selectedSeat = null
         seatItems = mutableListOf()
-        existSelectedSeat = false
 
         makeAllSeatTextView()
         loadSeatsToView()
@@ -136,8 +136,10 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
                 val clickedSeatNum = item.text.toString().toInt()
                 if (selectedSeatNum == clickedSeatNum) {
                     deselectSeat(item, seatNumber)
+                    itemClick?.onClick(false)
                 } else {
                     selectSeat(item, seatNumber)
+                    itemClick?.onClick(true)
                 }
             }
         }
@@ -191,8 +193,7 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     private fun deselectSeat(item: TextView, seatNumber: Int) {
         selectedSeatNum = -1
         selectedSeat = null
-        existSelectedSeat = false
-        
+
         setSeatItemProperty(item, seatNumber)
     }
 
@@ -203,7 +204,6 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
         selectedSeatNum = seatNumber
         selectedSeat = item
-        existSelectedSeat = true
 
         setSelectedSeatItemProperty(item)
     }
