@@ -4,18 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel
-import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
 import com.softeer.togeduck.databinding.RvItemReserveStatusBinding
 import com.softeer.togeduck.utils.ItemClickWithRouteId
 
-class ReservationStatusAdapter(private val items: ReserveStatusModel) :
+class ReservationStatusAdapter(private val items: List<ReserveStatusItemModel>) :
     RecyclerView.Adapter<ViewHolder>() {
 
     private lateinit var binding: RvItemReserveStatusBinding
     var itemClick: ItemClickWithRouteId? = null
 
     override fun getItemCount(): Int {
-        return items.reserveStatus.size
+        return items.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,10 +29,10 @@ class ReservationStatusAdapter(private val items: ReserveStatusModel) :
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items.reserveStatus[holder.adapterPosition])
+        holder.bind(items[holder.adapterPosition])
 
         holder.itemView.setOnClickListener {
-            itemClick?.onClick(it, position, items.reserveStatus[holder.adapterPosition].id)
+            itemClick?.onClick(it, position, items[holder.adapterPosition].id)
         }
     }
 }
