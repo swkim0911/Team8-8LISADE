@@ -20,108 +20,120 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     }
 
     private var mode: SeatViewMode
-
-    private var seatsCntPerRow = 3
-    private var rearSeatsCnt = 4
-    private var totalRows = 10
-
-    private var seatDiffCntInRearAndOtherRow: Int
-    private var seatColWithAisleLeft: Int
-    private var aisleSize: Int
-    private var viewWidthSize: Int
-    private var viewHeightSize: Int
+    private var seatLayout: SeatLayoutModel
+    private var seatDiffCntInBackAndOtherRow: Int
+    private var seatLayoutSize: SeatLayoutSizeModel
 
     private var selectedSeatNum: Int
     private var selectedSeat: TextView?
+
+    private var seatItems: MutableList<TextView>
 
     private var _selectSeat = MutableLiveData<Boolean>(false)
     val selectSeat: LiveData<Boolean> get() = _selectSeat
 
     init {
-        context.theme.obtainStyledAttributes(attrs, R.styleable.SeatCustomView, 0, 0).apply {
+        context.theme.obtainStyledAttributes(attrs, R.styleable.SeatCustomView, 0, 0).run {
             try {
-                mode = SeatViewMode.values()[this.getInt(R.styleable.SeatCustomView_mode, 0)]
+                mode = SeatViewMode.values()[getInt(R.styleable.SeatCustomView_mode, 0)]
+                seatLayout = SeatLayoutModel(
+                    seatsCntPerRow = getInt(R.styleable.SeatCustomView_seatsCntPerRow, 0),
+                    backSeatsCnt = getInt(R.styleable.SeatCustomView_backSeatsCnt, 0),
+                    totalRows = getInt(R.styleable.SeatCustomView_totalRows, 0),
+                    mySeatNum = getInt(R.styleable.SeatCustomView_mySeatNum, 0),
+                    soldOutSeatNums = stringToList(
+                        getString(R.styleable.SeatCustomView_soldOutSeatNums) ?: ""
+                    )
+                )
             } finally {
                 recycle()
             }
         }
-
-        seatDiffCntInRearAndOtherRow = rearSeatsCnt - seatsCntPerRow
-        seatColWithAisleLeft = calcSeatColWithAisleLeft()
-        aisleSize = calcAisleSize()
-        viewWidthSize =
-            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + aisleSize).fromDpToPx()
-        viewHeightSize = ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE).fromDpToPx()
+        seatDiffCntInBackAndOtherRow = seatLayout.backSeatsCnt - seatLayout.seatsCntPerRow
+        seatLayoutSize = SeatLayoutSizeModel(
+            seatColWithAisleLeft = calcSeatColWithAisleLeft(),
+            aisleSize = calcAisleSize(),
+            viewWidthSize = ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatLayout.seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()).fromDpToPx(),
+            viewHeightSize = ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatLayout.totalRows + SEAT_SIZE).fromDpToPx()
+        )
 
         selectedSeatNum = -1
         selectedSeat = null
 
-        addAllSeatsToView()
+        seatItems = mutableListOf()
+
+        makeAllSeatTextView()
+        loadSeatsToView()
     }
 
-    private fun calcSeatColWithAisleLeft() = when (seatsCntPerRow) {
+    private fun stringToList(input: String): List<Int> {
+        val regex = Regex("\\d+")
+        val matches = regex.findAll(input)
+        return matches.map { it.value.toInt() }.toList()
+    }
+
+    private fun calcSeatColWithAisleLeft() = when (seatLayout.seatsCntPerRow) {
         2 -> 1
         3, 4 -> 2
         else -> -1
     }
 
     private fun calcAisleSize(): Int {
-        return if (seatDiffCntInRearAndOtherRow == 0) {
+        return if (seatDiffCntInBackAndOtherRow == 0) {
             SEAT_SIZE
         } else {
-            seatDiffCntInRearAndOtherRow * (SEAT_SIZE + SEAT_MARGIN_SIZE)
+            seatDiffCntInBackAndOtherRow * (SEAT_SIZE + SEAT_MARGIN_SIZE)
         }
     }
 
-
-    private fun addAllSeatsToView() {
-        for (row in 0..<totalRows) {
-            for (col in 0..<seatsCntPerRow) {
-                val seatNumber = row * seatsCntPerRow + col + 1
-                val item = if (col < seatColWithAisleLeft) {
-                    createSeat(col, row, 0)
+    private fun makeAllSeatTextView() {
+        for (row in 0..<seatLayout.totalRows) {
+            for (col in 0..<seatLayout.seatsCntPerRow) {
+                val seatNumber = row * seatLayout.seatsCntPerRow + col + 1
+                val item = if (col < seatLayoutSize.seatColWithAisleLeft) {
+                    createSeat(col, row, 0, seatNumber)
                 } else {
-                    createSeat(
-                        col, row, aisleSize
-                    )
+                    createSeat(col, row, seatLayoutSize.aisleSize, seatNumber)
                 }
-
-                addSeatToView(item, seatNumber)
+                seatItems.add(item)
             }
         }
-        for (col in 0..<rearSeatsCnt) { // 마지막 줄 좌석 추가
-            val seatNumber = totalRows * seatsCntPerRow + col + 1
-            val item = if (seatDiffCntInRearAndOtherRow == 0 && col >= seatColWithAisleLeft) {
-                createSeat(col, totalRows, aisleSize)
-            } else {
-                createSeat(col, totalRows, 0)
-            }
-
-            addSeatToView(item, seatNumber)
+        for (col in 0..<seatLayout.backSeatsCnt) { // 마지막 줄 좌석 추가
+            val seatNumber = seatLayout.totalRows * seatLayout.seatsCntPerRow + col + 1
+            val item =
+                if (seatDiffCntInBackAndOtherRow == 0 && col >= seatLayoutSize.seatColWithAisleLeft) {
+                    createSeat(col, seatLayout.totalRows, seatLayoutSize.aisleSize, seatNumber)
+                } else {
+                    createSeat(col, seatLayout.totalRows, 0, seatNumber)
+                }
+            seatItems.add(item)
         }
     }
 
-    private fun createSeat(col: Int, row: Int, addedLeftMargin: Int): TextView {
+    private fun loadSeatsToView() {
+        var seatNum = 1
+        for (seatTextView in seatItems) {
+            addSeatToView(seatTextView, seatNum++)
+        }
+        if (mode == SeatViewMode.SELECTABLE) {
+            checkSoldOutSeat()
+        } else {
+            checkMySeat()
+        }
+    }
+
+    private fun createSeat(col: Int, row: Int, addedLeftMargin: Int, seatNumber: Int): TextView {
         val item = TextView(context)
         val leftPos = col * (SEAT_SIZE + SEAT_MARGIN_SIZE) + addedLeftMargin
         val topPos = row * (SEAT_SIZE + SEAT_MARGIN_SIZE)
 
-        val lp = LayoutParams(viewWidthSize, viewHeightSize)
+        val lp = LayoutParams(seatLayoutSize.viewWidthSize, seatLayoutSize.viewHeightSize)
         lp.run {
             lp.width = SEAT_SIZE.fromDpToPx()
             lp.height = SEAT_SIZE.fromDpToPx()
             lp.topMargin = topPos.fromDpToPx()
             lp.leftMargin = leftPos.fromDpToPx()
         }
-
-        return item.apply {
-            layoutParams = lp
-            gravity = Gravity.CENTER
-        }
-    }
-
-    private fun addSeatToView(item: TextView, seatNumber: Int) {
-        setSeatItemProperty(item, seatNumber)
 
         if (mode == SeatViewMode.SELECTABLE) {
             item.setOnClickListener {
@@ -133,7 +145,26 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
                 }
             }
         }
+
+        return item.apply {
+            layoutParams = lp
+            gravity = Gravity.CENTER
+        }
+    }
+
+    private fun addSeatToView(item: TextView, seatNumber: Int) {
+        setSeatItemProperty(item, seatNumber)
         addView(item)
+    }
+
+    private fun checkSoldOutSeat() {
+        for (i in seatLayout.soldOutSeatNums) {
+            setSoldOutSeatItemProperty(seatItems[i - 1])
+        }
+    }
+
+    private fun checkMySeat() {
+        setSelectedSeatItemProperty(seatItems[seatLayout.mySeatNum - 1])
     }
 
     private fun setSeatItemProperty(item: TextView, seatNumber: Int) {
@@ -141,6 +172,7 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
             background = ContextCompat.getDrawable(context, R.drawable.seat_item)
             text = seatNumber.toString()
             setTextColor(Color.BLACK)
+            isEnabled = true
         }
     }
 
@@ -152,10 +184,11 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         }
     }
 
-    private fun setSoldOutSeatItemProperty(item: TextView, seatNumber: Int) {
+    private fun setSoldOutSeatItemProperty(item: TextView) {
         item.run {
             background = ContextCompat.getDrawable(context, R.drawable.sold_out_seat_item)
             text = ""
+            isEnabled = false
         }
     }
 
@@ -179,16 +212,10 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         setSelectedSeatItemProperty(item)
     }
 
-    fun updateSeatChart(seatsCntPerRow: Int, totalRows: Int, rearSeatsCnt: Int) {
-        this.seatsCntPerRow = seatsCntPerRow
-        this.totalRows = totalRows
-        this.rearSeatsCnt = rearSeatsCnt
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        setMeasuredDimension(viewWidthSize, viewHeightSize)
+        setMeasuredDimension(seatLayoutSize.viewWidthSize, seatLayoutSize.viewHeightSize)
     }
 
 }
@@ -196,3 +223,18 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 enum class SeatViewMode {
     SELECTABLE, READ_ONLY
 }
+
+data class SeatLayoutModel(
+    val seatsCntPerRow: Int,
+    val backSeatsCnt: Int,
+    val totalRows: Int,
+    val mySeatNum: Int,
+    val soldOutSeatNums: List<Int>,
+)
+
+data class SeatLayoutSizeModel(
+    val seatColWithAisleLeft: Int,
+    val aisleSize: Int,
+    val viewWidthSize: Int,
+    val viewHeightSize: Int,
+)

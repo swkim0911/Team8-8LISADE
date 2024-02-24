@@ -118,7 +118,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:mode="read_only" />
+                app:backSeatsCnt="4"
+                app:mode="read_only"
+                app:mySeatNum="3"
+                app:seatsCntPerRow="3"
+                app:totalRows="7" />
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

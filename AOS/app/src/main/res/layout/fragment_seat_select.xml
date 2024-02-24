@@ -232,7 +232,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:mode="selectable" />
+                app:backSeatsCnt="4"
+                app:mode="selectable"
+                app:seatsCntPerRow="3"
+                app:soldOutSeatNums="[1,2,3]"
+                app:totalRows="5" />
         </ScrollView>
 
         <TextView
