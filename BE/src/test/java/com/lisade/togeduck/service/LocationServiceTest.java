@@ -1,6 +1,6 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.cache.LocationCacheService;
+import com.lisade.togeduck.cache.service.LocationCacheService;
 import com.lisade.togeduck.repository.CityRepository;
 import com.lisade.togeduck.repository.StationRepository;
 import org.junit.jupiter.api.BeforeEach;

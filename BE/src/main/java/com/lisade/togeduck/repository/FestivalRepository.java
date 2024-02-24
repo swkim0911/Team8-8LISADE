@@ -19,6 +19,12 @@ public interface FestivalRepository extends JpaRepository<Festival, Long>,
         @Param("categoryId") Long categoryId,
         @Param("festivalStatus") FestivalStatus festivalStatus);
 
+    @Query("SELECT f FROM Festival f WHERE f.category.id = :categoryId AND f.festivalStatus = :festivalStatus order by f.popularScore DESC ")
+    Slice<Festival> findSliceByCategoryAndFestivalStatusBest(
+        @Param("pageable") Pageable pageable,
+        @Param("categoryId") Long categoryId,
+        @Param("festivalStatus") FestivalStatus festivalStatus);
+
     @Override
     @Query("SELECT f FROM Festival f LEFT JOIN FETCH f.festivalImages LEFT JOIN FETCH f.category WHERE f.id = :id")
     Optional<Festival> findById(Long id);
