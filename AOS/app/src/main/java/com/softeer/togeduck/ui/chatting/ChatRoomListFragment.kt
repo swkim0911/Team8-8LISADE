@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.databinding.FragmentChatRoomListBinding
 import com.softeer.togeduck.room.TogeduckDatabase
 import com.softeer.togeduck.utils.ItemClick
@@ -27,7 +28,10 @@ class ChatRoomListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onResume() {
+        super.onResume()
         init()
     }
 
@@ -47,11 +51,25 @@ class ChatRoomListFragment : Fragment() {
                             val intent = Intent(binding.root.context, ChatRoomActivity::class.java)
 
                             intent.putExtra("id", chatRooms[position].id)
+                            intent.putExtra("roomName", chatRooms[position].roomName)
+
+                            setUnreadMessageCountZero(chatRooms[position])
+
                             startActivity(intent)
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun setUnreadMessageCountZero(chatRoomListModel: ChatRoomListModel){
+        val db = TogeduckDatabase.getInstance(binding.root.context)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            chatRoomListModel.unreadMessageCount = 0
+
+            db!!.chatRoomsDao().update(chatRoomListModel)
         }
     }
 }

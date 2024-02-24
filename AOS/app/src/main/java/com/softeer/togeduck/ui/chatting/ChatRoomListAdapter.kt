@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.databinding.RvItemChatRoomListBinding
 import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.TimeFormatter
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
@@ -72,26 +73,17 @@ class ChatRoomListAdapter(private val items: List<ChatRoomListModel>) :
 
         @RequiresApi(Build.VERSION_CODES.O)
         private fun setTimeFormat(time: String) : String {
-            val yyyyMMdd = DateTimeFormatter.ofPattern("yyyy.MM.dd일", Locale.KOREA)
-            val MMdd = DateTimeFormatter.ofPattern("MM월 dd일", Locale.KOREA)
-            val yesterday = "어제"
-            val ahhmm = DateTimeFormatter.ofPattern("a hh:mm", Locale.KOREA)
-
             val now = LocalDateTime.now()
-            val timeParser = DateTimeFormatterBuilder()
-                .appendPattern("yyyy-MM-dd HH:mm:ss")
-                .toFormatter()
-
-            val parsedTime = LocalDateTime.parse(time, timeParser)
+            val parsedTime = TimeFormatter.toLocalDateTime(time)
 
             if(parsedTime.toLocalDate().isEqual(now.toLocalDate())){
-                return parsedTime.format(ahhmm)
+                return TimeFormatter.ahhmm(time)
             } else if(parsedTime.toLocalDate().isEqual(now.toLocalDate().minusDays(1L))){
-                return yesterday
+                return TimeFormatter.yesterday()
             } else if(parsedTime.year == now.year){
-                return parsedTime.format(MMdd)
+                return TimeFormatter.MMdd(time)
             } else{
-                return parsedTime.format(yyyyMMdd)
+                return TimeFormatter.yyyyMMdd(time)
             }
         }
     }
