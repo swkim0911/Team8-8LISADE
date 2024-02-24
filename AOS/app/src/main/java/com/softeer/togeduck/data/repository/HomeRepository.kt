@@ -20,8 +20,6 @@ class HomeRepository @Inject constructor(
     suspend fun getCategory():Result<List<HomeCategoryModel>>{
         return kotlin.runCatching {
             homeRemoteDataSource.getCategory().toHomeCategoryModel()
-        }.onFailure {
-
         }
     }
 

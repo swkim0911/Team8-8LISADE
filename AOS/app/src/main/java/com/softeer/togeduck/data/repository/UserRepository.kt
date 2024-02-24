@@ -9,11 +9,11 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val loginRemoteDataSource: UserRemoteDataSource,
+    private val userRemoteDataSource: UserRemoteDataSource,
     private val userDataStore: UserDataStore
 ) {
     suspend fun login(loginRequest: LoginRequest): Response<String> {
-        return loginRemoteDataSource.login(loginRequest)
+        return userRemoteDataSource.login(loginRequest)
     }
 
     suspend fun storeUser(sessionId: String) {
