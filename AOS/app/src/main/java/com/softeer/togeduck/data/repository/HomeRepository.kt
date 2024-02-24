@@ -1,16 +1,12 @@
 package com.softeer.togeduck.data.repository
 
-import android.util.Log
-import com.softeer.togeduck.data.dto.response.home.HomeCategoryResponse
-import com.softeer.togeduck.data.dto.response.home.HomePopularArticleResponse
 import com.softeer.togeduck.data.mapper.toHomeArticleModel
 import com.softeer.togeduck.data.mapper.toHomeCategoryModel
 import com.softeer.togeduck.data.mapper.toPopularArticleModel
 import com.softeer.togeduck.data.model.home.main.HomeArticleModel
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.data.model.home.main.PopularArticleModel
-import com.softeer.togeduck.data.remote.datasource.home.HomeRemoteDataSource
-import retrofit2.Response
+import com.softeer.togeduck.data.remote.datasource.home.main.HomeRemoteDataSource
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(

@@ -1,5 +1,6 @@
 package com.softeer.togeduck.di
 
+import com.softeer.togeduck.data.remote.service.ArticleDetailService
 import com.softeer.togeduck.data.remote.service.HomeService
 import com.softeer.togeduck.data.remote.service.UserService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
@@ -34,6 +35,12 @@ class ServiceModule {
     @Singleton
     fun provideReserveStatusService(retrofit: Retrofit): ReserveStatusService {
         return retrofit.create(ReserveStatusService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService{
+        return retrofit.create(ArticleDetailService::class.java)
     }
 
 }

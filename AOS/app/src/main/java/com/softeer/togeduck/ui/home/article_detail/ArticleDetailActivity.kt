@@ -7,11 +7,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.ActivityArticleDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.security.AccessController.getContext
 
 
-
-
+@AndroidEntryPoint
 class ArticleDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArticleDetailBinding

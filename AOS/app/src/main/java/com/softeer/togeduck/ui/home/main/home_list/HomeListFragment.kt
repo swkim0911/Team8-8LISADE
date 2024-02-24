@@ -50,10 +50,6 @@ class HomeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
-//        homeListViewModel.festivalList.observe(viewLifecycleOwner, Observer {
-//            setUpRvArticleListRecyclerView(it)
-//        })
         homeListViewModel.apply {
             festivalList.observe(viewLifecycleOwner, Observer {
                 setUpRvArticleListRecyclerView(it)
