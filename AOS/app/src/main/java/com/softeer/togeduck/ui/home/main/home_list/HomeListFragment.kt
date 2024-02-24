@@ -17,17 +17,6 @@ import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.databinding.FragmentHomeListBinding
 import com.softeer.togeduck.utils.ItemClick
 
-
-private val dummyData = listOf(
-    HomeCategoryModel("dummy", "스포츠"),
-    HomeCategoryModel("dummy", "뮤지컬"),
-    HomeCategoryModel("dummy", "콘서트"),
-    HomeCategoryModel("dummy", "팬미팅"),
-    HomeCategoryModel("dummy", "애니메이션"),
-    HomeCategoryModel("dummy", "기타"),
-)
-
-
 class HomeListFragment : Fragment() {
     private var _binding: FragmentHomeListBinding? = null
     private val binding get() = _binding!!
