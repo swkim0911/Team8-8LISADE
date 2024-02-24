@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuHome"
-        android:name="com.softeer.togeduck.ui.home.HomeFragment"
+        android:name="com.softeer.togeduck.ui.home.main.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment

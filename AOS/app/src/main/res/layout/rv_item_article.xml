@@ -15,14 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
-        <!-- NeedFix: API연동시 수정 필요 이미지 수정 필요-->
         <ImageView
             android:id="@+id/articleImg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/dummy_psy"
+            app:s3ImageUrl="@{homeArticle.imgUrl}"
             app:layout_constraintEnd_toStartOf="@id/guidelineContents"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -7,13 +7,13 @@
 
         <variable
             name="vm"
-            type="com.softeer.togeduck.ui.home.main.HomeListViewModel" />
+            type="com.softeer.togeduck.ui.home.main.home_list.HomeListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.main.HomeListFragment">
+        tools:context=".ui.home.main.home_list.HomeListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategoryList"
