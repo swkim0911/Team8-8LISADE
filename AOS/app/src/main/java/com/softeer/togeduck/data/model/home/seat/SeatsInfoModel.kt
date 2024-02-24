@@ -9,6 +9,7 @@ data class SeatsInfoModel(
     val departurePlace: String,
     val arrivalPlace: String,
     val price: Int,
+    val formattedPrice: String,
     val seats: List<SeatStatusModel>,
 )
 
