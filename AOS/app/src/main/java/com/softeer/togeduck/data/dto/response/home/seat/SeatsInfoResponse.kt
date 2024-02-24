@@ -35,5 +35,9 @@ data class SeatStatusResponse(
     @Json(name = "seatNo")
     val seatNo: String,
     @Json(name = "status")
-    val status: String,
+    val status: SeatStatus,
 )
+
+enum class SeatStatus(val isAvailable: Boolean) {
+    AVAILABLE(true), RESERVATION(false)
+}
