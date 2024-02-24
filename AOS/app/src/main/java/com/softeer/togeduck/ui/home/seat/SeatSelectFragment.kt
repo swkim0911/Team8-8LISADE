@@ -1,6 +1,5 @@
 package com.softeer.togeduck.ui.home.seat
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
 import com.softeer.togeduck.utils.ItemClickWithSeat
+import com.softeer.togeduck.utils.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,9 +36,18 @@ class SeatSelectFragment : Fragment() {
     }
 
     private fun init() {
+        binding.vm = seatSelectViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        seatSelectViewModel.loadSeatsInfoData()
+        seatSelectViewModel.errMessage.observe(viewLifecycleOwner) {
+            showErrorToast(requireContext(), it.toString())
+        }
+
         binding.selectCompleteBtn.setOnClickListener {
             findNavController().navigate(R.id.action_seatSelectFragment_to_seatPaymentFragment)
         }
+
         binding.seatSelectView.itemClick = object : ItemClickWithSeat {
             override fun onClick(existSelectedSeat: Boolean) {
                 binding.selectCompleteBtn.isEnabled = existSelectedSeat
@@ -49,6 +58,8 @@ class SeatSelectFragment : Fragment() {
                             R.color.main
                         )
                     )
+                    binding.totalPriceValue.text =
+                        seatSelectViewModel.seatsInfo.value?.formattedPrice
                 } else {
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(
@@ -56,10 +67,12 @@ class SeatSelectFragment : Fragment() {
                             R.color.gray300
                         )
                     )
+                    binding.totalPriceValue.text = "0"
                 }
 
             }
         }
+
 
     }
 }

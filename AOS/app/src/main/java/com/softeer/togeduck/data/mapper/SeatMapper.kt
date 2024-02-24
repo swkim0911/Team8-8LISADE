@@ -9,7 +9,7 @@ fun SeatsInfoResponse.toSeatInfoModel(): SeatsInfoModel {
         totalRows = column,
         backSeatsCnt = backSeat,
         totalSeats = totalSeats,
-        reservedSeats = reservedSeats,
+        remainingSeats = totalSeats - reservedSeats,
         departurePlace = "${sourceCity}(${source})",
         arrivalPlace = "${destinationCity}(${destination})",
         price = price,
