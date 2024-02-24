@@ -1,26 +1,22 @@
 package com.softeer.togeduck.ui.home.seat
 
-import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SeatSelectFragment : Fragment() {
     private var _binding: FragmentSeatSelectBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val seatSelectViewModel: SeatSelectViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,28 +33,6 @@ class SeatSelectFragment : Fragment() {
     }
 
     private fun init() {
-        val seatSelectView = binding.seatSelectView
-        val selectSeat = seatSelectView.selectSeat
-
-        selectSeat.observe(viewLifecycleOwner, Observer {
-            var vgColor = R.color.gray300
-            var selectCompleteBtnEnabled = false
-
-            if (selectSeat.value == true) {
-                vgColor = R.color.navy300
-                selectCompleteBtnEnabled = true
-            }
-
-            binding.run {
-                selectCompleteBtn.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(), vgColor
-                    )
-                )
-                selectCompleteBtn.isEnabled = selectCompleteBtnEnabled
-            }
-        })
-
         binding.selectCompleteBtn.setOnClickListener {
             findNavController().navigate(R.id.action_seatSelectFragment_to_seatPaymentFragment)
         }
