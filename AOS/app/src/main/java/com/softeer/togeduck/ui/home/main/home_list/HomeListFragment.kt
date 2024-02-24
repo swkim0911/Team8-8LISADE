@@ -62,6 +62,7 @@ class HomeListFragment : Fragment() {
         setUpRvCategoryRecyclerView(dummyData)
         setUpArrayAdapter()
         binding.vm = homeListViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun getArticleSize() {
