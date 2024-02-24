@@ -22,7 +22,7 @@ public class BatchSchedulerConfig {
     private final Job job;
     private final JobLauncher jobLauncher;
 
-    @Scheduled(fixedDelay = 20000)
+    @Scheduled(fixedDelay = 300000)
     public void batchSchedule() {
         JobParameter<?> jobParameter = new JobParameter<>(System.currentTimeMillis(), Long.class);
 

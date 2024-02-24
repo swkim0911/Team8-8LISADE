@@ -1,9 +1,15 @@
 package com.lisade.togeduck.config;
 
+import com.lisade.togeduck.batch.FestivalIdRangePartitioner;
 import com.lisade.togeduck.batch.FestivalItem;
 import com.lisade.togeduck.batch.FestivalItemProcessingResult;
-import com.lisade.togeduck.cache.FestivalClickCountCacheService;
-import com.lisade.togeduck.cache.FestivalClickCountCacheValue;
+import com.lisade.togeduck.batch.PopularFestivalCacheUpdateTasklet;
+import com.lisade.togeduck.cache.service.BestFestivalCacheService;
+import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.value.FestivalClickCountCacheValue;
+import com.lisade.togeduck.mapper.FestivalMapper;
+import com.lisade.togeduck.repository.CategoryRepository;
 import com.lisade.togeduck.repository.FestivalRepository;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -46,6 +52,10 @@ public class PopularScoringBatchConfig {
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
     private final FestivalClickCountCacheService festivalClickCountCacheService;
+    private final CategoryRepository categoryRepository;
+    private final PopularFestivalCacheService popularFestivalCacheService;
+    private final BestFestivalCacheService bestFestivalCacheService;
+    private final FestivalMapper festivalMapper;
     private final FestivalRepository festivalRepository;
 
     @Bean
@@ -58,6 +68,7 @@ public class PopularScoringBatchConfig {
         return new JobBuilder("calcPopularScoreJob", jobRepository)
             .start(saveClickCountStep(jobRepository))
             .next(calcPopularScoreStepManager(jobRepository))
+            .next(confirmPopularFestivalStep(jobRepository))
             .build();
     }
 
@@ -91,16 +102,20 @@ public class PopularScoringBatchConfig {
     }
 
     @Bean
+    public Step confirmPopularFestivalStep(JobRepository jobRepository) {
+        return new StepBuilder("confirmPopularFestivalStep", jobRepository)
+            .tasklet(new PopularFestivalCacheUpdateTasklet(festivalRepository, categoryRepository,
+                    popularFestivalCacheService, bestFestivalCacheService, festivalMapper),
+                transactionManager()).build();
+    }
+
+    @Bean
     @StepScope
     public ListItemReader<FestivalClickCountCacheValue> festivalClickCountItemReader() {
         List<FestivalClickCountCacheValue> festivalClickCountCacheValues = new ArrayList<>();
-        log.info("Redis 읽기 시작");
         festivalClickCountCacheService.getAll().forEach(festivalClickCountCacheValues::add);
-        log.info("Redis 읽기 종료");
         if (!festivalClickCountCacheValues.isEmpty()) {
-            log.info("Redis 데이터 삭제 시작");
             festivalClickCountCacheService.deleteAll();
-            log.info("Redis 데이터 삭제 종료");
         }
         return new ListItemReader<>(festivalClickCountCacheValues);
     }

@@ -8,7 +8,7 @@
 
         <variable
             name="reserveStatus"
-            type="com.softeer.togeduck.data.model.reserve_status.ReservationStatusModel" />
+            type="com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,11 +20,11 @@
 
         <ImageView
             android:id="@+id/itemImg"
+            imgLoad="@{reserveStatus.festivalImg}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            imgLoad="@{reserveStatus.festivalImg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,11 +39,13 @@
 
         <TextView
             android:id="@+id/itemTitle"
-            android:layout_width="wrap_content"
+            style="@style/ellipsize_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{reserveStatus.festivalName}"
+            android:text="@{`[`+reserveStatus.festivalPlace +`]`+ reserveStatus.festivalName}"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guidelineContents"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{reserveStatus.date + ` / ` +reserveStatus.departureTime +` 출발`}"
+            android:text="@{reserveStatus.departureTime +` 출발`}"
             android:textColor="@color/gray300"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
@@ -60,10 +62,11 @@
 
         <TextView
             android:id="@+id/itemPlace"
+            style="@style/ellipsize_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@{reserveStatus.place}"
+            android:text="@{reserveStatus.departurePlace}"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@id/guidelineContents"
             app:layout_constraintTop_toBottomOf="@id/itemDatetime" />

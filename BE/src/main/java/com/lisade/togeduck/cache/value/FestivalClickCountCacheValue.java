@@ -1,15 +1,13 @@
-package com.lisade.togeduck.cache;
+package com.lisade.togeduck.cache.value;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
-@Setter
 @RedisHash("festival_click_count")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FestivalClickCountCacheValue {

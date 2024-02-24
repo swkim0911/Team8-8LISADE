@@ -1,6 +1,6 @@
 package com.lisade.togeduck.config;
 
-import com.lisade.togeduck.cache.LocationCacheValue;
+import com.lisade.togeduck.cache.value.LocationCacheValue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +26,12 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-    	RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-	config.setHostName(host);
-	config.setPort(port);
-	config.setPassword(password);
-	LettuceConnectionFactory factory = new LettuceConnectionFactory(config);
-	return factory;
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        config.setHostName(host);
+        config.setPort(port);
+        config.setPassword(password);
+        LettuceConnectionFactory factory = new LettuceConnectionFactory(config);
+        return factory;
     }
 
     @Bean

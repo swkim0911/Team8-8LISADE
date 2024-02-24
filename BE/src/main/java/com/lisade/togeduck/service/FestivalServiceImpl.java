@@ -1,6 +1,10 @@
 package com.lisade.togeduck.service;
 
-import com.lisade.togeduck.cache.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.service.BestFestivalCacheService;
+import com.lisade.togeduck.cache.service.FestivalClickCountCacheService;
+import com.lisade.togeduck.cache.service.PopularFestivalCacheService;
+import com.lisade.togeduck.cache.value.BestFestivalCacheValue;
+import com.lisade.togeduck.cache.value.PopularFestivalCacheValue;
 import com.lisade.togeduck.dto.response.BestFestivalDto;
 import com.lisade.togeduck.dto.response.BestFestivalResponse;
 import com.lisade.togeduck.dto.response.FestivalDetailResponse;
@@ -18,6 +22,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalClickCountCacheService festivalClickCountCacheService;
+    private final PopularFestivalCacheService popularFestivalCacheService;
+    private final BestFestivalCacheService bestFestivalCacheService;
     private final FestivalRepository festivalRepository;
     private final RouteRepository routeRepository;
     private final FestivalMapper festivalMapper;
@@ -34,9 +41,40 @@ public class FestivalServiceImpl implements FestivalService {
     public Slice<FestivalResponse> getList(Pageable pageable, Long categoryId,
         FestivalStatus festivalStatus,
         String filterType) {
+        if (filterType.equals("best")) {
+            return getBestFestivalResponse(pageable, categoryId, festivalStatus);
+        } else {
+            return getFestivalResponses(pageable, categoryId, festivalStatus);
+        }
+    }
+
+    private Slice<FestivalResponse> getFestivalResponses(Pageable pageable, Long categoryId,
+        FestivalStatus festivalStatus) {
         Slice<Festival> festivals = festivalRepository.findSliceByCategoryAndFestivalStatus(
             pageable, categoryId, festivalStatus);
         return festivalMapper.toFestivalResponseSlice(festivals);
+    }
+
+    private Slice<FestivalResponse> getBestFestivalResponse(Pageable pageable, Long categoryId,
+        FestivalStatus festivalStatus) {
+        return popularFestivalCacheService.get(categoryId.toString())
+            .map(popularFestivalCacheValue -> getFestivalResponseSlice(pageable,
+                popularFestivalCacheValue))
+            .orElseGet(() -> getFestivalResponses(pageable, categoryId, festivalStatus));
+    }
+
+    private Slice<FestivalResponse> getFestivalResponseSlice(Pageable pageable,
+        PopularFestivalCacheValue popularFestivalCacheValue) {
+        List<FestivalResponse> festivalResponses = popularFestivalCacheValue.getFestivalResponses();
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), festivalResponses.size());
+
+        List<FestivalResponse> slicedFestivalResponses = festivalResponses.subList(start, end);
+        boolean hasNext = end < festivalResponses.size();
+
+        return new SliceImpl<>(slicedFestivalResponses,
+            pageable, hasNext);
     }
 
     @Override
@@ -58,9 +96,17 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     public BestFestivalResponse getBest() {
-        Integer defaultLimit = 8;
-        List<BestFestivalDto> best = festivalRepository.findBest(defaultLimit);
-        return festivalMapper.toBestFestivalResponse(best.size(), best);
+        return bestFestivalCacheService.get()
+            .map(BestFestivalCacheValue::getBests)
+            .orElseGet(this::fetchAndCacheBestFestivals);
+    }
+
+    private BestFestivalResponse fetchAndCacheBestFestivals() {
+        List<BestFestivalDto> bestFestivals = festivalRepository.findBest(8);
+        BestFestivalResponse bestFestivalResponse = festivalMapper.toBestFestivalResponse(
+            bestFestivals.size(), bestFestivals);
+        bestFestivalCacheService.save(bestFestivalResponse);
+        return bestFestivalResponse;
     }
 
     @Override

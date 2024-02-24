@@ -48,5 +48,9 @@
         <item name="strokeColor">@color/gray300</item>
     </style>
 
+    <style name="ellipsize_text">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 
 </resources>
