@@ -22,15 +22,17 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
+import java.util.UUID
 
-class ChatRoomActivity : AppCompatActivity() {
+class ChatRoomActivity: AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
 
     private var newMessages = arrayListOf<ChatMessageModel>()
     private var id = 0L
 
-    private val url = "ws://localhost:8080/chat"
+    private val url = "ws://10.0.2.2:8080/chat"
     private val stomp = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
+    private val uuid = UUID.randomUUID().toString()
 
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -171,26 +173,31 @@ class ChatRoomActivity : AppCompatActivity() {
         stomp.topic("/topic/message/$id").subscribe { stompMessage ->
             val data = JSONObject(stompMessage.payload)
 
-            val nickname = data.get("nickname") as String
-            val message = data.get("message") as String
-            val time = data.get("createdAt") as String
-            val type = data.get("action") as String
+            val uuid = data.get("uuid") as String
 
-            var location = ""
+            if (this.uuid != uuid) {
+                val nickname = data.get("sender") as String
+                val message = data.get("message") as String
+                val time = data.get("createdAt") as String
+                val type = data.get("action") as String
 
-            var lastMessage = getLastMessage()
+                var location = ""
 
-            if (type == "JOIN" || type == "LEAVE") {
-                location = "CENTER"
-            } else if (lastMessage == null || nickname != lastMessage.nickname) {
-                location = "FIRST_LEFT"
-            } else {
-                location = "LEFT"
-            }
+                var lastMessage = getLastMessage()
 
-            runOnUiThread {
-                addTimeMessage(time)
-                updateMessage(nickname, message, time, type, location)
+                if (type == "JOIN" || type == "LEAVE") {
+                    location = "CENTER"
+                } else if (lastMessage == null || nickname != lastMessage.nickname) {
+                    location = "FIRST_LEFT"
+                } else {
+                    location = "LEFT"
+                }
+
+                runOnUiThread {
+                    addTimeMessage(time)
+                    updateMessage(nickname, message, time, type, location)
+                    binding.rvChatRoomMessage.scrollToPosition(binding.rvChatRoomMessage.adapter!!.itemCount - 1)
+                }
             }
         }
     }
@@ -204,8 +211,9 @@ class ChatRoomActivity : AppCompatActivity() {
         data.put("message", message)
         data.put("createdAt", now)
         data.put("action", "MESSAGE")
+        data.put("uuid", uuid)
 
-        stomp.send("", data.toString()).subscribe()
+        stomp.send("/app/chat/message", data.toString()).subscribe()
 
         addTimeMessage(now)
         updateMessage("!", message, now, "MESSAGE", "RIGHT")
