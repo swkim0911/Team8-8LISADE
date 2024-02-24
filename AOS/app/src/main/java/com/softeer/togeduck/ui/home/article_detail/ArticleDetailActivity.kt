@@ -1,20 +1,24 @@
 package com.softeer.togeduck.ui.home.article_detail
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navArgs
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.ActivityArticleDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.security.AccessController.getContext
 
 
 @AndroidEntryPoint
 class ArticleDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArticleDetailBinding
+    private val args: ArticleDetailActivityArgs by navArgs()
+    private val articleDetailViewModel: ArticleDetailViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article_detail)
@@ -22,6 +26,9 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        val articleId = args.articleId
+        Log.d("TESTLOG9999", articleId.toString())
+        articleDetailViewModel.getArticleDetail(articleId)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.detailFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController

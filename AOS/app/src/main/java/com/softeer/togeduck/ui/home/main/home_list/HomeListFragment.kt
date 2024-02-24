@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -98,7 +99,9 @@ class HomeListFragment : Fragment() {
         }
         articleAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                findNavController().navigate(R.id.action_homeListFragment_to_articleDetailActivity)
+                val articleId = data[position].id
+                val action = HomeListFragmentDirections.actionHomeListFragmentToArticleDetailActivity(articleId)
+                findNavController().navigate(action)
             }
         }
 

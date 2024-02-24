@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentArticleDetailBinding
@@ -18,7 +19,7 @@ class ArticleDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private val articleDetailViewModel: ArticleDetailViewModel by viewModels()
+    private val articleDetailViewModel: ArticleDetailViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

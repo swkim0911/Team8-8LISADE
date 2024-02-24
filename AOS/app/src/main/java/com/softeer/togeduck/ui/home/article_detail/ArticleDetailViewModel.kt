@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.home.article_detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,13 +19,11 @@ class ArticleDetailViewModel @Inject constructor(
     private val _articleDetail = MutableLiveData<ArticleDetailModel>()
     val articleDetail: LiveData<ArticleDetailModel> = _articleDetail
 
-    init{
-        getArticleDetail()
-    }
 
-    private fun getArticleDetail(){
+    fun getArticleDetail(id:Int){
+        Log.d("TESTLOG22222",id.toString())
         viewModelScope.launch {
-            articleDetailRepository.getFestivalDetail("1")
+            articleDetailRepository.getFestivalDetail(id.toString())
                 .onSuccess {
                     _articleDetail.value = it
                 }
