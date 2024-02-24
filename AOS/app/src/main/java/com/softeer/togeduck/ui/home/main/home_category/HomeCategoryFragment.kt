@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
+import com.softeer.togeduck.data.model.home.main.PopularArticleModel
 import com.softeer.togeduck.databinding.FragmentHomeCatergoryBinding
+import com.softeer.togeduck.ui.home.main.PopularArticleAdapter
 import com.softeer.togeduck.utils.GridSpacingItemDecoration
 import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.fromDpToPx

@@ -5,23 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softeer.togeduck.data.model.home.main.PopularArticleModel
 import com.softeer.togeduck.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-private val dummyData = listOf(
-    PopularArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "2024.02.07", "잠실종합운동장"),
-    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
-    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청")
-)
+//private val dummyData = listOf(
+//    PopularArticleModel("dummy", "[서울] 싸이 흠뻑쇼", "2024.02.07", "잠실종합운동장"),
+//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
+//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
+//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
+//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청"),
+//    PopularArticleModel("dummy", "[부산] 싸이 흠뻑쇼", "2024.02.14", "부산시청")
+//)
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val homeViewModel : HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,13 +45,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        homeViewModel.popularFestivalList.observe(viewLifecycleOwner, Observer {
+            setUpPopularFestivalRecyclerView(it)
+        })
     }
 
-    private fun init() {
+    private fun setUpPopularFestivalRecyclerView(data:List<PopularArticleModel>) {
         binding.rvItemPopularArticle.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = PopularArticleAdapter(dummyData)
+            adapter = PopularArticleAdapter(data)
         }
     }
     
