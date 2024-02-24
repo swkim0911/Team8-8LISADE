@@ -5,7 +5,7 @@ data class SeatsInfoModel(
     val totalRows: Int,
     val backSeatsCnt: Int,
     val totalSeats: Int,
-    val reservedSeats: Int,
+    val remainingSeats: Int,
     val departurePlace: String,
     val arrivalPlace: String,
     val price: Int,
