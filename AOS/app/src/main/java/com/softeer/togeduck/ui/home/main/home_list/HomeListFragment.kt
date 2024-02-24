@@ -51,15 +51,22 @@ class HomeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        homeListViewModel.festivalList.observe(viewLifecycleOwner, Observer {
-            setUpRvArticleListRecyclerView(it)
-        })
+//        homeListViewModel.festivalList.observe(viewLifecycleOwner, Observer {
+//            setUpRvArticleListRecyclerView(it)
+//        })
+        homeListViewModel.apply {
+            festivalList.observe(viewLifecycleOwner, Observer {
+                setUpRvArticleListRecyclerView(it)
+            })
+            categoryChipList.observe(viewLifecycleOwner, Observer {
+                setUpRvCategoryRecyclerView(it)
+            })
+        }
 //        getArticleSize()
     }
 
 
     private fun init() {
-        setUpRvCategoryRecyclerView(dummyData)
         setUpArrayAdapter()
         binding.vm = homeListViewModel
         binding.lifecycleOwner = viewLifecycleOwner
