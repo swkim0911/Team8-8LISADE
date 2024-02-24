@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:gravity="center"
-                android:text="채팅방 이름"
+                android:text="@string/chat_room_name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -81,7 +81,7 @@
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="메시지를 입력하세요"
+                    android:hint="@string/chat_message_hint"
                     android:maxLines="1"
                     android:textSize="18sp" />
 

@@ -14,7 +14,7 @@
             android:id="@+id/chatMessageMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="center message"
+            android:text="@string/chat_center_message"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:padding="10dp"
