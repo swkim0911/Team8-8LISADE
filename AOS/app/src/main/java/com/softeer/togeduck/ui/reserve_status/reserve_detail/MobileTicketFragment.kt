@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.softeer.togeduck.databinding.FragmentMobileTicketBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MobileTicketFragment : Fragment() {
     private var _binding: FragmentMobileTicketBinding? = null
     private val binding get() = _binding!!
+    private val reserveDetailViewModel: ReserveStatusDetailViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +39,20 @@ class MobileTicketFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        init()
+    }
+
+    private fun init() {
+        reserveDetailViewModel.loadMobileTicketData()
         binding.seatingChartBtn.setOnClickListener {
             showDialog()
         }
+
+
     }
 
     private fun showDialog() {
         val dialogFragment = SeatChartFragmentDialogue()
-        dialogFragment.show(parentFragmentManager,"SeatChartFragmentDialogue")
+        dialogFragment.show(parentFragmentManager, "SeatChartFragmentDialogue")
     }
 }
