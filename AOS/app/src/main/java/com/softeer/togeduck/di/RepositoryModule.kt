@@ -2,6 +2,8 @@ package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.local.datasource.UserDataStore
 import com.softeer.togeduck.data.remote.datasource.LoginRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
+import com.softeer.togeduck.data.repository.ReserveStatusRepository
 import com.softeer.togeduck.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -15,8 +17,17 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideUserRepository(
-        loginRemoteDataSource: LoginRemoteDataSource, userDataSource: UserDataStore
+        loginRemoteDataSource: LoginRemoteDataSource,
+        userDataSource: UserDataStore,
     ): UserRepository {
         return UserRepository(loginRemoteDataSource, userDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideReserveStatusRepository(
+        reserveStatusRemoteDataSource: ReserveStatusRemoteDataSource,
+    ): ReserveStatusRepository {
+        return ReserveStatusRepository(reserveStatusRemoteDataSource)
     }
 }

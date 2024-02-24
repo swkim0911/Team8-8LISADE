@@ -8,6 +8,11 @@ interface ItemClick {
 
 }
 
-interface ItemClickWithData{
-    fun onClick(view:View, position: Int, detailList: List<RegionDetailModel>)
+interface ItemClickWithRouteId {
+    fun onClick(view: View, position: Int, routeId: Int)
+
+}
+
+interface ItemClickWithData {
+    fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>)
 }
