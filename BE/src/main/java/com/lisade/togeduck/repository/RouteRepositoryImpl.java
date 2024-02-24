@@ -204,7 +204,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 driver.name,
                 driver.company,
                 driver.phoneNumber,
-                route.carNumber))
+                route.carNumber,
+                driver.imagePath))
             .from(route)
             .join(driver)
             .on(route.driver.eq(driver))

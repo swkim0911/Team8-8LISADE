@@ -92,5 +92,6 @@ public class UserReservedRouteDetailResponse {
         private String company;
         private String phoneNumber;
         private String carNumber;
+        private String imagePath;
     }
 }
