@@ -33,8 +33,8 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     private var viewHeightSize: Int
 
     private var seatItems: MutableList<TextView>
-    private var selectedSeatNum: Int
     private var selectedSeat: TextView?
+    var selectedSeatNum: Int
 
     var itemClick: ItemClickWithSeat? = null
 

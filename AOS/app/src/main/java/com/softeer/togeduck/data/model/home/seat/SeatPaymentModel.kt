@@ -9,6 +9,7 @@ data class SeatPaymentModel(
     val arrivalAt: String,
     val totalSeats: Int,
     val reservedSeats: Int,
+    val recruitStatus: String,
     val mySeatNum: Int,
     val price: Int,
     val formattedPrice: String,

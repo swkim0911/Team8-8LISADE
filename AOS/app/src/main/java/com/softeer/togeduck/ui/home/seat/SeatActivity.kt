@@ -21,7 +21,9 @@ class SeatActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val routeId = args.routeId
+        /////////////////// 추후 수정 필요
+//        val routeId = args.routeId
+        val routeId = 1
         seatViewModel.routeId = routeId
     }
 }
