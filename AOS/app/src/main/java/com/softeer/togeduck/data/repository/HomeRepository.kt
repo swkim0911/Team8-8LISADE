@@ -6,7 +6,7 @@ import com.softeer.togeduck.data.mapper.toPopularArticleModel
 import com.softeer.togeduck.data.model.home.main.HomeArticleModel
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.data.model.home.main.PopularArticleModel
-import com.softeer.togeduck.data.remote.datasource.home.main.HomeRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.HomeRemoteDataSource
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(

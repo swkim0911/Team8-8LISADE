@@ -1,7 +1,7 @@
 package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.local.datasource.UserDataStore
-import com.softeer.togeduck.data.remote.datasource.intro.UserRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.UserRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.SeatRemoteDataSource
 import com.softeer.togeduck.data.repository.ReserveStatusRepository

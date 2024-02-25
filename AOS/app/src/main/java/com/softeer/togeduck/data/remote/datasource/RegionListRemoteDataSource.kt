@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.remote.datasource.home.open_route
+package com.softeer.togeduck.data.remote.datasource
 
 import com.softeer.togeduck.data.dto.response.open_route.RegionListResponse
 import com.softeer.togeduck.data.mapper.toRegionListModel

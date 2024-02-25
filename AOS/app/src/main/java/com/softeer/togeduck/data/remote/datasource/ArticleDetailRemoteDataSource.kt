@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.remote.datasource.home.article_detail
+package com.softeer.togeduck.data.remote.datasource
 
 import com.softeer.togeduck.data.dto.response.article_detail.ArticleDetailResponse
 import com.softeer.togeduck.data.dto.response.article_detail.ArticleRouteResponse
