@@ -21,8 +21,7 @@ class RouteViewModel @Inject constructor(
     private val _articleRouteList = MutableLiveData<List<RouteListModel>>()
     val articleRouteList: LiveData<List<RouteListModel>> = _articleRouteList
 
-    private val _articleId = MutableLiveData(1)
-    val articleId: LiveData<Int> = _articleId
+    private var articleId = 1
 
 
     // Need FIx
@@ -33,8 +32,8 @@ class RouteViewModel @Inject constructor(
         size = 3,
     ).toMap()
 
-    init {
-        getArticleRouteList()
+    fun getArticleId(id:Int){
+        articleId = id
     }
 
     private var _size = MutableLiveData("0")
@@ -43,9 +42,9 @@ class RouteViewModel @Inject constructor(
         _size.value = itemCount
     }
 
-    private fun getArticleRouteList() {
+    fun getArticleRouteList() {
         viewModelScope.launch {
-            articleDetailRepository.getArticleRoute(_articleId.value.toString(), params)
+            articleDetailRepository.getArticleRoute(articleId.toString(), params)
                 .onSuccess {
                     _articleRouteList.value = it
                 }
