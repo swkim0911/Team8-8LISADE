@@ -9,10 +9,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SeatSelectViewModel @Inject constructor(private val seatRepository: SeatRepository) :
+class SeatViewModel @Inject constructor(private val seatRepository: SeatRepository) :
     ViewModel() {
-    private var routeId: Int = 1
     private val tag = this.javaClass.simpleName
+    var routeId: Int = 0
 
     private var _errMessage = MutableLiveData<String>()
     val errMessage: LiveData<String> = _errMessage

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SeatSelectFragment : Fragment() {
     private var _binding: FragmentSeatSelectBinding? = null
     private val binding get() = _binding!!
-    private val seatSelectViewModel: SeatSelectViewModel by viewModels()
+    private val seatViewModel: SeatViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -36,11 +36,11 @@ class SeatSelectFragment : Fragment() {
     }
 
     private fun init() {
-        binding.vm = seatSelectViewModel
+        binding.vm = seatViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        seatSelectViewModel.loadSeatsInfoData()
-        seatSelectViewModel.errMessage.observe(viewLifecycleOwner) {
+        seatViewModel.loadSeatsInfoData()
+        seatViewModel.errMessage.observe(viewLifecycleOwner) {
             showErrorToast(requireContext(), it.toString())
         }
 
@@ -59,7 +59,7 @@ class SeatSelectFragment : Fragment() {
                         )
                     )
                     binding.totalPriceValue.text =
-                        seatSelectViewModel.seatsInfo.value?.formattedPrice
+                        seatViewModel.seatsInfo.value?.formattedPrice
                 } else {
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(

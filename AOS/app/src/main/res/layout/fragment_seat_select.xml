@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.softeer.togeduck.ui.home.seat.SeatSelectViewModel" />
+            type="com.softeer.togeduck.ui.home.seat.SeatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
