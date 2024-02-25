@@ -7,13 +7,18 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatChartDialogueBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SeatChartFragmentDialogue : DialogFragment() {
     private var _binding: FragmentSeatChartDialogueBinding? = null
     private val binding get() = _binding!!
+    private val args: SeatChartFragmentDialogueArgs by navArgs()
+    private val seatChartViewModel: SeatChartViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +56,9 @@ class SeatChartFragmentDialogue : DialogFragment() {
         binding.iconClose.setOnClickListener {
             dialog?.dismiss()
         }
+
+        val routeId = args.routeId
+        seatChartViewModel.setRouteId(routeId)
     }
 
 

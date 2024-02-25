@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentMobileTicketBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +30,7 @@ class MobileTicketFragment : Fragment() {
         _binding =
             DataBindingUtil.inflate(
                 inflater,
-                com.softeer.togeduck.R.layout.fragment_mobile_ticket,
+                R.layout.fragment_mobile_ticket,
                 container,
                 false
             )
@@ -45,14 +47,10 @@ class MobileTicketFragment : Fragment() {
     private fun init() {
         reserveDetailViewModel.loadMobileTicketData()
         binding.seatingChartBtn.setOnClickListener {
-            showDialog()
+            findNavController().navigate(R.id.action_mobileTicketFragment_to_seatChartFragmentDialogue)
         }
 
 
     }
 
-    private fun showDialog() {
-        val dialogFragment = SeatChartFragmentDialogue()
-        dialogFragment.show(parentFragmentManager, "SeatChartFragmentDialogue")
-    }
 }
