@@ -11,7 +11,8 @@ import retrofit2.http.Query
 interface ReserveStatusService {
     @GET("users/routes")
     suspend fun getReserveStatusList(
-        @Query("page") page: Int, @Query("size") size: Int
+        @Query("page") page: Int,
+        @Query("size") size: Int,
     ): ReserveStatusResponse
 
     @GET("users/routes/{route_id}")
