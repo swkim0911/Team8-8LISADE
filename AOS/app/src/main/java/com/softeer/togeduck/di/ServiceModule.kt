@@ -10,7 +10,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -18,17 +17,13 @@ import javax.inject.Singleton
 class ServiceModule {
     @Provides
     @Singleton
-    fun provideLoginService(
-        retrofit: Retrofit
-    ): UserService {
+    fun provideLoginService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideHomeService(
-        retrofit: Retrofit
-    ):HomeService{
+    fun provideHomeService(retrofit: Retrofit): HomeService {
         return retrofit.create(HomeService::class.java)
     }
 
@@ -41,14 +36,15 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService{
+    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService {
         return retrofit.create(ArticleDetailService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRegionListService(retrofit: Retrofit): RegionListService{
+    fun provideRegionListService(retrofit: Retrofit): RegionListService {
         return retrofit.create(RegionListService::class.java)
     }
+
 
 }
