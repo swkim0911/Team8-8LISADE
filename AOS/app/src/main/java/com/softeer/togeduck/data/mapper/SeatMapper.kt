@@ -19,7 +19,7 @@ fun SeatsInfoResponse.toSeatInfoModel(): SeatsInfoModel {
         seats = seats.filter { !it.status.isAvailable }.map { it.seatNo.toInt() })
 }
 
-fun SeatPaymentResponse.toSeatPaymentModel(): SeatPaymentModel {
+fun SeatPaymentResponse.toSeatPaymentModel(seatNo: Int): SeatPaymentModel {
     return SeatPaymentModel(
         festivalName = festivalName,
         festivalAt = startedAt,
@@ -28,7 +28,7 @@ fun SeatPaymentResponse.toSeatPaymentModel(): SeatPaymentModel {
         arrivalPlace = "${destinationCity}(${destination})",
         arrivalAt = arrivalAt,
         totalSeats = numberOfSeats,
-        reservedSeats = numberOfReserverdSeats,
+        reservedSeats = numberOfReservedSeats,
         mySeatNum = seatNo,
         price = price,
         formattedPrice = price.addCommas()
