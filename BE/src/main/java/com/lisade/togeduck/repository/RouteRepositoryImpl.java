@@ -10,6 +10,7 @@ import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
@@ -272,4 +273,22 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .on(seat.user.eq(user))
             .where(user.id.eq(userId));
     }
+
+    @Override
+    public RouteCityAndDestinationDetail getRouteDetail(Long routeId) {
+        return queryFactory.select(Projections.constructor(RouteCityAndDestinationDetail.class,
+                route.numberOfReservationSeats,
+                route.station.city.name,
+                route.station.name,
+                route.festival.city.name,
+                route.festival.location,
+                route.price
+            ))
+            .from(route)
+            .join(route.festival)
+            .join(route.station)
+            .where(route.id.eq(routeId))
+            .fetchOne();
+    }
+
 }
