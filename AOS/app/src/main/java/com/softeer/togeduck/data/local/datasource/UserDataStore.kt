@@ -20,7 +20,6 @@ class UserDataStore @Inject constructor(
 ) {
     companion object {
         private val USER_SESSION_ID = stringPreferencesKey("user_session_id")
-        private val FCM_TOKEN = stringPreferencesKey("fcm_token")
     }
 
     suspend fun storeUser(sessionId: String) {
@@ -29,17 +28,7 @@ class UserDataStore @Inject constructor(
         }
     }
 
-    suspend fun storeFcmToken(fcmToken: String) {
-        context.dataStore.edit { preferences ->
-            preferences[FCM_TOKEN] = fcmToken
-        }
-    }
-
     val getUserSessionId: Flow<String?> = context.dataStore.data.map { sessionId ->
         sessionId[USER_SESSION_ID]
-    }
-
-    val getFcmToken: Flow<String?> = context.dataStore.data.map { fcmToken ->
-        fcmToken[FCM_TOKEN]
     }
 }
