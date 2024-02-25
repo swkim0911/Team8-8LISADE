@@ -29,6 +29,7 @@ fun SeatPaymentResponse.toSeatPaymentModel(seatNo: Int): SeatPaymentModel {
         arrivalAt = arrivalAt,
         totalSeats = numberOfSeats,
         reservedSeats = numberOfReservedSeats,
+        recruitStatus = "${numberOfReservedSeats} / ${numberOfSeats}",
         mySeatNum = seatNo,
         price = price,
         formattedPrice = price.addCommas()

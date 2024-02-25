@@ -1,6 +1,7 @@
 package com.softeer.togeduck.ui.home.seat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class SeatSelectFragment : Fragment() {
     private var _binding: FragmentSeatSelectBinding? = null
     private val binding get() = _binding!!
     private val seatViewModel: SeatViewModel by activityViewModels()
+    private var selectedSeatNum: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,7 +47,12 @@ class SeatSelectFragment : Fragment() {
         }
 
         binding.selectCompleteBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_seatSelectFragment_to_seatPaymentFragment)
+            val routeId = seatViewModel.routeId
+            val action = SeatSelectFragmentDirections.actionSeatSelectFragmentToSeatPaymentFragment(
+                routeId,
+                selectedSeatNum
+            )
+            findNavController().navigate(action)
         }
 
         binding.seatSelectView.itemClick = object : ItemClickWithSeat {
@@ -58,6 +65,7 @@ class SeatSelectFragment : Fragment() {
                             R.color.main
                         )
                     )
+                    selectedSeatNum = binding.seatSelectView.selectedSeatNum
                     binding.totalPriceValue.text =
                         seatViewModel.seatsInfo.value?.formattedPrice
                 } else {
@@ -67,6 +75,7 @@ class SeatSelectFragment : Fragment() {
                             R.color.gray300
                         )
                     )
+                    selectedSeatNum = binding.seatSelectView.selectedSeatNum
                     binding.totalPriceValue.text = "0"
                 }
 

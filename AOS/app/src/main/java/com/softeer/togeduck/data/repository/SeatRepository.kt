@@ -19,9 +19,10 @@ class SeatRepository @Inject constructor(private val seatRemoteDataSource: SeatR
 
     suspend fun getSeatPayment(
         routeId: Int,
+        seatNo: Int,
     ): Result<SeatPaymentModel> {
         return kotlin.runCatching {
-            seatRemoteDataSource.getSeatPayment(routeId).toSeatPaymentModel()
+            seatRemoteDataSource.getSeatPayment(routeId).toSeatPaymentModel(seatNo)
         }
     }
 }
