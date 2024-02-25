@@ -16,26 +16,8 @@ import com.softeer.togeduck.data.model.home.open_route.RegionListModel
 import com.softeer.togeduck.databinding.DialogSelectRegionBinding
 import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.ItemClickWithData
+import com.softeer.togeduck.utils.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
-
-//private val dummyData = listOf(
-//    RegionListModel(
-//        1,
-//        "서울",
-//        listOf(RegionDetailModel("1"), RegionDetailModel("2"), RegionDetailModel("3"))
-//    ),
-//    RegionListModel(
-//        1,
-//        "부산",
-//        listOf(RegionDetailModel("4"), RegionDetailModel("5"), RegionDetailModel("6"))
-//    ),
-//    RegionListModel(
-//        1,
-//        "대전",
-//        listOf(RegionDetailModel("1"), RegionDetailModel("2"), RegionDetailModel("3"))
-//    )
-//)
-//
 
 @AndroidEntryPoint
 class RegionListDialog : DialogFragment() {
@@ -83,6 +65,9 @@ class RegionListDialog : DialogFragment() {
         binding.vm = regionListViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         regionListViewModel.getPopularFestival()
+        regionListViewModel.errMessage.observe(viewLifecycleOwner, Observer {
+            showErrorToast(requireContext(), it.toString())
+        })
     }
     private fun setUpRegionListRecyclerView(data:List<RegionListModel>) {
         regionListAdapter = RegionListAdapter(data)
@@ -112,6 +97,7 @@ class RegionListDialog : DialogFragment() {
                             view.setBackgroundColor(color)
                             selectedDetailView = view
                             selectedRegion = detailList[position].detail
+                            regionListViewModel.selectCompleted()
                         }
                     }
                 }
@@ -141,6 +127,7 @@ class RegionListDialog : DialogFragment() {
     private fun selectComplete() {
         binding.selectConfirm.setOnClickListener {
             regionListViewModel.setSelectedRegion(selectedRegion)
+            regionListViewModel.isSelectedRegionCompleted()
             dialog?.dismiss()
         }
 
