@@ -21,7 +21,6 @@ class ArticleDetailViewModel @Inject constructor(
 
 
     fun getArticleDetail(id:Int){
-        Log.d("TESTLOG22222",id.toString())
         viewModelScope.launch {
             articleDetailRepository.getFestivalDetail(id.toString())
                 .onSuccess {
