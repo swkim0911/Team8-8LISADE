@@ -3,7 +3,10 @@ package com.softeer.togeduck.ui.intro
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
+import com.softeer.togeduck.data.dto.request.FcmTokenRequest
 import com.softeer.togeduck.data.dto.request.LoginRequest
+import com.softeer.togeduck.data.local.datasource.UserDataStore
 import com.softeer.togeduck.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
@@ -24,10 +27,26 @@ class LoginViewModel @Inject constructor(
                         sessionStore(it)
                     }
                 }
+
+                sendFcmToken()
             } else {
 
             }
+        }
+    }
 
+    private fun sendFcmToken() {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            val token = it
+
+            viewModelScope.launch {
+                val response = loginRepository.sendFcmToken(FcmTokenRequest(token))
+                if (response.isSuccessful) {
+
+                } else {
+
+                }
+            }
         }
     }
 
