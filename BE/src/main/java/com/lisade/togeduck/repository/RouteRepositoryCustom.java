@@ -3,6 +3,7 @@ package com.lisade.togeduck.repository;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
+import com.lisade.togeduck.dto.response.SeatDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
@@ -33,4 +34,6 @@ public interface RouteRepositoryCustom {
     Slice<FestivalRoutesResponse> findRoutes(Pageable pageable, Long festivalId, String cityName);
 
     RouteCityAndDestinationDetail getRouteDetail(Long routeId);
+
+    SeatDetailResponse getSeatDetail(Long userId, Long routeId);
 }

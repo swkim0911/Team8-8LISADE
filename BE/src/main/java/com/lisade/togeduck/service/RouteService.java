@@ -6,6 +6,7 @@ import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
+import com.lisade.togeduck.dto.response.SeatDetailResponse;
 import com.lisade.togeduck.dto.response.SeatListResponse;
 import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.Bus;
@@ -94,5 +95,9 @@ public class RouteService {
         RouteCityAndDestinationDetail routeCityAndDestinationDetail = routeRepository.getRouteDetail(
             routeId);
         return SeatMapper.toSeatListResponse(busLayout, routeCityAndDestinationDetail, seats);
+    }
+
+    public SeatDetailResponse getSeat(Long userId, Long routeId) {
+        return routeRepository.getSeatDetail(userId, routeId);
     }
 }

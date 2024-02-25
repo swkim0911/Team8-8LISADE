@@ -2,6 +2,7 @@ package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.SeatDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
@@ -34,6 +35,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
+    private final RouteService routeService;
 
     public User get(Long userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
@@ -131,5 +133,9 @@ public class UserService {
     private LocalTime getArrivedAt(LocalDateTime startedAt, LocalTime expectedAt) {
         return startedAt.toLocalTime().plusHours(expectedAt.getHour())
             .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
+    }
+
+    public SeatDetailResponse getReservedSeat(Long userId, Long routeId) {
+        return routeService.getSeat(userId, routeId);
     }
 }

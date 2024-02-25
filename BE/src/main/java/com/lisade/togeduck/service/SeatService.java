@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SeatService {
 
     private final SeatRepository seatRepository;
-    private final BusService busService;
 
     public List<SeatResponse> getList(Long routeId) {
         List<SeatResponse> seats = seatRepository.findSeatsByRouteId(routeId);

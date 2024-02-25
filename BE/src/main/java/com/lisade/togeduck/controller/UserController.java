@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.SeatDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
@@ -68,5 +69,11 @@ public class UserController {
 
         return userService.getReservedRouteInfo(user.getId(), routeId)
             .orElseThrow(RuntimeException::new);
+    }
+
+    @GetMapping("/routes/{route_id}/ticket/seats")
+    public SeatDetailResponse getSeat(@Login User user,
+        @PathVariable(name = "route_id") Long routeId) {
+        return userService.getReservedSeat(user.getId(), routeId);
     }
 }
