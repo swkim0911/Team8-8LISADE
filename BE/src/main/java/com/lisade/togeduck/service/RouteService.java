@@ -1,9 +1,14 @@
 package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
+import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
+import com.lisade.togeduck.dto.response.SeatListResponse;
+import com.lisade.togeduck.dto.response.SeatResponse;
+import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
 import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
@@ -16,6 +21,7 @@ import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.RouteRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,5 +86,18 @@ public class RouteService {
     private RouteDetailDto validateRouteDetailDto(
         Optional<RouteDetailDto> optionalRouteDetailDto) {
         return optionalRouteDetailDto.orElseThrow(FestivalNotFoundException::new);
+    }
+
+    @Transactional
+    public SeatListResponse getSeats(Long routeId) {
+        BusLayoutResponse busLayout = busService.getBusLayout(routeId);
+        List<SeatResponse> seats = seatService.getList(routeId);
+        RouteCityAndDestinationDetail routeCityAndDestinationDetail = routeRepository.getRouteDetail(
+            routeId);
+        return SeatMapper.toSeatListResponse(busLayout, routeCityAndDestinationDetail, seats);
+    }
+
+    public UserSeatDetailResponse getSeat(Long userId, Long routeId) {
+        return routeRepository.getSeatDetail(userId, routeId);
     }
 }
