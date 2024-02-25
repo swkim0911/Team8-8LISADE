@@ -27,7 +27,6 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     private fun init() {
         val articleId = args.articleId
-        Log.d("TESTLOG9999", articleId.toString())
         articleDetailViewModel.getArticleDetail(articleId)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.detailFragmentContainerView) as NavHostFragment
