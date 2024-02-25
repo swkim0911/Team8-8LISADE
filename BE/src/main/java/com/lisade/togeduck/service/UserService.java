@@ -2,7 +2,6 @@ package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
-import com.lisade.togeduck.dto.response.SeatDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
@@ -10,6 +9,8 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAnd
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
+import com.lisade.togeduck.dto.response.UserTicketResponse;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
@@ -135,7 +136,11 @@ public class UserService {
             .plusMinutes(expectedAt.getMinute()).plusSeconds(expectedAt.getSecond());
     }
 
-    public SeatDetailResponse getReservedSeat(Long userId, Long routeId) {
+    public UserSeatDetailResponse getReservedSeat(Long userId, Long routeId) {
         return routeService.getSeat(userId, routeId);
+    }
+
+    public UserTicketResponse getTicket(Long userId, Long routeId) {
+        return userRepository.getTicket(userId, routeId);
     }
 }

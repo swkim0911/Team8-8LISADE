@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SeatDetailResponse {
+public class UserSeatDetailResponse {
 
     Integer seatNo;
     Integer totalSeats;

@@ -12,13 +12,13 @@ import static com.lisade.togeduck.entity.QUser.user;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
-import com.lisade.togeduck.dto.response.SeatDetailResponse;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.DriverInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.SeatInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationInfo;
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
+import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
 import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.ExpressionUtils;
@@ -293,14 +293,14 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
     }
 
     @Override
-    public SeatDetailResponse getSeatDetail(Long userId, Long routeId) {
+    public UserSeatDetailResponse getSeatDetail(Long userId, Long routeId) {
         return queryFactory.select(
-                Projections.constructor(SeatDetailResponse.class, seat.no, route.numberOfSeats,
+                Projections.constructor(UserSeatDetailResponse.class, seat.no, route.numberOfSeats,
                     route.bus.row, route.bus.column, route.bus.backSeats))
             .from(route)
             .join(route.seats, seat)
             .join(route.bus, bus)
-            .where(seat.user.id.eq(userId).and(route.id.eq(routeId)))
+            .where(seat.user.id.eq(userId).and(route.id.eq(routeId)).and(seat.route.id.eq(routeId)))
             .fetchOne();
     }
 }
