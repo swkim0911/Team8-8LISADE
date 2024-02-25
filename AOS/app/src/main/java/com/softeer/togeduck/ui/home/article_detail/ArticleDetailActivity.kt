@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navArgs
 import com.softeer.togeduck.R
@@ -19,15 +20,17 @@ class ArticleDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArticleDetailBinding
     private val args: ArticleDetailActivityArgs by navArgs()
     private val articleDetailViewModel: ArticleDetailViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article_detail)
         init()
+
     }
 
     private fun init() {
         val articleId = args.articleId
-        articleDetailViewModel.getArticleDetail(articleId)
+        articleDetailViewModel.getArticleId(articleId)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.detailFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
