@@ -19,16 +19,19 @@ class ArticleDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArticleDetailBinding
     private val args: ArticleDetailActivityArgs by navArgs()
     private val articleDetailViewModel: ArticleDetailViewModel by viewModels()
+    private val routeViewModel: RouteViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article_detail)
         init()
+
     }
 
     private fun init() {
         val articleId = args.articleId
-        Log.d("TESTLOG9999", articleId.toString())
-        articleDetailViewModel.getArticleDetail(articleId)
+
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.detailFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
@@ -37,6 +40,7 @@ class ArticleDetailActivity : AppCompatActivity() {
         val transparentColor = ContextCompat.getColor(this@ArticleDetailActivity, R.color.transparent)
 
         binding.routeButton.setOnClickListener {
+            routeViewModel.getArticleId(articleId)
             navController.navigate(R.id.action_articleDetailFragment_to_routeFragment)
             binding.run{
                 routeButton.setTextColor(checkedColor)
@@ -49,6 +53,7 @@ class ArticleDetailActivity : AppCompatActivity() {
         }
 
         binding.articleDetailButton.setOnClickListener {
+            articleDetailViewModel.getArticleId(articleId)
             navController.navigate(R.id.action_routeFragment_to_articleDetailFragment)
             binding.run{
                 routeButton.setTextColor(defaultColor)
