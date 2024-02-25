@@ -16,7 +16,9 @@
 <br><br>
 ## 🛠 Tech Stacks
 ### Android
+![프론트 기술스택](https://github.com/dlwnsgus07/school/assets/37991960/92b924ff-ee51-4dba-878f-5a41dfb55852)
 ### Back-end
+![백앤드 기술](https://github.com/dlwnsgus07/school/assets/37991960/e738ee46-a4b3-438a-9b6c-ce94c9ebba33)
 ### ⚙️ Infrastructure
 ## 📋 GIT 전략 📋
 ### 📌 브랜치 종류 
