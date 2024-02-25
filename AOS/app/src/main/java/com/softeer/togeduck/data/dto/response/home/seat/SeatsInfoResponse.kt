@@ -3,8 +3,6 @@ package com.softeer.togeduck.data.dto.response.home.seat
 import com.squareup.moshi.Json
 
 data class SeatsInfoResponse(
-    @Json(name = "numberOfSeats")
-    val numberOfSeats: Int,
     @Json(name = "row")
     val row: Int,
     @Json(name = "column")
