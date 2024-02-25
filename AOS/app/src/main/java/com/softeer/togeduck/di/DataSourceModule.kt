@@ -1,10 +1,8 @@
 package com.softeer.togeduck.di
 
-import com.softeer.togeduck.data.remote.datasource.LoginRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.SeatRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.intro.UserRemoteDataSource
-import com.softeer.togeduck.data.remote.service.LoginService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
 import com.softeer.togeduck.data.remote.service.SeatService
 import com.softeer.togeduck.data.remote.service.UserService
