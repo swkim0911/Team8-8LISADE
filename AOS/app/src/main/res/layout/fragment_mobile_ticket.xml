@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.softeer.togeduck.data.model.reserve_status.reserve_detail.MobileTicketModel" />
+            type="com.softeer.togeduck.ui.reserve_status.reserve_detail.MobileTicketViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,7 +102,7 @@
             android:layout_marginBottom="5dp"
             android:background="@color/transparent"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.title}"
+            android:text="@{vm.mobileTicket.title}"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.startedAt}"
+            android:text="@{vm.mobileTicket.startedAt}"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/ticketTitleContainer"
@@ -187,7 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.departurePlace}"
+            android:text="@{vm.mobileTicket.departurePlace}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/departureTime"
             app:layout_constraintEnd_toEndOf="@id/dividerVertical"
@@ -201,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.departureTime}"
+            android:text="@{vm.mobileTicket.departureTime}"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon2"
@@ -239,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.arrivalPlace}"
+            android:text="@{vm.mobileTicket.arrivalPlace}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/arrivalTime"
             app:layout_constraintEnd_toEndOf="@id/ticketContainer"
@@ -253,7 +253,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.arrivalTime}"
+            android:text="@{vm.mobileTicket.arrivalTime}"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon2"
@@ -289,7 +289,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.seatNo}"
+            android:text="@{vm.mobileTicket.seatNo}"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/seatingChartBtn"

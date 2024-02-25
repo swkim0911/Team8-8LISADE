@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_mobileTicketFragment_to_seatChartFragmentDialogue"
             app:destination="@id/seatChartFragmentDialogue" />
+        <argument
+            android:name="routeId"
+            app:argType="integer" />
     </fragment>
     <dialog
         android:id="@+id/seatChartFragmentDialogue"

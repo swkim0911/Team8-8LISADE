@@ -4,11 +4,13 @@ import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.Rese
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.MobileTicketResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatus
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.SeatChartResponse
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.DriverInfoModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.MobileTicketModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.ReserveStatusDetailModel
+import com.softeer.togeduck.data.model.reserve_status.reserve_detail.SeatChartModel
 import com.softeer.togeduck.utils.addCommas
 
 fun ReserveStatusResponse.toReserveStatusModel(): ReserveStatusModel {
@@ -68,5 +70,15 @@ fun MobileTicketResponse.toMobileTicketModel(): MobileTicketModel {
         departureTime = departureAt,
         arrivalTime = arrivalAt,
         seatNo = seatNo,
+    )
+}
+
+fun SeatChartResponse.toSeatChartModel(): SeatChartModel {
+    return SeatChartModel(
+        mySeatNo = seatNo,
+        totalSeats = totalSeats,
+        seatsCntPerRow = row,
+        totalRows = column,
+        backSeatsCnt = backSeat,
     )
 }

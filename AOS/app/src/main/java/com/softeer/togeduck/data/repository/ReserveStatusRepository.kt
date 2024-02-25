@@ -3,9 +3,11 @@ package com.softeer.togeduck.data.repository
 import com.softeer.togeduck.data.mapper.toMobileTicketModel
 import com.softeer.togeduck.data.mapper.toReserveStatusDetailModel
 import com.softeer.togeduck.data.mapper.toReserveStatusModel
+import com.softeer.togeduck.data.mapper.toSeatChartModel
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.MobileTicketModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.ReserveStatusDetailModel
+import com.softeer.togeduck.data.model.reserve_status.reserve_detail.SeatChartModel
 import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
 import javax.inject.Inject
 
@@ -37,6 +39,15 @@ class ReserveStatusRepository @Inject constructor(
         return kotlin.runCatching {
             reserveStatusRemoteDataSource.getMobileTicket(routeId)
                 .toMobileTicketModel()
+        }
+    }
+
+    suspend fun getSeatChart(
+        routeId: Int,
+    ): Result<SeatChartModel> {
+        return kotlin.runCatching {
+            reserveStatusRemoteDataSource.getSeatChart(routeId)
+                .toSeatChartModel()
         }
     }
 }

@@ -3,6 +3,7 @@ package com.softeer.togeduck.data.remote.service
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatusDetailResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.MobileTicketResponse
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.SeatChartResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,4 +23,9 @@ interface ReserveStatusService {
     suspend fun getMobileTicket(
         @Path("route_id") routeId: Int
     ): MobileTicketResponse
+
+    @GET("users/route/{route_id}/tickets/seats")
+    suspend fun getSeatChart(
+        @Path("route_id") routeId: Int
+    ): SeatChartResponse
 }
