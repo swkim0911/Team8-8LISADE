@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentOpenRouteBinding
@@ -28,6 +29,9 @@ class OpenRouteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        regionListViewModel.selectedBusId.observe(viewLifecycleOwner, Observer {
+            regionListViewModel.isSelectedRegionCompleted()
+        })
     }
 
     private fun init(){

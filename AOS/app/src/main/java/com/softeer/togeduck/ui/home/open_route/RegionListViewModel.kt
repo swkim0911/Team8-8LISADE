@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.home.open_route
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,9 @@ class RegionListViewModel @Inject constructor(
 
     private val _selectedRegion = MutableLiveData("선택")
     val selectedRegion: LiveData<String> = _selectedRegion
+
+    private val _selectedBusId = MutableLiveData(-1)
+    val selectedBusId: LiveData<Int> = _selectedBusId
 
     private val _regionList = MutableLiveData<List<RegionListModel>>()
     val regionList: LiveData<List<RegionListModel>> = _regionList
@@ -53,6 +57,10 @@ class RegionListViewModel @Inject constructor(
         }
     }
 
+    fun selectBusId(id: Int) {
+        _selectedBusId.value = id
+    }
+
     fun reSetSelectedCompleted() {
         _isSelectCompleted.value = false
     }
@@ -62,6 +70,7 @@ class RegionListViewModel @Inject constructor(
     }
 
     fun isSelectedRegionCompleted() {
-        _isCanOpenRoute.value = _selectedRegion.value != "선택"
+        _isCanOpenRoute.value = _selectedRegion.value != "선택" && _selectedBusId.value != -1
     }
+
 }
