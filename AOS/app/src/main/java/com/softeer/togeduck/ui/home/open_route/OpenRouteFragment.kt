@@ -29,9 +29,7 @@ class OpenRouteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        regionListViewModel.selectedBusId.observe(viewLifecycleOwner, Observer {
-            regionListViewModel.isSelectedRegionCompleted()
-        })
+        setSelectedImage()
     }
 
     private fun init(){
@@ -45,4 +43,28 @@ class OpenRouteFragment : Fragment() {
             findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
         }
     }
+
+    private fun setSelectedImage(){
+        val busImageList = listOf(
+            binding.bus14,
+            binding.bus25,
+            binding.bus45,
+        )
+        busImageList.forEachIndexed { index, imageView ->
+            imageView.setOnClickListener {
+                regionListViewModel.selectBusId(index)
+            }
+        }
+        regionListViewModel.selectedBusId.observe(viewLifecycleOwner, Observer { selectedImageId->
+            busImageList.forEachIndexed { index, imageView ->
+                if (index == selectedImageId) {
+                    imageView.setBackgroundResource(R.drawable.selected_image_border)
+                } else {
+                    imageView.setBackgroundResource(R.drawable.unselcted_image_border)
+                }
+            }
+            regionListViewModel.isSelectedRegionCompleted()
+        })
+    }
+
 }
