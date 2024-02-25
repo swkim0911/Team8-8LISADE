@@ -1,7 +1,9 @@
 package com.softeer.togeduck.data.mapper
 
+import com.softeer.togeduck.data.dto.request.home.seat.MySeatRequest
 import com.softeer.togeduck.data.dto.response.home.seat.SeatPaymentResponse
 import com.softeer.togeduck.data.dto.response.home.seat.SeatsInfoResponse
+import com.softeer.togeduck.data.model.home.seat.MySeatModel
 import com.softeer.togeduck.data.model.home.seat.SeatPaymentModel
 import com.softeer.togeduck.data.model.home.seat.SeatsInfoModel
 import com.softeer.togeduck.utils.addCommas
@@ -33,5 +35,12 @@ fun SeatPaymentResponse.toSeatPaymentModel(seatNo: Int): SeatPaymentModel {
         mySeatNum = seatNo,
         price = price,
         formattedPrice = price.addCommas()
+    )
+}
+
+fun MySeatModel.toMySeatRequest(): MySeatRequest {
+    return MySeatRequest(
+        userId = userId,
+        seatNo = seatNo
     )
 }
