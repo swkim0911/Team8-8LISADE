@@ -18,7 +18,6 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         private const val SEAT_MARGIN_SIZE = 10
     }
 
-    private var remainCallSetter = 4 // 바인딩어탭터로 속성 값 할 당 시 남은 호출될 setter 개수 체크
     private var mode: SeatViewMode
     private var seatsCntPerRow: Int
     private var backSeatsCnt: Int
@@ -64,48 +63,55 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
             ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()).fromDpToPx()
         viewHeightSize = ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE).fromDpToPx()
 
-        makeAllSeatTextView()
-        loadSeatsToView()
+        initSeatView()
     }
-
 
     fun setSeatsCntPerRow(value: String) {
         this.seatsCntPerRow = value.toInt()
-        checkAllSetterCalledToInit()
+        checkAllValueAssignedWithBindingAdapter()
     }
 
     fun setBackSeatsCnt(value: String) {
         this.backSeatsCnt = value.toInt()
-        checkAllSetterCalledToInit()
+        checkAllValueAssignedWithBindingAdapter()
     }
 
     fun setTotalRows(value: String) {
         this.totalRows = value.toInt()
-        checkAllSetterCalledToInit()
+        checkAllValueAssignedWithBindingAdapter()
     }
 
-    fun setMySeatNum(value: String) {
+    fun setMySeatNum(value: String) { // READ_ONLY 모드에서만 호출
         this.mySeatNum = value.toInt()
-        checkAllSetterCalledToInit()
+        checkAllValueAssignedWithBindingAdapter()
     }
 
-    fun setSoldOutSeatNums(value: String) {
+    fun setSoldOutSeatNums(value: String) { // SELECTABLE 모드에서만 호출
         this.soldOutSeatNums = stringToList(value)
-        checkAllSetterCalledToInit()
+        checkAllValueAssignedWithBindingAdapter()
     }
 
-    private fun checkAllSetterCalledToInit() {
-        if (--remainCallSetter == 0) {
-            seatDiffCntInBackAndOtherRow = backSeatsCnt - seatsCntPerRow
-            seatColWithAisleLeft = calcSeatColWithAisleLeft()
-            aisleSize = calcAisleSize()
-            viewWidthSize =
-                ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()).fromDpToPx()
-            viewHeightSize = ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE).fromDpToPx()
-
-            makeAllSeatTextView()
-            loadSeatsToView()
+    private fun checkAllValueAssignedWithBindingAdapter() {
+        if (seatsCntPerRow == 0 || backSeatsCnt == 0 || totalRows == 0) {
+            return
         }
+        if (mode == SeatViewMode.READ_ONLY && mySeatNum == 0) {
+            return
+        }
+        seatDiffCntInBackAndOtherRow = backSeatsCnt - seatsCntPerRow
+        seatColWithAisleLeft = calcSeatColWithAisleLeft()
+        aisleSize = calcAisleSize()
+        viewWidthSize =
+            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()).fromDpToPx()
+        viewHeightSize =
+            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE).fromDpToPx()
+
+        initSeatView()
+    }
+
+    private fun initSeatView() {
+        makeAllSeatTextView()
+        loadSeatsToView()
     }
 
     private fun stringToList(input: String): List<Int> {
@@ -142,12 +148,11 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         }
         for (col in 0..<backSeatsCnt) { // 마지막 줄 좌석 추가
             val seatNumber = totalRows * seatsCntPerRow + col + 1
-            val item =
-                if (seatDiffCntInBackAndOtherRow == 0 && col >= seatColWithAisleLeft) {
-                    createSeat(col, totalRows, aisleSize, seatNumber)
-                } else {
-                    createSeat(col, totalRows, 0, seatNumber)
-                }
+            val item = if (seatDiffCntInBackAndOtherRow == 0 && col >= seatColWithAisleLeft) {
+                createSeat(col, totalRows, aisleSize, seatNumber)
+            } else {
+                createSeat(col, totalRows, 0, seatNumber)
+            }
             seatItems.add(item)
         }
     }
