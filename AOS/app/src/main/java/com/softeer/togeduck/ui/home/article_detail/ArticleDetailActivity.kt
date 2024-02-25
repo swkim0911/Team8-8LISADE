@@ -30,8 +30,8 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     private fun init() {
         val articleId = args.articleId
-        articleDetailViewModel.getArticleId(articleId)
-        routeViewModel.getArticleId(articleId)
+
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.detailFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
@@ -40,6 +40,7 @@ class ArticleDetailActivity : AppCompatActivity() {
         val transparentColor = ContextCompat.getColor(this@ArticleDetailActivity, R.color.transparent)
 
         binding.routeButton.setOnClickListener {
+            routeViewModel.getArticleId(articleId)
             navController.navigate(R.id.action_articleDetailFragment_to_routeFragment)
             binding.run{
                 routeButton.setTextColor(checkedColor)
@@ -52,6 +53,7 @@ class ArticleDetailActivity : AppCompatActivity() {
         }
 
         binding.articleDetailButton.setOnClickListener {
+            articleDetailViewModel.getArticleId(articleId)
             navController.navigate(R.id.action_routeFragment_to_articleDetailFragment)
             binding.run{
                 routeButton.setTextColor(defaultColor)

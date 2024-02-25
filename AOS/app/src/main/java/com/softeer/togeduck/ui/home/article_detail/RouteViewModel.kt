@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.dto.request.home.ArticleRouteRequest
 import com.softeer.togeduck.data.model.home.article_detail.RouteListModel
 import com.softeer.togeduck.data.repository.ArticleDetailRepository
+import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
+import com.softeer.togeduck.utils.recordErrLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +19,11 @@ import javax.inject.Inject
 class RouteViewModel @Inject constructor(
     private val articleDetailRepository: ArticleDetailRepository,
 ) : ViewModel() {
+
+    private val tag = this.javaClass.simpleName.substring(0, 4)
+
+    private var _errMessage = MutableLiveData<String>()
+    val errMessage: LiveData<String> = _errMessage
 
     private val _articleRouteList = MutableLiveData<List<RouteListModel>>()
     val articleRouteList: LiveData<List<RouteListModel>> = _articleRouteList
@@ -49,7 +56,8 @@ class RouteViewModel @Inject constructor(
                     _articleRouteList.value = it
                 }
                 .onFailure {
-                    Log.d("TESTLOG", it.toString())
+                    recordErrLog(tag, it.message!!)
+                    _errMessage.value = DATA_LOAD_ERROR_MESSAGE
                 }
         }
 

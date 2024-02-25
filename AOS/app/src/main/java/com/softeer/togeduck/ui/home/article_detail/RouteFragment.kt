@@ -16,18 +16,9 @@ import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.home.article_detail.RouteListModel
 import com.softeer.togeduck.databinding.FragmentRouteBinding
 import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
-
-private val dummyData = listOf(
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-    RouteListModel("2024.02.17 / 09:00 출발", "부산시청 앞", "10,000", 30, 24, "모집중"),
-)
 
 @AndroidEntryPoint
 class RouteFragment : Fragment() {
@@ -63,6 +54,9 @@ class RouteFragment : Fragment() {
         routeViewModel.articleRouteList.observe(viewLifecycleOwner, Observer {
             init(it)
         })
+        routeViewModel.errMessage.observe(viewLifecycleOwner, Observer {
+            showErrorToast(requireContext(), it.toString())
+        })
 
     }
 
@@ -72,6 +66,7 @@ class RouteFragment : Fragment() {
             ArrayAdapter(requireContext(), R.layout.item_category_sort_list, R.id.textView,regionArray)
         binding.listSortMenu.adapter = arrayAdapter
         binding.vm = routeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun init(data:List<RouteListModel>) {
