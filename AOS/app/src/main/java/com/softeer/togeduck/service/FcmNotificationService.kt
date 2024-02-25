@@ -7,31 +7,35 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.local.datasource.UserDataStore
-import com.softeer.togeduck.data.repository.FcmTokenRepository
-import com.softeer.togeduck.room.TogeduckDatabase
+import com.softeer.togeduck.data.model.chatting.ChatMessageModel
+import com.softeer.togeduck.data.repository.ChatMessageRepository
+import com.softeer.togeduck.data.repository.ChatRoomListRepository
 import com.softeer.togeduck.ui.chatting.ChatRoomActivity
+import com.softeer.togeduck.utils.TimeFormatter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FcmNotificationService: FirebaseMessagingService() {
+    private val chatRoomListRepository = ChatRoomListRepository(application)
+    private val chatMessageRepository = ChatMessageRepository(application)
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            FcmTokenRepository(UserDataStore(applicationContext)).storeFcmToken(token)
-        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
         createNotification(message)
+        saveMessage(message)
     }
 
     private fun createNotification(remoteMessage: RemoteMessage) {
@@ -71,9 +75,8 @@ class FcmNotificationService: FirebaseMessagingService() {
         notificationManager.notify(id.toInt(), notificationBuilder.build())
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun saveMessage(remoteMessage: RemoteMessage) {
-        val db = TogeduckDatabase.getInstance(applicationContext)
-
         val id = remoteMessage.data["roomId"]!!.toLong()
         val sender = remoteMessage.data["sender"]!!.toString()
         val message = remoteMessage.data["message"]!!.toString()
@@ -81,7 +84,39 @@ class FcmNotificationService: FirebaseMessagingService() {
         val type = remoteMessage.data["action"]!!.toString()
 
         CoroutineScope(Dispatchers.IO).launch {
-            // TODO 메세지 데이터베이스에 저장
+            val chatRoomListModel = chatRoomListRepository.get(id)
+
+            if (chatRoomListModel != null) {
+                chatRoomListModel.recentMessage = message
+                chatRoomListModel.recentTime = time
+                chatRoomListModel.unreadMessageCount++
+
+                chatRoomListRepository.update(chatRoomListModel)
+            }
+
+            val lastMessage = chatMessageRepository.getLastMessage(id)
+            var location = ""
+
+            val now = TimeFormatter.now()
+
+            if (lastMessage == null){
+                val timeChatMessageModel = ChatMessageModel(0, id, "", TimeFormatter.yyyyMMddE(now), now, "DATE", "CENTER")
+                chatMessageRepository.insert(timeChatMessageModel)
+
+                location = "FIRST_LEFT"
+            } else {
+                val lastMessageDate = TimeFormatter.toLocalDateTime(lastMessage.time!!).toLocalDate()
+                val nowDate = TimeFormatter.toLocalDateTime(now).toLocalDate()
+
+                if (!lastMessageDate.isEqual(nowDate)) {
+                    val timeChatMessageModel = ChatMessageModel(0, id, "", TimeFormatter.yyyyMMddE(now), now, "DATE", "CENTER")
+                    chatMessageRepository.insert(timeChatMessageModel)
+                }
+
+                location = "LEFT"
+            }
+
+            chatMessageRepository.insert(ChatMessageModel(0, id, sender, message, time, type, location))
         }
     }
 }
