@@ -10,7 +10,6 @@ data class SeatPaymentResponse(
     val destinationCity: String,
     val destination: String,
     val numberOfSeats: Int,
-    val numberOfReserverdSeats: Int,
-    val seatNo: Int,
+    val numberOfReservedSeats: Int,
     val price: Int,
 )
