@@ -3,6 +3,7 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
 import com.lisade.togeduck.dto.response.CoordinateResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
@@ -17,6 +18,7 @@ import com.lisade.togeduck.entity.Route;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
+import com.lisade.togeduck.exception.RouteNotFoundException;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.RouteRepository;
@@ -104,5 +106,10 @@ public class RouteService {
 
     public CoordinateResponse getCoordinate(Long routeId) {
         return routeRepository.getCoordinate(routeId);
+    }
+
+    public PaymentPageResponse getPaymentInfo(Long userId, Long routeId) {
+        return routeRepository.findPaymentInfo(userId, routeId)
+            .orElseThrow(RouteNotFoundException::new);
     }
 }

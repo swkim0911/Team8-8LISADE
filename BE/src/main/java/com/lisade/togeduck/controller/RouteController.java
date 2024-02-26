@@ -58,7 +58,8 @@ public class RouteController {
     }
 
     @GetMapping("/routes/{route_id}/payment")
-    public PaymentPageResponse getPaymentPage(@PathVariable(name = "route_id") Long routeId) {
-        return routService.getPaymentInfo(routeId);
+    public PaymentPageResponse getPaymentPage(@Login User user,
+        @PathVariable(name = "route_id") Long routeId) {
+        return routeService.getPaymentInfo(user.getId(), routeId);
     }
 }

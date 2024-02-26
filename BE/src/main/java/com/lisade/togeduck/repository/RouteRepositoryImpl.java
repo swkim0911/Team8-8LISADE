@@ -11,6 +11,7 @@ import static com.lisade.togeduck.entity.QUser.user;
 
 import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
@@ -327,5 +328,9 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(route.festival, festival)
             .where(route.id.eq(routeId))
             .fetchOne();
+    }
+
+    public Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId) {
+        return Optional.empty();
     }
 }
