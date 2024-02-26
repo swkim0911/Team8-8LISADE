@@ -51,6 +51,7 @@ class FcmNotificationService: FirebaseMessagingService() {
         val channelId = "chatNotification"
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
+        val roomName = remoteMessage.data["roomName"]!!.toString()
         val sender = remoteMessage.data["sender"]!!.toString()
         val message = remoteMessage.data["message"]!!.toString()
 
@@ -58,8 +59,9 @@ class FcmNotificationService: FirebaseMessagingService() {
             .setSmallIcon(R.mipmap.ic_launcher)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setDefaults(NotificationCompat.DEFAULT_SOUND or NotificationCompat.DEFAULT_VIBRATE)
-            .setContentTitle(sender)
-            .setContentText(message)
+            .setContentTitle(roomName)
+            .setContentText(sender)
+            .setSubText(message)
             .setAutoCancel(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setSound(soundUri)
