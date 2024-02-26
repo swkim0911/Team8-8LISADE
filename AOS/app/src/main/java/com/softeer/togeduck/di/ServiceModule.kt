@@ -3,8 +3,9 @@ package com.softeer.togeduck.di
 import com.softeer.togeduck.data.remote.service.ArticleDetailService
 import com.softeer.togeduck.data.remote.service.HomeService
 import com.softeer.togeduck.data.remote.service.OpenRouteService
-import com.softeer.togeduck.data.remote.service.UserService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
+import com.softeer.togeduck.data.remote.service.SeatService
+import com.softeer.togeduck.data.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +41,14 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService{
+    fun provideSeatService(retrofit: Retrofit): SeatService {
+        return retrofit.create(SeatService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService {
         return retrofit.create(ArticleDetailService::class.java)
     }
 

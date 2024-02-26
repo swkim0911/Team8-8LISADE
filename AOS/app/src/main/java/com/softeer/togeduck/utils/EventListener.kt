@@ -20,3 +20,7 @@ interface ItemClickWithCategoryId {
 interface ItemClickWithData {
     fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>)
 }
+
+interface ItemClickWithSeat {
+    fun onClick(existSelectedSeat: Boolean)
+}

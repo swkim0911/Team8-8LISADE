@@ -2,6 +2,8 @@ package com.lisade.togeduck.controller;
 
 import com.lisade.togeduck.annotation.Login;
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
+import com.lisade.togeduck.dto.response.CoordinateResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
 import com.lisade.togeduck.dto.response.RouteRegistrationResponse;
 import com.lisade.togeduck.dto.response.SeatListResponse;
@@ -46,5 +48,18 @@ public class RouteController {
     public SeatListResponse getList(
         @PathVariable(name = "route_id") Long routeId) {
         return routeService.getSeats(routeId);
+    }
+
+    @GetMapping("/routes/{route_id}/coordinate")
+    public CoordinateResponse getCoordinate(
+        @PathVariable(name = "route_id") Long routeId
+    ) {
+        return routeService.getCoordinate(routeId);
+    }
+
+    @GetMapping("/routes/{route_id}/payment")
+    public PaymentPageResponse getPaymentPage(@Login User user,
+        @PathVariable(name = "route_id") Long routeId) {
+        return routeService.getPaymentInfo(user.getId(), routeId);
     }
 }

@@ -7,9 +7,11 @@ import static com.lisade.togeduck.entity.QFestival.festival;
 import static com.lisade.togeduck.entity.QRoute.route;
 import static com.lisade.togeduck.entity.QSeat.seat;
 import static com.lisade.togeduck.entity.QStation.station;
-import static com.lisade.togeduck.entity.QUser.user;
 
+import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndStationInfo;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
@@ -20,13 +22,11 @@ import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.StationI
 import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import com.lisade.togeduck.dto.response.UserSeatDetailResponse;
 import com.lisade.togeduck.entity.enums.RouteStatus;
-import com.lisade.togeduck.entity.enums.SeatStatus;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -54,8 +54,8 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.station.name,
                 route.festival.location,
                 route.expectedTime,
-                getTotalSeats(routeId),
-                getReservationSeats(routeId),
+                route.numberOfSeats,
+                route.numberOfReservationSeats,
                 route.price
             )).from(route)
             .join(route.station)
@@ -77,7 +77,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.price,
                 route.status,
                 bus.numberOfSeats,
-                ExpressionUtils.as(getReservationSeats(), "reservedSeats")))
+                ExpressionUtils.as(route.numberOfReservationSeats, "reservedSeats")))
             .from(route)
             .join(station)
             .on(route.station.eq(station))
@@ -128,7 +128,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                 route.price,
                 route.status,
                 bus.numberOfSeats,
-                getReservationSeats(),
+                route.numberOfReservationSeats,
                 festival.thumbnailPath))
             .from(route)
             .join(station)
@@ -234,45 +234,10 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
         SeatInfo seatInfo = queryFactory.select(Projections.constructor(
                 SeatInfo.class,
                 seat.no,
-                getReservationSeats(routeId)))
+                route.numberOfReservationSeats))
             .from(seat)
             .where(seat.user.id.eq(userId).and(seat.route.id.eq(routeId))).fetchOne();
         return Optional.ofNullable(seatInfo);
-    }
-
-    private JPQLQuery<Long> getSeatId(Long routeId, Long userId) {
-        return JPAExpressions.select(seat.id).from(seat)
-            .where(seat.user.id.eq(userId).and(seat.route.id.eq(routeId)));
-    }
-
-    private JPQLQuery<Integer> getTotalSeats(Long routeId) {
-        return JPAExpressions.select(bus.numberOfSeats)
-            .from(route)
-            .where(route.id.eq(routeId))
-            .join(bus)
-            .on(route.bus.eq(bus));
-    }
-
-    private JPQLQuery<Integer> getReservationSeats() {
-        return JPAExpressions.select(seat.id.count().intValue())
-            .from(seat)
-            .where(seat.route.id.eq(route.id)
-                .and(seat.status.eq(SeatStatus.RESERVATION)));
-    }
-
-    private JPQLQuery<Integer> getReservationSeats(Long routeId) {
-        return JPAExpressions.select(seat.id.count().intValue())
-            .from(seat)
-            .where(seat.route.id.eq(routeId)
-                .and(seat.status.eq(SeatStatus.RESERVATION)));
-    }
-
-    public JPQLQuery<Long> getRouteId(Long userId) {
-        return JPAExpressions.select(seat.route.id)
-            .from(user)
-            .join(seat)
-            .on(seat.user.eq(user))
-            .where(user.id.eq(userId));
     }
 
     @Override
@@ -303,4 +268,72 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .where(seat.user.id.eq(userId).and(route.id.eq(routeId)).and(seat.route.id.eq(routeId)))
             .fetchOne();
     }
+
+    @Override
+    public CoordinateResponse getCoordinate(Long routeId) {
+        return queryFactory.select(
+                Projections.constructor(CoordinateResponse.class,
+                    route.station.xPos,
+                    route.station.yPos,
+                    route.festival.xPos,
+                    route.festival.yPos,
+                    route.station.name,
+                    route.festival.location,
+                    route.startedAt,
+                    route.expectedTime,
+                    route.numberOfReservationSeats,
+                    route.numberOfSeats,
+                    route.price,
+                    route.festival.startedAt
+                ))
+            .from(route)
+            .join(route.station, station)
+            .join(route.festival, festival)
+            .where(route.id.eq(routeId))
+            .fetchOne();
+    }
+
+    public Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<PaymentPageResponse.RouteAndFestivalInfo> findRouteAndFestivalInfoWhenPay(
+        Long routeId) {
+        return Optional.ofNullable(queryFactory.select(
+                Projections.constructor(PaymentPageResponse.RouteAndFestivalInfo.class,
+                    festival.title,
+                    festival.startedAt,
+                    city.name,
+                    festival.location))
+            .from(route)
+            .join(festival)
+            .on(route.festival.id.eq(festival.id))
+            .join(city)
+            .on(festival.city.id.eq(city.id))
+            .where(route.id.eq(routeId))
+            .fetchOne());
+    }
+
+    @Override
+    public Optional<RouteAndStationInfo> findRouteAndStationInfo(Long routeId) {
+        return Optional.ofNullable(queryFactory.select(
+                Projections.constructor(PaymentPageResponse.RouteAndStationInfo.class,
+                    city.name,
+                    station.name,
+                    route.startedAt,
+                    route.expectedTime,
+                    route.numberOfSeats,
+                    route.numberOfReservationSeats,
+                    route.price))
+            .from(route)
+            .join(station)
+            .on(route.station.id.eq(station.id))
+            .join(city)
+            .on(station.city.id.eq(city.id))
+            .where(route.id.eq(routeId))
+            .fetchOne());
+
+    }
+
 }

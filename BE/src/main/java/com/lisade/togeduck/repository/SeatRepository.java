@@ -9,4 +9,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long>, SeatRepositor
 
     @Query("select s from Seat as s join fetch s.route where s.id =:routeId and s.no =:no")
     Optional<Seat> findByRouteIdAndNoWithRoute(Long routeId, Integer no);
+
+    Optional<Seat> findByUserIdAndRouteId(Long userId, Long routeId);
 }

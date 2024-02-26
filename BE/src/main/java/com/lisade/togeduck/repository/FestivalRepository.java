@@ -4,6 +4,7 @@ import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.enums.FestivalStatus;
 import io.lettuce.core.dynamic.annotation.Param;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,9 +26,10 @@ public interface FestivalRepository extends JpaRepository<Festival, Long>,
         @Param("categoryId") Long categoryId,
         @Param("festivalStatus") FestivalStatus festivalStatus);
 
+    @NotNull
     @Override
-    @Query("SELECT f FROM Festival f LEFT JOIN FETCH f.festivalImages LEFT JOIN FETCH f.category WHERE f.id = :id")
-    Optional<Festival> findById(Long id);
+    @Query("SELECT f FROM Festival f LEFT JOIN FETCH f.category WHERE f.id = :id")
+    Optional<Festival> findById(@NotNull Long id);
 
     @Query("select max(f.id) from Festival as f")
     Long findMaxId();

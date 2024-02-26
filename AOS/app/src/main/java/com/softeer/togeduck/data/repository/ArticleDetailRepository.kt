@@ -6,7 +6,7 @@ import com.softeer.togeduck.data.mapper.toRouteListModel
 import com.softeer.togeduck.data.model.home.article_detail.ArticleDetailModel
 import com.softeer.togeduck.data.model.home.article_detail.RouteListModel
 import com.softeer.togeduck.data.model.home.article_detail.RouteDetailModel
-import com.softeer.togeduck.data.remote.datasource.home.article_detail.ArticleDetailRemoteDataSource
+import com.softeer.togeduck.data.remote.datasource.ArticleDetailRemoteDataSource
 import javax.inject.Inject
 
 class ArticleDetailRepository @Inject constructor(
