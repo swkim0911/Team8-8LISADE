@@ -9,6 +9,7 @@ import static com.lisade.togeduck.entity.QSeat.seat;
 import static com.lisade.togeduck.entity.QStation.station;
 import static com.lisade.togeduck.entity.QUser.user;
 
+import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
@@ -301,6 +302,30 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(route.seats, seat)
             .join(route.bus, bus)
             .where(seat.user.id.eq(userId).and(route.id.eq(routeId)).and(seat.route.id.eq(routeId)))
+            .fetchOne();
+    }
+
+    @Override
+    public CoordinateResponse getCoordinate(Long routeId) {
+        return queryFactory.select(
+                Projections.constructor(CoordinateResponse.class,
+                    route.station.xPos,
+                    route.station.yPos,
+                    route.festival.xPos,
+                    route.festival.yPos,
+                    route.station.name,
+                    route.festival.location,
+                    route.startedAt,
+                    route.expectedTime,
+                    route.numberOfReservationSeats,
+                    route.numberOfSeats,
+                    route.price,
+                    route.festival.startedAt
+                ))
+            .from(route)
+            .join(route.station, station)
+            .join(route.festival, festival)
+            .where(route.id.eq(routeId))
             .fetchOne();
     }
 }

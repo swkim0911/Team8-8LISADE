@@ -1,5 +1,6 @@
 package com.lisade.togeduck.repository;
 
+import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
@@ -36,4 +37,6 @@ public interface RouteRepositoryCustom {
     RouteCityAndDestinationDetail getRouteDetail(Long routeId);
 
     UserSeatDetailResponse getSeatDetail(Long userId, Long routeId);
+
+    CoordinateResponse getCoordinate(Long routeId);
 }
