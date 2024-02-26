@@ -26,14 +26,14 @@ class HomeListViewModel @Inject constructor(
     private var _size = MutableLiveData("")
     val size: LiveData<String> = _size
 
-    private var _categoryNum = MutableLiveData(6)
+    private var _categoryNum = MutableLiveData(2)
     val categoryNum: LiveData<Int> = _categoryNum
 
     private val params = CategoryFestivalRequest(
         category = _categoryNum.value,
         filter = "popular",
         page = 0,
-        size = 3,
+        size = 10,
     ).toMap()
 
     init {

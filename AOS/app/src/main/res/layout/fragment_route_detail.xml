@@ -24,15 +24,14 @@
             app:layout_constraintEnd_toEndOf="@id/mapImg"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.kakao.vectormap.MapView
             android:id="@+id/mapImg"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/dummy_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iconClose" />
+            app:layout_constraintTop_toBottomOf="@id/iconClose"/>
+
 
         <ImageView
             android:id="@+id/iconSpDp"
@@ -58,8 +57,8 @@
         <TextView
             android:id="@+id/departurePlace"
             android:layout_width="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="출발지점 입니다."
             android:textSize="18sp"
             android:textStyle="bold"
@@ -185,9 +184,9 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/mapImg"
             app:layout_constraintStart_toStartOf="@id/mapImg"
-            app:layout_constraintTop_toBottomOf="@id/totalPriceText"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/totalPriceText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
