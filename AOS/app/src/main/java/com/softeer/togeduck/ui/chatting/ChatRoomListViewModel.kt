@@ -1,16 +1,20 @@
 package com.softeer.togeduck.ui.chatting
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.data.repository.ChatRoomListRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChatRoomListViewModel(application: Application) : AndroidViewModel(application) {
-    private val chatRoomRepository: ChatRoomListRepository = ChatRoomListRepository(application)
+@HiltViewModel
+class ChatRoomListViewModel @Inject constructor(
+    private val chatRoomRepository: ChatRoomListRepository
+) : ViewModel() {
+
     private val _chatRooms = MutableLiveData<List<ChatRoomListModel>>()
     val chatRooms: LiveData<List<ChatRoomListModel>> get() = _chatRooms
 
