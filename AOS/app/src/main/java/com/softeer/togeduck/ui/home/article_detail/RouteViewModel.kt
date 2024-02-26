@@ -53,7 +53,9 @@ class RouteViewModel @Inject constructor(
 
     fun getArticleRouteList() {
         viewModelScope.launch {
-            articleDetailRepository.getArticleRoute(articleId.toString(), params)
+            // Need Fix
+//            articleDetailRepository.getArticleRoute(articleId.toString(), params)
+            articleDetailRepository.getArticleRoute(10.toString(), params)
                 .onSuccess {
                     _articleRouteList.value = it
                 }

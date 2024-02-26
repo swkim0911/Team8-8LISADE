@@ -1,6 +1,8 @@
 package com.softeer.togeduck.data.mapper
 
+import com.softeer.togeduck.data.dto.response.open_route.MakeRouteResponse
 import com.softeer.togeduck.data.dto.response.open_route.RegionListResponse
+import com.softeer.togeduck.data.model.home.open_route.MakeRouteModel
 import com.softeer.togeduck.data.model.home.open_route.RegionDetailModel
 import com.softeer.togeduck.data.model.home.open_route.RegionListModel
 
@@ -18,3 +20,9 @@ fun RegionListResponse.toRegionListModel():List<RegionListModel>{
     }
 }
 
+fun MakeRouteResponse.toMakeRouteModel():MakeRouteModel{
+    return MakeRouteModel(
+        festivalId = festivalId,
+        routeId = routeId
+    )
+}

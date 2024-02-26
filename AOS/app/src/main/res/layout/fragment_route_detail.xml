@@ -26,20 +26,25 @@
             app:layout_constraintBottom_toTopOf="@id/mapImg"
             app:layout_constraintEnd_toEndOf="@id/mapImg"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <ImageView
             android:id="@+id/mapImg"
             android:layout_width="300dp"
             android:layout_height="300dp"
+            android:src="@drawable/dummy_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iconClose">
-            <com.kakao.vectormap.MapView
-                android:id="@+id/mapImgs"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                />
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            app:layout_constraintTop_toBottomOf="@id/iconClose"/>
+
+<!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--            android:id="@+id/mapImg"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp"-->
+<!--          >-->
+<!--            <com.kakao.vectormap.MapView-->
+<!--                android:id="@+id/mapImgs"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="300dp" />-->
+<!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 
         <ImageView

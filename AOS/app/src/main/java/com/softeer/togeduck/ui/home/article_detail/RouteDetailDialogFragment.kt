@@ -55,13 +55,12 @@ class RouteDetailDialogFragment : DialogFragment() {
             )
         )
         // 수정필요
-        initMap()
+//        initMap()
 
 
     }
 
     private fun init() {
-        mapView = binding.mapImgs
         binding.vm = routeDetailDialogViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         routeDetailDialogViewModel.getRouteDetails()

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.softeer.togeduck.data.dto.request.home.open_route.MakeRouteRequest
 import com.softeer.togeduck.data.model.home.article_detail.ArticleDetailModel
-import com.softeer.togeduck.data.model.home.article_detail.RouteDetailModel
 import com.softeer.togeduck.data.repository.ArticleDetailRepository
 import com.softeer.togeduck.data.repository.OpenRouteRepository
 import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
@@ -30,11 +30,9 @@ class OpenRouteViewModel @Inject constructor(
     val errMessage: LiveData<String> = _errMessage
 
     private val _articleDetail = MutableLiveData<ArticleDetailModel>()
-    var articleDetail:LiveData<ArticleDetailModel> = _articleDetail
+    var articleDetail: LiveData<ArticleDetailModel> = _articleDetail
 
-
-
-    fun getArticleDetails(){
+    fun getArticleDetails() {
         viewModelScope.launch {
             articleDetailRepository.getFestivalDetail(10.toString())
                 .onSuccess {
@@ -49,7 +47,19 @@ class OpenRouteViewModel @Inject constructor(
         }
     }
 
+    fun requestMakeRoute() {
+        val body = MakeRouteRequest(
+            stationId = 7,
+            busId = 1,
+            distance = 443,
+            expectedTime = 7200,
+        )
 
+        viewModelScope.launch {
+            openRouteRepository.requestMakeRoute(10, body)
+
+        }
+    }
 
 
 }
