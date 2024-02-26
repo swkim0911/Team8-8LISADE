@@ -1,6 +1,7 @@
 package com.softeer.togeduck.ui.home.main.home_category
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,8 @@ import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.data.model.home.main.PopularArticleModel
 import com.softeer.togeduck.databinding.FragmentHomeCatergoryBinding
 import com.softeer.togeduck.ui.home.main.PopularArticleAdapter
+import com.softeer.togeduck.ui.home.main.home_list.HomeListFragmentDirections
+import com.softeer.togeduck.ui.reserve_status.ReserveStatusFragmentDirections
 import com.softeer.togeduck.utils.GridSpacingItemDecoration
 import com.softeer.togeduck.utils.ItemClick
 import com.softeer.togeduck.utils.fromDpToPx
@@ -52,7 +55,9 @@ class HomeCategoryFragment : Fragment() {
         )
         adapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                findNavController().navigate(R.id.action_homeCategoryFragment_to_homeListFragment)
+                val id = data[position].id
+                val action = HomeCategoryFragmentDirections.actionHomeCategoryFragmentToHomeListFragment(id)
+                findNavController().navigate(action)
             }
         }
     }

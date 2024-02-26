@@ -25,9 +25,18 @@
         <action
             android:id="@+id/action_homeListFragment_to_articleDetailActivity"
             app:destination="@id/articleDetailActivity" />
+        <argument
+            android:name="categoryId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <activity
         android:id="@+id/articleDetailActivity"
         android:name="com.softeer.togeduck.ui.home.article_detail.ArticleDetailActivity"
-        android:label="ArticleDetailActivity" />
+        android:label="ArticleDetailActivity" >
+        <argument
+            android:name="articleId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </activity>
 </navigation>

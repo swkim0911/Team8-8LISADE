@@ -79,6 +79,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("com.kakao.maps.open:android:2.9.2")
 }
 
 kapt {

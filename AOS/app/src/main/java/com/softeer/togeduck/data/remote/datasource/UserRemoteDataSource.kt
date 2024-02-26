@@ -1,4 +1,4 @@
-package com.softeer.togeduck.data.remote.datasource.intro
+package com.softeer.togeduck.data.remote.datasource
 
 import com.softeer.togeduck.data.dto.request.LoginRequest
 import com.softeer.togeduck.data.remote.service.UserService

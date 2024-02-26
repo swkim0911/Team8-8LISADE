@@ -22,6 +22,9 @@ class HomeCategoryViewModel @Inject constructor(
     private val _categoryList = MutableLiveData<List<HomeCategoryModel>>()
     val categoryList: LiveData<List<HomeCategoryModel>> = _categoryList
 
+    private val _categoryNum = MutableLiveData(-1)
+    val categoryNum = _categoryNum
+
     init{
         getCategory()
     }

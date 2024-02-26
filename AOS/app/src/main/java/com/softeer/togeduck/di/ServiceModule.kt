@@ -1,9 +1,12 @@
 package com.softeer.togeduck.di
 
+import com.softeer.togeduck.data.remote.service.ArticleDetailService
 import com.softeer.togeduck.data.remote.service.ChatService
 import com.softeer.togeduck.data.remote.service.HomeService
-import com.softeer.togeduck.data.remote.service.UserService
+import com.softeer.togeduck.data.remote.service.OpenRouteService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
+import com.softeer.togeduck.data.remote.service.SeatService
+import com.softeer.togeduck.data.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,4 +47,23 @@ class ServiceModule {
     ): ChatService {
         return retrofit.create(ChatService::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideSeatService(retrofit: Retrofit): SeatService {
+        return retrofit.create(SeatService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService {
+        return retrofit.create(ArticleDetailService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegionListService(retrofit: Retrofit): OpenRouteService{
+        return retrofit.create(OpenRouteService::class.java)
+    }
+
 }
