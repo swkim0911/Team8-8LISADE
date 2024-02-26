@@ -26,15 +26,14 @@ class SeatChartViewModel @Inject constructor(private val reserveStatusRepository
     val seatChart: LiveData<SeatChartModel> = _seatChart
 
     fun loadSeatChartData() {
-//        viewModelScope.launch {
-//            reserveStatusRepository.getSeatChart(routeId).onSuccess {
-//                _seatChart.value = it
-//            }.onFailure {
-//                recordErrLog(tag, it.message!!)
-//                _errMessage.value = DATA_LOAD_ERROR_MESSAGE
-//            }
-//        }
-        _seatChart.value = SeatChartModel(15, 3, 3, 4, 2)
+        viewModelScope.launch {
+            reserveStatusRepository.getSeatChart(routeId).onSuccess {
+                _seatChart.value = it
+            }.onFailure {
+                recordErrLog(tag, it.message!!)
+                _errMessage.value = DATA_LOAD_ERROR_MESSAGE
+            }
+        }
     }
 
 }
