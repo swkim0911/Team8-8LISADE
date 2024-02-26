@@ -55,4 +55,9 @@ public class RouteController {
     ) {
         return routeService.getCoordinate(routeId);
     }
+
+    @GetMapping("/routes/{route_id}/payment")
+    public PaymentPageResponse getPaymentPage(@PathVariable(name = "route_id") Long routeId) {
+        return routService.getPaymentInfo(routeId);
+    }
 }
