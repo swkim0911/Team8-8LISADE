@@ -13,6 +13,7 @@ fun HomeCategoryResponse.toHomeCategoryModel(): List<HomeCategoryModel> {
         HomeCategoryModel(
             imageUrl = category.image,
             title = category.name,
+            id = category.id,
         )
     }
 }

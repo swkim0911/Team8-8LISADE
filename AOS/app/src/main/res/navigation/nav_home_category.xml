@@ -25,6 +25,10 @@
         <action
             android:id="@+id/action_homeListFragment_to_articleDetailActivity"
             app:destination="@id/articleDetailActivity" />
+        <argument
+            android:name="categoryId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <activity
         android:id="@+id/articleDetailActivity"

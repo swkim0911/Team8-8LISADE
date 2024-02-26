@@ -6,13 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.softeer.togeduck.R
 import com.softeer.togeduck.data.model.home.main.HomeCategoryModel
 import com.softeer.togeduck.databinding.RvItemCategoryChipBinding
-import com.softeer.togeduck.utils.ItemClick
+import com.softeer.togeduck.utils.ItemClickWithCategoryId
 
-class HomeListCategoryChipAdapter(private val items: List<HomeCategoryModel>) :
+class HomeListCategoryChipAdapter(
+    private val items: List<HomeCategoryModel>,
+    private val categoryId: Int
+) :
     RecyclerView.Adapter<CategoryChipViewHolder>() {
     private lateinit var binding: RvItemCategoryChipBinding
-    private var selectedItemPosition = 0
-    var itemClick: ItemClick? = null
+    private var selectedItemPosition = categoryId
+    var itemClick: ItemClickWithCategoryId? = null
 
     override fun getItemCount(): Int {
         return items.size
@@ -37,6 +40,7 @@ class HomeListCategoryChipAdapter(private val items: List<HomeCategoryModel>) :
                 notifyItemChanged(previousSelectedPosition)
             }
             notifyItemChanged(position)
+            itemClick?.onClick(it, position,selectedItemPosition)
 
         }
         if (position == selectedItemPosition) {

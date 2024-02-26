@@ -26,18 +26,7 @@ class HomeListViewModel @Inject constructor(
     private var _size = MutableLiveData("")
     val size: LiveData<String> = _size
 
-    private var _categoryNum = MutableLiveData(2)
-    val categoryNum: LiveData<Int> = _categoryNum
-
-    private val params = CategoryFestivalRequest(
-        category = _categoryNum.value,
-        filter = "popular",
-        page = 0,
-        size = 10,
-    ).toMap()
-
     init {
-        getCategoryFestival()
         getCategory()
     }
 
@@ -45,11 +34,16 @@ class HomeListViewModel @Inject constructor(
         _size.value = itemCount
     }
 
-    private fun getCategoryFestival() {
+    fun getCategoryFestival(categoryNum:Int) {
+        val params = CategoryFestivalRequest(
+            category = categoryNum,
+            filter = "best",
+            page = 0,
+            size = 10,
+        ).toMap()
         viewModelScope.launch {
             homeRepository.getCategoryFestival(params)
                 .onSuccess {
-                    Log.d("TESTLOG", it.toString())
                     _festivalList.value = it
                 }
                 .onFailure {
