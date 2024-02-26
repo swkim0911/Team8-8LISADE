@@ -47,7 +47,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class PopularScoringBatchConfig {
 
     public static final double GRAVITY_CONSTANT = 1.8;
-    public static final int POOL_SIZE = 5;
+    public static final int POOL_SIZE = 2;
 
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;

@@ -11,17 +11,11 @@ import org.springframework.batch.item.ExecutionContext;
 public class FestivalIdRangePartitioner implements Partitioner {
 
     private final FestivalRepository festivalRepository;
-    static final Long SINGLE_THREAD_CRITICAL_POINT = 1001L;
 
     @Override
     public Map<String, ExecutionContext> partition(int gridSize) {
         Long max = festivalRepository.findMaxId();
         Long min = festivalRepository.findMinId();
-        Long totalFestivalSize = max - min;
-
-        if (totalFestivalSize < SINGLE_THREAD_CRITICAL_POINT) {
-            gridSize = 2;
-        }
 
         long targetSize = (max - min) / gridSize + 1;
         Map<String, ExecutionContext> result = new HashMap<>(gridSize);
