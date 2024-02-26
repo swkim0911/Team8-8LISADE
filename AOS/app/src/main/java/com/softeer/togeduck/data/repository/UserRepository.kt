@@ -22,5 +22,4 @@ class UserRepository @Inject constructor(
     fun getUserSessionId(): Flow<String?> {
         return userDataStore.getUserSessionId
     }
-
 }

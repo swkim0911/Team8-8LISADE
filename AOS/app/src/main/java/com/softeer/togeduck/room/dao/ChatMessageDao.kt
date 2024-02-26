@@ -13,6 +13,9 @@ interface ChatMessageDao {
     @Query("select * from chat_message where room_id =:roomId")
     fun getMessagesByRoomId(roomId: Long) : List<ChatMessageModel>
 
+    @Query("select * from chat_message where room_id =:roomId order by id desc limit 1")
+    fun getLastMessage(roomId: Long) : ChatMessageModel?
+
     @Insert
     fun insert(chatMessage: ChatMessageModel)
 

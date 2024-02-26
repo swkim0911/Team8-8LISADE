@@ -16,11 +16,17 @@ interface ChatRoomListDao {
     fun getAll() : List<ChatRoomListModel>
 
     @Insert
-    fun insert(chatRooms: ChatRoomListModel)
+    fun insert(chatRoom: ChatRoomListModel)
+
+    @Insert
+    fun insertAll(chatRoomList: List<ChatRoomListModel>)
 
     @Update
     fun update(chatRooms: ChatRoomListModel)
 
     @Delete
     fun delete(chatRooms: ChatRoomListModel)
+
+    @Query("delete from chat_room")
+    fun deleteAll()
 }

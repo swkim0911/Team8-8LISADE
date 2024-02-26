@@ -1,6 +1,7 @@
 package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.remote.service.ArticleDetailService
+import com.softeer.togeduck.data.remote.service.ChatService
 import com.softeer.togeduck.data.remote.service.HomeService
 import com.softeer.togeduck.data.remote.service.OpenRouteService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
@@ -39,6 +40,13 @@ class ServiceModule {
         return retrofit.create(ReserveStatusService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideChatService(
+        retrofit: Retrofit
+    ): ChatService {
+        return retrofit.create(ChatService::class.java)
+    }
     @Provides
     @Singleton
     fun provideSeatService(retrofit: Retrofit): SeatService {
