@@ -28,10 +28,9 @@ class LoginViewModel @Inject constructor(
                 sessionId?.let {
                     viewModelScope.launch {
                         sessionStore(it)
+                        getChatRoomList()
                     }
                 }
-
-                getChatRoomList()
             } else {
 
             }
