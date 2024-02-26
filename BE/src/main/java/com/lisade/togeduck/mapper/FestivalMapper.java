@@ -24,7 +24,7 @@ public interface FestivalMapper {
 
     FestivalResponse toFestivalResponse(FestivalViewDto festivalViewDto);
 
-    @Mapping(target = "paths", source = "festivalImages")
+    @Mapping(target = "paths", source = "thumbnailPath")
     @Mapping(target = "category", source = "category.name")
     FestivalDetailResponse toFestivalDetailResponse(Festival festival);
 
