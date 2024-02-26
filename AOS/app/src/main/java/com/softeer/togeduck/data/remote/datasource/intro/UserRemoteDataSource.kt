@@ -1,7 +1,5 @@
 package com.softeer.togeduck.data.remote.datasource.intro
 
-import com.softeer.togeduck.data.dto.BaseResponse
-import com.softeer.togeduck.data.dto.request.FcmTokenRequest
 import com.softeer.togeduck.data.dto.request.LoginRequest
 import com.softeer.togeduck.data.remote.service.UserService
 import retrofit2.Response
@@ -14,11 +12,5 @@ class UserRemoteDataSource @Inject constructor(
         loginRequest: LoginRequest
     ): Response<String> {
         return userService.login(loginRequest)
-    }
-
-    suspend fun sendFcmToken(
-        fcmTokenRequest: FcmTokenRequest
-    ): Response<String> {
-        return userService.sendFcmToken(fcmTokenRequest)
     }
 }
