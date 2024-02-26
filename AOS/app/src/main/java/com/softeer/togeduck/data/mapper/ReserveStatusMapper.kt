@@ -1,10 +1,9 @@
 package com.softeer.togeduck.data.mapper
 
-import android.util.Log
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatusDetailResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.MobileTicketResponse
-import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatus
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.RecruitStatus
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.SeatChartResponse
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel
 import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
@@ -25,7 +24,7 @@ fun ReserveStatusResponse.toReserveStatusModel(): ReserveStatusModel {
             festivalPlace = it.location,
             cost = it.price,
             formattedCost = it.price.addCommas(),
-            recruitStatus = it.totalSeats == it.reservedSeats,
+            recruitStatus = it.status,
             recruitPhrase = "${it.status.value}(${it.reservedSeats}/${it.totalSeats})",
         )
     })
@@ -33,7 +32,7 @@ fun ReserveStatusResponse.toReserveStatusModel(): ReserveStatusModel {
 
 fun ReserveStatusDetailResponse.toReserveStatusDetailModel(): ReserveStatusDetailModel {
     val driverDispatched = when (status) {
-        ReserveStatus.RECRUIT, ReserveStatus.RECRUIT_COMPLETE -> false
+        RecruitStatus.RECRUIT, RecruitStatus.RECRUIT_COMPLETE -> false
         else -> true
     }
     return ReserveStatusDetailModel(

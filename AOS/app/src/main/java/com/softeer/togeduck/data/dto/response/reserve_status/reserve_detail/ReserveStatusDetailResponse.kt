@@ -7,7 +7,7 @@ data class ReserveStatusDetailResponse(
     val title: String,
     val seatNo: Int,
     val expectedDuration: String,
-    val status: ReserveStatus,
+    val status: RecruitStatus,
     val totalSeats: Int,
     val reservedSeats: Int,
     val price: Int,
@@ -21,7 +21,7 @@ data class ReserveStatusDetailResponse(
     val driverInfo: DriverInfoResponse,
 )
 
-enum class ReserveStatus(val value: String) {
+enum class RecruitStatus(val value: String) {
     RECRUIT("모집중"),
     RECRUIT_COMPLETE("모집완료"),
     OPERATION_CONFIRM("출발확정"),
