@@ -12,14 +12,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.databinding.FragmentChatRoomListBinding
 import com.softeer.togeduck.utils.ItemClick
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChatRoomListFragment : Fragment() {
     private lateinit var binding: FragmentChatRoomListBinding
-    private lateinit var viewModel: ChatRoomListViewModel
+    private val chatRoomListViewModel: ChatRoomListViewModel by viewModels()
     private var receiverRegistered = false
     private var receiver : BroadcastReceiver? = null
 
@@ -34,7 +36,6 @@ class ChatRoomListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[ChatRoomListViewModel::class.java]
         initObservers()
     }
 
@@ -44,7 +45,7 @@ class ChatRoomListFragment : Fragment() {
             if(receiver == null){
                 receiver = object: BroadcastReceiver(){
                     override fun onReceive(p0: Context?, p1: Intent?) {
-                        viewModel.loadChatRooms()
+                        chatRoomListViewModel.loadChatRooms()
                     }
                 }
             }
@@ -72,7 +73,7 @@ class ChatRoomListFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onResume() {
         super.onResume()
-        viewModel.loadChatRooms()
+        chatRoomListViewModel.loadChatRooms()
         startRegisterReceiver();
     }
 
@@ -93,7 +94,7 @@ class ChatRoomListFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.chatRooms.observe(viewLifecycleOwner) { chatRooms ->
+        chatRoomListViewModel.chatRooms.observe(viewLifecycleOwner) { chatRooms ->
             val adapter = ChatRoomListAdapter(chatRooms)
             binding.rvChatRoomList.adapter = adapter
 
@@ -113,6 +114,6 @@ class ChatRoomListFragment : Fragment() {
     }
 
     private fun setUnreadMessageCountZero(chatRoomListModel: ChatRoomListModel) {
-        viewModel.updateChatRoom(chatRoomListModel.copy(unreadMessageCount = 0))
+        chatRoomListViewModel.updateChatRoom(chatRoomListModel.copy(unreadMessageCount = 0))
     }
 }
