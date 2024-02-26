@@ -2,11 +2,13 @@ package com.softeer.togeduck.ui.chatting
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.RECEIVER_EXPORTED
 import android.content.Context.RECEIVER_NOT_EXPORTED
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.databinding.FragmentChatRoomListBinding
 import com.softeer.togeduck.utils.ItemClick
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notifyAll
 
 @AndroidEntryPoint
 class ChatRoomListFragment : Fragment() {
@@ -50,7 +53,7 @@ class ChatRoomListFragment : Fragment() {
                 }
             }
             val filter = IntentFilter("com.package.notification")
-            requireActivity().registerReceiver(receiver, filter, RECEIVER_NOT_EXPORTED)
+            requireActivity().registerReceiver(receiver, filter, RECEIVER_EXPORTED)
 
             receiverRegistered = true
         }
