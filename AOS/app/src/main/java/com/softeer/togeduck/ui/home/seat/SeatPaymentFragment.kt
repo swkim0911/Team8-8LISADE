@@ -44,6 +44,7 @@ class SeatPaymentFragment : Fragment() {
 
     private fun init() {
         binding.paymentBtn.setOnClickListener {
+            seatPaymentViewModel.setMySeatData()
             findNavController().navigate(R.id.action_seatPaymentFragment_to_seatPaymentCompleteFragment)
         }
 
@@ -51,6 +52,7 @@ class SeatPaymentFragment : Fragment() {
         val selectedSeatNum = args.selectedSeatNum
         seatPaymentViewModel.routeId = routeId
         seatPaymentViewModel.selectedNum = selectedSeatNum
+
         seatPaymentViewModel.loadSeatPaymentData()
         seatPaymentViewModel.errMessage.observe(viewLifecycleOwner) {
             showErrorToast(requireContext(), it.toString())

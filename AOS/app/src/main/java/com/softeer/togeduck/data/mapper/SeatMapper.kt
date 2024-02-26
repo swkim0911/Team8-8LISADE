@@ -40,7 +40,6 @@ fun SeatPaymentResponse.toSeatPaymentModel(seatNo: Int): SeatPaymentModel {
 
 fun MySeatModel.toMySeatRequest(): MySeatRequest {
     return MySeatRequest(
-        userId = userId,
         seatNo = seatNo
     )
 }

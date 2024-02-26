@@ -1,8 +1,10 @@
 package com.softeer.togeduck.data.repository
 
 import com.softeer.togeduck.data.dto.request.home.seat.MySeatRequest
+import com.softeer.togeduck.data.mapper.toMySeatRequest
 import com.softeer.togeduck.data.mapper.toSeatInfoModel
 import com.softeer.togeduck.data.mapper.toSeatPaymentModel
+import com.softeer.togeduck.data.model.home.seat.MySeatModel
 import com.softeer.togeduck.data.model.home.seat.SeatPaymentModel
 import com.softeer.togeduck.data.model.home.seat.SeatsInfoModel
 import com.softeer.togeduck.data.remote.datasource.SeatRemoteDataSource
@@ -29,10 +31,10 @@ class SeatRepository @Inject constructor(private val seatRemoteDataSource: SeatR
 
     suspend fun setMySeat(
         routeId: Int,
-        mySeatRequest: MySeatRequest
+        mySeatModel: MySeatModel,
     ): Result<Any> {
         return kotlin.runCatching {
-            seatRemoteDataSource.setMySeat(routeId, mySeatRequest)
+            seatRemoteDataSource.setMySeat(routeId, mySeatModel.toMySeatRequest())
         }
     }
 }
