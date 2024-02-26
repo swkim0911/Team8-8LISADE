@@ -1,12 +1,17 @@
 package com.softeer.togeduck.ui.chatting
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.databinding.FragmentChatRoomListBinding
@@ -15,6 +20,8 @@ import com.softeer.togeduck.utils.ItemClick
 class ChatRoomListFragment : Fragment() {
     private lateinit var binding: FragmentChatRoomListBinding
     private lateinit var viewModel: ChatRoomListViewModel
+    private var receiverRegistered = false
+    private var receiver : BroadcastReceiver? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,9 +38,55 @@ class ChatRoomListFragment : Fragment() {
         initObservers()
     }
 
+    private fun startRegisterReceiver(){
+        if(!receiverRegistered){
+            if(receiver == null){
+                receiver = object: BroadcastReceiver(){
+                    override fun onReceive(p0: Context?, p1: Intent?) {
+                        viewModel.loadChatRooms()
+                    }
+                }
+            }
+            val filter = IntentFilter("com.package.notification")
+            requireActivity().registerReceiver(receiver, filter)
+
+            receiverRegistered = true
+        }
+    }
+
+    private fun finishRegisterReceiver() {
+        if (receiverRegistered) {
+            requireActivity().unregisterReceiver(receiver)
+            receiver = null
+            receiverRegistered = false
+        }
+    }
+
+    private fun pauseRegisterReceiver() {
+        if (receiverRegistered) {
+            receiverRegistered = false
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         viewModel.loadChatRooms()
+        startRegisterReceiver();
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pauseRegisterReceiver()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        finishRegisterReceiver()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startRegisterReceiver()
     }
 
     private fun initObservers() {
