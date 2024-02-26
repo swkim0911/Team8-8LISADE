@@ -1,19 +1,19 @@
 package com.softeer.togeduck.ui.chatting
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softeer.togeduck.data.local.datasource.UserDataStore
 import com.softeer.togeduck.data.model.chatting.ChatMessageModel
 import com.softeer.togeduck.data.repository.ChatMessageRepository
 import com.softeer.togeduck.data.repository.ChatRoomListRepository
+import com.softeer.togeduck.data.repository.UserRepository
 import com.softeer.togeduck.utils.TimeFormatter
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -24,12 +24,13 @@ import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 import ua.naiksoftware.stomp.dto.StompHeader
 import java.util.UUID
+import javax.inject.Inject
 
-
-class ChatRoomViewModel(application: Application) : AndroidViewModel(application) {
-    private val chatMessageRepository = ChatMessageRepository(application)
-    private val chatRoomListRepository = ChatRoomListRepository(application)
-    private val userDataStore = UserDataStore(application)
+@HiltViewModel
+class ChatRoomViewModel @Inject constructor(
+    private val chatMessageRepository : ChatMessageRepository,
+    private val chatRoomListRepository : ChatRoomListRepository,
+    private val userRepository : UserRepository) : ViewModel() {
 
     private val _chatMessages = MutableLiveData<List<ChatMessageModel>>()
     val chatMessages: LiveData<List<ChatMessageModel>> get() = _chatMessages
@@ -80,7 +81,7 @@ class ChatRoomViewModel(application: Application) : AndroidViewModel(application
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val session = userDataStore.getUserSessionId.first()
+            val session = userRepository.getUserSessionId().first()
 
             withContext(Dispatchers.Main) {
                 val headerList = ArrayList<StompHeader>()
