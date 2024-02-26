@@ -37,7 +37,7 @@ public class ChatController {
     @MessageMapping(value = "/chat/message")
     public void message(@RequestBody ChatMessageRequest chatMessageRequest)
         throws FirebaseMessagingException {
-        chatService.save(chatMessageRequest);
+//        chatService.save(chatMessageRequest);
 
         simpleMessageSendingOperations.convertAndSend(
             "/topic/message/" + chatMessageRequest.getRoomId(), chatMessageRequest);
