@@ -12,7 +12,7 @@ public class ChatRoomMapper {
             .id(chatRoom.getId())
             .routeId(chatRoom.getRoute().getId())
             .roomName(chatRoom.getRoomName())
-            .thumbnailPath(chatRoom.getThumbnailPath())
+            .thumbnail(chatRoom.getThumbnailPath())
             .build();
     }
 

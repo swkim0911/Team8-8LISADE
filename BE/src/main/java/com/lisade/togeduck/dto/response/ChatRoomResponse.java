@@ -14,5 +14,5 @@ public class ChatRoomResponse {
     private Long id;
     private Long routeId;
     private String roomName;
-    private String thumbnailPath;
+    private String thumbnail;
 }
