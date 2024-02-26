@@ -48,16 +48,6 @@ class ChatRoomViewModel(application: Application) : AndroidViewModel(application
         loadChatMessages(id)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        stomp.disconnect()
-
-        if (newMessages.value!!.isNotEmpty()) {
-            insertNewMessages()
-            updateChatRoom()
-        }
-    }
-
     private fun loadChatMessages(id: Long) {
         viewModelScope.launch {
             val messages = chatMessageRepository.getMessagesByRoomId(id)
@@ -97,6 +87,17 @@ class ChatRoomViewModel(application: Application) : AndroidViewModel(application
                 headerList.add(StompHeader("Cookie", session))
                 stomp.connect(headerList)
             }
+        }
+    }
+
+    fun disconnectStomp() {
+        stomp.disconnect()
+    }
+
+    fun saveMessages() {
+        if (!_newMessages.value.isNullOrEmpty()) {
+            insertNewMessages()
+            updateChatRoom()
         }
     }
 

@@ -85,6 +85,12 @@ class ChatRoomActivity: AppCompatActivity() {
         viewModel.readMessage()
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.disconnectStomp()
+        viewModel.saveMessages()
+    }
+
     private fun keyBordShow() {
         WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.ime())
     }
