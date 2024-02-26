@@ -1,12 +1,11 @@
 package com.softeer.togeduck.ui.home.open_route
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.model.home.open_route.RegionListModel
-import com.softeer.togeduck.data.repository.RegionListRepository
+import com.softeer.togeduck.data.repository.OpenRouteRepository
 import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
 import com.softeer.togeduck.utils.recordErrLog
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegionListViewModel @Inject constructor(
-    private val regionListRepository: RegionListRepository
+    private val openRouteRepository: OpenRouteRepository
 ) : ViewModel() {
 
     private val tag = this.javaClass.simpleName.substring(0, 4)
@@ -46,7 +45,7 @@ class RegionListViewModel @Inject constructor(
 
     fun getPopularFestival() {
         viewModelScope.launch {
-            regionListRepository.getRegionList()
+            openRouteRepository.getRegionList()
                 .onSuccess {
                     _regionList.value = it
                 }

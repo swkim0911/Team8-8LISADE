@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentOpenRouteBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class OpenRouteFragment : Fragment() {
     private var _binding: FragmentOpenRouteBinding? = null
     private val binding get() = _binding!!
@@ -43,6 +45,7 @@ class OpenRouteFragment : Fragment() {
             findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
         }
     }
+
 
     private fun setSelectedImage(){
         val busImageList = listOf(

@@ -1,9 +1,11 @@
 package com.softeer.togeduck.data.repository
 
 import com.softeer.togeduck.data.mapper.toArticleDetailModel
+import com.softeer.togeduck.data.mapper.toRouteDetailModel
 import com.softeer.togeduck.data.mapper.toRouteListModel
 import com.softeer.togeduck.data.model.home.article_detail.ArticleDetailModel
 import com.softeer.togeduck.data.model.home.article_detail.RouteListModel
+import com.softeer.togeduck.data.model.home.article_detail.RouteDetailModel
 import com.softeer.togeduck.data.remote.datasource.home.article_detail.ArticleDetailRemoteDataSource
 import javax.inject.Inject
 
@@ -28,4 +30,12 @@ class ArticleDetailRepository @Inject constructor(
         }
     }
 
+    suspend fun getRouteDetail(
+        festivalId:Int,
+        routeId:Int
+    ):Result<RouteDetailModel>{
+        return kotlin.runCatching {
+            articleDetailRemoteDataSource.getRouteDetail(festivalId,routeId).toRouteDetailModel()
+        }
+    }
 }

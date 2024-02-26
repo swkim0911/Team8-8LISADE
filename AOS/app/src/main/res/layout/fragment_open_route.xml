@@ -8,6 +8,9 @@
         <variable
             name="vm"
             type="com.softeer.togeduck.ui.home.open_route.RegionListViewModel" />
+        <variable
+            name="orVm"
+            type="com.softeer.togeduck.ui.home.open_route.OpenRouteViewModel" />
 
     </data>
 

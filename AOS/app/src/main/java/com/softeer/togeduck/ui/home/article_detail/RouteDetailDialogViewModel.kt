@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.model.home.article_detail.ArticleDetailModel
+import com.softeer.togeduck.data.model.home.article_detail.RouteDetailModel
 import com.softeer.togeduck.data.repository.ArticleDetailRepository
 import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
 import com.softeer.togeduck.utils.recordErrLog
@@ -15,38 +16,22 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ArticleDetailViewModel @Inject constructor(
+class RouteDetailDialogViewModel @Inject constructor(
     private val articleDetailRepository: ArticleDetailRepository
-): ViewModel() {
-
+): ViewModel(){
     private val tag = this.javaClass.simpleName.substring(0, 4)
 
     private var _errMessage = MutableLiveData<String>()
     val errMessage: LiveData<String> = _errMessage
 
-    private val _articleDetail = MutableLiveData<ArticleDetailModel>()
-    val articleDetail: LiveData<ArticleDetailModel> = _articleDetail
+    private val _routeDetail = MutableLiveData<RouteDetailModel>()
+    val routeDetail: LiveData<RouteDetailModel> = _routeDetail
 
-    private val _imgUrl = MutableLiveData("https://togeduckbucket.s3.amazonaws.com/festival_image/lill.png")
-    val imgUrl: LiveData<String> = _imgUrl
-
-    private var articleId = 1
-
-    fun getArticleId(id:Int){
-        articleId = id
-        Log.d("articleId4", articleId.toString())
-    }
-
-    fun getArticleDetails(){
+    fun getRouteDetails(){
         viewModelScope.launch {
-            Log.d("articleId3", articleId.toString())
-            articleDetailRepository.getFestivalDetail(articleId.toString())
+            articleDetailRepository.getRouteDetail(10,1)
                 .onSuccess {
-//                    _imgUrl.value = it.paths[0]
-                    Log.d("IMGURL",_imgUrl.value.toString())
-                    Log.d("IMGURL2",_imgUrl.toString())
-                    _articleDetail.value = it
-
+                    _routeDetail.value = it
                 }
                 .onFailure {
                     recordErrLog(tag, it.message!!)
@@ -54,6 +39,7 @@ class ArticleDetailViewModel @Inject constructor(
                 }
         }
     }
+
 
 
 }

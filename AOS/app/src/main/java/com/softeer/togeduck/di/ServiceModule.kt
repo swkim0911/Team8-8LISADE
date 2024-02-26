@@ -2,7 +2,7 @@ package com.softeer.togeduck.di
 
 import com.softeer.togeduck.data.remote.service.ArticleDetailService
 import com.softeer.togeduck.data.remote.service.HomeService
-import com.softeer.togeduck.data.remote.service.RegionListService
+import com.softeer.togeduck.data.remote.service.OpenRouteService
 import com.softeer.togeduck.data.remote.service.UserService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
 import dagger.Module
@@ -10,7 +10,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -47,8 +46,8 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideRegionListService(retrofit: Retrofit): RegionListService{
-        return retrofit.create(RegionListService::class.java)
+    fun provideRegionListService(retrofit: Retrofit): OpenRouteService{
+        return retrofit.create(OpenRouteService::class.java)
     }
 
 }
