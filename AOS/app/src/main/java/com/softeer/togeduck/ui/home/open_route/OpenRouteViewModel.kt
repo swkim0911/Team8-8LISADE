@@ -1,4 +1,4 @@
-package com.softeer.togeduck.ui.home.article_detail
+package com.softeer.togeduck.ui.home.open_route
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,8 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softeer.togeduck.data.model.home.article_detail.ArticleDetailModel
+import com.softeer.togeduck.data.model.home.article_detail.RouteDetailModel
 import com.softeer.togeduck.data.repository.ArticleDetailRepository
+import com.softeer.togeduck.data.repository.OpenRouteRepository
 import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
+import com.softeer.togeduck.utils.convertS3Url
 import com.softeer.togeduck.utils.recordErrLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,9 +18,11 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ArticleDetailViewModel @Inject constructor(
+class OpenRouteViewModel @Inject constructor(
+    private val openRouteRepository: OpenRouteRepository,
     private val articleDetailRepository: ArticleDetailRepository
-): ViewModel() {
+) : ViewModel() {
+
 
     private val tag = this.javaClass.simpleName.substring(0, 4)
 
@@ -25,21 +30,17 @@ class ArticleDetailViewModel @Inject constructor(
     val errMessage: LiveData<String> = _errMessage
 
     private val _articleDetail = MutableLiveData<ArticleDetailModel>()
-    val articleDetail: LiveData<ArticleDetailModel> = _articleDetail
+    var articleDetail:LiveData<ArticleDetailModel> = _articleDetail
 
-    private var articleId = 1
 
-    fun getArticleId(id:Int){
-        articleId = id
-        Log.d("articleId4", articleId.toString())
-    }
 
     fun getArticleDetails(){
         viewModelScope.launch {
-            articleDetailRepository.getFestivalDetail(articleId.toString())
+            articleDetailRepository.getFestivalDetail(10.toString())
                 .onSuccess {
+                    Log.d("imgurl", it.paths.convertS3Url())
+                    Log.d("TESTLOG123", it.toString())
                     _articleDetail.value = it
-
                 }
                 .onFailure {
                     recordErrLog(tag, it.message!!)
@@ -47,6 +48,8 @@ class ArticleDetailViewModel @Inject constructor(
                 }
         }
     }
+
+
 
 
 }

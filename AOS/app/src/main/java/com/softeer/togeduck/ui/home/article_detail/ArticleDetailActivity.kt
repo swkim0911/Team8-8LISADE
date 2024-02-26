@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navArgs
 import com.softeer.togeduck.R
@@ -30,7 +31,8 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     private fun init() {
         val articleId = args.articleId
-
+        articleDetailViewModel.getArticleId(articleId)
+        Log.d("ARTICLEID2", articleId.toString())
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.detailFragmentContainerView) as NavHostFragment

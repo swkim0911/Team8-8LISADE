@@ -28,19 +28,21 @@ class RouteViewModel @Inject constructor(
     private val _articleRouteList = MutableLiveData<List<RouteListModel>>()
     val articleRouteList: LiveData<List<RouteListModel>> = _articleRouteList
 
-    private var articleId = 1
+    private var articleId = 10
 
 
     // Need FIx
     private val params = ArticleRouteRequest(
         city = "",
-        sort = "",
+        sort = "best",
         page = 1,
-        size = 3,
+        size = 10,
     ).toMap()
 
     fun getArticleId(id:Int){
         articleId = id
+        Log.d("articleId44", articleId.toString())
+
     }
 
     private var _size = MutableLiveData("0")

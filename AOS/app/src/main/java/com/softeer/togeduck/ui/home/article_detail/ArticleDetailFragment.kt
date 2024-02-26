@@ -22,7 +22,7 @@ class ArticleDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private val articleDetailViewModel: ArticleDetailViewModel by viewModels()
+    private val articleDetailViewModel: ArticleDetailViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

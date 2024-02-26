@@ -5,7 +5,7 @@ data class ArticleDetailModel(
     val content: String,
     val id: Int,
     val location: String,
-    val paths: List<String>,
+    val paths: String,
     val startedAt: String,
     val title: String
 )

@@ -13,6 +13,10 @@ interface ItemClickWithRouteId {
 
 }
 
+interface ItemClickWithCategoryId {
+    fun onClick(view: View, position: Int, categoryId: Int)
+}
+
 interface ItemClickWithData {
     fun onClick(view: View, position: Int, detailList: List<RegionDetailModel>)
 }
