@@ -7,5 +7,5 @@ data class MobileTicketModel(
     val arrivalPlace: String,
     val departureTime: String,
     val arrivalTime: String,
-    val seatNo: String,
+    val seatNo: Int,
 )

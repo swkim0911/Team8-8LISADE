@@ -48,6 +48,9 @@ class MobileTicketFragment : Fragment() {
     }
 
     private fun init() {
+        binding.vm = mobileTicketViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         val routeId = args.routeId
         mobileTicketViewModel.routeId = routeId
 
