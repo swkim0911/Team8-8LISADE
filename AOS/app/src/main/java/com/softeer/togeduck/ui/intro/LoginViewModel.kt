@@ -1,22 +1,25 @@
 package com.softeer.togeduck.ui.intro
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
-import com.softeer.togeduck.data.dto.request.FcmTokenRequest
 import com.softeer.togeduck.data.dto.request.LoginRequest
-import com.softeer.togeduck.data.local.datasource.UserDataStore
+import com.softeer.togeduck.data.dto.response.chat.ChatRoomListResponse
+import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
+import com.softeer.togeduck.data.repository.ChatRepository
+import com.softeer.togeduck.data.repository.ChatRoomListRepository
 import com.softeer.togeduck.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: UserRepository,
+    private val chatRoomListRepository: ChatRoomListRepository,
+    private val chatRepository: ChatRepository,
+    private val loginRepository: UserRepository
 ) : ViewModel() {
+
     fun saveSessionId() {
         viewModelScope.launch {
             val response = loginRepository.login(LoginRequest("user1", "password1"))
@@ -28,25 +31,38 @@ class LoginViewModel @Inject constructor(
                     }
                 }
 
-                sendFcmToken()
+                getChatRoomList()
             } else {
 
             }
         }
     }
 
-    private fun sendFcmToken() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            val token = it
+    private fun getChatRoomList() {
+        viewModelScope.launch {
+            val response = chatRepository.getChatRoomList()
 
-            viewModelScope.launch {
-                val response = loginRepository.sendFcmToken(FcmTokenRequest(token))
-                if (response.isSuccessful) {
-
-                } else {
-
+            if(response.isSuccessful) {
+                if (!response.body().isNullOrEmpty()) {
+                    saveChatRoomList(response.body()!!)
                 }
+            } else {
+
             }
+        }
+    }
+
+    private suspend fun saveChatRoomList(chatRoomListResponse: List<ChatRoomListResponse>) {
+        if(chatRoomListResponse.isNotEmpty()) {
+            chatRoomListResponse.forEach {
+                FirebaseMessaging.getInstance().subscribeToTopic(it.id.toString())
+            }
+
+            chatRoomListRepository.insertAll(
+                chatRoomListResponse.map {
+                    ChatRoomListModel(it.id, it.routeId, it.thumbnail, it.roomName, "", "", 0)
+                }.toList()
+            )
         }
     }
 
