@@ -49,7 +49,7 @@ public class RouteController {
         return routeService.getSeats(routeId);
     }
 
-    @GetMapping("/route/{route_id}/coordinate")
+    @GetMapping("/routes/{route_id}/coordinate")
     public CoordinateResponse getCoordinate(
         @PathVariable(name = "route_id") Long routeId
     ) {
