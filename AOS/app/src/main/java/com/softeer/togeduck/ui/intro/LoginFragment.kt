@@ -19,6 +19,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel: LoginViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +30,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
         binding.run{
             registerBtn.setOnClickListener{
                 findNavController().navigate(R.id.action_intro_login_to_intro_register)
@@ -40,5 +42,9 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun init(){
+        binding.vm = loginViewModel
+        binding.lifecycleOwner = this
+    }
 
 }
