@@ -1,5 +1,7 @@
 package com.softeer.togeduck.ui.intro
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
@@ -20,9 +22,16 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository
 ) : ViewModel() {
 
+    private val _id = MutableLiveData<String>("")
+    val id:LiveData<String> = _id
+
+    private val _password = MutableLiveData<String>("")
+    val password:LiveData<String> = _password
+
+
     fun saveSessionId() {
         viewModelScope.launch {
-            val response = loginRepository.login(LoginRequest("user1", "password1"))
+            val response = loginRepository.login(LoginRequest(_id.value!!, _password.value!!))
             if (response.isSuccessful) {
                 val sessionId = extractSessionId(response.headers()["Set-Cookie"])
                 sessionId?.let {
@@ -80,5 +89,10 @@ class LoginViewModel @Inject constructor(
             }
         }
         return null
+    }
+
+    fun setLoginForm(id:String,password:String){
+        _id.value = id
+        _password.value = password
     }
 }
