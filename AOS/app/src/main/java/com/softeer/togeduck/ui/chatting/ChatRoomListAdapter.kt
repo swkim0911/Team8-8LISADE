@@ -59,7 +59,13 @@ class ChatRoomListAdapter(private val items: List<ChatRoomListModel>) :
 
                 chatRoomName.text = item.roomName
                 chatRoomRecentMessage.text = item.recentMessage
-                chatRoomRecentTime.text = setTimeFormat(item.recentTime)
+
+                if(item.recentTime.isNotEmpty()) {
+                    chatRoomRecentTime.text = setTimeFormat(item.recentTime)
+                    chatRoomRecentTime.visibility = View.VISIBLE
+                } else {
+                    chatRoomRecentTime.visibility = View.INVISIBLE
+                }
 
                 if(item.unreadMessageCount == 0){
                     chatRoomUnreadMessageCount.visibility = View.INVISIBLE
