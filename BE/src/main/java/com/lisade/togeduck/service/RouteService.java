@@ -5,6 +5,7 @@ import com.lisade.togeduck.dto.response.BusLayoutResponse;
 import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndStationInfo;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
@@ -21,6 +22,7 @@ import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
 import com.lisade.togeduck.exception.RouteNotFoundException;
+import com.lisade.togeduck.mapper.PaymentPageResponseMapper;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.RouteRepository;
@@ -118,7 +120,10 @@ public class RouteService {
         RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfoWhenPay(
                 routeId)
             .orElseThrow(RouteNotFoundException::new);
-        routeRepository.findRouteAndStation(routeId).orElseThrow(RouteNotFoundException::new);
-        return null;
+        RouteAndStationInfo routeAndStationInfo = routeRepository.findRouteAndStationInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
+
+        return PaymentPageResponseMapper.toPaymentPageResponse(seat.getNo(), routeAndFestivalInfo,
+            routeAndStationInfo);
     }
 }
