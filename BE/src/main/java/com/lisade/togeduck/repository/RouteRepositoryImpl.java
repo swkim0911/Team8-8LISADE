@@ -11,6 +11,8 @@ import static com.lisade.togeduck.entity.QUser.user;
 
 import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndStationInfo;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
@@ -328,4 +330,48 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .where(route.id.eq(routeId))
             .fetchOne();
     }
+
+    public Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<PaymentPageResponse.RouteAndFestivalInfo> findRouteAndFestivalInfoWhenPay(
+        Long routeId) {
+        return Optional.ofNullable(queryFactory.select(
+                Projections.constructor(PaymentPageResponse.RouteAndFestivalInfo.class,
+                    festival.title,
+                    festival.startedAt,
+                    city.name,
+                    festival.location))
+            .from(route)
+            .join(festival)
+            .on(route.festival.id.eq(festival.id))
+            .join(city)
+            .on(festival.city.id.eq(city.id))
+            .where(route.id.eq(routeId))
+            .fetchOne());
+    }
+
+    @Override
+    public Optional<RouteAndStationInfo> findRouteAndStationInfo(Long routeId) {
+        return Optional.ofNullable(queryFactory.select(
+                Projections.constructor(PaymentPageResponse.RouteAndStationInfo.class,
+                    city.name,
+                    station.name,
+                    route.startedAt,
+                    route.expectedTime,
+                    route.numberOfSeats,
+                    route.numberOfReservationSeats,
+                    route.price))
+            .from(route)
+            .join(station)
+            .on(route.station.id.eq(station.id))
+            .join(city)
+            .on(station.city.id.eq(city.id))
+            .where(route.id.eq(routeId))
+            .fetchOne());
+
+    }
+
 }

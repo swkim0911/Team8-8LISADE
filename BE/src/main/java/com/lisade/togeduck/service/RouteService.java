@@ -3,6 +3,9 @@ package com.lisade.togeduck.service;
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
 import com.lisade.togeduck.dto.response.CoordinateResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndFestivalInfo;
+import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndStationInfo;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
@@ -14,12 +17,16 @@ import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
 import com.lisade.togeduck.entity.Route;
+import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
+import com.lisade.togeduck.exception.RouteNotFoundException;
+import com.lisade.togeduck.mapper.PaymentPageResponseMapper;
 import com.lisade.togeduck.mapper.RouteMapper;
 import com.lisade.togeduck.mapper.SeatMapper;
 import com.lisade.togeduck.repository.RouteRepository;
+import com.lisade.togeduck.repository.SeatRepository;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -39,6 +46,7 @@ public class RouteService {
     private final FestivalService festivalService;
     private final LocationService locationService;
     private final RouteRepository routeRepository;
+    private final SeatRepository seatRepository;
 
     @Transactional
     public RouteRegistrationResponse save(Long festivalId,
@@ -104,5 +112,19 @@ public class RouteService {
 
     public CoordinateResponse getCoordinate(Long routeId) {
         return routeRepository.getCoordinate(routeId);
+    }
+
+    @Transactional
+    public PaymentPageResponse getPaymentInfo(Long userId, Long routeId) {
+        Seat seat = seatRepository.findByUserIdAndRouteId(userId, routeId)
+            .orElseThrow(RouteNotFoundException::new);
+        RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfoWhenPay(
+                routeId)
+            .orElseThrow(RouteNotFoundException::new);
+        RouteAndStationInfo routeAndStationInfo = routeRepository.findRouteAndStationInfo(routeId)
+            .orElseThrow(RouteNotFoundException::new);
+
+        return PaymentPageResponseMapper.toPaymentPageResponse(seat.getNo(), routeAndFestivalInfo,
+            routeAndStationInfo);
     }
 }
