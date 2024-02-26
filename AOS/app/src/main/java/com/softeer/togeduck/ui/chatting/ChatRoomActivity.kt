@@ -37,7 +37,7 @@ class ChatRoomActivity: AppCompatActivity() {
 
         this.onBackPressedDispatcher.addCallback(this, callback)
 
-        chatRoomViewModel.init(id)
+        chatRoomViewModel.init(id, roomName!!)
 
         observeChatMessages()
         observeNewChatMessage()

@@ -39,13 +39,15 @@ class ChatRoomViewModel @Inject constructor(
     val newMessages: LiveData<ArrayList<ChatMessageModel>> get() = _newMessages
 
     private var id = 0L
+    private var roomName = ""
 
     private val url = "ws://10.0.2.2:8080/chat"
     private val stomp = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
     private val uuid = UUID.randomUUID().toString()
 
-    fun init(id: Long) {
+    fun init(id: Long, roomName: String) {
         this.id = id
+        this.roomName = roomName
         loadChatMessages(id)
     }
 
@@ -143,6 +145,7 @@ class ChatRoomViewModel @Inject constructor(
         val now = TimeFormatter.now()
 
         data.put("roomId", id)
+        data.put("roomName", roomName)
         data.put("message", message)
         data.put("createdAt", now)
         data.put("action", "MESSAGE")
