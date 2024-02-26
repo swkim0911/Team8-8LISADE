@@ -2,6 +2,7 @@ package com.lisade.togeduck.repository;
 
 import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.FestivalRoutesResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse.BusInfo;
@@ -41,4 +42,10 @@ public interface RouteRepositoryCustom {
     CoordinateResponse getCoordinate(Long routeId);
 
     Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId);
+
+    Optional<PaymentPageResponse.RouteAndFestivalInfo> findRouteAndFestivalInfoWhenPay(
+        Long routeId);
+
+    Optional<PaymentPageResponse.RouteAndStationInfo> findRouteAndStationInfo(Long routeId);
+
 }

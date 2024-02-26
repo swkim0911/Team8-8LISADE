@@ -4,6 +4,7 @@ import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
 import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.PaymentPageResponse;
+import com.lisade.togeduck.dto.response.PaymentPageResponse.RouteAndFestivalInfo;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
@@ -114,7 +115,10 @@ public class RouteService {
     public PaymentPageResponse getPaymentInfo(Long userId, Long routeId) {
         Seat seat = seatRepository.findByUserIdAndRouteId(userId, routeId)
             .orElseThrow(RouteNotFoundException::new);
-        
+        RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfoWhenPay(
+                routeId)
+            .orElseThrow(RouteNotFoundException::new);
+        routeRepository.findRouteAndStation(routeId).orElseThrow(RouteNotFoundException::new);
         return null;
     }
 }

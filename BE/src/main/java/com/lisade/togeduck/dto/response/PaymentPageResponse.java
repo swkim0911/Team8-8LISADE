@@ -48,8 +48,8 @@ public class PaymentPageResponse {
     public static class RouteAndFestivalInfo {
 
         private String festivalName;
-        private String title;
         private LocalDateTime startedAt;
         private String destinationCity;
+        private String destination;
     }
 }
