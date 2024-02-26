@@ -36,6 +36,7 @@ class FcmNotificationService: FirebaseMessagingService() {
 
         createNotification(message)
         saveMessage(message)
+        sendBroadcast()
     }
 
     private fun createNotification(remoteMessage: RemoteMessage) {
@@ -118,5 +119,10 @@ class FcmNotificationService: FirebaseMessagingService() {
 
             chatMessageRepository.insert(ChatMessageModel(0, id, sender, message, time, type, location))
         }
+    }
+
+    private fun sendBroadcast() {
+        val intent = Intent().setAction("com.package.notification")
+        sendBroadcast(intent)
     }
 }
