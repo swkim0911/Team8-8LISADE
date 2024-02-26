@@ -1,7 +1,5 @@
 package com.softeer.togeduck.data.repository
 
-import com.softeer.togeduck.data.dto.BaseResponse
-import com.softeer.togeduck.data.dto.request.FcmTokenRequest
 import com.softeer.togeduck.data.dto.request.LoginRequest
 import com.softeer.togeduck.data.local.datasource.UserDataStore
 import com.softeer.togeduck.data.remote.datasource.intro.UserRemoteDataSource
@@ -15,10 +13,6 @@ class UserRepository @Inject constructor(
 ) {
     suspend fun login(loginRequest: LoginRequest): Response<String> {
         return loginRemoteDataSource.login(loginRequest)
-    }
-
-    suspend fun sendFcmToken(fcmTokenRequest: FcmTokenRequest): Response<String> {
-        return loginRemoteDataSource.sendFcmToken(fcmTokenRequest)
     }
 
     suspend fun storeUser(sessionId: String) {
