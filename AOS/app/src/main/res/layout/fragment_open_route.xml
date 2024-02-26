@@ -8,6 +8,7 @@
         <variable
             name="vm"
             type="com.softeer.togeduck.ui.home.open_route.RegionListViewModel" />
+
         <variable
             name="orVm"
             type="com.softeer.togeduck.ui.home.open_route.OpenRouteViewModel" />
@@ -74,9 +75,9 @@
         <ImageView
             android:id="@+id/concertImg"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/dummy_exo_concert"
+            android:src="@drawable/dummy_img_data"
             app:layout_constraintBottom_toTopOf="@id/dividerImg"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
@@ -87,7 +88,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-
             app:layout_constraintBottom_toTopOf="@id/concertInfo"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
@@ -110,7 +110,7 @@
             android:id="@+id/concertTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/dummy_concert_title"
+            android:text="@{orVm.articleDetail.title}"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/concertPlace"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
@@ -121,7 +121,7 @@
             android:id="@+id/concertPlace"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="예술의 전당 콘서트홀(서울특별시 서초구 남부순환로 2406)"
+            android:text="@{orVm.articleDetail.location}"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/concertRunningTime"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
@@ -143,7 +143,7 @@
             android:id="@+id/concertAge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="관람연령 : 만 12세이상"
+            android:text="관람연령 : 전체 관람가"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@id/dividerConcertInfo"
             app:layout_constraintEnd_toEndOf="@id/guideRight"

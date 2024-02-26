@@ -1,7 +1,6 @@
 package com.softeer.togeduck.ui.home.open_route
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ class OpenRouteFragment : Fragment() {
     private var _binding: FragmentOpenRouteBinding? = null
     private val binding get() = _binding!!
     private val regionListViewModel: RegionListViewModel by activityViewModels()
+    private val openRouteViewModel: OpenRouteViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,20 +34,23 @@ class OpenRouteFragment : Fragment() {
         setSelectedImage()
     }
 
-    private fun init(){
+    private fun init() {
         binding.vm = regionListViewModel
+        binding.orVm = openRouteViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        openRouteViewModel.getArticleDetails()
         binding.leftLayoutView.setOnClickListener {
             regionListViewModel.reSetSelectedCompleted()
             RegionListDialog().show(parentFragmentManager, "ListDialogFragment")
         }
-        binding.openRouteButton.setOnClickListener{
+        binding.openRouteButton.setOnClickListener {
             findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
         }
     }
 
 
-    private fun setSelectedImage(){
+    private fun setSelectedImage() {
         val busImageList = listOf(
             binding.bus14,
             binding.bus25,
@@ -58,7 +61,7 @@ class OpenRouteFragment : Fragment() {
                 regionListViewModel.selectBusId(index)
             }
         }
-        regionListViewModel.selectedBusId.observe(viewLifecycleOwner, Observer { selectedImageId->
+        regionListViewModel.selectedBusId.observe(viewLifecycleOwner, Observer { selectedImageId ->
             busImageList.forEachIndexed { index, imageView ->
                 if (index == selectedImageId) {
                     imageView.setBackgroundResource(R.drawable.selected_image_border)

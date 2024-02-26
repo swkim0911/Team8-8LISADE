@@ -10,22 +10,28 @@ class ArticleDetailRemoteDataSource @Inject constructor(
     private val articleDetailService: ArticleDetailService,
 ) {
     suspend fun getArticleDetail(
-        id:String,
+        id: String,
     ): ArticleDetailResponse {
         return articleDetailService.getArticleDetail(id)
     }
 
     suspend fun getArticleRoute(
-        id:String,
+        id: String,
         params: Map<String, String>
-    ):ArticleRouteResponse{
+    ): ArticleRouteResponse {
         return articleDetailService.getArticleRoute(id, params)
     }
 
     suspend fun getRouteDetail(
-        festivalId:Int,
-        routeId:Int
+        festivalId: Int,
+        routeId: Int
     ): RouteDetailResponse {
         return articleDetailService.getRouteDetail(festivalId, routeId)
+    }
+
+    suspend fun getFestivalImg(
+        festivalId: Int,
+    ):String{
+        return articleDetailService.getFestivalImg(festivalId)
     }
 }

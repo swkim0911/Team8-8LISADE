@@ -23,4 +23,9 @@ interface ArticleDetailService {
         @Path("festival_id") festivalId: Int,
         @Path("route_id") routeId: Int
     ): RouteDetailResponse
+
+    @GET("/festivals/{festival_id}/images")
+    suspend fun getFestivalImg(
+        @Path("festival_id") festivalId: Int
+    ): String
 }

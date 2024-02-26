@@ -38,4 +38,14 @@ class ArticleDetailRepository @Inject constructor(
             articleDetailRemoteDataSource.getRouteDetail(festivalId,routeId).toRouteDetailModel()
         }
     }
+
+    suspend fun getFestivalImg(
+        festivalId: Int
+    ):Result<String>{
+        return kotlin.runCatching {
+            articleDetailRemoteDataSource.getFestivalImg(festivalId)
+        }
+    }
+
+
 }

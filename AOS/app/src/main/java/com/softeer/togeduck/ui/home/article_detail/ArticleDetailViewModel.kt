@@ -27,9 +27,6 @@ class ArticleDetailViewModel @Inject constructor(
     private val _articleDetail = MutableLiveData<ArticleDetailModel>()
     val articleDetail: LiveData<ArticleDetailModel> = _articleDetail
 
-    private val _imgUrl = MutableLiveData("https://togeduckbucket.s3.amazonaws.com/festival_image/lill.png")
-    val imgUrl: LiveData<String> = _imgUrl
-
     private var articleId = 1
 
     fun getArticleId(id:Int){
@@ -39,12 +36,8 @@ class ArticleDetailViewModel @Inject constructor(
 
     fun getArticleDetails(){
         viewModelScope.launch {
-            Log.d("articleId3", articleId.toString())
             articleDetailRepository.getFestivalDetail(articleId.toString())
                 .onSuccess {
-//                    _imgUrl.value = it.paths[0]
-                    Log.d("IMGURL",_imgUrl.value.toString())
-                    Log.d("IMGURL2",_imgUrl.toString())
                     _articleDetail.value = it
 
                 }
