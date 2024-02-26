@@ -17,7 +17,7 @@ public class SeatController {
     private final SeatService seatService;
 
 
-    @PostMapping
+    @PostMapping("/routes/{route_id}/seats")
     public Long register(
         @Login User user,
         @PathVariable(name = "route_id") Long routeId,
