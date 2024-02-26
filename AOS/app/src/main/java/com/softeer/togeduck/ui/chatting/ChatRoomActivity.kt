@@ -3,21 +3,22 @@ package com.softeer.togeduck.ui.chatting
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.databinding.BindingAdapter
-import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import com.softeer.togeduck.data.model.chatting.ChatMessageModel
 import com.softeer.togeduck.databinding.ActivityChatRoomBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChatRoomActivity: AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
-    private lateinit var viewModel: ChatRoomViewModel
+    private val chatRoomViewModel: ChatRoomViewModel by viewModels()
+    private var id : Long = 0
 
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -31,14 +32,12 @@ class ChatRoomActivity: AppCompatActivity() {
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[ChatRoomViewModel::class.java]
-
-        val id = intent.getLongExtra("id", 0)
+        id = intent.getLongExtra("id", 0)
         val roomName = intent.getStringExtra("roomName")
 
         this.onBackPressedDispatcher.addCallback(this, callback)
 
-        viewModel.init(id)
+        chatRoomViewModel.init(id)
 
         observeChatMessages()
         observeNewChatMessage()
@@ -67,7 +66,7 @@ class ChatRoomActivity: AppCompatActivity() {
                 val message = chatMessageEditText.text.toString()
 
                 if (message.isNotEmpty()) {
-                    viewModel.sendMessage(message)
+                    chatRoomViewModel.sendMessage(message)
                     chatMessageEditText.text.clear()
                 } else {
                     chatMessageEditText.requestFocus()
@@ -81,14 +80,16 @@ class ChatRoomActivity: AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        viewModel.connectToStomp()
-        viewModel.readMessage()
+        chatRoomViewModel.connectToStomp()
+        chatRoomViewModel.readMessage()
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(id.toString())
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.disconnectStomp()
-        viewModel.saveMessages()
+        chatRoomViewModel.disconnectStomp()
+        chatRoomViewModel.saveMessages()
+        FirebaseMessaging.getInstance().subscribeToTopic(id.toString())
     }
 
     private fun keyBordShow() {
@@ -96,7 +97,7 @@ class ChatRoomActivity: AppCompatActivity() {
     }
 
     private fun observeChatMessages() {
-        viewModel.chatMessages.observe(this) { messages ->
+        chatRoomViewModel.chatMessages.observe(this) { messages ->
             binding.apply {
                 val adapter = ChatMessageListAdapter(messages as ArrayList<ChatMessageModel>)
 
@@ -107,7 +108,7 @@ class ChatRoomActivity: AppCompatActivity() {
     }
 
     private fun observeNewChatMessage() {
-        viewModel.newMessages.observe(this) { messages ->
+        chatRoomViewModel.newMessages.observe(this) { messages ->
             binding.apply {
                 val adapter = rvChatRoomMessage.adapter as ChatMessageListAdapter
 
