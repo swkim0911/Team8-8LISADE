@@ -1,5 +1,6 @@
 package com.softeer.togeduck.data.mapper
 
+import android.util.Log
 import com.softeer.togeduck.data.dto.request.home.seat.MySeatRequest
 import com.softeer.togeduck.data.dto.response.home.seat.SeatPaymentResponse
 import com.softeer.togeduck.data.dto.response.home.seat.SeatsInfoResponse
@@ -10,15 +11,15 @@ import com.softeer.togeduck.utils.addCommas
 
 fun SeatsInfoResponse.toSeatInfoModel(): SeatsInfoModel {
     return SeatsInfoModel(seatsCntPerRow = row,
-        totalRows = column,
-        backSeatsCnt = backSeat,
+        totalRows = col,
+        backSeatsCnt = backSeats,
         totalSeats = totalSeats,
         remainingSeats = totalSeats - reservedSeats,
         departurePlace = "${sourceCity}(${source})",
         arrivalPlace = "${destinationCity}(${destination})",
         price = price,
         formattedPrice = price.addCommas(),
-        seats = seats.filter { !it.status.isAvailable }.map { it.seatNo.toInt() })
+        seats = seats.filter { !it.status.isAvailable }.map { it.seatNo })
 }
 
 fun SeatPaymentResponse.toSeatPaymentModel(seatNo: Int): SeatPaymentModel {

@@ -237,7 +237,7 @@
                 app:backSeatsCnt="@{String.valueOf(vm.seatsInfo.backSeatsCnt)}"
                 app:mode="selectable"
                 app:seatsCntPerRow="@{String.valueOf(vm.seatsInfo.seatsCntPerRow)}"
-                app:soldOutSeatNums="@{vm.seatsInfo.seats.toString()}"
+                app:soldOutSeatNums="@{String.valueOf(vm.seatsInfo.seats)}"
                 app:totalRows="@{String.valueOf(vm.seatsInfo.totalRows)}" />
         </ScrollView>
 

@@ -1,10 +1,11 @@
 package com.softeer.togeduck.data.dto.response.home.seat
 
+
 data class SeatsInfoResponse(
-    val row: Int,
-    val column: Int,
-    val backSeat: Int,
     val totalSeats: Int,
+    val row: Int,
+    val col: Int,
+    val backSeats: Int,
     val reservedSeats: Int,
     val sourceCity: String,
     val source: String,
@@ -16,7 +17,7 @@ data class SeatsInfoResponse(
 
 data class SeatStatusResponse(
     val id: Int,
-    val seatNo: String,
+    val seatNo: Int,
     val status: SeatStatus,
 )
 

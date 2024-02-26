@@ -67,6 +67,8 @@ class SeatSelectFragment : Fragment() {
                     selectedSeatNum = binding.seatSelectView.selectedSeatNum
                     binding.totalPriceValue.text =
                         seatViewModel.seatsInfo.value?.formattedPrice
+                    binding.seatLeftoverValue.text =
+                        (binding.seatLeftoverValue.text.toString().toInt() - 1).toString()
                 } else {
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(
@@ -76,11 +78,12 @@ class SeatSelectFragment : Fragment() {
                     )
                     selectedSeatNum = binding.seatSelectView.selectedSeatNum
                     binding.totalPriceValue.text = "0"
+                    binding.seatLeftoverValue.text =
+                        (binding.seatLeftoverValue.text.toString().toInt() + 1).toString()
                 }
 
             }
         }
-
-
     }
+
 }
