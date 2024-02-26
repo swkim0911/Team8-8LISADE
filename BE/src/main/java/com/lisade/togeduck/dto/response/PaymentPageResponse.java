@@ -1,5 +1,6 @@
 package com.lisade.togeduck.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
@@ -14,10 +15,13 @@ import lombok.NoArgsConstructor;
 public class PaymentPageResponse {
 
     private String festivalName;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
     private LocalDateTime startedAt;
     private String sourceCity;
     private String source;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime departureAt;
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime arrivalAt;
     private String destinationCity;
     private String destination;

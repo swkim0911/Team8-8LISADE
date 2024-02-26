@@ -368,7 +368,7 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
             .join(station)
             .on(route.station.id.eq(station.id))
             .join(city)
-            .on(festival.city.id.eq(city.id))
+            .on(station.city.id.eq(city.id))
             .where(route.id.eq(routeId))
             .fetchOne());
 
