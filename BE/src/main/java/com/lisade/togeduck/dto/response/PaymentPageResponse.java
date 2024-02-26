@@ -25,4 +25,31 @@ public class PaymentPageResponse {
     private Integer numberOfReservedSeats;
     private Integer seatNo;
     private Integer price;
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RouteAndStationInfo {
+
+        private String sourceCity;
+        private String source;
+        private LocalDateTime departureAt;
+        private LocalTime expectedTime;
+        private Integer numberOfSeats;
+        private Integer numberOfReservedSeats;
+        private Integer price;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RouteAndFestivalInfo {
+
+        private String festivalName;
+        private String title;
+        private LocalDateTime startedAt;
+        private String destinationCity;
+    }
 }

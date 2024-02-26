@@ -41,5 +41,4 @@ public interface RouteRepositoryCustom {
     CoordinateResponse getCoordinate(Long routeId);
 
     Optional<PaymentPageResponse> findPaymentInfo(Long userId, Long routeId);
-
 }
