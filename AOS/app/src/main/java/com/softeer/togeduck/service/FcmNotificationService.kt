@@ -21,10 +21,12 @@ import com.softeer.togeduck.utils.TimeFormatter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class FcmNotificationService: FirebaseMessagingService() {
-    private val chatRoomListRepository = ChatRoomListRepository(application)
-    private val chatMessageRepository = ChatMessageRepository(application)
+
+    private lateinit var chatRoomListRepository : ChatRoomListRepository
+    private lateinit var chatMessageRepository : ChatMessageRepository
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -34,20 +36,15 @@ class FcmNotificationService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
+        chatMessageRepository = ChatMessageRepository(this.application)
+        chatRoomListRepository = ChatRoomListRepository(this.application)
+
         createNotification(message)
         saveMessage(message)
         sendBroadcast()
     }
 
     private fun createNotification(remoteMessage: RemoteMessage) {
-        val id = remoteMessage.data["roomId"]!!.toLong()
-        val intent = Intent(this, ChatRoomActivity::class.java)
-
-        intent.putExtra("id", id)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-        val pendingIntent = PendingIntent.getActivity(this, id.toInt(), intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE)
-
         val channelId = "chatNotification"
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
@@ -55,13 +52,22 @@ class FcmNotificationService: FirebaseMessagingService() {
         val sender = remoteMessage.data["sender"]!!.toString()
         val message = remoteMessage.data["message"]!!.toString()
 
+        val id = remoteMessage.data["roomId"]!!.toLong()
+        val intent = Intent(this, ChatRoomActivity::class.java)
+
+        intent.putExtra("id", id)
+        intent.putExtra("roomName", roomName)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        val pendingIntent = PendingIntent.getActivity(this, id.toInt(), intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE)
+
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setDefaults(NotificationCompat.DEFAULT_SOUND or NotificationCompat.DEFAULT_VIBRATE)
             .setContentTitle(roomName)
-            .setContentText(sender)
-            .setSubText(message)
+            .setContentText(message)
+            .setSubText(sender)
             .setAutoCancel(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setSound(soundUri)
