@@ -2,6 +2,7 @@ package com.lisade.togeduck.service;
 
 import com.lisade.togeduck.dto.request.RouteRegistrationRequest;
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
+import com.lisade.togeduck.dto.response.CoordinateResponse;
 import com.lisade.togeduck.dto.response.RouteCityAndDestinationDetail;
 import com.lisade.togeduck.dto.response.RouteDetailDto;
 import com.lisade.togeduck.dto.response.RouteDetailResponse;
@@ -99,5 +100,9 @@ public class RouteService {
 
     public UserSeatDetailResponse getSeat(Long userId, Long routeId) {
         return routeRepository.getSeatDetail(userId, routeId);
+    }
+
+    public CoordinateResponse getCoordinate(Long routeId) {
+        return routeRepository.getCoordinate(routeId);
     }
 }
