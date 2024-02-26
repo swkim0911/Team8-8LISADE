@@ -26,4 +26,7 @@ interface ChatRoomListDao {
 
     @Delete
     fun delete(chatRooms: ChatRoomListModel)
+
+    @Query("delete from chat_room")
+    fun deleteAll()
 }

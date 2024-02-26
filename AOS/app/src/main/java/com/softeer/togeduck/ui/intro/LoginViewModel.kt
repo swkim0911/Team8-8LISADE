@@ -57,6 +57,7 @@ class LoginViewModel @Inject constructor(
                 FirebaseMessaging.getInstance().subscribeToTopic(it.id.toString())
             }
 
+            chatRoomListRepository.deleteAll()
             chatRoomListRepository.insertAll(
                 chatRoomListResponse.map {
                     ChatRoomListModel(it.id, it.routeId, it.thumbnail, it.roomName, "", "", 0)

@@ -45,4 +45,10 @@ class ChatRoomListRepository(application: Application) {
             chatRoomListDao.update(chatRoomListModel)
         }
     }
+
+    suspend fun deleteAll() {
+        withContext(Dispatchers.IO) {
+            chatRoomListDao.deleteAll()
+        }
+    }
 }
