@@ -1,5 +1,6 @@
 package com.lisade.togeduck.service;
 
+import com.lisade.togeduck.cache.service.SessionCacheService;
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
 import com.lisade.togeduck.dto.response.UserReservedRouteDetailResponse;
@@ -36,6 +37,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
+    private final SessionCacheService sessionCacheService;
     private final RouteService routeService;
 
     public User get(Long userId) {
@@ -55,10 +57,14 @@ public class UserService {
     }
 
     @Transactional
-    public User login(LoginRequest loginRequest) {
-        return userRepository.findByUserIdAndPassword(loginRequest.getUserId(),
+    public User login(LoginRequest loginRequest, String session) {
+        User user = userRepository.findByUserIdAndPassword(loginRequest.getUserId(),
                 loginRequest.getPassword())
             .orElseThrow(UserNotFoundException::new);
+
+        sessionCacheService.save(user.getNickname(), session);
+
+        return user;
     }
 
     @Transactional(readOnly = true)

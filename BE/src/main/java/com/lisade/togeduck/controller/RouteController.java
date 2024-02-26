@@ -33,7 +33,7 @@ public class RouteController {
         RouteRegistrationResponse registrationResponse = routeService.save(festivalId,
             routeRegistration);
 
-        chatRoomService.create(user, registrationResponse.getRouteId()); // 채팅방 생성
+        chatRoomService.create(registrationResponse.getRouteId()); // 채팅방 생성
 
         return registrationResponse;
     }
