@@ -3,14 +3,14 @@ package com.softeer.togeduck.di
 import com.softeer.togeduck.data.remote.service.ArticleDetailService
 import com.softeer.togeduck.data.remote.service.HomeService
 import com.softeer.togeduck.data.remote.service.RegionListService
-import com.softeer.togeduck.data.remote.service.UserService
 import com.softeer.togeduck.data.remote.service.ReserveStatusService
+import com.softeer.togeduck.data.remote.service.SeatService
+import com.softeer.togeduck.data.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -18,20 +18,15 @@ import javax.inject.Singleton
 class ServiceModule {
     @Provides
     @Singleton
-    fun provideLoginService(
-        retrofit: Retrofit
-    ): UserService {
+    fun provideLoginService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideHomeService(
-        retrofit: Retrofit
-    ):HomeService{
+    fun provideHomeService(retrofit: Retrofit): HomeService {
         return retrofit.create(HomeService::class.java)
     }
-
 
     @Provides
     @Singleton
@@ -41,14 +36,22 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService{
+    fun provideSeatService(retrofit: Retrofit): SeatService {
+        return retrofit.create(SeatService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideArticleDetailService(retrofit: Retrofit): ArticleDetailService {
         return retrofit.create(ArticleDetailService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRegionListService(retrofit: Retrofit): RegionListService{
+    fun provideRegionListService(retrofit: Retrofit): RegionListService {
         return retrofit.create(RegionListService::class.java)
     }
+
 
 }

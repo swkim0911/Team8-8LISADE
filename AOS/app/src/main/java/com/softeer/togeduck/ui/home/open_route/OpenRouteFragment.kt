@@ -32,15 +32,19 @@ class OpenRouteFragment : Fragment() {
         setSelectedImage()
     }
 
-    private fun init(){
+    private fun init() {
         binding.vm = regionListViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.leftLayoutView.setOnClickListener {
             regionListViewModel.reSetSelectedCompleted()
             RegionListDialog().show(parentFragmentManager, "ListDialogFragment")
         }
-        binding.openRouteButton.setOnClickListener{
-            findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
+        binding.openRouteButton.setOnClickListener {
+            ////////////// 유정-해당 페이지 api 연동하면 수정 필요-
+            val routeId = 0
+            val action = OpenRouteFragmentDirections.actionOpenRouteFragmentToSeatActivity(routeId)
+            findNavController().navigate(action)
+            ////////////// 유정-해당 페이지 api 연동하면 수정 필요-
         }
     }
 

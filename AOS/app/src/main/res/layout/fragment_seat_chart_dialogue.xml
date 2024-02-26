@@ -118,7 +118,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:mode="read_only" />
+                app:backSeatsCnt="@{String.valueOf(vm.seatChart.backSeatsCnt)}"
+                app:mode="read_only"
+                app:mySeatNum="@{String.valueOf(vm.seatChart.mySeatNo)}"
+                app:seatsCntPerRow="@{String.valueOf(vm.seatChart.seatsCntPerRow)}"
+                app:totalRows="@{String.valueOf(vm.seatChart.totalRows)}" />
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
