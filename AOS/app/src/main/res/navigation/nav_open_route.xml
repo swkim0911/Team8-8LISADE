@@ -20,6 +20,7 @@
         tools:layout="@layout/activity_seat" >
         <argument
             android:name="routeId"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" />
     </activity>
 </navigation>
