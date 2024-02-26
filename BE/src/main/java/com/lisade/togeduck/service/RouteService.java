@@ -114,6 +114,7 @@ public class RouteService {
         return routeRepository.getCoordinate(routeId);
     }
 
+    @Transactional
     public PaymentPageResponse getPaymentInfo(Long userId, Long routeId) {
         Seat seat = seatRepository.findByUserIdAndRouteId(userId, routeId)
             .orElseThrow(RouteNotFoundException::new);
