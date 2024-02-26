@@ -1,15 +1,14 @@
 package com.softeer.togeduck.data.repository
 
 import android.app.Application
-import com.softeer.togeduck.data.model.chatting.ChatMessageModel
 import com.softeer.togeduck.data.model.chatting.ChatRoomListModel
 import com.softeer.togeduck.room.TogeduckDatabase
-import com.softeer.togeduck.room.dao.ChatMessageDao
 import com.softeer.togeduck.room.dao.ChatRoomListDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ChatRoomListRepository(application: Application) {
+
     private val chatRoomListDao: ChatRoomListDao
 
     init {
@@ -22,6 +21,13 @@ class ChatRoomListRepository(application: Application) {
             chatRoomListDao.insert(chatRoomListModel)
         }
     }
+
+    suspend fun insertAll(chatRoomListModelList: List<ChatRoomListModel>) {
+        withContext(Dispatchers.IO) {
+            chatRoomListDao.insertAll(chatRoomListModelList)
+        }
+    }
+
     suspend fun get(roomId: Long) : ChatRoomListModel? {
         return withContext(Dispatchers.IO) {
             chatRoomListDao.get(roomId)
