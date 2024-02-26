@@ -26,14 +26,17 @@ class ArticleDetailViewModel @Inject constructor(
 
     private val _articleDetail = MutableLiveData<ArticleDetailModel>()
     val articleDetail: LiveData<ArticleDetailModel> = _articleDetail
+
     private var articleId = 1
 
     fun getArticleId(id:Int){
         articleId = id
+        Log.d("articleId4", articleId.toString())
     }
 
     fun getArticleDetails(){
         viewModelScope.launch {
+            Log.d("articleId3", articleId.toString())
             articleDetailRepository.getFestivalDetail(articleId.toString())
                 .onSuccess {
                     _articleDetail.value = it

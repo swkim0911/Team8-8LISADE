@@ -1,6 +1,7 @@
 package com.softeer.togeduck.ui.home.main.home_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,7 +77,7 @@ class HomeListFragment : Fragment() {
         }
         categoryAdapter.itemClick = object : ItemClickWithCategoryId {
             override fun onClick(view: View, position: Int, categoryId: Int) {
-                homeListViewModel.getCategoryFestival(categoryId)
+                homeListViewModel.getCategoryFestival(categoryId+1)
             }
         }
     }
@@ -106,6 +107,7 @@ class HomeListFragment : Fragment() {
         articleAdapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
                 val articleId = data[position].id
+                Log.d("articleID1", articleId.toString())
                 val action =
                     HomeListFragmentDirections.actionHomeListFragmentToArticleDetailActivity(
                         articleId
