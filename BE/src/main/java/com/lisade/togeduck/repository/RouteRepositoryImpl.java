@@ -312,7 +312,16 @@ public class RouteRepositoryImpl implements RouteRepositoryCustom {
                     route.station.xPos,
                     route.station.yPos,
                     route.festival.xPos,
-                    route.festival.yPos))
+                    route.festival.yPos,
+                    route.station.name,
+                    route.festival.location,
+                    route.startedAt,
+                    route.expectedTime,
+                    route.numberOfReservationSeats,
+                    route.numberOfSeats,
+                    route.price,
+                    route.festival.startedAt
+                ))
             .from(route)
             .join(route.station, station)
             .join(route.festival, festival)
