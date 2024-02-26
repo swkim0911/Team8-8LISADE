@@ -38,6 +38,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
     private final SessionCacheService sessionCacheService;
+    private final RouteService routeService;
 
     public User get(Long userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
