@@ -207,12 +207,13 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
     private fun setOnClickEventToSeat(item: TextView, seatNumber: Int) {
         val clickedSeatNum = item.text.toString().toInt()
+        val existBeforeSelectedSeat = selectedSeatNum != -1
         if (selectedSeatNum == clickedSeatNum) {
             deselectSeat(item, seatNumber)
-            itemClick?.onClick(false)
+            itemClick?.onClick(false, existBeforeSelectedSeat)
         } else {
             selectSeat(item, seatNumber)
-            itemClick?.onClick(true)
+            itemClick?.onClick(true, existBeforeSelectedSeat)
         }
     }
 
@@ -284,7 +285,7 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
     }
 
     interface ItemClickWithSeat {
-        fun onClick(existSelectedSeat: Boolean)
+        fun onClick(existSelectedSeat: Boolean, existBeforeSelectedSeat: Boolean)
     }
 
     private enum class SeatViewMode {
