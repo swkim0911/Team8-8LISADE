@@ -43,6 +43,9 @@ class SeatPaymentFragment : Fragment() {
     }
 
     private fun init() {
+        binding.vm = seatPaymentViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         binding.paymentBtn.setOnClickListener {
             seatPaymentViewModel.setMySeatData()
             findNavController().navigate(R.id.action_seatPaymentFragment_to_seatPaymentCompleteFragment)
