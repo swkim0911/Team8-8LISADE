@@ -48,7 +48,8 @@ class SeatPaymentFragment : Fragment() {
 
         binding.paymentBtn.setOnClickListener {
             seatPaymentViewModel.setMySeatData()
-            findNavController().navigate(R.id.action_seatPaymentFragment_to_seatPaymentCompleteFragment)
+            val action = SeatPaymentFragmentDirections.actionSeatPaymentFragmentToSeatPaymentCompleteFragment(seatPaymentViewModel.routeId)
+            findNavController().navigate(action)
         }
 
         val routeId = args.routeId
