@@ -32,21 +32,20 @@ fun loadRecruitmentStatusTag(view: TextView, status: RecruitStatus?) {
 }
 
 @BindingAdapter("s3ImageUrl")
-fun setS3ImageUrl(view: ImageView, url: String) {
-    val convertedUrl = url.convertS3Url() // 확장 함수 사용
+fun setS3ImageUrl(view: ImageView, url: String?) {
+    val convertedUrl = url?.convertS3Url() // 확장 함수 사용
     Glide.with(view.context)
         .load(convertedUrl)
         .into(view)
 }
 
 @BindingAdapter("recruitStatusTextColor")
-fun loadRecruitStatusTextColor(view: TextView, status: RecruitStatus?) {
+fun loadRecruitStatusTextColor(view: TextView, status: RecruitStatus) {
     val textColor = when (status) {
         RecruitStatus.RECRUIT -> R.color.main
         RecruitStatus.RECRUIT_COMPLETE -> R.color.navy300
         RecruitStatus.OPERATION_CONFIRM -> R.color.navy800
         RecruitStatus.OPERATION_COMPLETE -> R.color.gray400
-        else -> R.color.black
     }
     view.setTextColor(ContextCompat.getColor(view.context, textColor))
 }

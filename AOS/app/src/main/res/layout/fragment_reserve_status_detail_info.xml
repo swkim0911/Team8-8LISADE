@@ -138,12 +138,12 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.38">
 
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/festivalImg"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="match_parent"-->
-                    <!--                        android:adjustViewBounds="true"-->
-                    <!--                        app:s3ImageUrl="@{vm.reserveStatusDetail.imagePath.toString()}" />-->
+                                        <ImageView
+                                            android:id="@+id/festivalImg"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:adjustViewBounds="true"
+                                            app:s3ImageUrl="@{vm.reserveStatusDetail.imagePath.toString()}" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -368,6 +368,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
+                        s3ImageUrl="@{vm.reserveStatusDetail.driverInfo.imagePath}"
                         android:src="@drawable/dumi_driver" />
                 </androidx.cardview.widget.CardView>
 
