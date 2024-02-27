@@ -45,7 +45,7 @@ class OpenRouteFragment : Fragment() {
             RegionListDialog().show(parentFragmentManager, "ListDialogFragment")
         }
         binding.openRouteButton.setOnClickListener {
-            openRouteViewModel.setNewRoute()
+            openRouteViewModel.requestMakeRoute(regionListViewModel.selectedBusId.value ?: 1)
             val routeId = openRouteViewModel.routeId
             val action =
                 OpenRouteFragmentDirections.actionOpenRouteFragmentToSeatActivity(routeId)
