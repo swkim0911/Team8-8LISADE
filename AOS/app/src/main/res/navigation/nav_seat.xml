@@ -28,7 +28,9 @@
         tools:layout="@layout/fragment_seat_select">
         <action
             android:id="@+id/action_seatSelectFragment_to_seatPaymentFragment"
-            app:destination="@id/seatPaymentFragment" />
+            app:destination="@id/seatPaymentFragment"
+            app:popUpTo="@id/nav_seat"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/seatPaymentCompleteFragment"

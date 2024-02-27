@@ -45,38 +45,36 @@ class OpenRouteFragment : Fragment() {
             RegionListDialog().show(parentFragmentManager, "ListDialogFragment")
         }
         binding.openRouteButton.setOnClickListener {
-            findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
-            binding.openRouteButton.setOnClickListener {
-                openRouteViewModel.requestMakeRoute()
-                val routeId = openRouteViewModel.routeId
-                val action =
-                    OpenRouteFragmentDirections.actionOpenRouteFragmentToSeatActivity(routeId)
-                findNavController().navigate(action)
-            }
+            openRouteViewModel.requestMakeRoute(regionListViewModel.selectedBusId.value ?: 0)
+            val routeId = openRouteViewModel.routeId
+            val action =
+                OpenRouteFragmentDirections.actionOpenRouteFragmentToSeatActivity(routeId)
+            findNavController().navigate(action)
         }
     }
-        private fun setSelectedImage() {
-            val busImageList = listOf(
-                binding.bus14,
-                binding.bus25,
-                binding.bus45,
-            )
-            busImageList.forEachIndexed { index, imageView ->
-                imageView.setOnClickListener {
-                    regionListViewModel.selectBusId(index)
-                }
+
+    private fun setSelectedImage() {
+        val busImageList = listOf(
+            binding.bus14,
+            binding.bus25,
+            binding.bus45,
+        )
+        busImageList.forEachIndexed { index, imageView ->
+            imageView.setOnClickListener {
+                regionListViewModel.selectBusId(index)
             }
-            regionListViewModel.selectedBusId.observe(
-                viewLifecycleOwner,
-                Observer { selectedImageId ->
-                    busImageList.forEachIndexed { index, imageView ->
-                        if (index == selectedImageId) {
-                            imageView.setBackgroundResource(R.drawable.selected_image_border)
-                        } else {
-                            imageView.setBackgroundResource(R.drawable.unselcted_image_border)
-                        }
-                    }
-                    regionListViewModel.isSelectedRegionCompleted()
-                })
         }
+        regionListViewModel.selectedBusId.observe(
+            viewLifecycleOwner,
+            Observer { selectedImageId ->
+                busImageList.forEachIndexed { index, imageView ->
+                    if (index == selectedImageId) {
+                        imageView.setBackgroundResource(R.drawable.selected_image_border)
+                    } else {
+                        imageView.setBackgroundResource(R.drawable.unselcted_image_border)
+                    }
+                }
+                regionListViewModel.isSelectedRegionCompleted()
+            })
+    }
 }
