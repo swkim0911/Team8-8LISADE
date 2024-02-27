@@ -78,7 +78,9 @@ class RouteFragment : Fragment() {
         rvList.addItemDecoration(dividerItemDecoration)
         adapter.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                RouteDetailDialogFragment().show(parentFragmentManager, "RouteDetailDialogFragment")
+                val action = RouteFragmentDirections.actionRouteFragmentToRouteDetailDialogFragment(data[position].routeId)
+                findNavController().navigate(action)
+//                RouteDetailDialogFragment().show(parentFragmentManager, "RouteDetailDialogFragment")
             }
         }
 

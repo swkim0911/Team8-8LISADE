@@ -1,6 +1,7 @@
 package com.softeer.togeduck.data.model.home.article_detail
 
 data class RouteListModel(
+    val routeId: Int,
     val startDate: String,
     val place: String,
     val price: String,

@@ -20,9 +20,10 @@ fun ArticleDetailResponse.toArticleDetailModel(): ArticleDetailModel {
     )
 }
 
-fun ArticleRouteResponse.toRouteListModel(): List<RouteListModel>{
+fun ArticleRouteResponse.toRouteListModel(): List<RouteListModel> {
     return this.content.map { data ->
         RouteListModel(
+            routeId = data.id,
             startDate = data.startedAt,
             place = data.station,
             price = data.price.addCommas(),

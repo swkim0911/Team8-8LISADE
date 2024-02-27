@@ -29,13 +29,13 @@
         <action
             android:id="@+id/action_routeFragment_to_openRouteActivity"
             app:destination="@id/openRouteActivity" />
-        <action
-            android:id="@+id/action_routeFragment_to_seatActivity2"
-            app:destination="@id/seatActivity2" />
         <argument
             android:name="aritcleId"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_routeFragment_to_routeDetailDialogFragment"
+            app:destination="@id/routeDetailDialogFragment" />
     </fragment>
     <activity
         android:id="@+id/openRouteActivity"
@@ -45,5 +45,22 @@
         android:id="@+id/seatActivity2"
         android:name="com.softeer.togeduck.ui.home.seat.SeatActivity"
         android:label="activity_seat"
-        tools:layout="@layout/activity_seat" />
+        tools:layout="@layout/activity_seat" >
+        <argument
+            android:name="routeId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </activity>
+    <dialog
+        android:id="@+id/routeDetailDialogFragment"
+        android:name="com.softeer.togeduck.ui.home.article_detail.RouteDetailDialogFragment"
+        android:label="RouteDetailDialogFragment" >
+        <action
+            android:id="@+id/action_routeDetailDialogFragment_to_seatActivity2"
+            app:destination="@id/seatActivity2" />
+        <argument
+            android:name="routeId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </dialog>
 </navigation>
