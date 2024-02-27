@@ -20,12 +20,12 @@ interface ReserveStatusService {
         @Path("route_id") routeId: Int
     ): ReserveStatusDetailResponse
 
-    @GET("users/route/{route_id}/tickets")
+    @GET("users/routes/{route_id}/tickets")
     suspend fun getMobileTicket(
         @Path("route_id") routeId: Int
     ): MobileTicketResponse
 
-    @GET("users/route/{route_id}/tickets/seats")
+    @GET("users/routes/{route_id}/tickets/seats")
     suspend fun getSeatChart(
         @Path("route_id") routeId: Int
     ): SeatChartResponse

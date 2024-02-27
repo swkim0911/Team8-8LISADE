@@ -50,6 +50,9 @@ class SeatChartFragmentDialogue : DialogFragment() {
             )
         )
 
+        binding.vm = seatChartViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         val routeId = args.routeId
         seatChartViewModel.routeId = routeId
 

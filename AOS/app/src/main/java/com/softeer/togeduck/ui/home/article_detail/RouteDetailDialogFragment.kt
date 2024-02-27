@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.MapLifeCycleCallback
@@ -22,6 +23,7 @@ import com.softeer.togeduck.databinding.FragmentRouteDetailBinding
 class RouteDetailDialogFragment : DialogFragment() {
     private var _binding: FragmentRouteDetailBinding? = null
     private val binding get() = _binding!!
+    private val args: RouteDetailDialogFragmentArgs by navArgs()
     private val routeDetailDialogViewModel: RouteDetailDialogViewModel by activityViewModels()
     private lateinit var mapView: MapView
     override fun onCreateView(
@@ -65,14 +67,14 @@ class RouteDetailDialogFragment : DialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         routeDetailDialogViewModel.getRouteDetails()
         binding.joinButton.setOnClickListener {
-            dialog?.dismiss()
-            findNavController().navigate(R.id.action_routeFragment_to_seatActivity2)
+            val action =
+                RouteDetailDialogFragmentDirections.actionRouteDetailDialogFragmentToSeatActivity2(args.routeId)
+            findNavController().navigate(action)
         }
 
         binding.iconClose.setOnClickListener {
             dialog?.dismiss()
         }
-
 
 
     }

@@ -9,5 +9,5 @@ data class MobileTicketResponse(
     val destination: String,
     val departureAt: String,
     val arrivalAt: String,
-    val seatNo: String,
+    val seatNo: Int,
 )

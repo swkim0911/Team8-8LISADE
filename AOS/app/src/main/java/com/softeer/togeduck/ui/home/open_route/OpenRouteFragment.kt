@@ -40,24 +40,18 @@ class OpenRouteFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         openRouteViewModel.getArticleDetails()
-
         binding.leftLayoutView.setOnClickListener {
             regionListViewModel.reSetSelectedCompleted()
             RegionListDialog().show(parentFragmentManager, "ListDialogFragment")
         }
         binding.openRouteButton.setOnClickListener {
-            openRouteViewModel.requestMakeRoute()
-            findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
-            ////////////// 유정-해당 페이지 api 연동하면 수정 필요-
-            val routeId = 0
+            openRouteViewModel.requestMakeRoute(regionListViewModel.selectedBusId.value ?: 1)
+            val routeId = openRouteViewModel.routeId
             val action =
                 OpenRouteFragmentDirections.actionOpenRouteFragmentToSeatActivity(routeId)
             findNavController().navigate(action)
-            ////////////// 유정-해당 페이지 api 연동하면 수정 필요-
-
         }
     }
-
 
     private fun setSelectedImage() {
         val busImageList = listOf(
@@ -83,5 +77,4 @@ class OpenRouteFragment : Fragment() {
                 regionListViewModel.isSelectedRegionCompleted()
             })
     }
-
 }

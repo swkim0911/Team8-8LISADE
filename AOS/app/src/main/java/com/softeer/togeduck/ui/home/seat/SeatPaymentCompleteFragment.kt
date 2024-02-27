@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatPaymentCompleteBinding
 
 class SeatPaymentCompleteFragment : Fragment() {
     private var _binding: FragmentSeatPaymentCompleteBinding? = null
     private val binding get() = _binding!!
+    private val args: SeatPaymentCompleteFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,11 @@ class SeatPaymentCompleteFragment : Fragment() {
                 findNavController().navigate(R.id.action_seatPaymentCompleteFragment_to_mainActivity)
             }
             moveReserveStatusBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_seatPaymentCompleteFragment_to_reserveStatusDetailActivity)
+                val action =
+                    SeatPaymentCompleteFragmentDirections.actionSeatPaymentCompleteFragmentToReserveStatusDetailActivity(
+                        args.routeId
+                    )
+                findNavController().navigate(action)
             }
         }
     }

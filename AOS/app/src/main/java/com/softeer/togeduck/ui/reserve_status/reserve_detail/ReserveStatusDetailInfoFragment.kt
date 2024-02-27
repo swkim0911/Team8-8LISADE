@@ -33,6 +33,7 @@ class ReserveStatusDetailInfoFragment : Fragment() {
             container,
             false
         )
+
         return binding.root
     }
 

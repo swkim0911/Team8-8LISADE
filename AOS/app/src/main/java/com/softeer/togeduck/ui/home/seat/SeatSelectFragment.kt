@@ -1,7 +1,6 @@
 package com.softeer.togeduck.ui.home.seat
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
-import com.softeer.togeduck.utils.ItemClickWithSeat
+import com.softeer.togeduck.ui.custom_view.SeatCustomView
 import com.softeer.togeduck.utils.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,7 +54,7 @@ class SeatSelectFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.seatSelectView.itemClick = object : ItemClickWithSeat {
+        binding.seatSelectView.itemClick = object : SeatCustomView.ItemClickWithSeat {
             override fun onClick(existSelectedSeat: Boolean) {
                 binding.selectCompleteBtn.isEnabled = existSelectedSeat
                 if (existSelectedSeat) {
@@ -68,6 +67,8 @@ class SeatSelectFragment : Fragment() {
                     selectedSeatNum = binding.seatSelectView.selectedSeatNum
                     binding.totalPriceValue.text =
                         seatViewModel.seatsInfo.value?.formattedPrice
+                    binding.seatLeftoverValue.text =
+                        (binding.seatLeftoverValue.text.toString().toInt() - 1).toString()
                 } else {
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(
@@ -77,11 +78,12 @@ class SeatSelectFragment : Fragment() {
                     )
                     selectedSeatNum = binding.seatSelectView.selectedSeatNum
                     binding.totalPriceValue.text = "0"
+                    binding.seatLeftoverValue.text =
+                        (binding.seatLeftoverValue.text.toString().toInt() + 1).toString()
                 }
 
             }
         }
-
-
     }
+
 }

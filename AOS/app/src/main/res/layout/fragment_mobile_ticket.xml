@@ -82,8 +82,10 @@
             app:cardElevation="@dimen/ticket_elevation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideRight"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/guideLeft"
-            app:layout_constraintTop_toBottomOf="@id/header_top" />
+            app:layout_constraintTop_toBottomOf="@id/header_top"
+            app:layout_constraintVertical_bias="0.0" />
 
         <View
             android:id="@+id/ticketTitleContainer"
@@ -183,15 +185,16 @@
 
         <TextView
             android:id="@+id/departurePlace"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
             android:elevation="@dimen/ticket_elevation"
             android:text="@{vm.mobileTicket.departurePlace}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/departureTime"
             app:layout_constraintEnd_toEndOf="@id/dividerVertical"
-            app:layout_constraintStart_toStartOf="@id/ticketContainer"
+            app:layout_constraintStart_toStartOf="@id/guideTicketLeft"
             app:layout_constraintTop_toBottomOf="@id/dividerHorizon1"
             app:layout_constraintVertical_chainStyle="packed" />
 
@@ -235,14 +238,15 @@
 
         <TextView
             android:id="@+id/arrivalPlace"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:elevation="@dimen/ticket_elevation"
             android:text="@{vm.mobileTicket.arrivalPlace}"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/arrivalTime"
-            app:layout_constraintEnd_toEndOf="@id/ticketContainer"
+            app:layout_constraintEnd_toEndOf="@id/guideTicketRight"
             app:layout_constraintStart_toStartOf="@id/dividerVertical"
             app:layout_constraintTop_toBottomOf="@id/dividerHorizon1"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -260,16 +264,16 @@
             app:layout_constraintStart_toStartOf="@id/arrivalPlace"
             app:layout_constraintTop_toBottomOf="@id/arrivalPlace" />
 
-        <TextView
-            android:id="@+id/estimatedTimeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:elevation="@dimen/ticket_elevation"
-            android:text="@string/expected"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/arrivalTime"
-            app:layout_constraintTop_toTopOf="@id/arrivalTime" />
+                <TextView
+                    android:id="@+id/estimatedTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:elevation="@dimen/ticket_elevation"
+                    android:text="@string/expected"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/arrivalTime"
+                    app:layout_constraintTop_toTopOf="@id/arrivalTime" />
 
         <TextView
             android:id="@+id/seatNumberText"
@@ -289,7 +293,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="@dimen/ticket_elevation"
-            android:text="@{vm.mobileTicket.seatNo}"
+            android:text="@{String.valueOf(vm.mobileTicket.seatNo)}"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/seatingChartBtn"

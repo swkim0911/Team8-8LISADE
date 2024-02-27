@@ -41,5 +41,4 @@ class RouteDetailDialogViewModel @Inject constructor(
     }
 
 
-
 }

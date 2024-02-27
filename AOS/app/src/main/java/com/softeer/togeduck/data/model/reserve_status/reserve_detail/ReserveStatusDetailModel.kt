@@ -1,13 +1,13 @@
 package com.softeer.togeduck.data.model.reserve_status.reserve_detail
 
-import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatus
+import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.RecruitStatus
 
 data class ReserveStatusDetailModel(
     val festivalId: Int,
     val title: String,
     val seatNo: Int,
     val expectedDuration: String,
-    val status: ReserveStatus,
+    val status: RecruitStatus,
     val recruitStatus: String,
     val price: Int,
     val formattedPrice: String,

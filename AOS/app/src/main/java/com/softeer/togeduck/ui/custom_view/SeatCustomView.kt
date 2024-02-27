@@ -1,15 +1,15 @@
 package com.softeer.togeduck.ui.custom_view
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.softeer.togeduck.R
-import com.softeer.togeduck.utils.ItemClickWithSeat
-import com.softeer.togeduck.utils.fromDpToPx
 
 class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
 
@@ -59,54 +59,65 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         seatDiffCntInBackAndOtherRow = backSeatsCnt - seatsCntPerRow
         seatColWithAisleLeft = calcSeatColWithAisleLeft()
         aisleSize = calcAisleSize()
-        viewWidthSize =
-            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()).fromDpToPx()
-        viewHeightSize = ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE).fromDpToPx()
+        viewWidthSize = fromDpToPx(
+            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize())
+        )
+        viewHeightSize = fromDpToPx((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE)
 
-        initSeatView()
+        if (checkAllValueAssigned()) {
+            initSeatView()
+        }
     }
 
     fun setSeatsCntPerRow(value: String) {
+        Log.e("1", value.toString())
         this.seatsCntPerRow = value.toInt()
-        checkAllValueAssignedWithBindingAdapter()
+        initWithBindingAdapter()
     }
 
     fun setBackSeatsCnt(value: String) {
         this.backSeatsCnt = value.toInt()
-        checkAllValueAssignedWithBindingAdapter()
+        initWithBindingAdapter()
     }
 
     fun setTotalRows(value: String) {
         this.totalRows = value.toInt()
-        checkAllValueAssignedWithBindingAdapter()
+        initWithBindingAdapter()
     }
 
     fun setMySeatNum(value: String) { // READ_ONLY 모드에서만 호출
         this.mySeatNum = value.toInt()
-        checkAllValueAssignedWithBindingAdapter()
+        initWithBindingAdapter()
     }
 
     fun setSoldOutSeatNums(value: String) { // SELECTABLE 모드에서만 호출
         this.soldOutSeatNums = stringToList(value)
-        checkAllValueAssignedWithBindingAdapter()
+        initWithBindingAdapter()
     }
 
-    private fun checkAllValueAssignedWithBindingAdapter() {
-        if (seatsCntPerRow == 0 || backSeatsCnt == 0 || totalRows == 0) {
-            return
-        }
-        if (mode == SeatViewMode.READ_ONLY && mySeatNum == 0) {
-            return
-        }
+    private fun initWithBindingAdapter() {
+        if (!checkAllValueAssigned()) return
+
         seatDiffCntInBackAndOtherRow = backSeatsCnt - seatsCntPerRow
         seatColWithAisleLeft = calcSeatColWithAisleLeft()
         aisleSize = calcAisleSize()
         viewWidthSize =
-            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()).fromDpToPx()
-        viewHeightSize =
-            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE).fromDpToPx()
+            fromDpToPx(((SEAT_SIZE + SEAT_MARGIN_SIZE) * seatsCntPerRow - SEAT_MARGIN_SIZE + calcAisleSize()))
+        viewHeightSize = fromDpToPx(
+            ((SEAT_SIZE + SEAT_MARGIN_SIZE) * totalRows + SEAT_SIZE)
+        )
 
         initSeatView()
+    }
+
+    private fun checkAllValueAssigned(): Boolean {
+        if (seatsCntPerRow == 0 || backSeatsCnt == 0 || totalRows == 0) {
+            return false
+        }
+        if (mode == SeatViewMode.READ_ONLY && mySeatNum == 0) {
+            return false
+        }
+        return true
     }
 
     private fun initSeatView() {
@@ -176,28 +187,32 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
         val lp = LayoutParams(viewWidthSize, viewHeightSize)
         lp.run {
-            lp.width = SEAT_SIZE.fromDpToPx()
-            lp.height = SEAT_SIZE.fromDpToPx()
-            lp.topMargin = topPos.fromDpToPx()
-            lp.leftMargin = leftPos.fromDpToPx()
+            lp.width = fromDpToPx(SEAT_SIZE)
+            lp.height = fromDpToPx(SEAT_SIZE)
+            lp.topMargin = fromDpToPx(topPos)
+            lp.leftMargin = fromDpToPx(leftPos)
         }
 
         if (mode == SeatViewMode.SELECTABLE) {
             item.setOnClickListener {
-                val clickedSeatNum = item.text.toString().toInt()
-                if (selectedSeatNum == clickedSeatNum) {
-                    deselectSeat(item, seatNumber)
-                    itemClick?.onClick(false)
-                } else {
-                    selectSeat(item, seatNumber)
-                    itemClick?.onClick(true)
-                }
+                setOnClickEventToSeat(item, seatNumber)
             }
         }
 
         return item.apply {
             layoutParams = lp
             gravity = Gravity.CENTER
+        }
+    }
+
+    private fun setOnClickEventToSeat(item: TextView, seatNumber: Int) {
+        val clickedSeatNum = item.text.toString().toInt()
+        if (selectedSeatNum == clickedSeatNum) {
+            deselectSeat(item, seatNumber)
+            itemClick?.onClick(false)
+        } else {
+            selectSeat(item, seatNumber)
+            itemClick?.onClick(true)
         }
     }
 
@@ -224,7 +239,6 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
             isEnabled = true
         }
     }
-
 
     private fun setSelectedSeatItemProperty(item: TextView) {
         item.run {
@@ -265,8 +279,18 @@ class SeatCustomView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         setMeasuredDimension(viewWidthSize, viewHeightSize)
     }
 
+    private fun fromDpToPx(value: Int): Int {
+        return (value * Resources.getSystem().displayMetrics.density).toInt()
+    }
+
+    interface ItemClickWithSeat {
+        fun onClick(existSelectedSeat: Boolean)
+    }
+
+    private enum class SeatViewMode {
+        SELECTABLE, READ_ONLY
+    }
+
+
 }
 
-enum class SeatViewMode {
-    SELECTABLE, READ_ONLY
-}

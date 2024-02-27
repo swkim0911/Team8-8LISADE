@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.navArgs
-import com.bumptech.glide.Glide.init
 import com.softeer.togeduck.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,9 +20,7 @@ class SeatActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        /////////////////// 추후 수정 필요
-//        val routeId = args.routeId
-        val routeId = 1
+        val routeId = args.routeId
         seatViewModel.routeId = routeId
     }
 }

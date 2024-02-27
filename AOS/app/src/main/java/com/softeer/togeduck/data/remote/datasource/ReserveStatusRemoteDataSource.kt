@@ -1,5 +1,6 @@
 package com.softeer.togeduck.data.remote.datasource
 
+import android.util.Log
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatusDetailResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.MobileTicketResponse
