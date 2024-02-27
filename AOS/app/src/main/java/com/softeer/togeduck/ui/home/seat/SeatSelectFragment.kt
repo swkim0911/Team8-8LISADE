@@ -48,32 +48,30 @@ class SeatSelectFragment : Fragment() {
         binding.selectCompleteBtn.setOnClickListener {
             val routeId = seatViewModel.routeId
             val action = SeatSelectFragmentDirections.actionSeatSelectFragmentToSeatPaymentFragment(
-                routeId,
-                selectedSeatNum
+                routeId, selectedSeatNum
             )
             findNavController().navigate(action)
         }
 
         binding.seatSelectView.itemClick = object : SeatCustomView.ItemClickWithSeat {
-            override fun onClick(existSelectedSeat: Boolean) {
+            override fun onClick(existSelectedSeat: Boolean, existBeforeSelected: Boolean) {
                 binding.selectCompleteBtn.isEnabled = existSelectedSeat
-                if (existSelectedSeat) {
+                if (existSelectedSeat) { // 좌석 클릭됐을때 다시 누름
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(
-                            requireContext(),
-                            R.color.main
+                            requireContext(), R.color.main
                         )
                     )
                     selectedSeatNum = binding.seatSelectView.selectedSeatNum
-                    binding.totalPriceValue.text =
-                        seatViewModel.seatsInfo.value?.formattedPrice
-                    binding.seatLeftoverValue.text =
-                        (binding.seatLeftoverValue.text.toString().toInt() - 1).toString()
+                    binding.totalPriceValue.text = seatViewModel.seatsInfo.value?.formattedPrice
+                    if (!existBeforeSelected) {
+                        binding.seatLeftoverValue.text =
+                            (binding.seatLeftoverValue.text.toString().toInt() - 1).toString()
+                    }
                 } else {
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(
-                            requireContext(),
-                            R.color.gray300
+                            requireContext(), R.color.gray300
                         )
                     )
                     selectedSeatNum = binding.seatSelectView.selectedSeatNum
