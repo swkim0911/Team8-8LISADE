@@ -47,7 +47,7 @@ class OpenRouteFragment : Fragment() {
         binding.openRouteButton.setOnClickListener {
             findNavController().navigate(R.id.action_openRouteFragment_to_seatActivity)
             binding.openRouteButton.setOnClickListener {
-                openRouteViewModel.setNewRoute()
+                openRouteViewModel.requestMakeRoute()
                 val routeId = openRouteViewModel.routeId
                 val action =
                     OpenRouteFragmentDirections.actionOpenRouteFragmentToSeatActivity(routeId)
