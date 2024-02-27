@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.softeer.togeduck.R
 import com.softeer.togeduck.databinding.FragmentSeatSelectBinding
-import com.softeer.togeduck.ui.custom_view.SeatCustomView
 import com.softeer.togeduck.utils.showErrorToast
+import com.yunyj99.seatview.ui.SeatView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,10 +53,10 @@ class SeatSelectFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.seatSelectView.itemClick = object : SeatCustomView.ItemClickWithSeat {
+        binding.seatSelectView.itemClick = object : SeatView.ItemClickWithSeat {
             override fun onClick(existSelectedSeat: Boolean, existBeforeSelected: Boolean) {
                 binding.selectCompleteBtn.isEnabled = existSelectedSeat
-                if (existSelectedSeat) { // 좌석 클릭됐을때 다시 누름
+                if (existSelectedSeat) {
                     binding.selectCompleteBtn.setBackgroundColor(
                         ContextCompat.getColor(
                             requireContext(), R.color.main

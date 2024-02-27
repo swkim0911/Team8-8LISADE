@@ -229,16 +229,16 @@
             app:layout_constraintStart_toStartOf="@id/driverSeatText"
             app:layout_constraintTop_toBottomOf="@id/driverSeatText">
 
-            <com.softeer.togeduck.ui.custom_view.SeatCustomView
+            <com.yunyj99.seatview.ui.SeatView
                 android:id="@+id/seatSelectView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:backSeatsCnt="@{String.valueOf(vm.seatsInfo.backSeatsCnt)}"
-                app:mode="selectable"
-                app:seatsCntPerRow="@{String.valueOf(vm.seatsInfo.seatsCntPerRow)}"
-                app:soldOutSeatNums="@{String.valueOf(vm.seatsInfo.seats)}"
-                app:totalRows="@{String.valueOf(vm.seatsInfo.totalRows)}" />
+                app:seatViewBackSeatsCnt="@{String.valueOf(vm.seatsInfo.backSeatsCnt)}"
+                app:seatViewMode="selectable"
+                app:seatViewSeatsCntPerRow="@{String.valueOf(vm.seatsInfo.seatsCntPerRow)}"
+                app:seatViewSoldOutSeatNums="@{String.valueOf(vm.seatsInfo.seats)}"
+                app:seatViewTotalRows="@{String.valueOf(vm.seatsInfo.totalRows)}" />
         </ScrollView>
 
         <TextView

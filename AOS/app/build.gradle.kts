@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(files("libs/seatview-release.aar"))
     val room_version = "2.5.0"
 
     implementation("androidx.room:room-runtime:$room_version")
