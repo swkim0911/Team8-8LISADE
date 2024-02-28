@@ -67,7 +67,7 @@ class UserServiceTest {
         when(userRepository.findByUserIdAndPassword(any(), any())).thenReturn(
             Optional.ofNullable(user));
 
-        User loginUser = userService.login(loginRequest);
+        User loginUser = userService.login(loginRequest, "");
 
         //then
         Assertions.assertThat(loginUser.getUserId()).isEqualTo(userId);

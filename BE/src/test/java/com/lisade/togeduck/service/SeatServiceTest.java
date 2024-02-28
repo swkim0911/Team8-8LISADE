@@ -12,7 +12,6 @@ import static org.mockito.Mockito.verify;
 
 import com.lisade.togeduck.dto.request.SeatRegistrationRequest;
 import com.lisade.togeduck.dto.response.BusLayoutResponse;
-import com.lisade.togeduck.dto.response.SeatListResponse;
 import com.lisade.togeduck.dto.response.SeatResponse;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.Route;
@@ -56,10 +55,10 @@ class SeatServiceTest {
         doReturn(busLayoutResponse).when(busService).getBusLayout(anyLong());
 
         // when
-        SeatListResponse seatListResponse = seatService.getList(1L);
+        List<SeatResponse> list = seatService.getList(1L);
 
         // then
-        assertEquals(16, seatListResponse.getNumberOfSeats());
+        assertEquals(16, list.size());
 
         verify(seatRepository, times(1)).findSeatsByRouteId(any(Long.class));
     }

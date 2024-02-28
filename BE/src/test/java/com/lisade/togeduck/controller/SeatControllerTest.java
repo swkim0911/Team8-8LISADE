@@ -97,7 +97,7 @@ class SeatControllerTest {
             mvcResult.getResponse().getContentAsString(),
             SeatListResponse.class);
 
-        assertEquals(5, response.getNumberOfSeats());
+        assertEquals(5, response.getTotalSeats());
     }
 
     @Test
@@ -232,7 +232,7 @@ class SeatControllerTest {
         }
 
         return SeatListResponse.builder()
-            .numberOfSeats(seats.size())
+            .totalSeats(seats.size())
             .seats(seats)
             .build();
     }
