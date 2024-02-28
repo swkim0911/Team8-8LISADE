@@ -22,10 +22,10 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository
 ) : ViewModel() {
 
-    private val _id = MutableLiveData<String>("user1")
+    private val _id = MutableLiveData<String>("")
     val id:LiveData<String> = _id
 
-    private val _password = MutableLiveData<String>("password1")
+    private val _password = MutableLiveData<String>("")
     val password:LiveData<String> = _password
 
 
