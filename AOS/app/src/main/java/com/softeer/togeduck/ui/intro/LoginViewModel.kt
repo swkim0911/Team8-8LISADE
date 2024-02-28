@@ -22,16 +22,13 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository
 ) : ViewModel() {
 
-    private val _id = MutableLiveData<String>("")
-    val id:LiveData<String> = _id
-
-    private val _password = MutableLiveData<String>("")
-    val password:LiveData<String> = _password
+    var id = MutableLiveData("")
+    var password = MutableLiveData("")
 
 
     fun saveSessionId() {
         viewModelScope.launch {
-            val response = loginRepository.login(LoginRequest(_id.value!!, _password.value!!))
+            val response = loginRepository.login(LoginRequest(id.value!!, password.value!!))
             if (response.isSuccessful) {
                 val sessionId = extractSessionId(response.headers()["Set-Cookie"])
                 sessionId?.let {
@@ -91,8 +88,4 @@ class LoginViewModel @Inject constructor(
         return null
     }
 
-    fun setLoginForm(id:String,password:String){
-        _id.value = id
-        _password.value = password
-    }
 }
