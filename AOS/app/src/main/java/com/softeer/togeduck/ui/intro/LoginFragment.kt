@@ -37,9 +37,7 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_intro_login_to_intro_register)
             }
             loginBtn.setOnClickListener {
-                val id = binding.idInput.text.toString()
-                val password = binding.passwordInput.text.toString()
-                loginViewModel.saveSessionId(id, password)
+                loginViewModel.saveSessionId()
                 findNavController().navigate(R.id.action_intro_login_to_mainActivity)
             }
         }
