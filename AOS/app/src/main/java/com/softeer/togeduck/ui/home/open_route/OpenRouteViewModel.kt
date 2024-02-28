@@ -53,7 +53,7 @@ class OpenRouteViewModel @Inject constructor(
     fun requestMakeRoute(selectedBusId: Int) {
         val body = MakeRouteRequest(
             stationId = 7,
-            busId = selectedBusId,
+            busId = selectedBusId + 1,
             distance = 443,
             expectedTime = 7200,
         )

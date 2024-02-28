@@ -1,5 +1,6 @@
 package com.softeer.togeduck.data.mapper
 
+import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusItemResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.ReserveStatusDetailResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.ReserveStatusResponse
 import com.softeer.togeduck.data.dto.response.reserve_status.reserve_detail.MobileTicketResponse
@@ -28,6 +29,21 @@ fun ReserveStatusResponse.toReserveStatusModel(): ReserveStatusModel {
             recruitPhrase = "${it.status.value}(${it.reservedSeats}/${it.totalSeats})",
         )
     })
+}
+
+fun ReserveStatusItemResponse.toReserveStatusItemModel(): ReserveStatusItemModel {
+    return ReserveStatusItemModel(
+        id = id,
+        festivalName = title,
+        festivalImg = imagePath,
+        departureTime = startedAt,
+        departurePlace = stationName,
+        festivalPlace = location,
+        cost = price,
+        formattedCost = price.addCommas(),
+        recruitStatus = status,
+        recruitPhrase = "${status.value}(${reservedSeats}/${totalSeats})",
+    )
 }
 
 fun ReserveStatusDetailResponse.toReserveStatusDetailModel(): ReserveStatusDetailModel {

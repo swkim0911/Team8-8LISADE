@@ -82,6 +82,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("com.kakao.maps.open:android:2.9.2")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("androidx.paging:paging-runtime:3.2.1")
 }
 
 kapt {

@@ -1,5 +1,6 @@
 package com.softeer.togeduck.di
 
+import com.softeer.togeduck.data.remote.datasource.ReserveStatusPagingDataSource
 import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.SeatRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.UserRemoteDataSource
@@ -32,5 +33,10 @@ class DataSourceModule {
     @Provides
     fun provideSeatRemoteDataSource(service: SeatService): SeatRemoteDataSource {
         return SeatRemoteDataSource(service)
+    }
+    @Singleton
+    @Provides
+    fun provideReserveStatusPagingDataSource(service: ReserveStatusService): ReserveStatusPagingDataSource {
+        return ReserveStatusPagingDataSource(service)
     }
 }
