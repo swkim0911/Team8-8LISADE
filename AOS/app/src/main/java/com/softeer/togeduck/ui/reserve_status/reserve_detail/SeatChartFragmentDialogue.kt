@@ -38,17 +38,10 @@ class SeatChartFragmentDialogue : DialogFragment() {
     }
 
     private fun init() {
-        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
-        val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
+        initSize()
 
-        dialog?.window?.setLayout(
-            width, height
-        )
-        dialog?.window?.setBackgroundDrawable(
-            ContextCompat.getDrawable(
-                requireContext(), R.drawable.dialogue_radius
-            )
-        )
+        binding.vm = seatChartViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.vm = seatChartViewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -64,6 +57,20 @@ class SeatChartFragmentDialogue : DialogFragment() {
         seatChartViewModel.errMessage.observe(viewLifecycleOwner) {
             showErrorToast(requireContext(), it.toString())
         }
+    }
+
+    private fun initSize() {
+        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
+        val height = (resources.displayMetrics.heightPixels * 0.9).toInt()
+
+        dialog?.window?.setLayout(
+            width, height
+        )
+        dialog?.window?.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                requireContext(), R.drawable.dialogue_radius
+            )
+        )
     }
 
 
