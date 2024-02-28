@@ -9,7 +9,7 @@ import java.time.LocalTime;
 public class PaymentPageResponseMapper {
 
 
-    public static PaymentPageResponse toPaymentPageResponse(Integer seatNo,
+    public static PaymentPageResponse toPaymentPageResponse(
         RouteAndFestivalInfo routeAndFestivalInfo, RouteAndStationInfo routeAndStationInfo) {
         LocalTime expectedTime = routeAndStationInfo.getExpectedTime();
         return PaymentPageResponse.builder()
@@ -25,7 +25,6 @@ public class PaymentPageResponseMapper {
             .destination(routeAndFestivalInfo.getDestination())
             .numberOfSeats(routeAndStationInfo.getNumberOfSeats())
             .numberOfReservedSeats(routeAndStationInfo.getNumberOfReservedSeats())
-            .seatNo(seatNo)
             .price(routeAndStationInfo.getPrice())
             .build();
     }

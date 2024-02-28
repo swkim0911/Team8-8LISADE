@@ -27,7 +27,6 @@ public class PaymentPageResponse {
     private String destination;
     private Integer numberOfSeats;
     private Integer numberOfReservedSeats;
-    private Integer seatNo;
     private Integer price;
 
     @Getter

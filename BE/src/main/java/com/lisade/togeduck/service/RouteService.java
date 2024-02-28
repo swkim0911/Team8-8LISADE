@@ -17,7 +17,6 @@ import com.lisade.togeduck.entity.Bus;
 import com.lisade.togeduck.entity.Festival;
 import com.lisade.togeduck.entity.PriceTable;
 import com.lisade.togeduck.entity.Route;
-import com.lisade.togeduck.entity.Seat;
 import com.lisade.togeduck.entity.Station;
 import com.lisade.togeduck.exception.FestivalNotFoundException;
 import com.lisade.togeduck.exception.RouteAlreadyExistsException;
@@ -116,15 +115,14 @@ public class RouteService {
 
     @Transactional
     public PaymentPageResponse getPaymentInfo(Long userId, Long routeId) {
-        Seat seat = seatRepository.findByUserIdAndRouteId(userId, routeId)
-            .orElseThrow(RouteNotFoundException::new);
+
         RouteAndFestivalInfo routeAndFestivalInfo = routeRepository.findRouteAndFestivalInfoWhenPay(
                 routeId)
             .orElseThrow(RouteNotFoundException::new);
         RouteAndStationInfo routeAndStationInfo = routeRepository.findRouteAndStationInfo(routeId)
             .orElseThrow(RouteNotFoundException::new);
 
-        return PaymentPageResponseMapper.toPaymentPageResponse(seat.getNo(), routeAndFestivalInfo,
+        return PaymentPageResponseMapper.toPaymentPageResponse(routeAndFestivalInfo,
             routeAndStationInfo);
     }
 }
