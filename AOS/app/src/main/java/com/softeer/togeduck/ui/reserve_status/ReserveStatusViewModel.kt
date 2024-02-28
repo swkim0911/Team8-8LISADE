@@ -4,34 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.softeer.togeduck.data.model.reserve_status.ReserveStatusItemModel
+import com.softeer.togeduck.data.remote.datasource.ReserveStatusPagingDataSource.Companion.ITEMS_PER_PAGE
 import com.softeer.togeduck.data.repository.ReserveStatusRepository
-import com.softeer.togeduck.utils.DATA_LOAD_ERROR_MESSAGE
-import com.softeer.togeduck.utils.recordErrLog
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class ReserveStatusViewModel @Inject constructor(
     private val reserveStatusRepository: ReserveStatusRepository,
 ) : ViewModel() {
-    private val tag = this.javaClass.simpleName.substring(0, 22)
+    private val tag = this.javaClass.simpleName
 
     private var _errMessage = MutableLiveData<String>()
     val errMessage: LiveData<String> = _errMessage
 
-    private var _reserveStatusItems = MutableLiveData<ReserveStatusModel>()
-    val reserveStatusItems: LiveData<ReserveStatusModel> = _reserveStatusItems
+    val reserveStatusItem: Flow<PagingData<ReserveStatusItemModel>> =
+        Pager(
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
+            pagingSourceFactory = { reserveStatusRepository.getPagingSource() }
+        ).flow.cachedIn(viewModelScope)
 
-    fun loadReserveStatusData() {
-        viewModelScope.launch {
-            reserveStatusRepository.getReserveStatusList(1, 10).onSuccess {
-                _reserveStatusItems.value = it
-            }.onFailure {
-                recordErrLog(tag, it.message!!)
-                _errMessage.value = DATA_LOAD_ERROR_MESSAGE
-            }
-        }
-    }
 }

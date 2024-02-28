@@ -2,6 +2,7 @@ package com.softeer.togeduck.di
 
 import android.app.Application
 import com.softeer.togeduck.data.local.datasource.UserDataStore
+import com.softeer.togeduck.data.remote.datasource.ReserveStatusPagingDataSource
 import com.softeer.togeduck.data.remote.datasource.UserRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
 import com.softeer.togeduck.data.remote.datasource.chat.ChatDataSource
@@ -33,8 +34,9 @@ class RepositoryModule {
     @Provides
     fun provideReserveStatusRepository(
         reserveStatusRemoteDataSource: ReserveStatusRemoteDataSource,
+        reserveStatusPagingDataSource: ReserveStatusPagingDataSource,
     ): ReserveStatusRepository {
-        return ReserveStatusRepository(reserveStatusRemoteDataSource)
+        return ReserveStatusRepository(reserveStatusRemoteDataSource, reserveStatusPagingDataSource)
     }
 
     @Singleton

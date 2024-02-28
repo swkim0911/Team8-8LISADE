@@ -8,11 +8,13 @@ import com.softeer.togeduck.data.model.reserve_status.ReserveStatusModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.MobileTicketModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.ReserveStatusDetailModel
 import com.softeer.togeduck.data.model.reserve_status.reserve_detail.SeatChartModel
+import com.softeer.togeduck.data.remote.datasource.ReserveStatusPagingDataSource
 import com.softeer.togeduck.data.remote.datasource.ReserveStatusRemoteDataSource
 import javax.inject.Inject
 
 class ReserveStatusRepository @Inject constructor(
     private val reserveStatusRemoteDataSource: ReserveStatusRemoteDataSource,
+    private val reserveStatusPagingDataSource: ReserveStatusPagingDataSource,
 ) {
     suspend fun getReserveStatusList(
         page: Int,
@@ -49,5 +51,9 @@ class ReserveStatusRepository @Inject constructor(
             reserveStatusRemoteDataSource.getSeatChart(routeId)
                 .toSeatChartModel()
         }
+    }
+
+    fun getPagingSource(): ReserveStatusPagingDataSource {
+        return reserveStatusPagingDataSource
     }
 }
