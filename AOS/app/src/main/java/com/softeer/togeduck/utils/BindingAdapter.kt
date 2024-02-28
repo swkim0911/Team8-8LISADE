@@ -1,6 +1,7 @@
 package com.softeer.togeduck.utils
 
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -34,6 +35,7 @@ fun loadRecruitmentStatusTag(view: TextView, status: RecruitStatus?) {
 @BindingAdapter("s3ImageUrl")
 fun setS3ImageUrl(view: ImageView, url: String?) {
     val convertedUrl = url?.convertS3Url() // 확장 함수 사용
+    Log.d("Imgurl", convertedUrl.toString())
     Glide.with(view.context)
         .load(convertedUrl)
         .into(view)

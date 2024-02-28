@@ -16,6 +16,7 @@
         tools:context=".ui.home.article_detail.ArticleDetailActivity">
 
         <ImageView
+            s3ImageUrl="@{vm.articleDetail.paths}"
             android:id="@+id/articleImg"
             android:layout_width="0dp"
             android:layout_height="400dp"

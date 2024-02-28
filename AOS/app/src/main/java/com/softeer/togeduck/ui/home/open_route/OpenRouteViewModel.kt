@@ -40,8 +40,6 @@ class OpenRouteViewModel @Inject constructor(
         viewModelScope.launch {
             articleDetailRepository.getFestivalDetail(10.toString())
                 .onSuccess {
-                    Log.d("imgurl", it.paths.convertS3Url())
-                    Log.d("TESTLOG123", it.toString())
                     _articleDetail.value = it
                     festivalId = it.id
                 }
