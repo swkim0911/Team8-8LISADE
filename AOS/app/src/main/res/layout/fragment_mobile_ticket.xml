@@ -127,10 +127,10 @@
             app:layout_constraintTop_toBottomOf="@id/festivalName" />
 
         <ImageView
+            android:id="@+id/qrImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:elevation="@dimen/ticket_elevation"
-            android:src="@drawable/dumi_qr"
             app:layout_constraintBottom_toTopOf="@id/dividerHorizon1"
             app:layout_constraintEnd_toEndOf="@id/guideTicketRight"
             app:layout_constraintStart_toStartOf="@id/guideTicketLeft"

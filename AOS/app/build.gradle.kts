@@ -80,6 +80,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("com.kakao.maps.open:android:2.9.2")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 }
 
 kapt {
