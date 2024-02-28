@@ -14,26 +14,27 @@ public class FestivalIdRangePartitioner implements Partitioner {
 
     @Override
     public Map<String, ExecutionContext> partition(int gridSize) {
+        Long maxId = festivalRepository.findMaxId();
         Long max = festivalRepository.findMaxId();
         Long min = festivalRepository.findMinId();
 
         long targetSize = (max - min) / gridSize + 1;
         Map<String, ExecutionContext> result = new HashMap<>(gridSize);
-        long number = 0L;
-        long start = min;
+        long num = 0L;
+        long start = minId;
         long end = start + targetSize - 1;
-        while (start <= max) {
+        while (start <= maxId) {
             ExecutionContext ctx = new ExecutionContext();
-            result.put("partition" + number, ctx);
-            if (end >= max) {
-                end = max;
+            result.put("partition" + num, ctx);
+            if (end >= maxId) {
+                end = maxId;
             }
             ctx.putLong("minId", start);
             ctx.putLong("maxId", end);
 
             start += targetSize;
             end += targetSize;
-            number++;
+            num++;
         }
         return result;
     }
