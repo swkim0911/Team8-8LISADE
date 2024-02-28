@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.softeer.togeduck.R
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.softeer.togeduck.databinding.FragmentMobileTicketBinding
 import com.softeer.togeduck.utils.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,7 +71,21 @@ class MobileTicketFragment : Fragment() {
             showErrorToast(requireContext(), it.toString())
         }
 
+        makeQR()
+    }
 
+    private fun makeQR() {
+        try {
+            val barcodeEncoder = BarcodeEncoder()
+            val data =
+                "routeId=" + mobileTicketViewModel.routeId + ";seatNo" + mobileTicketViewModel.mobileTicket.value?.seatNo + ";"
+            val bitmap =
+                barcodeEncoder.encodeBitmap(data, BarcodeFormat.QR_CODE, 400, 400)
+            val imageViewQrCode = binding.qrImage
+            imageViewQrCode.setImageBitmap(bitmap)
+        } catch (e: Exception) {
+            Toast.makeText(context, "입장권 QR코드 생성에 실패했습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
