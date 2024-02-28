@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/id"
+                android:text="@={vm.id}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray200"
                 android:inputType="text"
@@ -59,6 +60,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
+                android:text="@={vm.password}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
