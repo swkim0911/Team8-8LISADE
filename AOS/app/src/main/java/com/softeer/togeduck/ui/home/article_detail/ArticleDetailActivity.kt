@@ -30,6 +30,12 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        binding.vm = articleDetailViewModel
+        binding.lifecycleOwner = this
+        articleDetailViewModel.articleDetail.observe(this, Observer {
+
+        })
+
         val articleId = args.articleId
         articleDetailViewModel.getArticleId(articleId)
         Log.d("ARTICLEID2", articleId.toString())
@@ -67,4 +73,5 @@ class ArticleDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 }
