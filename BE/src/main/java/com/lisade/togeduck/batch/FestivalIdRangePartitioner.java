@@ -15,10 +15,9 @@ public class FestivalIdRangePartitioner implements Partitioner {
     @Override
     public Map<String, ExecutionContext> partition(int gridSize) {
         Long maxId = festivalRepository.findMaxId();
-        Long max = festivalRepository.findMaxId();
-        Long min = festivalRepository.findMinId();
+        Long minId = festivalRepository.findMinId();
 
-        long targetSize = (max - min) / gridSize + 1;
+        long targetSize = (maxId - minId) / gridSize + 1;
         Map<String, ExecutionContext> result = new HashMap<>(gridSize);
         long num = 0L;
         long start = minId;
