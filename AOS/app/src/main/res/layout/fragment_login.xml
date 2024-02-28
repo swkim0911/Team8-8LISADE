@@ -36,9 +36,9 @@
             app:layout_constraintTop_toBottomOf="@id/main_logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/idInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{vm.id}"
                 android:hint="@string/id"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray200"
@@ -58,11 +58,11 @@
             app:layout_constraintTop_toBottomOf="@id/login_text">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:text="@{vm.password}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray200"
                 android:textSize="18sp" />

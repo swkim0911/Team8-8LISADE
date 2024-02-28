@@ -1,5 +1,6 @@
 package com.softeer.togeduck.ui.intro
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,16 +23,10 @@ class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository
 ) : ViewModel() {
 
-    private val _id = MutableLiveData<String>("")
-    val id:LiveData<String> = _id
 
-    private val _password = MutableLiveData<String>("")
-    val password:LiveData<String> = _password
-
-
-    fun saveSessionId() {
+    fun saveSessionId(id:String, password:String) {
         viewModelScope.launch {
-            val response = loginRepository.login(LoginRequest(_id.value!!, _password.value!!))
+            val response = loginRepository.login(LoginRequest(id, password))
             if (response.isSuccessful) {
                 val sessionId = extractSessionId(response.headers()["Set-Cookie"])
                 sessionId?.let {
@@ -91,8 +86,4 @@ class LoginViewModel @Inject constructor(
         return null
     }
 
-    fun setLoginForm(id:String,password:String){
-        _id.value = id
-        _password.value = password
-    }
 }
