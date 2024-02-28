@@ -83,4 +83,6 @@ public class UserController {
         @PathVariable(name = "route_id") Long routeId) {
         return userService.getReservedSeat(user.getId(), routeId);
     }
+
+
 }
