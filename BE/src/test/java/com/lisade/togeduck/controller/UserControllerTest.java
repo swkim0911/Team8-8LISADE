@@ -2,8 +2,10 @@ package com.lisade.togeduck.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
+import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
 import com.lisade.togeduck.global.exception.Error;
@@ -33,6 +35,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -151,6 +156,30 @@ class UserControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(EmailAlreadyExistsException.class));
     }
+
+    @Test
+    @DisplayName("로그인 성공")
+    void login_O() throws Exception {
+        // given
+        LoginRequest loginRequest = LoginRequest.builder()
+                .userId("userId")
+                .password("password1@")
+                .build();
+        User mockUser = User.builder().userId("userId").password("password1@").build();
+
+
+        // when
+        when(userService.login(any(LoginRequest.class), any(String.class))).thenReturn(mockUser);
+
+        //then
+        mockMvc.perform(post("/users/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(loginRequest)))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo(loginRequest.getUserId()));
+    }
+
+
 
     
     // 에러 응답의 상태 코드를 설정하기 위해
