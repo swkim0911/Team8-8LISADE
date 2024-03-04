@@ -255,14 +255,6 @@ class UserControllerTest {
                 .andReturn();
     }
 
-    @Test
-    @DisplayName("로그인 하지 않은 상태에서 예약한 경로를 조회할 때 실패")
-    void getRoutes_X() {
-
-    }
-
-
-    
     // 에러 응답의 상태 코드를 설정하기 위해
     private ResponseEntity<Object> getResponseEntity(GeneralException ex) {
         Error error = ex.getError();
