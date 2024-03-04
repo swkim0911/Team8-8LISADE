@@ -2,10 +2,15 @@ package com.lisade.togeduck.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lisade.togeduck.constant.SessionConst;
 import com.lisade.togeduck.dto.request.LoginRequest;
 import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.FestivalResponse;
+import com.lisade.togeduck.dto.response.RouteDetailResponse;
+import com.lisade.togeduck.dto.response.UserReservedRouteResponse;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
+import com.lisade.togeduck.entity.enums.RouteStatus;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
 import com.lisade.togeduck.exception.UserNotFoundException;
@@ -18,11 +23,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,6 +45,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.as;
@@ -203,6 +215,50 @@ class UserControllerTest {
                         .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(UserNotFoundException.class));
+    }
+
+    @Test
+    @DisplayName("User 가 예약한 경로들의 리스트 조회 성공")
+    void getRoutes_O() throws Exception{
+        //given
+        UserReservedRouteResponse mockResponse = UserReservedRouteResponse.builder()
+                .id(1L)
+                .title("festival")
+                .startedAt(LocalDateTime.now())
+                .location("Seoul")
+                .stationName("station")
+                .price(10000)
+                .status(RouteStatus.RECRUIT)
+                .totalSeats(30)
+                .reservedSeats(20)
+                .imagePath("path").build();
+
+        Slice<UserReservedRouteResponse> mockSlice = new PageImpl<>(Collections.singletonList(
+                mockResponse));
+
+        //when
+        when(userService.getReservedRouteList(any(Pageable.class), any(Long.class))).thenReturn(mockSlice);
+
+        //then
+
+        User mockUser = User.builder()
+                .userId("userId")
+                .password("password1!")
+                .build();
+
+        MvcResult mvcResult = mockMvc.perform(get("/users/routes")
+                        .param("page", "0")
+                        .param("size", "10")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .sessionAttr(SessionConst.LOGIN_USER.getSessionName(), mockUser))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
+
+    @Test
+    @DisplayName("로그인 하지 않은 상태에서 예약한 경로를 조회할 때 실패")
+    void getRoutes_X() {
+
     }
 
 
