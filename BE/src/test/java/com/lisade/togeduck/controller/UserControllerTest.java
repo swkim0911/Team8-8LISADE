@@ -1,9 +1,8 @@
 package com.lisade.togeduck.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -11,9 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisade.togeduck.dto.request.SignUpRequest;
 import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
-import com.lisade.togeduck.global.handler.ApiResponseHandler;
+import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
+import com.lisade.togeduck.global.exception.Error;
+import com.lisade.togeduck.global.exception.GeneralException;
 import com.lisade.togeduck.global.handler.GlobalExceptionHandler;
+import com.lisade.togeduck.global.response.ApiResponse;
 import com.lisade.togeduck.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,13 +27,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.http.*;
+import org.springframework.lang.Nullable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -76,6 +82,28 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.userId").value("사용가능한 아이디입니다."));
     }
 
+    @Test
+    @DisplayName("회원 아이디 중복 확인 - 아이디 생성 불가능한 경우")
+    void checkUserId_X() throws Exception {
+        //given
+        UserIdAlreadyExistsException exception = new UserIdAlreadyExistsException();
+        ResponseEntity<Object> responseEntity = getResponseEntity(exception);
+
+        //when
+        when(userService.checkUserId(any(String.class)))
+                .thenThrow(exception);
+
+        when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
+                any(WebRequest.class))).thenReturn(responseEntity);
+
+        //then
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/{user_id}", "userId")
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(
+                        UserIdAlreadyExistsException.class));
+    }
+
 
 
     @Test
@@ -96,5 +124,36 @@ class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().string("1"))
                 .andReturn();
+    }
+
+    private ResponseEntity<Object> getResponseEntity(GeneralException ex) {
+        Error error = ex.getError();
+        HttpStatus httpStatus = error.getHttpStatus();
+        String message = error.getMessage();
+        ApiResponse<Object> body = ApiResponse.of(httpStatus.value(), httpStatus.name(), message);
+        HttpHeaders headers = HttpHeaders.EMPTY;
+        WebRequest mockWebRequest = mock(WebRequest.class);
+        return handleExceptionInternal(ex, body, headers, httpStatus, mockWebRequest);
+    }
+
+    private ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body,
+                                                           HttpHeaders headers, HttpStatusCode
+                                                                   statusCode, WebRequest request) {
+        if (request instanceof ServletWebRequest servletWebRequest) {
+            HttpServletResponse response = servletWebRequest.getResponse();
+            if (response != null && response.isCommitted()) {
+                return null;
+            }
+        }
+        if (statusCode.equals(HttpStatus.INTERNAL_SERVER_ERROR) && body == null) {
+            request.setAttribute("jakarta.servlet.error.exception", ex, 0);
+        }
+
+        return this.createResponseEntity(body, headers, statusCode, request);
+    }
+
+    private ResponseEntity<Object> createResponseEntity(@Nullable Object body, HttpHeaders headers,
+                                                        HttpStatusCode statusCode, WebRequest request) {
+        return new ResponseEntity<>(body, headers, statusCode);
     }
 }
