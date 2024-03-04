@@ -8,6 +8,7 @@ import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.entity.User;
 import com.lisade.togeduck.exception.EmailAlreadyExistsException;
 import com.lisade.togeduck.exception.UserIdAlreadyExistsException;
+import com.lisade.togeduck.exception.UserNotFoundException;
 import com.lisade.togeduck.global.exception.Error;
 import com.lisade.togeduck.global.exception.GeneralException;
 import com.lisade.togeduck.global.handler.GlobalExceptionHandler;
@@ -179,6 +180,30 @@ class UserControllerTest {
                 .andExpect(result -> assertThat(result.getResponse().getContentAsString()).isEqualTo(loginRequest.getUserId()));
     }
 
+    @Test
+    @DisplayName("요청으로부터 DB에서 User을 찾을 수 없어 로그인 실패")
+    void login_X() throws Exception{
+        //given
+        LoginRequest loginRequest = LoginRequest.builder()
+                .userId("userId")
+                .password("password1@")
+                .build();
+
+        UserNotFoundException exception = new UserNotFoundException();
+        ResponseEntity<Object> responseEntity = getResponseEntity(exception);
+
+        //when
+        when(userService.login(any(LoginRequest.class), any(String.class))).thenThrow(exception);
+        when(globalExceptionHandler.handleGeneralException(any(GeneralException.class),
+                any(WebRequest.class))).thenReturn(responseEntity);
+
+        //then
+        mockMvc.perform(post("/users/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(loginRequest)))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(UserNotFoundException.class));
+    }
 
 
     
