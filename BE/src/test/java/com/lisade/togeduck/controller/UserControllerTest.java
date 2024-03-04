@@ -1,12 +1,16 @@
 package com.lisade.togeduck.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisade.togeduck.dto.request.SignUpRequest;
+import com.lisade.togeduck.dto.response.ValidateUserIdResponse;
 import com.lisade.togeduck.global.handler.ApiResponseHandler;
 import com.lisade.togeduck.global.handler.GlobalExceptionHandler;
 import com.lisade.togeduck.service.UserService;
@@ -43,17 +47,36 @@ class UserControllerTest {
     @Mock
     private GlobalExceptionHandler globalExceptionHandler;
 
-    @Mock
-    private ApiResponseHandler apiResponseHandler;
 
     @BeforeEach
     void setUp() {
         UserController userController = new UserController(userService);
 
         this.mockMvc = MockMvcBuilders.standaloneSetup(userController)
-                .setControllerAdvice(globalExceptionHandler, apiResponseHandler)
+                .setControllerAdvice(globalExceptionHandler)
                 .build();
     }
+
+    @Test
+    @DisplayName("회원 아이디 중복 확인 - 아이디 생성 가능한 경우")
+    void checkUserId_O() throws Exception {
+        //given
+        ValidateUserIdResponse mockResponse = ValidateUserIdResponse.builder()
+                .userId("사용가능한 아이디입니다.")
+                .build();
+
+        when(userService.checkUserId(any(String.class))).thenReturn(mockResponse);
+
+        //when
+        ResultActions result = mockMvc.perform(
+                get("/users/{user_id}", "userId")
+                        .contentType(MediaType.APPLICATION_JSON));
+        //then
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId").value("사용가능한 아이디입니다."));
+    }
+
+
 
     @Test
     @DisplayName("정상 회원가입 성공")
